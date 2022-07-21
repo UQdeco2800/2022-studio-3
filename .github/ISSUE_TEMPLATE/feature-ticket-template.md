@@ -36,8 +36,8 @@ List of sub-features you intend to have done and in Master by the end of the spr
 - [ ] ...
 
 # **Documentation**
-- [Main description of feature](../../wikis/page1)
-- [User documentation](../../wikis/Game-Guide#section1)
+- [Main description of feature](../wiki/Feature)
+- [User documentation](../wiki/Game-Guide#section1)
 - ...
 
 # **Members**
