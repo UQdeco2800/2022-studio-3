@@ -45,7 +45,7 @@ e.g.
 - [ ] Documentation of `Armour` updated on wiki (Aug. 23).
  
 # **Documentation**
-- [Main description of feature](../../wikis/page1)
+- [Main description of feature](../wiki/Feature)
 - [JavaDoc](JavaDoc/Location/Package/Class)
 - ...
  
