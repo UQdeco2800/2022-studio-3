@@ -41,5 +41,5 @@ List of sub-features you intend to have done and in Master by the end of the spr
 - ...
 
 # **Members**
-- Name (GitLab Username) (Slack Handle) -- only one is needed if they are the same.
+- Name (GitHub Username) (Slack Handle) -- only one is needed if they are the same.
 - e.g. Richard (@AppleByter) (Richard Thomas)
