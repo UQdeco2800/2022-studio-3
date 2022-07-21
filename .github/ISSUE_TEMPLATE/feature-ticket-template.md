@@ -2,7 +2,7 @@
 name: Feature Ticket Template
 about: Description of a new feature for the project.
 title: ''
-labels: feature
+labels: feature, task
 assignees: ''
 
 ---
