@@ -28,7 +28,9 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/box_boy_leaf.png",
     "images/tree.png",
-    "images/wall.png",
+    "images/Base.png",
+    "images/barracks atlantis.png",
+    "images/barracks medieval.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -66,10 +68,14 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
-    spawnWalls();
+    // spawnWalls();
+    spawnTownHall(new GridPoint2(4, 2));
+    spawnBarracks(new GridPoint2(2, 2));
+    spawnBarracksMedieval(new GridPoint2(2, 4));
+
     player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
+    // spawnGhosts();
+    // spawnGhostKing();
 
     playMusic();
   }
@@ -82,7 +88,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO_ISO);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -130,6 +136,21 @@ public class ForestGameArea extends GameArea {
       Entity wall = BuildingFactory.createWall();
       spawnEntityAt(wall, randomPos, true, false);
     }
+  }
+
+  private void spawnTownHall(GridPoint2 position) {
+    Entity townHall = BuildingFactory.createTownHall();
+    spawnEntityAt(townHall, position, false, false);
+  }
+
+  private void spawnBarracks(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracks();
+    spawnEntityAt(barracks, position, false, false);
+  }
+
+  private void spawnBarracksMedieval(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracksMedieval();
+    spawnEntityAt(barracks, position, false, false);
   }
 
   private Entity spawnPlayer() {
