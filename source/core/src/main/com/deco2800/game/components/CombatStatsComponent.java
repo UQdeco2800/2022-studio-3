@@ -2,6 +2,7 @@ package com.deco2800.game.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static java.lang.Math.max;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
@@ -13,10 +14,12 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
+  private int baseDefence;
 
-  public CombatStatsComponent(int health, int baseAttack) {
+  public CombatStatsComponent(int health, int baseAttack, int baseDefence) {
     setHealth(health);
     setBaseAttack(baseAttack);
+    setBaseDefence(baseDefence);
   }
 
   /**
@@ -84,8 +87,44 @@ public class CombatStatsComponent extends Component {
     }
   }
 
+  /**
+   * Sets the entity's defence from attacks. Defence has a minimum bound of 0.
+   *
+   * @param defence Attack defence
+   */
+  public void setBaseDefence(int defence) {
+    if (defence >= 0) {
+      this.baseDefence = defence;
+    } else {
+      /* note: this may be valid in the final build, but for now I want
+       * to leave it as is.
+       */
+      logger.error("Can not set base defence to a negative defence value");
+    }
+  }
+
+  /**
+   * Returns the entity's base defence.
+   *
+   * @return base defence
+   */
+  public int getBaseDefence() {return baseDefence;}
+
+  // TODO: Substitute dummy damage function with more complete function
+  /**
+   * Manages the entity being hit by an attacking enemy.
+   *
+   * Combatant takes damage equal to the attacker's attack less this entity's
+   * defence, with a minimum bound of 1.
+   *
+   * @param attacker The Combat Stats of an attacking entity
+   */
   public void hit(CombatStatsComponent attacker) {
-    int newHealth = getHealth() - attacker.getBaseAttack();
+    // Guarantee that at least one damage is done
+    int newHealth = getHealth() - max(1,
+            attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
   }
+
+
 }
