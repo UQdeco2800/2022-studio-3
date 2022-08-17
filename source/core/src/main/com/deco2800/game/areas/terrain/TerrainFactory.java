@@ -16,10 +16,18 @@ import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import net.dermetfan.gdx.physics.box2d.PositionController;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final int mapWidth = 30;
+  private static final int mapHeight = 30;
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
 
@@ -32,7 +40,7 @@ public class TerrainFactory {
    * @param cameraComponent Camera to render terrains to. Must be ortographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
-    this(cameraComponent, TerrainOrientation.ORTHOGONAL);
+    this(cameraComponent, TerrainOrientation.ISOMETRIC);
   }
 
   /**
@@ -118,8 +126,8 @@ public class TerrainFactory {
     fillTiles(layer, MAP_SIZE, grassTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    //fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
+    //fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -138,11 +146,43 @@ public class TerrainFactory {
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    TextureRegion isoGrass =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
+    TextureRegion isoTuft =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
+    TerrainTile grassTile = new TerrainTile(isoGrass);
+    TerrainTile tuftTile = new TerrainTile(isoTuft);
+
+    File mapFile = new File("E:\\DECO2800 Testing\\mapGen1\\src\\map.txt");
+    char[][] map = new char[mapHeight][mapWidth];
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(mapFile));
+      for (int i = 0; i < mapHeight; i++) {
+        for (int j = 0; j < mapWidth; j++) {
+          char currentChar = (char) br.read();
+          map[i][j] = currentChar;
+          System.out.print(currentChar);
+        }
+        br.readLine();
+        System.out.println('\n');
+      }
+    } catch (IOException e) {
+    }
+
+
+
+    for (int x = 0; x < mapWidth; x++) {
+      for (int y = 0; y < mapHeight; y++) {
         Cell cell = new Cell();
-        cell.setTile(tile);
-        layer.setCell(x, y, cell);
+        switch (map[y][x]) {
+          case '*':
+            cell.setTile(tuftTile);
+            break;
+          default:
+            cell.setTile(grassTile);
+        }
+        layer.setCell(x, mapHeight - y, cell);
       }
     }
   }
