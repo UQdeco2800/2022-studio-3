@@ -31,8 +31,9 @@ public class TerrainFactory {
    *
    * @param cameraComponent Camera to render terrains to. Must be ortographic.
    */
+  /*Setting camera orientation*/
   public TerrainFactory(CameraComponent cameraComponent) {
-    this(cameraComponent, TerrainOrientation.ORTHOGONAL);
+    this(cameraComponent, TerrainOrientation.ISOMETRIC);
   }
 
   /**
@@ -71,7 +72,7 @@ public class TerrainFactory {
             new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
         TextureRegion isoRocks =
             new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
-        return createForestDemoTerrain(1f, isoGrass, isoTuft, isoRocks);
+        return createForestDemoTerrain(0.5f, isoGrass, isoTuft, isoRocks);
       case FOREST_DEMO_HEX:
         TextureRegion hexGrass =
             new TextureRegion(resourceService.getAsset("images/hex_grass_1.png", Texture.class));
