@@ -6,19 +6,26 @@ import org.slf4j.LoggerFactory;
 /**
  * A component intended to be used by the player to track their unit's inventory.
  *
- * Currently only stores the stone and iron amount but can be extended for more 
+ * Currently only stores the stone and metal amount but can be extended for more 
  * advanced functionality such as storing other items.
  * Can also be used as a more generic component for other entities.
  */
 public class UnitInventory extends Component{
-  // idk what this does tbh
   private static final Logger logger = LoggerFactory.getLogger(UnitInventory.class);
   private int stone;
-  private int iron;
+  private int metal;
+  private int wood;
 
-  public UnitInventory(int stone, int iron) {
+  public UnitInventory() {
+    this.stone = 0;
+    this.metal = 0;
+    this.wood = 0;
+  }
+  
+  public UnitInventory(int stone, int metal, int wood) {
     this.stone = stone;
-    this.iron = iron;
+    this.metal = metal;
+    this.wood = wood;
   }
 
   /**
@@ -31,12 +38,20 @@ public class UnitInventory extends Component{
   }
 
   /**
-   * Returns the amount of iron in the inventory
+   * Returns the amount of metal in the inventory
    *
-   * @return amount of the iron
+   * @return amount of the metal
    */
-  public int getIron() {
-    return this.iron;
+  public int getMetal() {
+    return this.metal;
+  }
+
+  /**
+   * Returns the amount of wood in the inventory
+   * @return amount of the wood
+   */
+  public int getWood() {
+    return wood;
   }
 
   /**
@@ -49,12 +64,21 @@ public class UnitInventory extends Component{
   }
 
   /**
-   * Returns if the entity has a certain amount of iron.
-   * @param iron required amount of iron
-   * @return player has greater than or equal to the required amount of iron
+   * Returns if the entity has a certain amount of metal.
+   * @param metal required amount of metal
+   * @return player has greater than or equal to the required amount of metal
    */
-  public Boolean hasIron(int iron) {
-    return this.iron >= iron;
+  public Boolean hasMetal(int metal) {
+    return this.metal >= metal;
+  }
+
+    /**
+   * Returns if the entity has a certain amount of wood.
+   * @param wood required amount of wood
+   * @return player has greater than or equal to the required amount of wood
+   */
+  public Boolean hasWood(int wood) {
+    return this.wood >= wood;
   }
 
   /**
@@ -65,24 +89,31 @@ public class UnitInventory extends Component{
   public void setStone(int stone) {
     if (stone >= 0) {
       this.stone = stone;
-    } else {
-      this.stone = 0;
+      logger.debug("Setting stone to {}", this.stone);
     }
-    logger.debug("Setting stone to {}", this.stone);
   }
 
   /**
-   * Sets the player's iron. Iron has a minimum bound of 0.
+   * Sets the player's metal. Metal has a minimum bound of 0.
    *
-   * @param iron iron
+   * @param metal metal
    */
-  public void setIron(int iron) {
-    if (iron >= 0) {
-      this.iron = stone;
-    } else {
-      this.iron = 0;
+  public void setMetal(int metal) {
+    if (metal >= 0) {
+      this.metal = stone;
+      logger.debug("Setting metal to {}", this.metal);
+    }  
+  }
+
+  /**
+   * Sets the player's wood. Wood h
+   * @param wood
+   */
+  public void setWood(int wood) {
+    if (wood >= 0) {
+      this.wood = wood;
+      logger.debug("Setting wood to {}", this.wood);
     }
-    logger.debug("Setting iron to {}", this.iron);
   }
 
   /**
@@ -94,11 +125,19 @@ public class UnitInventory extends Component{
   }
 
   /**
-   * Adds to the player's iron. The amount added can be negative.
-   * @param iron iron to add
+   * Adds to the player's metal. The amount added can be negative.
+   * @param metal metal to add
    */
-  public void addIron(int iron) {
-    setIron(this.iron + iron);
+  public void addMetal(int metal) {
+    setMetal(this.metal + metal);
+  }    
+
+  /**
+   * Adds to the player's wood. The amount added can be negative.
+   * @param wood wood to add
+   */
+  public void addWood(int wood) {
+    setWood(this.wood + wood);
   }    
 }
 
