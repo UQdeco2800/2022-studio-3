@@ -1,6 +1,8 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -27,11 +29,13 @@ public class BuildingFactory {
         Entity townHall = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TextureRenderComponent("images/Base.png"));
+                .addComponent(new TextureRenderComponent("images/Base.png"))
+                .addComponent(new TouchPlayerInputComponent())
+                .addComponent(new BuildingActions());
         townHall.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         townHall.getComponent(TextureRenderComponent.class).scaleEntity();
         townHall.scaleWidth(4f);
-        PhysicsUtils.setScaledCollider(townHall, 0.9f, 0.9f);
+        PhysicsUtils.setScaledCollider(townHall, COLLIDER_SCALE, COLLIDER_SCALE);
         return townHall;
     }
 

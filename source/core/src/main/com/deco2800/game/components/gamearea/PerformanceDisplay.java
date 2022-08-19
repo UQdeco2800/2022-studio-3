@@ -44,7 +44,9 @@ public class PerformanceDisplay extends UIComponent {
     message =
         message
             .concat(String.format("FPS: %d fps%n", Gdx.graphics.getFramesPerSecond()))
-            .concat(String.format("RAM: %d MB%n", Gdx.app.getJavaHeap() / 1000000));
+            .concat(String.format("RAM: %d MB%n", Gdx.app.getJavaHeap() / 1000000))
+            .concat(String.format("Width: %d px%n", Gdx.graphics.getWidth()))
+            .concat(String.format("Height: %d px%n", Gdx.graphics.getHeight()));
     return message;
   }
 
