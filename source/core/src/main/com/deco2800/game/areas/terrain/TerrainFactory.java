@@ -40,7 +40,7 @@ public class TerrainFactory {
    * @param cameraComponent Camera to render terrains to. Must be ortographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
-    this(cameraComponent, TerrainOrientation.ISOMETRIC);
+    this(cameraComponent, TerrainOrientation.ORTHOGONAL);
   }
 
   /**
@@ -148,9 +148,9 @@ public class TerrainFactory {
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
     TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
     TerrainTile grassTile = new TerrainTile(isoGrass);
     TerrainTile tuftTile = new TerrainTile(isoTuft);
 
