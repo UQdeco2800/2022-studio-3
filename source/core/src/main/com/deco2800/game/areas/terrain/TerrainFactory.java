@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.utils.math.RandomUtils;
@@ -27,6 +28,9 @@ import java.io.IOException;
 public class TerrainFactory {
   private static final int mapWidth = 30;
   private static final int mapHeight = 30;
+  private static final int citySize = 7;
+  private static final int islandSize = 18;
+
   private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
@@ -154,33 +158,20 @@ public class TerrainFactory {
     TerrainTile grassTile = new TerrainTile(isoGrass);
     TerrainTile tuftTile = new TerrainTile(isoTuft);
 
-    File mapFile = new File("E:\\DECO2800 Testing\\mapGen1\\src\\map.txt");
-    char[][] map = new char[mapHeight][mapWidth];
-    try {
-      BufferedReader br = new BufferedReader(new FileReader(mapFile));
-      for (int i = 0; i < mapHeight; i++) {
-        for (int j = 0; j < mapWidth; j++) {
-          char currentChar = (char) br.read();
-          map[i][j] = currentChar;
-          System.out.print(currentChar);
-        }
-        br.readLine();
-        System.out.println('\n');
-      }
-    } catch (IOException e) {
-    }
-
-
+    //Generate a map with the following specifications
+    MapGenerator mg = new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
+    //Store the map
+    char[][] map = mg.getMap();
 
     for (int x = 0; x < mapWidth; x++) {
       for (int y = 0; y < mapHeight; y++) {
         Cell cell = new Cell();
-        switch (map[y][x]) {
-          case '*':
-            cell.setTile(tuftTile);
-            break;
-          default:
-            cell.setTile(grassTile);
+        if (map[y][x] == mg.getOceanChar()) {
+          //Set ocean tiles to "tuft" textures
+          cell.setTile(tuftTile);
+        } else {
+          //Set non-ocean tiles to "grass" textures
+          cell.setTile(grassTile);
         }
         layer.setCell(x, mapHeight - y, cell);
       }
