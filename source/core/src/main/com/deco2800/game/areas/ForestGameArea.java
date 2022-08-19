@@ -141,17 +141,17 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTownHall(GridPoint2 position) {
     Entity townHall = BuildingFactory.createTownHall();
-    spawnEntityAt(townHall, position, false, false);
+    spawnEntityAt(townHall, position, true, true);
   }
 
   private void spawnBarracks(GridPoint2 position) {
     Entity barracks = BuildingFactory.createBarracks();
-    spawnEntityAt(barracks, position, false, false);
+    spawnEntityAt(barracks, position, true, true);
   }
 
   private void spawnBarracksMedieval(GridPoint2 position) {
     Entity barracks = BuildingFactory.createBarracksMedieval();
-    spawnEntityAt(barracks, position, false, false);
+    spawnEntityAt(barracks, position, true, true);
   }
 
   private Entity spawnPlayer() {
