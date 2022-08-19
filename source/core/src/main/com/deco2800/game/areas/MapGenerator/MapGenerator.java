@@ -52,6 +52,10 @@ public class MapGenerator {
      */
     private final char islandChar = 'I';
 
+    /**
+     * Char denoting a city tile on the map = for purposes of output
+     */
+    private final char cityChar = 'c';
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -117,6 +121,30 @@ public class MapGenerator {
      */
     public int getHeight() {
         return this.mapHeight;
+    }
+
+    /**
+     * Returns the current char representing an ocean tile
+     * @return ocean char
+     */
+    public char getOceanChar() {
+        return this.oceanChar;
+    }
+
+    /**
+     * Returns the current char representing an island tile
+     * @return island char
+     */
+    public char getIslandChar() {
+        return this.islandChar;
+    }
+
+    /**
+     * Returns the current char representing a city tile
+     * @return city char
+     */
+    public char getCityChar() {
+        return this.cityChar;
     }
 
     /**
@@ -239,9 +267,6 @@ public class MapGenerator {
             addPoint(chosenMove);
             reference = chosenMove;
         }
-
-        //Write vertices for testing
-        writeMap("E:\\Deco2800 Testing\\MapGenerator\\src\\map2.txt");
 
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);
