@@ -63,7 +63,8 @@ public class MapGenerator {
      * @param mapHeight height of the map being generated in tiles
      * @param citySize square side length of city size in tiles
      * @param islandSize total length of the island in tiles
-     * @requires islandSize < (mapWidth - citySize)
+     * @requires islandSize < (mapWidth - citySize), islandSize < 2, mapWidth > 0, mapHeight > 0,
+     * citySize >= 1
      * @ensures there is enough room to fit the island and the city
      */
     public MapGenerator(int mapWidth, int mapHeight, int citySize, int islandSize)
@@ -451,9 +452,9 @@ public class MapGenerator {
      */
     private int weightPoint(Coordinate point) {
         int adjacentTileCount = 0;
-        //Iterate through adjacent tiles
-        for (int i = point.getX() - 1; i <= point.getX() + 2; i++) {
-            for (int j = point.getY() - 1; j <= point.getY() + 2; j++) {
+        //Iterate through tiles somewhat adjacent to this potential move
+        for (int i = point.getX() - 2; i <= point.getX() + 2; i++) {
+            for (int j = point.getY() - 2; j <= point.getY() + 2; j++) {
                 //If the character is not an ocean tile or the point being evaluated,
                 //it is considered occupied
                 Coordinate adjacent = new Coordinate(i, j);
@@ -463,7 +464,8 @@ public class MapGenerator {
                 }
             }
         }
-        return 9 - adjacentTileCount;
+        System.out.println(adjacentTileCount);
+        return 21 - adjacentTileCount;
     }
 }
 
