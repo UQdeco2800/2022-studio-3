@@ -3,7 +3,9 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
 
@@ -73,6 +75,18 @@ public class TouchPlayerInputComponent extends InputComponent {
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
+      case Input.Keys.G:
+        entity.getEvents().trigger("spawnTownHall");
+        return true;
+      case Input.Keys.H:
+        entity.getEvents().trigger("spawnWall");
+        return true;
+      case Input.Keys.J:
+        entity.getEvents().trigger("spawnBarracks");
+        return true;
+      case Input.Keys.K:
+        entity.getEvents().trigger("spawnMedievalBarracks");
+        return true;
       default:
         return false;
     }
@@ -87,6 +101,8 @@ public class TouchPlayerInputComponent extends InputComponent {
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     entity.getEvents().trigger("attack");
     screenY = (int) (Gdx.graphics.getHeight() - screenY);
+    screenY = screenY / 90; // tilemap we can see is 15 by 2
+    screenX = screenX / 128; // 90 pixels for each y tile and 128 for each x tile
     entity.getEvents().trigger("place", new Vector2(screenX, screenY));
     return true;
   }
@@ -101,8 +117,13 @@ public class TouchPlayerInputComponent extends InputComponent {
 
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
+
+
     screenY = (int) (Gdx.graphics.getHeight() - screenY);
+    screenY = screenY / (90);
+    screenX = screenX / (128);
     entity.getEvents().trigger("placing", new Vector2(screenX, screenY));
+
     return true;
   }
 }
