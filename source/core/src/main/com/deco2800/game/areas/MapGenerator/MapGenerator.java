@@ -149,6 +149,14 @@ public class MapGenerator {
     }
 
     /**
+     * Returns details about the city's extremities
+     * @return Map holding the vertices and centre of the city
+     */
+    public Map<String, Coordinate> getCityDetails() {
+        return this.cityDetails;
+    }
+
+    /**
      * Places a city of the desired size within the bounds of the map at a random location
      * @throws IllegalArgumentException if the city cannot be placed at a valid location
      */
@@ -464,7 +472,6 @@ public class MapGenerator {
                 }
             }
         }
-        System.out.println(adjacentTileCount);
         return 21 - adjacentTileCount;
     }
 }
