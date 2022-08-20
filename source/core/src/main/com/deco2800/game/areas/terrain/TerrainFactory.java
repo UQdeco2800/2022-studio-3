@@ -3,6 +3,7 @@ package com.deco2800.game.areas.terrain;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -24,38 +25,42 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-/** Factory for creating game terrains. */
+/** Factory for creating game terrain. */
 public class TerrainFactory {
-  private static final int mapWidth = 30;
-  private static final int mapHeight = 30;
+  private static final int mapWidth = 100;
+  private static final int mapHeight = 45;
   private static final int citySize = 7;
-  private static final int islandSize = 18;
+  private static final int islandSize = 70;
 
   private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
-
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+
+  private final CameraComponent cameraComponent;
+  private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
 
   /**
    * Create a terrain factory with Orthogonal orientation
    *
-   * @param cameraComponent Camera to render terrains to. Must be ortographic.
+   * @param cameraComponent Camera to render terrain to. Must be orthographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
-    this(cameraComponent, TerrainOrientation.ORTHOGONAL);
+    this(cameraComponent, TerrainOrientation.ISOMETRIC);
   }
 
   /**
    * Create a terrain factory
    *
-   * @param cameraComponent Camera to render terrains to. Must be orthographic.
+   * @param cameraComponent Camera to render terrain to. Must be orthographic.
    * @param orientation orientation to render terrain at
    */
   public TerrainFactory(CameraComponent cameraComponent, TerrainOrientation orientation) {
     this.camera = (OrthographicCamera) cameraComponent.getCamera();
     this.orientation = orientation;
+
+    this.cameraComponent = cameraComponent;
   }
 
   /**
@@ -152,30 +157,39 @@ public class TerrainFactory {
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TextureRegion isoGrass =
-            new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
     TextureRegion isoTuft =
-            new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
+            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
+    TextureRegion isoRock =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
     TerrainTile grassTile = new TerrainTile(isoGrass);
     TerrainTile tuftTile = new TerrainTile(isoTuft);
+    TerrainTile rockTile = new TerrainTile(isoRock);
 
-    //Generate a map with the following specifications
-    MapGenerator mg = new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
-    //Store the map
-    char[][] map = mg.getMap();
-
+    char[][] map = mapGenerator.getMap();
     for (int x = 0; x < mapWidth; x++) {
       for (int y = 0; y < mapHeight; y++) {
         Cell cell = new Cell();
-        if (map[y][x] == mg.getOceanChar()) {
-          //Set ocean tiles to "tuft" textures
-          cell.setTile(tuftTile);
-        } else {
-          //Set non-ocean tiles to "grass" textures
+        if (map[y][x] == mapGenerator.getOceanChar()) {
+          //Set ocean tiles to "rock" textures
+          cell.setTile(rockTile);
+        } else if (map[y][x] == mapGenerator.getIslandChar()) {
+          //Set island tiles to "grass" textures
           cell.setTile(grassTile);
+        } else {
+          cell.setTile(tuftTile);
         }
         layer.setCell(x, mapHeight - y, cell);
       }
     }
+  }
+
+  public CameraComponent getCameraComponent() {
+    return this.cameraComponent;
+  }
+
+  public MapGenerator getMapGenerator() {
+    return this.mapGenerator;
   }
 
   /**
