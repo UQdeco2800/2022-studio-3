@@ -145,10 +145,10 @@ public class ForestGameArea extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-    music.setLooping(true);
-    music.setVolume(0.3f);
-    music.play();
+    //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    //music.setLooping(true);
+    //music.setVolume(0.3f);
+    //music.play();
   }
 
   private void loadAssets() {
