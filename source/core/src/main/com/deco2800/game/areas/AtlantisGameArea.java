@@ -70,19 +70,12 @@ public class AtlantisGameArea extends GameArea {
 
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
-        mg.writeMap("E:\\map.txt");
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
         spawnEntity(new Entity().addComponent(terrain));
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
-
-        //Move camera to player
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        Coordinate centre = cityDetails.get("Centre");
-        Vector2 centreWorld = terrain.tileToWorldPosition(centre.getX(), mg.getHeight() - centre.getY());
-        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
 
         //Spawn boundaries where each ocean tile is
         spawnIslandBounds();
@@ -162,6 +155,11 @@ public class AtlantisGameArea extends GameArea {
 
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, spawn, true, true);
+
+        //Move camera to player
+        Vector2 centreWorld = terrain.tileToWorldPosition(spawn.x, spawn.y);
+        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
+
         return newPlayer;
     }
 

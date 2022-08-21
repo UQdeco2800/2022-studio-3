@@ -2,8 +2,6 @@ package com.deco2800.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -15,15 +13,15 @@ public class CameraInputComponent extends InputComponent {
     /**
      * Distance in pixels between the edge of the screen and a camera movement trigger
      */
-    private final float buffer = 100;
+    private final float buffer = 80;
     /**
      * Default scrolling speed of camera
      */
-    private final float defaultSpeed = 0.1f;
+    private final float defaultSpeed = 0.3f;
     /**
      * Scrolling speed of camera diagonally
      */
-    private final float fastSpeed = 0.12f;
+    private final float fastSpeed = 0.4f;
 
     /**
      * Current speed being scrolled at
@@ -52,6 +50,11 @@ public class CameraInputComponent extends InputComponent {
      * Height of game map
      */
     private int mapHeight = 0;
+
+    /**
+     * Degree of how far the game is zoomed out - 0 is default
+     */
+    private float zoom = 0;
 
     public CameraInputComponent() {
         super(5);
@@ -118,25 +121,23 @@ public class CameraInputComponent extends InputComponent {
 
         //If the camera is to move diagonally, increase the speed
         if (verticalChange != 0 && horizontalChange != 0) {
-            currentSpeed = fastSpeed;
+            currentSpeed = fastSpeed + (zoom * 0.1f);
         } else {
-            currentSpeed = defaultSpeed;
+            currentSpeed = defaultSpeed + (zoom * 0.1f);
         }
     }
     
     /**
      * Adjusts the camera zoom amount according to scroll speed.
-     *
      */
     @Override
     public boolean scrolled(float amountX, float amountY) {
       OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
-      float newZoom = camera.zoom + -1 * amountY;
-      if (newZoom > 0) {
-    	  camera.zoom = newZoom;
+      zoom = camera.zoom + amountY;
+      if (zoom > 0) {
+    	  camera.zoom = zoom;
     	  camera.update();
       }
-      
       return true;
     }
 
