@@ -1,6 +1,7 @@
 package com.deco2800.game.input;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.ui.terminal.KeyboardTerminalInputComponent;
+import com.deco2800.game.worker.KeyboardWorkerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,17 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForPlayer() {
         logger.debug("Creating player input handler");
         return new KeyboardPlayerInputComponent();
+    }
+
+    /**
+     * Creates an input handler for the worker
+     *
+     * @return Worker input handler
+     */
+    @Override
+    public InputComponent createForWorker() {
+        logger.debug("Creating worker input handler");
+        return new KeyboardWorkerInputComponent();
     }
 
     /**
