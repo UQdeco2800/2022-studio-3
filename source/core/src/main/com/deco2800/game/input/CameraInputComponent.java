@@ -1,7 +1,11 @@
 package com.deco2800.game.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.deco2800.game.components.CameraComponent;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import java.awt.color.CMMException;
 
 public class CameraInputComponent extends InputComponent {
     /**
@@ -28,26 +32,11 @@ public class CameraInputComponent extends InputComponent {
     /**
      * Direction to scroll in horizontally (-1, 0, 1)
      */
-    private int horizontalChange = 0;
+    private float horizontalChange = 0;
     /**
      * Direction to scroll in vertically (-1, 0, 1)
      */
-    private int verticalChange = 0;
-
-    /**
-     * Current tileSize of game
-     */
-    private float tileSize = -1;
-
-    /**
-     * Width of game map
-     */
-    private int mapWidth = 0;
-
-    /**
-     * Height of game map
-     */
-    private int mapHeight = 0;
+    private float verticalChange = 0;
 
     public CameraInputComponent() {
         super(5);
@@ -65,22 +54,10 @@ public class CameraInputComponent extends InputComponent {
      */
     @Override
     public void update() {
-        float cameraX = entity.getPosition().x;
-        float cameraY = entity.getPosition().y;
+        float cameraX = super.entity.getPosition().x;
+        float cameraY = super.entity.getPosition().y;
 
-        //If tileSize has been set, check to see where the camera is relative to the tiled map
-        if (!(tileSize == -1)) {
-            GridPoint2 tileCoords = worldToTile(cameraX, cameraY);
-            //If camera is being moved off map and it is already too far in that direction, cancel movement
-            if ((tileCoords.x >= mapWidth && horizontalChange == 1) || (tileCoords.x <= 0 && horizontalChange == -1)) {
-                horizontalChange = 0;
-            }
-            if ((tileCoords.y >= mapHeight && verticalChange == 1) || (tileCoords.y <= 0 && verticalChange == -1)) {
-                verticalChange = 0;
-            }
-        }
-
-        entity.setPosition(cameraX + horizontalChange * currentSpeed,
+        super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }
 
@@ -119,50 +96,21 @@ public class CameraInputComponent extends InputComponent {
             currentSpeed = defaultSpeed;
         }
     }
-
+    
     /**
-     * Sets the tile size from a terrainComponent
-     * @param tileSize tileSize in current game
+     * Adjusts the camera zoom amount according to scroll speed.
+     *
      */
-    public void setMapDetails(float tileSize, int mapWidth, int mapHeight) {
-        this.tileSize = tileSize;
-        this.mapWidth = mapWidth;
-        this.mapHeight = mapHeight;
-    }
-
-    /**
-     * Converts a world point to a position on the tile map
-     * @param worldX world y position of an entity
-     * @param worldY world y position of an entity
-     * @return position of the world point on the tile map
-     */
-    public GridPoint2 worldToTile(float worldX, float worldY) {
-        //Define constants to make expression simpler
-        float b = tileSize / 2;
-        float a = tileSize / 3.724f;
-
-        int tileX = (int) ((worldX / b) - (worldY / a)) / 2;
-        int tileY = (int) (worldY / a) + tileX;
-
-        return new GridPoint2(tileX, tileY);
-    }
-
-    /**
-     * Converts a world point to a position on the tile map
-     * @param tileSize tileSize returned by TerrainComponent of map
-     * @param worldX world y position of an entity
-     * @param worldY world y position of an entity
-     * @return position of the world point on the tile map
-     */
-    public static GridPoint2 worldToTile(float tileSize, float worldX, float worldY) {
-        //Define constants to make expression simpler
-        float b = tileSize / 2;
-        float a = tileSize / 3.724f;
-
-        int tileX = (int) ((worldX / b) - (worldY / a)) / 2;
-        int tileY = (int) (worldY / a) + tileX;
-
-        return new GridPoint2(tileX, tileY);
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+      OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
+      float newZoom = camera.zoom + -1 * amountY;
+      if (newZoom > 0) {
+    	  camera.zoom = newZoom;
+    	  camera.update();
+      }
+      
+      return true;
     }
 
 }

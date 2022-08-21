@@ -29,4 +29,14 @@ public class KeyboardInputFactory extends InputFactory {
         logger.debug("Creating terminal input handler");
         return new KeyboardTerminalInputComponent();
     }
+
+    /**
+     * Creates an input handler for the camera.
+     *
+     * @return Terminal input handler
+     */
+    public InputComponent createForCamera() {
+        logger.debug("Creating camera input handler");
+        return new CameraInputComponent();
+    }
 }

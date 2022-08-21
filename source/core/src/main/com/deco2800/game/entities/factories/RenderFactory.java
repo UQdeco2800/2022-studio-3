@@ -12,7 +12,7 @@ public class RenderFactory {
     Entity camera = new Entity();
     camera.addComponent(new CameraComponent());
     //Add a CameraInputComponent to manage camera movement around map
-    camera.addComponent(new CameraInputComponent());
+    camera.addComponent(ServiceLocator.getInputService().getInputFactory().createForCamera());
     return camera;
   }
 
