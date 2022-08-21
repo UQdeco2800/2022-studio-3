@@ -3,6 +3,8 @@ import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 @ExtendWith(GameExtension.class)
@@ -117,6 +119,29 @@ public class MapGeneratorTest {
             //Any exception such as array index out of bounds exception means map was generated
             //improperly
             fail();
+        }
+    }
+
+    @Test
+    public void getCityDetailsTest() {
+        MapGenerator mg = createMapGenerator();
+        char[][] map = mg.getMap();
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        Coordinate centre = cityDetails.get("Centre");
+        Coordinate nw = cityDetails.get("NW");
+        Coordinate sw = cityDetails.get("SW");
+        Coordinate ne = cityDetails.get("NE");
+
+        int minX = nw.getX();
+        int maxX = ne.getX();
+        int minY = nw.getY();
+        int maxY = sw.getY();
+
+        //Check all tiles that should be city tiles
+        for (int i = minX; i <= maxX; i++) {
+            for (int j = minY; j <= maxY; j++) {
+                assertEquals(mg.getCityChar(), map[j][i]);
+            }
         }
     }
 }
