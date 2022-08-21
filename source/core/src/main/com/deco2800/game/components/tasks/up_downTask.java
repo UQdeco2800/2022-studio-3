@@ -5,27 +5,28 @@ import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.physics.components.PhysicsComponent;
 
+
 /**
- * A class that makes enemies move horizontally in a constant speed.
+ * A class that makes enemies move vertically in a constant speed.
  */
-public class left_rightTask extends DefaultTask implements PriorityTask {
+public class up_downTask extends DefaultTask implements PriorityTask {
     private final int priority;
-    private final float x;
-    private float p_x = 0;
+    private final float y;
+    private float p_y = 0;
     private boolean isMove = true;
 
     /**
      * @param priority Task priority when chasing (0 when not chasing).
      */
-    public left_rightTask(float x, int priority) {
-        this.x = x;
+    public up_downTask(float y, int priority) {
+        this.y = y;
         this.priority = priority;
     }
 
     @Override
     public void start() {
         super.start();
-        p_x = this.owner.getEntity().getPosition().x;
+        p_y = this.owner.getEntity().getPosition().y;
     }
 
     /**
@@ -33,16 +34,16 @@ public class left_rightTask extends DefaultTask implements PriorityTask {
      */
     @Override
     public void update() {
-        float position_x = this.owner.getEntity().getPosition().x;
+        float position_y = this.owner.getEntity().getPosition().y;
         if (isMove) {
-            if(position_x <= p_x + x/2) {
-                this.owner.getEntity().getComponent(PhysicsComponent.class).getBody().setLinearVelocity(new Vector2(1,0));
+            if(position_y <= p_y + y/2) {
+                this.owner.getEntity().getComponent(PhysicsComponent.class).getBody().setLinearVelocity(new Vector2(0,1));
             } else {
                 isMove = false;
             }
         } else {
-            if(position_x >= p_x - x/2) {
-                this.owner.getEntity().getComponent(PhysicsComponent.class).getBody().setLinearVelocity(new Vector2(-1,0));
+            if(position_y >= p_y - y/2) {
+                this.owner.getEntity().getComponent(PhysicsComponent.class).getBody().setLinearVelocity(new Vector2(0,-1));
             } else {
                 isMove = true;
             }
