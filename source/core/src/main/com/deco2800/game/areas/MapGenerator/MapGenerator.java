@@ -46,7 +46,7 @@ public class MapGenerator {
 
     /**
      * Tile buffer that must exist between the city and the edge of the map in order to fit the
-     * island
+     * island. Must be > islandBuffer
      */
     private final int landBuffer = 3;
 
@@ -273,7 +273,6 @@ public class MapGenerator {
         Coordinate rightEdge = edges[1];
         addPoint(leftEdge);
         addPoint(rightEdge);
-        writeMap("E:\\Deco2800 Testing\\MapGenerator\\src\\edges.txt");
 
         //Iterate from right side of map to left side of map, placing vertices of the island above
         //and beside the city
@@ -294,9 +293,6 @@ public class MapGenerator {
             addPoint(chosenMove);
             reference = chosenMove;
         }
-
-        //Write vertices for testing
-        writeMap("E:\\Deco2800 Testing\\MapGenerator\\src\\vertices.txt");
 
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);

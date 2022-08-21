@@ -20,15 +20,23 @@ import java.util.Map;
 
 /** Factory for creating game terrain. */
 public class AtlantisTerrainFactory {
+    /**
+     * Variables to create the map with MapGenerator
+     */
     private static final int mapWidth = 200;
     private static final int mapHeight = 90;
     private static final int cityWidth = 50;
     private static final int cityHeight = 40;
     private static final int islandSize = 80;
+
     public static final float mapTileScale = 1f;
 
+    /**
+     * TerrainFactory variables
+     */
     private final OrthographicCamera camera;
     private final TerrainOrientation orientation = TerrainOrientation.ISOMETRIC;
+    //Store textures used to build game
     private final Map<String, TextureRegion> textures;
 
     private final CameraComponent cameraComponent;
@@ -47,7 +55,6 @@ public class AtlantisTerrainFactory {
         this.camera = (OrthographicCamera) cameraComponent.getCamera();
         this.cameraComponent = cameraComponent;
         this.textures = new HashMap<>();
-        this.getMapGenerator().writeMap("E:\\test.txt");
     }
 
     /**
