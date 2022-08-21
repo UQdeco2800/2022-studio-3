@@ -14,6 +14,7 @@ import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.worker.WorkerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/box_boy_leaf.png",
@@ -67,6 +69,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
+    spawnWorker(); // Spawns a new worker unit
 
     playMusic();
   }
@@ -116,6 +119,14 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  /**
+   * Creates a new worker unit and spawns it somewhere random on the map.
+   */
+  private void spawnWorker() {
+    Entity newWorker = WorkerFactory.createWorker();
+    spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
   }
 
   private Entity spawnPlayer() {

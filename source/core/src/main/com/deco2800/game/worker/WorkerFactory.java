@@ -9,17 +9,19 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
+import com.deco2800.game.worker.components.movement.WorkerIdleTask;
 
 /**
  * Factory to create a worker entity
  */
 public class WorkerFactory {
     private static final WorkerConfig stats =
-            FileLoader.readClass(WorkerConfig.class, "worker.json");
+            FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
 
     /**
      * Create a worker entity.
@@ -30,24 +32,18 @@ public class WorkerFactory {
                 ServiceLocator.getInputService().getInputFactory().createForWorker();
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WorkerIdleTask(2f));
+                        .addTask(new WorkerIdleTask());
         Entity worker =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("worker.png"))
-                        // Sets worker sprite to worker.png
+                        .addComponent(new TextureRenderComponent("images/heart.png"))
                         .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
-                        // Adds worker hitbox
-                        .addComponent(new WorkerActions())
-                        // Controls player actions (e.g., movement, attack, etc.)
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.iron))
-                        // Adds an inventory to the worker to manage wood, stone and iron
                         .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
-                        // Collects resources from resource node on collision (see TouchAttackComponent)
-                        .addComponent(inputComponent)
-                        .addComponent(aiComponent);
-                        // Controls NPC actions (e.g., wandering, chasing, etc.)
+                        .addComponent(aiComponent)
+                        .addComponent(inputComponent);
 
         PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
