@@ -2,6 +2,10 @@ package com.deco2800.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.deco2800.game.components.CameraComponent;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class CameraInputComponent extends InputComponent {
     /**
@@ -28,11 +32,11 @@ public class CameraInputComponent extends InputComponent {
     /**
      * Direction to scroll in horizontally (-1, 0, 1)
      */
-    private int horizontalChange = 0;
+    private float horizontalChange = 0;
     /**
      * Direction to scroll in vertically (-1, 0, 1)
      */
-    private int verticalChange = 0;
+    private float verticalChange = 0;
 
     /**
      * Current tileSize of game
@@ -65,8 +69,8 @@ public class CameraInputComponent extends InputComponent {
      */
     @Override
     public void update() {
-        float cameraX = entity.getPosition().x;
-        float cameraY = entity.getPosition().y;
+        float cameraX = super.entity.getPosition().x;
+        float cameraY = super.entity.getPosition().y;
 
         //If tileSize has been set, check to see where the camera is relative to the tiled map
         if (!(tileSize == -1)) {
@@ -80,7 +84,7 @@ public class CameraInputComponent extends InputComponent {
             }
         }
 
-        entity.setPosition(cameraX + horizontalChange * currentSpeed,
+        super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }
 
@@ -118,6 +122,22 @@ public class CameraInputComponent extends InputComponent {
         } else {
             currentSpeed = defaultSpeed;
         }
+    }
+    
+    /**
+     * Adjusts the camera zoom amount according to scroll speed.
+     *
+     */
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+      OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
+      float newZoom = camera.zoom + -1 * amountY;
+      if (newZoom > 0) {
+    	  camera.zoom = newZoom;
+    	  camera.update();
+      }
+      
+      return true;
     }
 
     /**
