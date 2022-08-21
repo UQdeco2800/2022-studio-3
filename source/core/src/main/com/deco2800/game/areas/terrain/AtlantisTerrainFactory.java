@@ -133,7 +133,7 @@ public class AtlantisTerrainFactory {
                     cell.setTile(tuftTile);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely
-                layer.setCell(x, mapHeight - y, cell);
+                layer.setCell(x, mapHeight - 1 - y, cell);
             }
         }
     }
