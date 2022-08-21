@@ -22,9 +22,15 @@ public class MapGenerator {
      */
     private final int mapHeight;
     /**
-     * The square side length of the city (in tiles)
+     * The side width of the city (in tiles)
      */
-    private final int citySize;
+    private final int cityWidth;
+
+    /**
+     * The side height of the city (in tiles)
+     */
+    private final int cityHeight;
+
     /**
      * The total distance of the island from side to side horizontally (in tiles)
      */
@@ -40,9 +46,15 @@ public class MapGenerator {
 
     /**
      * Tile buffer that must exist between the city and the edge of the map in order to fit the
-     * island
+     * island. Must be > islandBuffer
      */
     private final int landBuffer = 3;
+
+    /**
+     * Tile buffer that must exist between the island and the edge of the map
+     */
+    private final int islandBuffer = 1;
+
     /**
      * Char denoting an ocean tile on the map - for purposes of output
      */
@@ -57,26 +69,29 @@ public class MapGenerator {
      */
     private final char cityChar = 'c';
 
+
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
      * @param mapWidth width of the map being generated in tiles
      * @param mapHeight height of the map being generated in tiles
-     * @param citySize square side length of city size in tiles
+     * @param cityWidth  width of city size in tiles
+     * @param cityHeight height of city size in tiles
      * @param islandSize total length of the island in tiles
      * @requires islandSize < (mapWidth - citySize), islandSize < 2, mapWidth > 0, mapHeight > 0,
      * citySize >= 1
      * @ensures there is enough room to fit the island and the city
      */
-    public MapGenerator(int mapWidth, int mapHeight, int citySize, int islandSize)
+    public MapGenerator(int mapWidth, int mapHeight, int cityWidth, int cityHeight, int islandSize)
             throws IllegalArgumentException {
-        if (islandSize < 2 || mapWidth <= 0 || mapHeight <= 0 || citySize < 1) {
+        if (islandSize < 2 || mapWidth <= 0 || mapHeight <= 0 || cityWidth < 1 || cityHeight < 1) {
             throw new IllegalArgumentException("Invalid construction parameters for MapGenerator");
         }
 
         //Set variables
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.citySize = citySize;
+        this.cityWidth = cityWidth;
+        this.cityHeight = cityHeight;
         this.islandSize = islandSize;
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
@@ -162,7 +177,7 @@ public class MapGenerator {
      */
     private void placeCity() throws IllegalArgumentException {
         //Check to ensure valid input parameters
-        if (mapWidth < citySize + 2 * landBuffer || mapHeight < citySize + 2 * landBuffer) {
+        if (mapWidth < cityWidth + 2 * landBuffer || mapHeight < cityHeight + 2 * landBuffer) {
             //invalid position - throw exception
             throw new IllegalArgumentException("City is too big for map");
         }
@@ -179,15 +194,15 @@ public class MapGenerator {
         int y = cityPlacement.getY();
 
         //Define bounds for city - citySize %2 term added for odd sized cities
-        int minX = x - citySize / 2;
-        int maxX = x + citySize % 2 + citySize / 2 - 1;
-        int minY = y - citySize / 2;
-        int maxY = y + citySize % 2 + citySize / 2 - 1;
+        int minX = x - cityWidth / 2;
+        int maxX = x + cityWidth % 2 + cityWidth / 2 - 1;
+        int minY = y - cityHeight / 2;
+        int maxY = y + cityHeight % 2 + cityHeight / 2 - 1;
 
         //Add city positions to map
         for (int i = minX; i <= maxX; i++) {
             for (int j = minY; j <= maxY; j++) {
-                map[j][i] = 'c';
+                map[j][i] = cityChar;
             }
         }
 
@@ -210,10 +225,12 @@ public class MapGenerator {
     private boolean isValidCityPlacement(Coordinate placement) {
         int x = placement.getX();
         int y = placement.getY();
-        int sideLength = (citySize / 2) + landBuffer;
+        int sideLengthHorizontal = (cityWidth / 2) + landBuffer;
+        int sideLengthVertical = (cityHeight / 2) + landBuffer;
 
-        return x - sideLength >= 0 && x + sideLength < mapWidth && y - sideLength >= 0
-                && y + sideLength < mapHeight;
+        return x - sideLengthHorizontal >= 0 && x + sideLengthHorizontal < mapWidth
+                && y - sideLengthVertical >= 0
+                && y + sideLengthVertical < mapHeight;
     }
 
     /**
@@ -235,7 +252,7 @@ public class MapGenerator {
             for (int i = 0; i < mapWidth; i++) {
                 if (i % 10 == 0 || i == mapWidth - 1) {
                     bw.write(String.valueOf(i));
-                //Write empty spaces between characters, unless it had multiple digits...
+                    //Write empty spaces between characters, unless it had multiple digits...
                 } else if (!(i % 10 == 1 && i >= 10) && !(i % 10 == 2 && i >= 100)) {
                     bw.write(' ');
                 }
@@ -322,19 +339,19 @@ public class MapGenerator {
      * @return 2D array of coordinate with entry [0] holding the left edge and [1] holding the right
      */
     private Coordinate[] defineIslandEdges() throws IllegalArgumentException {
-        if (mapWidth < islandSize + citySize) {
+        if (mapWidth < islandSize + cityWidth + 2 * islandBuffer) {
             throw new IllegalArgumentException("Map too small for island of size " + islandSize);
         }
         Coordinate[] edges = new Coordinate[2];
         Coordinate centre = cityDetails.get("Centre");
 
-        int leftPivot = centre.getX() - citySize / 2 - 1;
-        int rightPivot = centre.getX() + citySize / 2 + citySize % 2;
+        int leftPivot = centre.getX() - cityWidth / 2 - 1;
+        int rightPivot = centre.getX() + cityWidth / 2 + cityWidth % 2;
         //Pick ends of island
         for (int i = 0; i < islandSize; i++) {
-            if (i % 2 == 0 && leftPivot - 1 >= 0) {
+            if (i % 2 == 0 && leftPivot - 1 >= islandBuffer) {
                 leftPivot--;
-            } else if (rightPivot + 1 < mapWidth) {
+            } else if (rightPivot + 1 < mapWidth - islandBuffer) {
                 rightPivot++;
             }
         }
@@ -373,11 +390,12 @@ public class MapGenerator {
     private List<Coordinate> legalMoves(Coordinate reference, int x, boolean direction) {
         /* Rules
         1. Height must be equal to or below centre coordinate height - 1
-        2. Height must not be < 0
+        2. Coordinate must not be placed out of bounds of map
         3. IF x between city bounds, height must be above city (overrides 6)
         4. Cannot move through another coordinate
         5. IF there are no available moves go to next tile along (stepback case)
         6. Height must only be +-2 different from last time
+        7. Tile cannot be placed one square from the map edge
         */
         Coordinate centre = cityDetails.get("Centre");
         List<Coordinate> moves = new ArrayList<>();
@@ -387,7 +405,7 @@ public class MapGenerator {
         potentialTiles.add(new Coordinate(x, reference.getY()));
 
         //Iterate through potential moves above and below to see if they are occupied by existing
-        //tiles
+        //tiles (rules 6, 4 & 2)
         boolean upperBlocked = false;
         boolean lowerBlocked = false;
         for (int i = 1; i <= 2; i++) {
@@ -411,10 +429,12 @@ public class MapGenerator {
         for (Coordinate c : potentialTiles) {
             //if it is legal, add it to list of legal moves
             if (c.inBounds(this)
-                    && (map[c.getY()][c.getX()] == oceanChar)
-                    && !(coordInCity(c))
-                    && ((direction && c.getY() < centre.getY() + 1)
-                    || (!(direction) && c.getY() > centre.getY() - 1))) {
+                    && (map[c.getY()][c.getX()] == oceanChar)                                   //Rule 4
+                    && !(coordInCity(c))                                                        //Rule 3
+                    && !((c.getY() < islandBuffer) || (c.getY() > mapHeight - islandBuffer - 1) //Rule 7
+                    || (c.getX() < islandBuffer) || (c.getX() > mapWidth - islandBuffer - 1))   //Rule 7
+                    && ((direction && c.getY() < centre.getY() + 1)                             //Rule 1
+                    || (!(direction) && c.getY() > centre.getY() - 1))) {                       //Rule 1
                 moves.add(c);
             }
         }
@@ -437,7 +457,11 @@ public class MapGenerator {
      * @param moves list of legal moves
      * @return a single coordinate which will be added to the island
      */
-    private Coordinate choosePoint(List<Coordinate> moves) {
+    private Coordinate choosePoint(List<Coordinate> moves) throws IllegalArgumentException {
+        if (moves.size() == 0) {
+            throw new IllegalArgumentException("Map creation failed");
+        }
+
         int totalCount = 0;
         TreeMap<Integer, Coordinate> weightMap = new TreeMap<>();
         for (Coordinate c : moves) {
@@ -472,6 +496,7 @@ public class MapGenerator {
                 }
             }
         }
+        //20 tiles at most may be adjacent within these conditions -> weighting of 1
         return 21 - adjacentTileCount;
     }
 }
