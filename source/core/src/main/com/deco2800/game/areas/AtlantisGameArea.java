@@ -6,13 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -83,7 +79,19 @@ public class AtlantisGameArea extends GameArea {
         Vector2 centreWorld = terrain.tileToWorldPosition(centre.getX(), mg.getHeight() - centre.getY());
         terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
 
+        //Spawn boundaries where each ocean tile is
+        spawnIslandBounds();
+
+        //Spawn boundaries around the map itself
+        spawnMapBounds();
+    }
+
+    /**
+     * Spawns invisible boundaries where each ocean tile is to box the island in
+     */
+    private void spawnIslandBounds() {
         // Terrain boundaries
+        MapGenerator mg = terrainFactory.getMapGenerator();
         float tileSize = terrain.getTileSize();
 
         for (int i = 0; i < mg.getWidth(); i++) {
@@ -98,9 +106,41 @@ public class AtlantisGameArea extends GameArea {
                 }
             }
         }
-
     }
 
+    /**
+     * Creates an invisible wall of obstacles around the boundaries of the map so entities cannot escape
+     */
+    private void spawnMapBounds() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        float tileSize = terrain.getTileSize();
+        //North/South side bounds
+        for (int i = -1; i < mg.getWidth(); i ++) {
+            spawnEntityAt(
+                    ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
+                    new GridPoint2(i, mg.getHeight()),
+                    true,
+                    false);
+            spawnEntityAt(
+                    ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
+                    new GridPoint2(i, -1),
+                    true,
+                    false);
+        }
+        //East/West side bounds
+        for (int j = -1; j < mg.getHeight(); j ++) {
+            spawnEntityAt(
+                    ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
+                    new GridPoint2(mg.getWidth(), j),
+                    true,
+                    false);
+            spawnEntityAt(
+                    ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
+                    new GridPoint2(-1, j),
+                    true,
+                    false);
+        }
+    }
 
     /**
      * Spawns player at the centre of the Atlantean city
