@@ -11,6 +11,8 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.worker.components.ResourceCollectComponent;
+import com.deco2800.game.worker.components.WorkerInventoryComponent;
 
 /**
  * Factory to create a worker entity

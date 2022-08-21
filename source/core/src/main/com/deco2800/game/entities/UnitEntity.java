@@ -3,6 +3,7 @@ package com.deco2800.game.entities;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.worker.components.WorkerInventoryComponent;
 
 public class UnitEntity extends Entity {
 
@@ -25,7 +26,7 @@ public class UnitEntity extends Entity {
     /**
      * a worker unit's set of resources that they have gathered.
      */
-    private UnitInventory unitInventory;
+    private WorkerInventoryComponent workerInventoryComponent;
     /**
      * a list of objects on the map which the worker unit can interact with
      */
@@ -41,7 +42,7 @@ public class UnitEntity extends Entity {
      * Constructor with no params
      */
     public UnitEntity() {
-        this.unitInventory = new UnitInventory();
+        this.workerInventoryComponent = new WorkerInventoryComponent();
         this.interactableObjects = new ArrayList<>();
         this.taskQueue = new Entity();
     }
@@ -51,16 +52,16 @@ public class UnitEntity extends Entity {
      * @param health health
      * @param hitboxRadius hitbox radius
      * @param movementSpeed movement speed
-     * @param unitInventory unit inventory
+     * @param workerInventoryComponent unit inventory
      * @param interactableObjects interactable objects 
      * @param taskQueue task queue
      */
     public UnitEntity(int health, int hitboxRadius, int movementSpeed,
-     UnitInventory unitInventory, List<Entity> interactableObjects,
-     Entity taskQueue) {
+                      WorkerInventoryComponent workerInventoryComponent, List<Entity> interactableObjects,
+                      Entity taskQueue) {
         this.health = health;
         this.hitboxRadius = hitboxRadius;
-        this.unitInventory = unitInventory;
+        this.workerInventoryComponent = workerInventoryComponent;
         this.interactableObjects = interactableObjects;
         this.taskQueue = taskQueue;
     }
@@ -118,16 +119,16 @@ public class UnitEntity extends Entity {
      * Gets the unit's inventory
      * @return unit inventory
      */
-    public UnitInventory getUnitInventory() {
-        return unitInventory;
+    public WorkerInventoryComponent getUnitInventory() {
+        return workerInventoryComponent;
     }
 
     /**
      * Sets the unit's inventory
-     * @param unitInventory unit inventory 
+     * @param workerInventoryComponent unit inventory
      */
-    public void setUnitInventory(UnitInventory unitInventory) {
-        this.unitInventory = unitInventory;
+    public void setUnitInventory(WorkerInventoryComponent workerInventoryComponent) {
+        this.workerInventoryComponent = workerInventoryComponent;
     }
 
     /**
@@ -230,7 +231,7 @@ public class UnitEntity extends Entity {
         result = prime * result + ((interactableObjects == null) ? 0 : interactableObjects.hashCode());
         result = prime * result + movementSpeed;
         result = prime * result + ((taskQueue == null) ? 0 : taskQueue.hashCode());
-        result = prime * result + ((unitInventory == null) ? 0 : unitInventory.hashCode());
+        result = prime * result + ((workerInventoryComponent == null) ? 0 : workerInventoryComponent.hashCode());
         return result;
     }
 
@@ -259,10 +260,10 @@ public class UnitEntity extends Entity {
                 return false;
         } else if (!taskQueue.equals(other.taskQueue))
             return false;
-        if (unitInventory == null) {
-            if (other.unitInventory != null)
+        if (workerInventoryComponent == null) {
+            if (other.workerInventoryComponent != null)
                 return false;
-        } else if (!unitInventory.equals(other.unitInventory))
+        } else if (!workerInventoryComponent.equals(other.workerInventoryComponent))
             return false;
         return true;
     }
@@ -271,6 +272,6 @@ public class UnitEntity extends Entity {
     public String toString() {
         return "UnitEntity [health=" + health + ", hitboxRadius=" + hitboxRadius + ", interactableObjects="
                 + interactableObjects + ", movementSpeed=" + movementSpeed + ", taskQueue=" + taskQueue
-                + ", unitInventory=" + unitInventory + "]";
+                + ", workerInventoryComponent=" + workerInventoryComponent + "]";
     }
 }

@@ -1,4 +1,4 @@
-package com.deco2800.game.entities;
+package com.deco2800.game.worker.components;
 import com.deco2800.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,19 +10,19 @@ import org.slf4j.LoggerFactory;
  * advanced functionality such as storing other items.
  * Can also be used as a more generic component for other entities.
  */
-public class UnitInventory extends Component{
-  private static final Logger logger = LoggerFactory.getLogger(UnitInventory.class);
+public class WorkerInventoryComponent extends Component {
+  private static final Logger logger = LoggerFactory.getLogger(WorkerInventoryComponent.class);
   private int stone;
   private int metal;
   private int wood;
 
-  public UnitInventory() {
+  public WorkerInventoryComponent() {
     this.stone = 0;
     this.metal = 0;
     this.wood = 0;
   }
   
-  public UnitInventory(int stone, int metal, int wood) {
+  public WorkerInventoryComponent(int stone, int metal, int wood) {
     this.stone = stone;
     this.metal = metal;
     this.wood = wood;

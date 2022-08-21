@@ -1,19 +1,19 @@
-package com.deco2800.game.worker;
+package com.deco2800.game.worker.components;
 
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
- * Input handler for the worker for keyboard and touch (mouse) input.
- * This input handler only uses keyboard input.
+ * Input handler for the player for keyboard and touch (mouse) input.
+ * This input handler uses keyboard and touch input.
  */
-public class KeyboardWorkerInputComponent extends InputComponent {
+public class TouchWorkerInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
 
-    public KeyboardWorkerInputComponent() {
+    public TouchWorkerInputComponent() {
         super(5);
     }
 
@@ -26,24 +26,21 @@ public class KeyboardWorkerInputComponent extends InputComponent {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Keys.W:
+            case Input.Keys.UP:
                 walkDirection.add(Vector2Utils.UP);
                 triggerWalkEvent();
                 return true;
-            case Keys.A:
+            case Input.Keys.LEFT:
                 walkDirection.add(Vector2Utils.LEFT);
                 triggerWalkEvent();
                 return true;
-            case Keys.S:
+            case Input.Keys.DOWN:
                 walkDirection.add(Vector2Utils.DOWN);
                 triggerWalkEvent();
                 return true;
-            case Keys.D:
+            case Input.Keys.RIGHT:
                 walkDirection.add(Vector2Utils.RIGHT);
                 triggerWalkEvent();
-                return true;
-            case Keys.SPACE:
-                entity.getEvents().trigger("attack");
                 return true;
             default:
                 return false;
@@ -59,19 +56,19 @@ public class KeyboardWorkerInputComponent extends InputComponent {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Keys.W:
+            case Input.Keys.UP:
                 walkDirection.sub(Vector2Utils.UP);
                 triggerWalkEvent();
                 return true;
-            case Keys.A:
+            case Input.Keys.LEFT:
                 walkDirection.sub(Vector2Utils.LEFT);
                 triggerWalkEvent();
                 return true;
-            case Keys.S:
+            case Input.Keys.DOWN:
                 walkDirection.sub(Vector2Utils.DOWN);
                 triggerWalkEvent();
                 return true;
-            case Keys.D:
+            case Input.Keys.RIGHT:
                 walkDirection.sub(Vector2Utils.RIGHT);
                 triggerWalkEvent();
                 return true;

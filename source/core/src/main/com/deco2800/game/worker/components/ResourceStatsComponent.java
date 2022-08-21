@@ -1,4 +1,4 @@
-package com.deco2800.game.worker;
+package com.deco2800.game.worker.components;
 
 import com.deco2800.game.components.Component;
 import org.slf4j.Logger;
