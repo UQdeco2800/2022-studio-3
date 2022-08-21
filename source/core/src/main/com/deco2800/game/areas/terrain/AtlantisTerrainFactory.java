@@ -20,10 +20,11 @@ import java.util.Map;
 
 /** Factory for creating game terrain. */
 public class AtlantisTerrainFactory {
-    private static final int mapWidth = 100;
-    private static final int mapHeight = 45;
-    private static final int citySize = 7;
-    private static final int islandSize = 70;
+    private static final int mapWidth = 200;
+    private static final int mapHeight = 90;
+    private static final int cityWidth = 50;
+    private static final int cityHeight = 40;
+    private static final int islandSize = 80;
     public static final float mapTileScale = 1f;
 
     private final OrthographicCamera camera;
@@ -35,7 +36,7 @@ public class AtlantisTerrainFactory {
     /**
      * Instantiate a new MapGenerator for this terrain factory
      */
-    private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
+    private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
     /**
      * Create a terrain factory with Isometric orientation
@@ -46,6 +47,7 @@ public class AtlantisTerrainFactory {
         this.camera = (OrthographicCamera) cameraComponent.getCamera();
         this.cameraComponent = cameraComponent;
         this.textures = new HashMap<>();
+        this.getMapGenerator().writeMap("E:\\test.txt");
     }
 
     /**

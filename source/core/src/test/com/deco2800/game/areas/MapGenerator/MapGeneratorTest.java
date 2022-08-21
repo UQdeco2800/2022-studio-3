@@ -16,9 +16,10 @@ public class MapGeneratorTest {
     private static MapGenerator createMapGenerator() {
         int mapWidth = 100;
         int mapHeight = 45;
-        int citySize = 7;
+        int cityWidth = 7;
+        int cityHeight = 7;
         int islandSize = 80;
-        return new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
+        return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
     }
 
     @Test
@@ -32,7 +33,7 @@ public class MapGeneratorTest {
         MapGenerator mg;
         try {
             //Invalid island size
-            mg = new MapGenerator(5, 5, 5, 1);
+            mg = new MapGenerator(5, 5, 5, 5, 1);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
@@ -43,7 +44,7 @@ public class MapGeneratorTest {
 
         try {
             //Invalid width and height
-            mg = new MapGenerator(-1, 0, 5, 3);
+            mg = new MapGenerator(-1, 0, 5, 5, 3);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
@@ -54,7 +55,7 @@ public class MapGeneratorTest {
 
         try {
             //Invalid city size
-            mg = new MapGenerator(5, 5, 0, 1);
+            mg = new MapGenerator(5, 5, 0, 2, 1);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
