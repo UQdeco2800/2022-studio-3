@@ -9,6 +9,7 @@ import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -68,12 +69,16 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void spawnTerrain() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        mg.writeMap("E:\\map.txt");
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
         spawnEntity(new Entity().addComponent(terrain));
+        //Set tile size for camera
+        terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
+                .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
 
         //Move camera to player
-        MapGenerator mg = terrainFactory.getMapGenerator();
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
         Coordinate centre = cityDetails.get("Centre");
         Vector2 centreWorld = terrain.tileToWorldPosition(centre.getX(), mg.getHeight() - centre.getY());
@@ -154,6 +159,7 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = cityDetails.get("Centre");
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, spawn, true, true);
         return newPlayer;
