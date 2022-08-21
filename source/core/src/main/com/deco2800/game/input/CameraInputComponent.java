@@ -52,9 +52,14 @@ public class CameraInputComponent extends InputComponent {
     private int mapHeight = 0;
 
     /**
-     * Degree of how far the game is zoomed out - 0 is default
+     * Degree of how far the game is currently zoomed out - 0 is default
      */
     private float zoom = 0;
+
+    /**
+     * The maximum distance the player may zoom out of the game
+     */
+    private final float maxZoom = 10;
 
     public CameraInputComponent() {
         super(5);
@@ -134,7 +139,7 @@ public class CameraInputComponent extends InputComponent {
     public boolean scrolled(float amountX, float amountY) {
       OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
       zoom = camera.zoom + amountY;
-      if (zoom > 0) {
+      if (zoom > 0 && !(zoom > maxZoom)) {
     	  camera.zoom = zoom;
     	  camera.update();
       }
