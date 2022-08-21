@@ -29,7 +29,8 @@ import java.io.IOException;
 public class TerrainFactory {
   private static final int mapWidth = 100;
   private static final int mapHeight = 45;
-  private static final int citySize = 7;
+  private static final int cityWidth = 7;
+  private static final int cityHeight = 7;
   private static final int islandSize = 70;
 
   private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
@@ -39,7 +40,7 @@ public class TerrainFactory {
   private final TerrainOrientation orientation;
 
   private final CameraComponent cameraComponent;
-  private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
+  private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
   /**
    * Create a terrain factory with Orthogonal orientation
