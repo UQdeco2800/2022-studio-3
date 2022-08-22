@@ -30,12 +30,10 @@ public class WorkerFactory {
     public static Entity createWorker() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForWorker();
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new WorkerIdleTask());
+        AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
         Entity worker =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/heart.png"))
+                        .addComponent(new TextureRenderComponent("images/worker.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())

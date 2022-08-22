@@ -75,6 +75,10 @@ public class WorkerMovementTask extends DefaultTask {
         }
     }
 
+    public boolean isMoving() {
+        return movementComponent.getMoving();
+    }
+
     private boolean didMove() {
         return owner.getEntity().getPosition().dst2(lastPos) > 0.001f;
     }

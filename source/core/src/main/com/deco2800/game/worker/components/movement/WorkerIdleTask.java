@@ -31,7 +31,9 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
 
     @Override
     public void update() {
-        movementTask.update();
+        if (movementTask.isMoving()) {
+            movementTask.update();
+        }
     }
 
     /**
