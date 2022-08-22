@@ -30,7 +30,7 @@ public class ResourceFactory {
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         tree.getComponent(TextureRenderComponent.class).scaleEntity();
         tree.scaleHeight(height);
-        PhysicsUtils.setScaledCollider(tree, 0.5f, 2.5f);
+        PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
         return tree;
     }
 
@@ -50,7 +50,7 @@ public class ResourceFactory {
         rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         rock.getComponent(TextureRenderComponent.class).scaleEntity();
         rock.scaleHeight(height);
-        PhysicsUtils.setScaledCollider(rock, 0.5f, 0.2f);
+        PhysicsUtils.setScaledCollider(rock, 0.5f, 2.5f);
         return rock;
     }
 
