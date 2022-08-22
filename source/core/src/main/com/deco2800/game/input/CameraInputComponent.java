@@ -2,6 +2,7 @@ package com.deco2800.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -91,7 +92,11 @@ public class CameraInputComponent extends InputComponent {
                 verticalChange = 0;
             }
         }
-
+        //Global cursor test
+        Vector3 worldCursor = super.entity.getComponent(CameraComponent.class).getCamera().
+                unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        //System.out.println("Gx: " +worldCursor.x + " Gy: " + worldCursor.y);
+        System.out.println(worldToTile(worldCursor.x, worldCursor.y));
         super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }

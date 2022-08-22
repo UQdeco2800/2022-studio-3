@@ -12,15 +12,22 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.Renderable;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MinimapComponent extends RenderComponent {
@@ -36,7 +43,7 @@ public class MinimapComponent extends RenderComponent {
     /**
      * Size of the minimap as a float - square side length
      */
-    private final float MINIMAP_SIZE = 2f;
+    private final float MINIMAP_SCALE = 1.5f;
 
 
     /**
@@ -51,15 +58,16 @@ public class MinimapComponent extends RenderComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
-        //Set bounds of minimap, based on camera size
-        float minimapLength = MINIMAP_SIZE * camera.zoom;
-        float minimapHeight = MINIMAP_SIZE * camera.zoom;
-
         //Get layer of cells from TiledMap
         TiledMapTileLayer terrainLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
         //Determine map width and height
         int mapWidth = terrainLayer.getWidth();
         int mapHeight = terrainLayer.getHeight();
+
+        //Set bounds of minimap, based on camera size
+        float minimapLength = mapWidth * MINIMAP_SCALE/100f * camera.zoom;
+        float minimapHeight = mapHeight * MINIMAP_SCALE/100f * camera.zoom;
+
         //Determine the scaled width of each tile in the minimap based on minimap size and map size
         float tileWidth = minimapLength / mapWidth;
         float tileHeight = minimapHeight / mapHeight;
@@ -95,6 +103,41 @@ public class MinimapComponent extends RenderComponent {
                 shapeRenderer.rect(world.x - ((mapWidth - i - 1) * tileWidth), world.y + (tileHeight * j), tileWidth, tileHeight);
             }
         }
+        //Display field of view
+        //Get edges of screen
+        Vector3 worldSW = camera.unproject(new Vector3(0, screenHeight, 0));
+        Vector3 worldSE = camera.unproject(new Vector3(screenWidth, screenHeight, 0));
+        Vector3 worldNW = camera.unproject(new Vector3(0, 0, 0));
+        Vector3 worldNE = camera.unproject(new Vector3(screenWidth, 0, 0));
+
+        //Convert to tile coordinates
+        TerrainComponent tc = this.entity.getComponent(TerrainComponent.class);
+        Map<String, GridPoint2> tileExtremities = new HashMap<>();
+        tileExtremities.put("NW", CameraInputComponent.worldToTile(tc.getTileSize(), worldNW.x, worldNW.y));
+        tileExtremities.put("NE", CameraInputComponent.worldToTile(tc.getTileSize(), worldNE.x, worldNE.y));
+        tileExtremities.put("SW", CameraInputComponent.worldToTile(tc.getTileSize(), worldSW.x, worldSW.y));
+        tileExtremities.put("SE", CameraInputComponent.worldToTile(tc.getTileSize(), worldSE.x, worldSE.y));
+
+        //Set tiles within bounds if they are out of bounds
+        for (GridPoint2 tp : tileExtremities.values()) {
+            if (tp.x < 0) {
+                tp.x = 0;
+            } else if (tp.x >= mapWidth) {
+                tp.x = mapWidth - 1;
+            }
+            if (tp.y < 0) {
+                tp.y = 0;
+            } else if (tp.y >= mapHeight) {
+                tp.y = mapHeight - 1;
+            }
+        }
+        shapeRenderer.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.rect(world.x - ((mapWidth - tileExtremities.get("NW").x - 1) * tileWidth),
+                world.y + (tileHeight * tileExtremities.get("SW").y),
+                (tileExtremities.get("SE").x - tileExtremities.get("NW").x) * tileWidth,
+                (tileExtremities.get("NE").y - tileExtremities.get("SW").y) * tileHeight);
         //End shape rendering, restart batch
         shapeRenderer.end();
         batch.begin();
@@ -110,12 +153,12 @@ public class MinimapComponent extends RenderComponent {
     }
 
     /**
-     * Minimap instantiated on layer 1 to draw over terrain
-     * @return layer of minimap - 1
+     * Minimap instantiated on layer 2 to draw over terrain and player
+     * @return layer of minimap - 2
      */
     @Override
     public int getLayer() {
-        return 1;
+        return 2;
     }
 
     @Override
