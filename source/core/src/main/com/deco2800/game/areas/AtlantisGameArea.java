@@ -22,6 +22,9 @@ public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
 
     private static final String[] forestTextures = {
+            "images/Ocean.png",
+            "images/Sand.png",
+            "images/Grass.png",
             "images/box_boy_leaf.png",
             "images/tree.png",
             "images/ghost_king.png",

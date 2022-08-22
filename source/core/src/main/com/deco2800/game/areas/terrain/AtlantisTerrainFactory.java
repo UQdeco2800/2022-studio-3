@@ -62,9 +62,9 @@ public class AtlantisTerrainFactory {
      */
     private void createTextures() {
         ResourceService resourceService = ServiceLocator.getResourceService();
-        textures.put("Grass", new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class)));
-        textures.put("Tuft", new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class)));
-        textures.put("Rocks", new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class)));
+        textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
+        textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
+        textures.put("Ocean", new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class)));
     }
 
     public TerrainComponent createAtlantisTerrainComponent() {
@@ -114,8 +114,8 @@ public class AtlantisTerrainFactory {
      */
     private void fillTiles(TiledMapTileLayer layer) {
         TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
-        TerrainTile tuftTile = new TerrainTile(textures.get("Tuft"));
-        TerrainTile rockTile = new TerrainTile(textures.get("Rocks"));
+        TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
+        TerrainTile oceanTile = new TerrainTile(textures.get("Ocean"));
 
         //Load the map from the map generator
         char[][] map = mapGenerator.getMap();
@@ -124,13 +124,13 @@ public class AtlantisTerrainFactory {
             for (int y = 0; y < mapHeight; y++) {
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
-                    //Set ocean tiles to "rock" textures
-                    cell.setTile(rockTile);
+                    //Set ocean tiles to ocean textures
+                    cell.setTile(oceanTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
-                    //Set island tiles to "grass" textures
-                    cell.setTile(grassTile);
+                    //Set island tiles to sand textures
+                    cell.setTile(sandTile);
                 } else {
-                    cell.setTile(tuftTile);
+                    cell.setTile(grassTile);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely
                 layer.setCell(x, mapHeight - 1 - y, cell);
