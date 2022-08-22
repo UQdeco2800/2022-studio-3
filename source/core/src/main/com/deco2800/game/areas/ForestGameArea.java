@@ -85,35 +85,40 @@ public class ForestGameArea extends GameArea {
     // Terrain walls
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    Vector2 worldBounds = new Vector2(tileBounds.x, tileBounds.y);
 
     // Left
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, true);
+        ObstacleFactory.createWall(WALL_WIDTH, tileBounds.y),
+            GridPoint2Utils.ZERO,
+            false,
+            true);
+
+    //divide or multiply by two to account for the 0.5f in the tilesize to zoom out
     // Right
     spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y * 3),
-        new GridPoint2(tileBounds.x + 30, 0),
-        false,
-        true);
-    // Top
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x * 3, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y - 8),
-        true,
-        false);
-    // Bottom
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x * 3, WALL_WIDTH),
-            new GridPoint2(0, -20),
+            ObstacleFactory.createWall(WALL_WIDTH, tileBounds.y),
+            new GridPoint2((tileBounds.x*2)-1, 0 ),
             true,
             false);
+    // Top
+    spawnEntityAt(
+        ObstacleFactory.createWall(tileBounds.x, WALL_WIDTH),
+        new GridPoint2(0, (tileBounds.y/2)),
+        true,
+        false);
+
+    // Bottom
+    spawnEntityAt(
+        ObstacleFactory.createWall(tileBounds.x, WALL_WIDTH),
+            new GridPoint2(0, -(tileBounds.y/2)),
+            false,
+            true);
   }
 
   private void spawnTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
     for (int i = 0; i < NUM_TREES; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
       Entity tree = ObstacleFactory.createTree();

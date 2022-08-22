@@ -27,7 +27,7 @@ public class TerrainFactory {
   private final TerrainOrientation orientation;
 
   /**
-   * Create a terrain factory with Orthogonal orientation
+   * Create a terrain factory with Isometric orientation
    *
    * @param cameraComponent Camera to render terrains to. Must be ortographic.
    */
