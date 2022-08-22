@@ -1,6 +1,5 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.input.InputComponent;
@@ -86,8 +85,11 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     entity.getEvents().trigger("attack");
-    screenY = (int) (Gdx.graphics.getHeight() - screenY);
-    entity.getEvents().trigger("place", new Vector2(screenX, screenY));
+    if (button == Input.Buttons.LEFT) {
+      entity.getEvents().trigger("place", screenX, screenY);
+    } else if (button == Input.Buttons.RIGHT) {
+      entity.getEvents().trigger("cancelPlacement");
+    }
     return true;
   }
 
@@ -101,8 +103,7 @@ public class TouchPlayerInputComponent extends InputComponent {
 
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
-    screenY = (int) (Gdx.graphics.getHeight() - screenY);
-    entity.getEvents().trigger("placing", new Vector2(screenX, screenY));
+    entity.getEvents().trigger("placing", screenX, screenY);
     return true;
   }
 }
