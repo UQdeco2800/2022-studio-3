@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
@@ -57,6 +58,7 @@ public class AtlantisTerrainFactory {
         this.textures = new HashMap<>();
     }
 
+
     /**
      * Create all textures needed to generate the AtlantisMap
      */
@@ -79,7 +81,7 @@ public class AtlantisTerrainFactory {
         //Make renderer for map
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
         //Return the component
-        return new TerrainComponent(camera, tiledMap, renderer, orientation, mapTileScale);
+        return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
     /**

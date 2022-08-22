@@ -103,6 +103,7 @@ public class CameraInputComponent extends InputComponent {
     public void updateDirection() {
         int currentX = Gdx.input.getX();
         int currentY = Gdx.input.getY();
+
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
