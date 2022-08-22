@@ -95,8 +95,9 @@ public class CameraInputComponent extends InputComponent {
         //Global cursor test
         Vector3 worldCursor = super.entity.getComponent(CameraComponent.class).getCamera().
                 unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        //System.out.println("Gx: " +Gdx.input.getX() + " Gy: " + Gdx.input.getY());
         //System.out.println("Gx: " +worldCursor.x + " Gy: " + worldCursor.y);
-        System.out.println(worldToTile(worldCursor.x, worldCursor.y));
+        //System.out.println(worldToTile(worldCursor.x, worldCursor.y));
         super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }

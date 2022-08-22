@@ -131,13 +131,28 @@ public class MinimapComponent extends RenderComponent {
                 tp.y = mapHeight - 1;
             }
         }
+        //Define max and min tiles viewable for each cartesian coordinate
+        int maxX = tileExtremities.get("SE").x;
+        int minX = tileExtremities.get("NW").x;
+        int maxY = tileExtremities.get("NE").y;
+        int minY = tileExtremities.get("SW").y;
+        //End filled shape rendering
         shapeRenderer.end();
+        //Set hollow fill for field of view rectangle
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.rect(world.x - ((mapWidth - tileExtremities.get("NW").x - 1) * tileWidth),
-                world.y + (tileHeight * tileExtremities.get("SW").y),
-                (tileExtremities.get("SE").x - tileExtremities.get("NW").x) * tileWidth,
-                (tileExtremities.get("NE").y - tileExtremities.get("SW").y) * tileHeight);
+        /*
+            - Rectangle x edge set at the (mapWidth - 1 - the smallest X tile visible) * tileWidth
+                - mapWidth - 1 - smallest_tile_x sends you to tile position desired,
+                but it must be multiplied by tileWidth to get position on world
+            - Rectangle y point set at minimum y point -> again multiplied by tileHeight to reach
+              world position
+            - Rectangle side lengths is simply the tiles along * by the width or height
+         */
+        shapeRenderer.rect(world.x - ((mapWidth - minX - 1) * tileWidth),
+                world.y + (tileHeight * minY),
+                (maxX - minX) * tileWidth,
+                (maxY - minY) * tileHeight);
         //End shape rendering, restart batch
         shapeRenderer.end();
         batch.begin();
