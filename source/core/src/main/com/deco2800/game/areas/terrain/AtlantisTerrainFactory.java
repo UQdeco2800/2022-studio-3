@@ -115,9 +115,14 @@ public class AtlantisTerrainFactory {
      * @param layer the layer with which to be filled with cells
      */
     private void fillTiles(TiledMapTileLayer layer) {
+        //Set terrainTiles based on textures stored in textures
         TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
         TerrainTile oceanTile = new TerrainTile(textures.get("Ocean"));
+        //Set id for each tile - used for visualising minimap
+        grassTile.setId(0);
+        sandTile.setId(1);
+        oceanTile.setId(2);
 
         //Load the map from the map generator
         char[][] map = mapGenerator.getMap();
