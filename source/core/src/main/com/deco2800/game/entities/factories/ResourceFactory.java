@@ -17,9 +17,10 @@ public class ResourceFactory {
 
     /**
      * Creates a tree resource.
+     * @param height scale of the tree (default value is 2.5f)
      * @return entity
      */
-    public static Entity createTree() {
+    public static Entity createTree(float height) {
         Entity tree =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/tree.png"))
@@ -28,35 +29,28 @@ public class ResourceFactory {
 
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         tree.getComponent(TextureRenderComponent.class).scaleEntity();
-        tree.scaleHeight(2.5f);
-        PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
+        tree.scaleHeight(height);
+        PhysicsUtils.setScaledCollider(tree, 0.5f, 2.5f);
         return tree;
     }
 
     /**
      * Creates a rock resource entity
-     * @param width Wall width in world units
-     * @param height Wall height in world units
-     * @return Wall entity of given width and height
+     * @param height scaled heigh of the rock entity
+     * @return entity of a rock
      */
-    public static Entity createRock(float width, float height) {
-        Entity wall = new Entity()
-                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
+    public static Entity createRock(float height) {
         Entity rock =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/RockTemp.png"))
+                        //this texture path is incorrect and requires a rock png
+                        .addComponent(new TextureRenderComponent("images/mud.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
         rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         rock.getComponent(TextureRenderComponent.class).scaleEntity();
-        rock.scaleHeight(2.5f);
-        //this allows just the base to be uncollideable
-        //PhysicsUtils.setScaledCollider(rock, 0.5f, 0.2f);
-        //this allows the image to be collideable anywhere
-        rock.setScale(width, height);
+        rock.scaleHeight(height);
+        PhysicsUtils.setScaledCollider(rock, 0.5f, 0.2f);
         return rock;
     }
 
