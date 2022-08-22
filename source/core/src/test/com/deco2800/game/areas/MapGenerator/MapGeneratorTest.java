@@ -3,6 +3,8 @@ import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 @ExtendWith(GameExtension.class)
@@ -14,9 +16,10 @@ public class MapGeneratorTest {
     private static MapGenerator createMapGenerator() {
         int mapWidth = 100;
         int mapHeight = 45;
-        int citySize = 7;
+        int cityWidth = 7;
+        int cityHeight = 7;
         int islandSize = 80;
-        return new MapGenerator(mapWidth, mapHeight, citySize, islandSize);
+        return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
     }
 
     @Test
@@ -30,7 +33,7 @@ public class MapGeneratorTest {
         MapGenerator mg;
         try {
             //Invalid island size
-            mg = new MapGenerator(5, 5, 5, 1);
+            mg = new MapGenerator(5, 5, 5, 5, 1);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
@@ -41,7 +44,7 @@ public class MapGeneratorTest {
 
         try {
             //Invalid width and height
-            mg = new MapGenerator(-1, 0, 5, 3);
+            mg = new MapGenerator(-1, 0, 5, 5, 3);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
@@ -52,7 +55,7 @@ public class MapGeneratorTest {
 
         try {
             //Invalid city size
-            mg = new MapGenerator(5, 5, 0, 1);
+            mg = new MapGenerator(5, 5, 0, 2, 1);
             fail();
         } catch (IllegalArgumentException e) {
             //Correct exception thrown
@@ -117,6 +120,29 @@ public class MapGeneratorTest {
             //Any exception such as array index out of bounds exception means map was generated
             //improperly
             fail();
+        }
+    }
+
+    @Test
+    public void getCityDetailsTest() {
+        MapGenerator mg = createMapGenerator();
+        char[][] map = mg.getMap();
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        Coordinate centre = cityDetails.get("Centre");
+        Coordinate nw = cityDetails.get("NW");
+        Coordinate sw = cityDetails.get("SW");
+        Coordinate ne = cityDetails.get("NE");
+
+        int minX = nw.getX();
+        int maxX = ne.getX();
+        int minY = nw.getY();
+        int maxY = sw.getY();
+
+        //Check all tiles that should be city tiles
+        for (int i = minX; i <= maxX; i++) {
+            for (int j = minY; j <= maxY; j++) {
+                assertEquals(mg.getCityChar(), map[j][i]);
+            }
         }
     }
 }
