@@ -16,8 +16,7 @@ import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
 import com.deco2800.game.worker.components.movement.WorkerIdleTask;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
+import com.deco2800.game.worker.type.Miner;
 
 /**
  * Factory to create a worker entity
@@ -25,11 +24,27 @@ import com.deco2800.game.worker.components.type.MinerComponent;
 public class WorkerFactory {
     private static final WorkerConfig stats =
             FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
+    public static Entity workerEnt;
+
+    public WorkerAbstract createWorker(String workerType){
+        if(workerType.equalsIgnoreCase("miner")){
+                WorkerAbstract worker =  new Miner();
+                worker.create();
+                workerEnt = worker.workerEntity;
+                return worker;
+        }
+        return null;
+    }
+
+    public Entity getWorkerEntity(){
+        return workerEnt;
+    }
+
     /**
      * Create a worker entity.
      * @return worker
      */
-    public static Entity createWorker() {
+    /*public static Entity createWorker() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForWorker();
         AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
@@ -41,6 +56,7 @@ public class WorkerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.iron))
+                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 
@@ -48,35 +64,9 @@ public class WorkerFactory {
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
         worker.getComponent(TextureRenderComponent.class).scaleEntity();
         return worker;
-    }
+    }*/
 
-    /**
-     * Create a Miner entity
-     * @return miner
-     */
-    public static Entity createMiner(){
-        Entity miner =
-                createWorker()
-                        .addComponent(new MinerComponent())
-                        .addComponent(new CollectStatsComponent(2))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE));
-        return miner;
-    }
-
-    /**
-     * Create a Forager entity
-     * @return forager
-     */
-    public static Entity createForager(){
-        Entity forager =
-                createWorker()
-                        .addComponent(new ForagerComponent())
-                        .addComponent(new CollectStatsComponent(4))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE));
-        return forager;
-    }
-
-    private WorkerFactory() {
+    /*private WorkerFactory() {
         throw new IllegalStateException("Instantiating static util class");
-    }
+    }*/
 }

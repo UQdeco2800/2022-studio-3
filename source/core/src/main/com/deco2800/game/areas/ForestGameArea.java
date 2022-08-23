@@ -34,6 +34,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+          "images/worker.png",
           "images/mud.png",
           "images/box_boy_leaf.png",
           "images/tree.png",
@@ -47,9 +48,7 @@ public class ForestGameArea extends GameArea {
           "images/hex_grass_3.png",
           "images/iso_grass_1.png",
           "images/iso_grass_2.png",
-          "images/iso_grass_3.png",
-          "images/worker.png",
-          "images/worker_highlight.png"
+          "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -79,8 +78,11 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    spawnWorker();
-    spawnForager();
+    //spawnWorker(); // Spawns a new worker unit
+    spawnStone(); // Spawns a new stone unit to test Miner entity
+    spawnTree(); // Spawns a new stone unit to test Forager entity
+    spawnMiner();
+    //spawnForager();
 
     playMusic();
   }
@@ -152,25 +154,27 @@ public class ForestGameArea extends GameArea {
    * Creates and spawns a new Miner unit
    */
   private void spawnMiner(){
-    Entity newMiner = WorkerFactory.createMiner();
-    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
+    WorkerFactory newMiner = new WorkerFactory();
+    newMiner.createWorker("miner");
+    Entity miner = newMiner.getWorkerEntity();
+    spawnEntityAt(miner, MINER_SPAWN, true, true);
   }
 
   /**
    * Creates and spawns a new Forager unit
    */
-  private void spawnForager(){
+  /*private void spawnForager(){
     Entity newForager = WorkerFactory.createForager();
     spawnEntityAt(newForager, FORAGER_SPAWN, true, true);
-  }
+  }*/
 
   /**
    * Creates a new worker unit and spawns it somewhere random on the map.
    */
-  private void spawnWorker() {
+  /*private void spawnWorker() {
     Entity newWorker = WorkerFactory.createWorker();
     spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
-  }
+  }*/
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
