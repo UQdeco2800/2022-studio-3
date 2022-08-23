@@ -34,7 +34,6 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-          "images/worker.png",
           "images/mud.png",
           "images/box_boy_leaf.png",
           "images/tree.png",
@@ -48,7 +47,9 @@ public class ForestGameArea extends GameArea {
           "images/hex_grass_3.png",
           "images/iso_grass_1.png",
           "images/iso_grass_2.png",
-          "images/iso_grass_3.png"
+          "images/iso_grass_3.png",
+          "images/worker.png",
+          "images/worker_highlight.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -78,10 +79,7 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    //spawnWorker(); // Spawns a new worker unit
-    spawnStone(); // Spawns a new stone unit to test Miner entity
-    spawnTree(); // Spawns a new stone unit to test Forager entity
-    spawnMiner();
+    spawnWorker();
     spawnForager();
 
     playMusic();

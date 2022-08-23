@@ -25,7 +25,6 @@ import com.deco2800.game.worker.components.movement.WorkerIdleTask;
 public class WorkerFactory {
     private static final WorkerConfig stats =
             FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
-
     /**
      * Create a worker entity.
      * @return worker
@@ -42,7 +41,6 @@ public class WorkerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.iron))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 
@@ -57,27 +55,12 @@ public class WorkerFactory {
      * @return miner
      */
     public static Entity createMiner(){
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForWorker();
-        AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
-        Entity worker =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/worker.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
+        Entity miner =
+                createWorker()
                         .addComponent(new MinerComponent())
                         .addComponent(new CollectStatsComponent(2))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
-                        .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.iron))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
-                        .addComponent(aiComponent)
-                        .addComponent(inputComponent);
-
-        PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
-        worker.getComponent(ColliderComponent.class).setDensity(1.5f);
-        worker.getComponent(TextureRenderComponent.class).scaleEntity();
-        return worker;
+                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE));
+        return miner;
     }
 
     /**
@@ -85,27 +68,12 @@ public class WorkerFactory {
      * @return forager
      */
     public static Entity createForager(){
-        InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForWorker();
-        AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
-        Entity worker =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/worker.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new PhysicsMovementComponent())
-                        .addComponent(new ColliderComponent())
+        Entity forager =
+                createWorker()
                         .addComponent(new ForagerComponent())
                         .addComponent(new CollectStatsComponent(4))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
-                        .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.iron))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
-                        .addComponent(aiComponent)
-                        .addComponent(inputComponent);
-
-        PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
-        worker.getComponent(ColliderComponent.class).setDensity(1.5f);
-        worker.getComponent(TextureRenderComponent.class).scaleEntity();
-        return worker;
+                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE));
+        return forager;
     }
 
     private WorkerFactory() {
