@@ -74,6 +74,7 @@ public class BuildingActions extends Component {
     }
 
     public void cancelPlacement() {
+        if (placed) {return;}
         entity.dispose();
     }
 
