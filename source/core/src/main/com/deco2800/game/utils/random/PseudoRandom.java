@@ -25,7 +25,7 @@ public class PseudoRandom {
      * @return double between lowerBound and upperBound.
      */
     public static double seedRandomDouble (double lowerBound, double upperBound) {
-        return new Random().nextDouble(upperBound - lowerBound);
+        return lowerBound + new Random().nextDouble(upperBound - lowerBound);
     }
 
     /**
