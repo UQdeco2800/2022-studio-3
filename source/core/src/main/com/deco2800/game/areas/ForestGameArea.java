@@ -130,8 +130,8 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_GHOSTS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghoul = NPCFactory.createGhoul();
-      spawnEntityAt(ghoul, randomPos, true, true);
+      Entity ghost = NPCFactory.createGhost(player);
+      spawnEntityAt(ghost, randomPos, true, true);
     }
   }
 
@@ -140,7 +140,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createDemon();
+    Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
 
