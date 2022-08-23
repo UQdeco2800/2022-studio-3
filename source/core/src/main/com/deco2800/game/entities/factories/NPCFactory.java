@@ -10,8 +10,7 @@ import com.deco2800.game.components.TouchAttackComponent;
 //import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BaseCombatEntityConfig;
-//import com.deco2800.game.entities.configs.BaseEntityConfig;
+import com.deco2800.game.entities.configs.BaseEntityConfig;
 //import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
@@ -45,7 +44,7 @@ public class NPCFactory {
    */
   public static Entity createGhoul() {
     Entity ghoul = createBaseNPC();
-    BaseCombatEntityConfig config = configs.ghoul;
+    BaseEntityConfig config = configs.ghost;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
@@ -54,8 +53,7 @@ public class NPCFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     ghoul
-        .addComponent(new CombatStatsComponent(config.baseHealth, config.baseAttack,
-            config.baseDefence, config.baseSpeed)) // casting to int temporary!
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) // casting to int temporary!
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 
@@ -71,7 +69,7 @@ public class NPCFactory {
    */
   public static Entity createDemon() {
     Entity demon = createBaseNPC();
-    BaseCombatEntityConfig config = configs.demon;
+    BaseEntityConfig config = configs.ghost;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
@@ -80,8 +78,7 @@ public class NPCFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     demon
-        .addComponent(new CombatStatsComponent(config.baseHealth, config.baseAttack,
-            config.baseDefence, config.baseSpeed)) // casting to int temporary!
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) // casting to int temporary!
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 
