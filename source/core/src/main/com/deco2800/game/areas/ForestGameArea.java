@@ -36,6 +36,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           "images/worker.png",
+          "images/worker_highlight.png",
           "images/mud.png",
           "images/box_boy_leaf.png",
           "images/tree.png",
@@ -79,11 +80,10 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    //spawnWorker(); // Spawns a new worker unit
+    spawnWorker(); // Spawns a new worker unit
     spawnStone(); // Spawns a new stone unit to test Miner entity
     spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
-    //spawnForager();
 
     playMusic();
   }
@@ -170,10 +170,10 @@ public class ForestGameArea extends GameArea {
   /**
    * Creates a new worker unit and spawns it somewhere random on the map.
    */
-  /*private void spawnWorker() {
+  private void spawnWorker() {
     Entity newWorker = WorkerFactory.createWorker();
     spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
-  }*/
+  }
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();

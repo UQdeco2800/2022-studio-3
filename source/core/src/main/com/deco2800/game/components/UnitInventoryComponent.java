@@ -1,5 +1,4 @@
-package com.deco2800.game.entities;
-import com.deco2800.game.components.Component;
+package com.deco2800.game.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
