@@ -6,8 +6,11 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourceCollectComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(ResourceStatsComponent.class);
     private short targetLayer;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
@@ -42,7 +45,22 @@ public class ResourceCollectComponent extends Component {
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
         if (targetStats != null) {
-            targetStats.collect(collectStats);
+            Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
+            MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
+            // If the worker type is Miner
+            if(collectorIsMiner.getIsMiner() == 1){
+                collectStone(targetStats);
+            }else{
+                targetStats.collect(collectStats);
+            }
         }
+    }
+
+    private void collectStone(ResourceStatsComponent targetStats){
+        int numCollected = targetStats.collectStone(collectStats);
+        // Add the number of collected resource to the worker inventory
+        WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
+        inventory.addStone(numCollected);
+        logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
     }
 }

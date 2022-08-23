@@ -15,6 +15,7 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerFactory;
+import com.deco2800.game.worker.resources.Stone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,11 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           "images/worker.png",
+          "images/mud.png",
           "images/box_boy_leaf.png",
           "images/tree.png",
           "images/ghost_king.png",
@@ -70,7 +73,9 @@ public class ForestGameArea extends GameArea {
     player = spawnPlayer();
     spawnGhosts();
     spawnGhostKing();
-    spawnWorker(); // Spawns a new worker unit
+    //spawnWorker(); // Spawns a new worker unit
+    spawnStone(); // Spawns a new stone unit to test Miner class
+    spawnMiner();
 
     playMusic();
   }
@@ -120,6 +125,22 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  /**
+   * Creates and spawns a new Stone unit.
+   */
+  private void spawnStone() {
+    Entity newStone = Stone.createStone();
+    spawnEntityAt(newStone, STONE_SPAWN, true, true);
+  }
+
+  /**
+   * Creates and spawns a new Miner unit
+   */
+  private void spawnMiner(){
+    Entity newStone = WorkerFactory.createMiner();
+    spawnEntityAt(newStone, STONE_SPAWN, true, true);
   }
 
   /**
