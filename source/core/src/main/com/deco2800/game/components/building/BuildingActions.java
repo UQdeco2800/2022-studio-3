@@ -32,7 +32,6 @@ public class BuildingActions extends Component {
         textureRenderComponent.setEnabled(true);
         physicsComponent = entity.getComponent(PhysicsComponent.class);
         physicsComponent.setEnabled(false);
-        cameraComponent = entity.getComponent(CameraComponent.class);
         placed = false;
     }
 
