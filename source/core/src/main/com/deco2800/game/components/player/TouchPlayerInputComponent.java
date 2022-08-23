@@ -1,8 +1,11 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
 
@@ -72,6 +75,18 @@ public class TouchPlayerInputComponent extends InputComponent {
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
+      case Input.Keys.G:
+        entity.getEvents().trigger("spawnTownHall");
+        return true;
+      case Input.Keys.H:
+        entity.getEvents().trigger("spawnWall");
+        return true;
+      case Input.Keys.J:
+        entity.getEvents().trigger("spawnBarracks");
+        return true;
+      case Input.Keys.K:
+        entity.getEvents().trigger("spawnMedievalBarracks");
+        return true;
       default:
         return false;
     }
@@ -85,6 +100,11 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     entity.getEvents().trigger("attack");
+    if (button == Input.Buttons.LEFT) {
+      entity.getEvents().trigger("place", screenX, screenY);
+    } else if (button == Input.Buttons.RIGHT) {
+      entity.getEvents().trigger("cancelPlacement");
+    }
     return true;
   }
 
@@ -94,5 +114,11 @@ public class TouchPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+
+  @Override
+  public boolean mouseMoved(int screenX, int screenY) {
+    entity.getEvents().trigger("placing", screenX, screenY);
+    return true;
   }
 }

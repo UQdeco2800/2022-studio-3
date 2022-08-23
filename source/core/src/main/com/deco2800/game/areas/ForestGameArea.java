@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -27,6 +28,9 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestTextures = {
     "images/box_boy_leaf.png",
     "images/tree.png",
+    "images/Base.png",
+    "images/barracks atlantis.png",
+    "images/barracks medieval.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -64,9 +68,15 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
+    // spawnWalls();
+    spawnTownHall(new GridPoint2(4, 2));
+    spawnBarracks(new GridPoint2(2, 2));
+    spawnBarracksMedieval(new GridPoint2(2, 4));
+
     player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
+    ServiceLocator.registerGameArea(this);
+    // spawnGhosts();
+    // spawnGhostKing();
 
     playMusic();
   }
@@ -79,7 +89,7 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO_ISO);
     spawnEntity(new Entity().addComponent(terrain));
 
     // Terrain walls
@@ -116,6 +126,32 @@ public class ForestGameArea extends GameArea {
       Entity tree = ObstacleFactory.createTree();
       spawnEntityAt(tree, randomPos, true, false);
     }
+  }
+
+  private void spawnWalls() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < 6; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity wall = BuildingFactory.createWall();
+      spawnEntityAt(wall, randomPos, true, false);
+    }
+  }
+
+  private void spawnTownHall(GridPoint2 position) {
+    Entity townHall = BuildingFactory.createTownHall();
+    spawnEntityAt(townHall, position, true, true);
+  }
+
+  private void spawnBarracks(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracks();
+    spawnEntityAt(barracks, position, true, true);
+  }
+
+  private void spawnBarracksMedieval(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracksMedieval();
+    spawnEntityAt(barracks, position, true, true);
   }
 
   private Entity spawnPlayer() {
