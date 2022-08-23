@@ -16,7 +16,6 @@ public class Stone{
         
         Entity stone = new Entity()
             .addComponent(new TextureRenderComponent("images/mud.png"))
-            .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
             .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));

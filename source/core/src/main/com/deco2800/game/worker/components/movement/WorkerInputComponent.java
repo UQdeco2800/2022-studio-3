@@ -34,9 +34,9 @@ public class WorkerInputComponent extends InputComponent {
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == Input.Buttons.LEFT) {
-            // Find the world coordinates of the cursor
-            Vector2 cursorWorldPos = screenToWorldPosition(screenX, screenY);
+        // Find the world coordinates of the cursor
+        Vector2 cursorWorldPos = screenToWorldPosition(screenX, screenY);
+        if (button == Input.Buttons.RIGHT) {
             if (isSelected) {
                 // Worker is selected. Prepare to move to cursor location.
                 // Find the difference between the entity position and its central point
@@ -46,16 +46,16 @@ public class WorkerInputComponent extends InputComponent {
                 Vector2 centerTarget = cursorWorldPos.add(entityDeltas);
                 // Trigger WorkerMovementTask
                 entity.getEvents().trigger("workerWalk", centerTarget);
-            } else {
-                // Worker is not selected.
-                // Determine if user is trying to select the entity.
-                if (inEntityBounds(cursorWorldPos.x, cursorWorldPos.y)) {
-                    isSelected = true;
-                    // Change sprite to worker_highlight.png
-                    entity.getComponent(TextureRenderComponent.class).setTexture(
-                            ServiceLocator.getResourceService().getAsset("images/worker_highlight.png", Texture.class)
-                    );
-                }
+            }
+        } else if (button == Input.Buttons.LEFT) {
+            // Worker is not selected.
+            // Determine if user is trying to select the entity.
+            if (inEntityBounds(cursorWorldPos.x, cursorWorldPos.y)) {
+                isSelected = true;
+                // Change sprite to worker_highlight.png
+                entity.getComponent(TextureRenderComponent.class).setTexture(
+                        ServiceLocator.getResourceService().getAsset("images/worker_highlight.png", Texture.class)
+                );
             }
         }
         return false;

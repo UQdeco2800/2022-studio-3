@@ -76,11 +76,11 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
-    player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
-    spawnWorker(); // Spawns a new worker unit
+    //spawnTrees();
+    //player = spawnPlayer();
+    //spawnGhosts();
+    //spawnGhostKing();
+    spawnMiner(); // Spawns a new worker unit
     spawnStone(); // Spawns a new stone unit to test Miner entity
     spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();

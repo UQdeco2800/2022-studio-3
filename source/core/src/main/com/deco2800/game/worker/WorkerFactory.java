@@ -43,7 +43,7 @@ public class WorkerFactory {
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 
-        PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
+        PhysicsUtils.setScaledCollider(worker, 2f, 2f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
         worker.getComponent(TextureRenderComponent.class).scaleEntity();
         return worker;
