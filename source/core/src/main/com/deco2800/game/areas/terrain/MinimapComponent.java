@@ -65,8 +65,8 @@ public class MinimapComponent extends RenderComponent {
         int mapHeight = terrainLayer.getHeight();
 
         //Set bounds of minimap, based on camera size
-        float minimapLength = mapWidth * MINIMAP_SCALE/100f * camera.zoom;
-        float minimapHeight = mapHeight * MINIMAP_SCALE/100f * camera.zoom;
+        float minimapLength = mapWidth * MINIMAP_SCALE/80f * camera.zoom;
+        float minimapHeight = mapHeight * MINIMAP_SCALE/80f * camera.zoom;
 
         //Determine the scaled width of each tile in the minimap based on minimap size and map size
         float tileWidth = minimapLength / mapWidth;
