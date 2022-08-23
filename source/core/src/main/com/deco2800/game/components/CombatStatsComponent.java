@@ -2,33 +2,76 @@ package com.deco2800.game.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static java.lang.Math.max;
 
 /**
  * Component used to store information related to combat such as health, attack, etc. Any entities
  * which engage it combat should have an instance of this class registered. This class can be
  * extended for more specific combat needs.
  */
-public class CombatStatsComponent extends BaseEntityStatsComponent {
+public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
-  private float attack;
-  private float defence;
-  private float speed;
+  private int health;
+  private int baseAttack;
+  private int baseDefence;
 
-  public CombatStatsComponent(float health, float attack, float defence, float speed) {
-    super(health);
-    setAttack(attack);
-    setDefence(defence);
-    setSpeed(speed);
+  public CombatStatsComponent(int health, int baseAttack, int baseDefence) {
+    setHealth(health);
+    setBaseAttack(baseAttack);
+    setBaseDefence(baseDefence);
   }
 
   /**
-   * Returns the entity's attack damage.
+   * Returns true if the entity's has 0 health, otherwise false.
    *
-   * @return attack damage
+   * @return is player dead
    */
-  public float getAttack() {
-    return attack;
+  public Boolean isDead() {
+    return health == 0;
+  }
+
+  /**
+   * Returns the entity's health.
+   *
+   * @return entity's health
+   */
+  public int getHealth() {
+    return health;
+  }
+
+  /**
+   * Sets the entity's health. Health has a minimum bound of 0.
+   *
+   * @param health health
+   */
+  public void setHealth(int health) {
+    if (health >= 0) {
+      this.health = health;
+    } else {
+      this.health = 0;
+    }
+    if (entity != null) {
+      entity.getEvents().trigger("updateHealth", this.health);
+    }
+  }
+
+  /**
+   * Adds to the player's health. The amount added can be negative.
+   *
+   * @param health health to add
+   */
+  public void addHealth(int health) {
+    setHealth(this.health + health);
+  }
+
+  /**
+   * Returns the entity's base attack damage.
+   *
+   * @return base attack damage
+   */
+  public int getBaseAttack() {
+    return baseAttack;
   }
 
   /**
@@ -36,60 +79,52 @@ public class CombatStatsComponent extends BaseEntityStatsComponent {
    *
    * @param attack Attack damage
    */
-  public void setAttack(float attack) {
+  public void setBaseAttack(int attack) {
     if (attack >= 0) {
-      this.attack = attack;
+      this.baseAttack = attack;
     } else {
-      logger.error("Can not set attack to a negative attack value");
+      logger.error("Can not set base attack to a negative attack value");
     }
   }
 
   /**
-   * Returns the entity's defence ability
+   * Sets the entity's defence from attacks. Defence has a minimum bound of 0.
    *
-   * @return defence ability
+   * @param defence Attack defence
    */
-  public float getDefence() {
-    return defence;
-  }
-
-  /**
-   * Sets the entity's defence ability, Defence ability has a minimum bound of 0.
-   *
-   * @param defence Defence ability
-   */
-  public void setDefence(float defence) {
+  public void setBaseDefence(int defence) {
     if (defence >= 0) {
-      this.defence = defence;
+      this.baseDefence = defence;
     } else {
-      logger.error("Can not set defence to a negative defence value");
+      /* note: this may be valid in the final build, but for now I want
+       * to leave it as is.
+       */
+      logger.error("Can not set base defence to a negative defence value");
     }
   }
 
   /**
-   * Returns the entity's speed, this speed values applies for attacks and movement
+   * Returns the entity's base defence.
    *
-   * @return entity's speed
+   * @return base defence
    */
-  public float getSpeed() {
-    return speed;
-  }
+  public int getBaseDefence() {return baseDefence;}
 
+  // TODO: Substitute dummy damage function with more complete function
   /**
-   * Sets the entity's speed, Speed has a minimum bound of 0.
+   * Manages the entity being hit by an attacking enemy.
    *
-   * @param speed Speed of the entity
+   * Combatant takes damage equal to the attacker's attack less this entity's
+   * defence, with a minimum bound of 1.
+   *
+   * @param attacker The Combat Stats of an attacking entity
    */
-  public void setSpeed(float speed) {
-    if (speed >= 0) {
-      this.speed = speed;
-    } else {
-      logger.error("Can not set speed to a negative speed value");
-    }
-  }
-
   public void hit(CombatStatsComponent attacker) {
-    float newHealth = getHealth() - attacker.getAttack();
+    // Guarantee that at least one damage is done
+    int newHealth = getHealth() - max(1,
+            attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
   }
+
+
 }

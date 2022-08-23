@@ -1,8 +1,7 @@
 {
-  "baseHealth": 100.0,
+  "health": 100,
   "baseAttack": 10,
-  "baseDefence": 10.0,
-  "baseSpeed": 10.0,
+  "baseDefence": 5,
   "gold": 50,
   "favouriteColour": "peach"
 }

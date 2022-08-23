@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class CombatStatsComponentTest {
   @Test
   void shouldSetGetHealth() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 5);
     assertEquals(100, combat.getHealth());
 
     combat.setHealth(150);
@@ -23,7 +23,7 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldCheckIsDead() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 5);
     assertFalse(combat.isDead());
 
     combat.setHealth(0);
@@ -32,7 +32,7 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldAddHealth() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 5);
     combat.addHealth(-500);
     assertEquals(0, combat.getHealth());
 
@@ -43,37 +43,27 @@ class CombatStatsComponentTest {
 
   @Test
   void shouldSetGetBaseAttack() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
-    assertEquals(20, combat.getAttack());
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 5);
+    assertEquals(20, combat.getBaseAttack());
 
-    combat.setAttack(150);
-    assertEquals(150, combat.getAttack());
+    combat.setBaseAttack(150);
+    assertEquals(150, combat.getBaseAttack());
 
-    combat.setAttack(-50);
-    assertEquals(150, combat.getAttack());
+    combat.setBaseAttack(-50);
+    assertEquals(150, combat.getBaseAttack());
   }
 
   @Test
   void shouldSetGetBaseDefence() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
-    assertEquals(10, combat.getDefence());
+    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 5);
+    assertEquals(5, combat.getBaseDefence());
 
-    combat.setDefence(150);
-    assertEquals(150, combat.getDefence());
+    combat.setBaseDefence(20);
+    assertEquals(20, combat.getBaseDefence());
 
-    combat.setDefence(-50);
-    assertEquals(150, combat.getDefence());
+    combat.setBaseDefence(-10);
+    assertEquals(20, combat.getBaseDefence());
   }
 
-  @Test
-  void shouldSetGetBaseSpeed() {
-    CombatStatsComponent combat = new CombatStatsComponent(100, 20, 10, 10);
-    assertEquals(10, combat.getSpeed());
-
-    combat.setSpeed(150);
-    assertEquals(150, combat.getSpeed());
-
-    combat.setSpeed(-50);
-    assertEquals(150, combat.getSpeed());
-  }
+  //TODO: add test for one combatant hitting another
 }
