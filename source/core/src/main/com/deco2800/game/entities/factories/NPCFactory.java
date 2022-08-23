@@ -63,7 +63,7 @@ public class NPCFactory {
   }
 
   /**
-   * Creates a demon entity
+   * Creates a ghoul entity
    *
    * @return entity
    */
