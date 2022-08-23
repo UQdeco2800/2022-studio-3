@@ -22,7 +22,7 @@ public class WorkerInputComponent extends InputComponent {
         super(5);
         this.camera = ServiceLocator.getEntityService().getCamera();
     }
-
+    
     /**
      * Triggers worker movement on left-mouse click.
      *

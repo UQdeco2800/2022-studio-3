@@ -17,6 +17,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.resources.Stone;
 import com.deco2800.game.worker.resources.Tree;
+import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,10 +155,8 @@ public class ForestGameArea extends GameArea {
    * Creates and spawns a new Miner unit
    */
   private void spawnMiner(){
-    WorkerFactory newMiner = new WorkerFactory();
-    newMiner.createWorker("miner");
-    Entity miner = newMiner.getWorkerEntity();
-    spawnEntityAt(miner, MINER_SPAWN, true, true);
+    Entity newMiner = MinerFactory.createMiner();
+    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
   }
 
   /**

@@ -12,11 +12,9 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
 import com.deco2800.game.worker.components.movement.WorkerIdleTask;
-import com.deco2800.game.worker.type.Miner;
 
 /**
  * Factory to create a worker entity
@@ -24,27 +22,12 @@ import com.deco2800.game.worker.type.Miner;
 public class WorkerFactory {
     private static final WorkerConfig stats =
             FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
-    public static Entity workerEnt;
-
-    public WorkerAbstract createWorker(String workerType){
-        if(workerType.equalsIgnoreCase("miner")){
-                WorkerAbstract worker =  new Miner();
-                worker.create();
-                workerEnt = worker.workerEntity;
-                return worker;
-        }
-        return null;
-    }
-
-    public Entity getWorkerEntity(){
-        return workerEnt;
-    }
 
     /**
      * Create a worker entity.
      * @return worker
      */
-    /*public static Entity createWorker() {
+    public static Entity createWorker() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForWorker();
         AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
@@ -64,9 +47,9 @@ public class WorkerFactory {
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
         worker.getComponent(TextureRenderComponent.class).scaleEntity();
         return worker;
-    }*/
+    }
 
-    /*private WorkerFactory() {
+    private WorkerFactory() {
         throw new IllegalStateException("Instantiating static util class");
-    }*/
+    }
 }
