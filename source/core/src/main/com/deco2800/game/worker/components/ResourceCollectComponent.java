@@ -47,9 +47,13 @@ public class ResourceCollectComponent extends Component {
         if (targetStats != null) {
             Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
             MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
-            // If the worker type is Miner
-            if(collectorIsMiner.getIsMiner() == 1){
+            ForagerComponent collectorIsForager = collectorType.getComponent(ForagerComponent.class);
+            if(collectorIsMiner != null){
+                // If the worker type is Miner
                 collectStone(targetStats);
+            }else if(collectorIsForager != null){
+                // If the worker type is Forager
+                collectWood(targetStats);
             }else{
                 targetStats.collect(collectStats);
             }
@@ -62,5 +66,13 @@ public class ResourceCollectComponent extends Component {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
         inventory.addStone(numCollected);
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
+    }
+
+    private void collectWood(ResourceStatsComponent targetStats){
+        int numCollected = targetStats.collectWood(collectStats);
+        // Add the number of collected resource to the worker inventory
+        WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
+        inventory.addWood(numCollected);
+        logger.info("[+] The worker has " + Integer.toString(inventory.getWood()) + " woods");
     }
 }

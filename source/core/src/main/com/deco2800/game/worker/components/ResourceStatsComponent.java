@@ -122,9 +122,20 @@ public class ResourceStatsComponent extends Component {
      */
     public int collectStone(CollectStatsComponent collector){
         int newStone = getStone() - collector.getCollectionAmount();
-        logger.info("[+] num of stone in Stone() : " + Integer.toString(getStone()));
+        logger.info("[+] num of stone in Stone() before : " + Integer.toString(getStone()));
         setStone(newStone);
-        logger.info("[+] num of stone in Stone() : " + Integer.toString(getStone()));
+        logger.info("[+] num of stone in Stone() after : " + Integer.toString(getStone()));
+        return collector.getCollectionAmount();
+    }
+
+    /**
+     * Collects stone
+     */
+    public int collectWood(CollectStatsComponent collector){
+        int newWood = getWood() - collector.getCollectionAmount();
+        logger.info("[+] num of stone in Tree() before : " + Integer.toString(getWood()));
+        setWood(newWood);
+        logger.info("[+] num of stone in Tree() after : " + Integer.toString(getWood()));
         return collector.getCollectionAmount();
     }
 }

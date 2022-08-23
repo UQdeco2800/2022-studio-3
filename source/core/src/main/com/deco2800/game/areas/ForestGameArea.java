@@ -16,6 +16,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.resources.Stone;
+import com.deco2800.game.worker.resources.Tree;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +28,10 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 MINER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 FORAGER_SPAWN = new GridPoint2(20, 15);
   private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
+  private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
           "images/worker.png",
@@ -74,8 +79,10 @@ public class ForestGameArea extends GameArea {
     spawnGhosts();
     spawnGhostKing();
     //spawnWorker(); // Spawns a new worker unit
-    spawnStone(); // Spawns a new stone unit to test Miner class
+    spawnStone(); // Spawns a new stone unit to test Miner entity
+    spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
+    spawnForager();
 
     playMusic();
   }
@@ -136,11 +143,27 @@ public class ForestGameArea extends GameArea {
   }
 
   /**
+   * Creates and spawns a new Tree unit.
+   */
+  private void spawnTree() {
+    Entity newTree = Tree.createTree();
+    spawnEntityAt(newTree, TREE_SPAWN, true, true);
+  }
+
+  /**
    * Creates and spawns a new Miner unit
    */
   private void spawnMiner(){
-    Entity newStone = WorkerFactory.createMiner();
-    spawnEntityAt(newStone, STONE_SPAWN, true, true);
+    Entity newMiner = WorkerFactory.createMiner();
+    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
+  }
+
+  /**
+   * Creates and spawns a new Forager unit
+   */
+  private void spawnForager(){
+    Entity newForager = WorkerFactory.createForager();
+    spawnEntityAt(newForager, FORAGER_SPAWN, true, true);
   }
 
   /**
