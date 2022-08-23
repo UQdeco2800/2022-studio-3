@@ -82,7 +82,7 @@ public class ForestGameArea extends GameArea {
     spawnStone(); // Spawns a new stone unit to test Miner entity
     spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
-    spawnForager();
+    //spawnForager();
 
     playMusic();
   }
@@ -154,25 +154,27 @@ public class ForestGameArea extends GameArea {
    * Creates and spawns a new Miner unit
    */
   private void spawnMiner(){
-    Entity newMiner = WorkerFactory.createMiner();
-    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
+    WorkerFactory newMiner = new WorkerFactory();
+    newMiner.createWorker("miner");
+    Entity miner = newMiner.getWorkerEntity();
+    spawnEntityAt(miner, MINER_SPAWN, true, true);
   }
 
   /**
    * Creates and spawns a new Forager unit
    */
-  private void spawnForager(){
+  /*private void spawnForager(){
     Entity newForager = WorkerFactory.createForager();
     spawnEntityAt(newForager, FORAGER_SPAWN, true, true);
-  }
+  }*/
 
   /**
    * Creates a new worker unit and spawns it somewhere random on the map.
    */
-  private void spawnWorker() {
+  /*private void spawnWorker() {
     Entity newWorker = WorkerFactory.createWorker();
     spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
-  }
+  }*/
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();

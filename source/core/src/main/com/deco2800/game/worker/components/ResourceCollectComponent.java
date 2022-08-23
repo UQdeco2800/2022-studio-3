@@ -6,6 +6,9 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.worker.components.type.ForagerComponent;
+import com.deco2800.game.worker.components.type.MinerComponent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
