@@ -1,4 +1,4 @@
-package com.deco2800.game.worker.components;
+package com.deco2800.game.worker.components.type;
 
 import com.deco2800.game.components.Component;
 
