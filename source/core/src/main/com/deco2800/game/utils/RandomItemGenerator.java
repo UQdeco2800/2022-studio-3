@@ -1,4 +1,4 @@
-import //Jordan's PRNG
+//import Jordan's PRNG
 
 // TODO:
 // * Find the place for inputting the weather icon file
