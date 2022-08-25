@@ -6,6 +6,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 
@@ -13,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ResourceCollectComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(ResourceStatsComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
     private short targetLayer;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
@@ -47,7 +48,11 @@ public class ResourceCollectComponent extends Component {
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
-        if (targetStats != null) {
+
+        BaseComponent isBase = target.getComponent(BaseComponent.class);
+        if (isBase != null) {
+            loadToBase(targetStats);
+        } else if (targetStats != null) {
             Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
             MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
             ForagerComponent collectorIsForager = collectorType.getComponent(ForagerComponent.class);
@@ -77,5 +82,16 @@ public class ResourceCollectComponent extends Component {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
         inventory.addWood(numCollected);
         logger.info("[+] The worker has " + Integer.toString(inventory.getWood()) + " woods");
+    }
+
+    private void loadToBase(ResourceStatsComponent baseStats) {
+        WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
+        baseStats.addIron(inventory.unloadMetal());
+        baseStats.addStone(inventory.unloadStone());
+        baseStats.addWood(inventory.unloadWood());
+        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getStone()) + " stones");
+        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getIron()) + " metal");
+        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getWood()) + " wood");
+        
     }
 }

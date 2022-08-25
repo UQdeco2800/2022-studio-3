@@ -139,5 +139,23 @@ public class WorkerInventoryComponent extends Component {
   public void addWood(int wood) {
     setWood(this.wood + wood);
   }    
+
+  public int unloadStone() {
+    int loaded = getStone();
+    setStone(0);
+    return loaded;
+  }
+
+  public int unloadMetal() {
+    int loaded = getMetal();
+    setMetal(0);
+    return loaded;
+  }
+
+  public int unloadWood() {
+    int loaded = getWood();
+    setWood(0);
+    return loaded;
+  }
 }
 

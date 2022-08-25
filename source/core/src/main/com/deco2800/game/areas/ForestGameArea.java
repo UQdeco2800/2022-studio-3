@@ -33,7 +33,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 MINER_SPAWN = new GridPoint2(20, 20);
   private static final GridPoint2 FORAGER_SPAWN = new GridPoint2(20, 15);
   private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
-  private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
+  private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 19);
   private static final GridPoint2 BASE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -84,8 +84,8 @@ public class ForestGameArea extends GameArea {
     //spawnGhosts();
     //spawnGhostKing();
     spawnMiner(); // Spawns a new worker unit
-    //spawnStone(); // Spawns a new stone unit to test Miner entity
-    // spawnTree(); // Spawns a new stone unit to test Forager entity
+    spawnStone(); // Spawns a new stone unit to test Miner entity
+    spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
     spawnBase(); // Spawns a base to test storage transfer`
 
@@ -158,7 +158,6 @@ public class ForestGameArea extends GameArea {
   private void spawnBase() {
     Entity newBase = BaseFactory.createBase();
     spawnEntityAt(newBase, BASE_SPAWN, true, true);
-
   }
 
   /**
