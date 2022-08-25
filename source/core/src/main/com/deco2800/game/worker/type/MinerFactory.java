@@ -17,4 +17,5 @@ public class MinerFactory {
         .addComponent(new CollectStatsComponent(2));
     }
     
+    
 }

@@ -12,6 +12,7 @@ import com.deco2800.game.physics.components.PhysicsComponent.AlignX;
 import com.deco2800.game.physics.components.PhysicsComponent.AlignY;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
+import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.resources.ResourceConfig;
 import com.deco2800.game.physics.components.HitboxComponent;
 
@@ -23,7 +24,8 @@ public class BaseFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.DEFAULT))
-            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));
+            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron))
+            .addComponent(new BaseComponent());
         newBase.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         newBase.getComponent(TextureRenderComponent.class).scaleEntity();
         newBase.scaleHeight(2.5f);
