@@ -30,11 +30,6 @@ public class DialogueBox extends Actor {
     private Image dialogueImage;
 
     /**
-     * Scroll text if overflow has occurred
-     */
-    private final TextButton scrollTextButton;
-
-    /**
      * Dismiss this dialogueBox
      */
     private final TextButton dismissButton;
@@ -56,8 +51,8 @@ public class DialogueBox extends Actor {
 
         this.dialogueTitle = new Label(title, skin);
         this.dialogueText = new Label(text, skin);
+        /* TODO: set image to be mutable */
         this.dialogueImage = new Image(new Texture(Gdx.files.internal("images/dialogue_box_image_default.png")));
-        this.scrollTextButton = new TextButton("...", skin);
         this.dismissButton = new TextButton("dismiss", skin);
         this.dialogueTexture = new Texture(Gdx.files.internal("images/dialogue_box_background.png"));
         this.hidden = false;
@@ -65,6 +60,7 @@ public class DialogueBox extends Actor {
         this.setSize(Gdx.graphics.getWidth(), 150f);
         this.setPosition(0f, 0f);
 
+        /* adjust position of actors */
         layout();
     }
 
@@ -73,36 +69,57 @@ public class DialogueBox extends Actor {
      */
     public void layout() {
 
-        float titleHeight = this.dialogueTitle.getHeight();
-        float textHeight = this.dialogueText.getHeight();
-        float dismissButtonWidth = this.dismissButton.getWidth();
+        final float screenWidth = Gdx.graphics.getWidth();
 
-        /* title */
-        this.dialogueTitle.setAlignment(Align.topLeft);
-        this.dialogueTitle.setPosition(0f, 150f - titleHeight);
+        final float titleWidth = 120f;
 
-        /* text */
-        this.dialogueText.setAlignment(Align.topLeft);
-        this.dialogueText.setPosition(0f, 150f - titleHeight - textHeight);
+        final float imageSize = 128f;
 
-        /* image */
-        this.dialogueImage.setSize(128f, 128f);
-        this.dialogueImage.setPosition(Gdx.graphics.getWidth() - dismissButtonWidth - this.dialogueImage.getWidth() - 10f, 10f);
+        final float dialogueBoxHeight = 150f;
+        final float dialogueBoxWidth = screenWidth - 550f;
 
-        /* scrollTextButton */
-        this.scrollTextButton.setPosition(0f, 0f);
+        final float dismissButtonHeight = this.dismissButton.getHeight();
+        final float dismissButtonWidth = this.dismissButton.getWidth();
+
+        final float spacer = 5f;
+
+        /* dialogue box */
+        this.setPosition((screenWidth / 2f) - (screenWidth - 550f) / 2f, 2 * spacer);
+        this.setSize(screenWidth - 550f, dialogueBoxHeight);
+
+        final float dialogueBoxX = this.getX();
+        final float dialogueBoxY = this.getY();
 
         /* dismissButton */
-        this.dismissButton.setPosition(Gdx.graphics.getWidth() - dismissButtonWidth, 0f);
+        this.dismissButton.setPosition(dialogueBoxX + spacer, dialogueBoxY + dialogueBoxHeight - dismissButtonHeight - spacer);
+
+        /* text */
+        this.dialogueText.setAlignment(Align.left);
+        this.dialogueText.setWrap(true);
+        this.dialogueText.setSize(dialogueBoxWidth - dismissButtonWidth - imageSize - titleWidth - spacer,
+                dialogueBoxHeight);
+        this.dialogueText.setPosition(dialogueBoxX + dismissButtonWidth + 2 * spacer,
+                dialogueBoxY);
+
+        /* image */
+        this.dialogueImage.setSize(imageSize, imageSize);
+        this.dialogueImage.setPosition((dialogueBoxX + dialogueBoxWidth) - titleWidth - imageSize,
+                this.getY() + 12f);
+
+        /* title */
+        this.dialogueTitle.setAlignment(Align.center);
+        this.dialogueTitle.setWrap(true);
+        this.dialogueTitle.setSize(titleWidth, dialogueBoxHeight);
+        this.dialogueTitle.setPosition(dialogueBoxX + dialogueBoxWidth - titleWidth, dialogueBoxY);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        batch.draw(this.dialogueTexture, 0f, 0f);
+        batch.draw(this.dialogueTexture, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0, 0,
+                this.dialogueTexture.getWidth(), this.dialogueTexture.getHeight(), false, false);
         this.dialogueTitle.draw(batch, parentAlpha);
         this.dialogueText.draw(batch, parentAlpha);
-        this.scrollTextButton.draw(batch, parentAlpha);
         this.dismissButton.draw(batch, parentAlpha);
 
         if (this.dialogueImage != null)
