@@ -138,4 +138,15 @@ public class ResourceStatsComponent extends Component {
         logger.info("[+] num of stone in Tree() after : " + Integer.toString(getWood()));
         return collector.getCollectionAmount();
     }
+
+    /* 
+    public int collectIron(CollectStatsComponent collector){
+        int newIron = getIron() - collector.getCollectionAmount();
+        logger.info("[+] num of iron in Mine() before : " + Integer.toString(getIron()));
+        setIron(newIron);
+        logger.info("[+] num of stone in Tree() after : " + Integer.toString(getIron()));
+        return collector.getCollectionAmount();
+    }
+    */
+    
 }

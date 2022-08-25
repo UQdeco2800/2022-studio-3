@@ -14,6 +14,7 @@ import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.worker.BaseFactory;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.resources.Stone;
 import com.deco2800.game.worker.resources.Tree;
@@ -33,8 +34,10 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 FORAGER_SPAWN = new GridPoint2(20, 15);
   private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
   private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
+  private static final GridPoint2 BASE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+          "images/base.png",
           "images/worker.png",
           "images/worker_highlight.png",
           "images/mud.png",
@@ -81,9 +84,10 @@ public class ForestGameArea extends GameArea {
     //spawnGhosts();
     //spawnGhostKing();
     spawnMiner(); // Spawns a new worker unit
-    spawnStone(); // Spawns a new stone unit to test Miner entity
-    spawnTree(); // Spawns a new stone unit to test Forager entity
+    //spawnStone(); // Spawns a new stone unit to test Miner entity
+    // spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
+    spawnBase(); // Spawns a base to test storage transfer`
 
     playMusic();
   }
@@ -149,6 +153,12 @@ public class ForestGameArea extends GameArea {
   private void spawnTree() {
     Entity newTree = Tree.createTree();
     spawnEntityAt(newTree, TREE_SPAWN, true, true);
+  }
+
+  private void spawnBase() {
+    Entity newBase = BaseFactory.createBase();
+    spawnEntityAt(newBase, BASE_SPAWN, true, true);
+
   }
 
   /**

@@ -51,13 +51,13 @@ public class ResourceCollectComponent extends Component {
             Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
             MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
             ForagerComponent collectorIsForager = collectorType.getComponent(ForagerComponent.class);
-            if(collectorIsMiner != null){
+            if (collectorIsMiner != null){
                 // If the worker type is Miner
                 collectStone(targetStats);
-            }else if(collectorIsForager != null){
+            } else if(collectorIsForager != null){
                 // If the worker type is Forager
                 collectWood(targetStats);
-            }else{
+            } else{
                 targetStats.collect(collectStats);
             }
         }
