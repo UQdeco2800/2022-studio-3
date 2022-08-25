@@ -53,7 +53,7 @@ public class DialogueBox extends Actor {
         this.dialogueText = new Label(text, skin);
         /* TODO: set image to be mutable */
         this.dialogueImage = new Image(new Texture(Gdx.files.internal("images/dialogue_box_image_default.png")));
-        this.dismissButton = new TextButton("dismiss", skin);
+        this.dismissButton = new TextButton("x", skin);
         this.dialogueTexture = new Texture(Gdx.files.internal("images/dialogue_box_background.png"));
         this.hidden = false;
 
