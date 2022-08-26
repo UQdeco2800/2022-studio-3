@@ -12,14 +12,12 @@ import com.deco2800.game.physics.components.HitboxComponent;
 public class Tree {
     private static final ResourceConfig stats = FileLoader.readClass(ResourceConfig.class, "configs/tree.json");
 
-    public static Entity createTree(){
-        
-        Entity stone = new Entity()
+    public static Entity createTree() {
+        return new Entity()
             .addComponent(new TextureRenderComponent("images/heart.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
             .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));
-        return stone;
     }
 }

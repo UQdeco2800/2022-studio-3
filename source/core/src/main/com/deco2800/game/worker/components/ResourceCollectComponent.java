@@ -92,6 +92,5 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getStone()) + " stones");
         logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getIron()) + " metal");
         logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getWood()) + " wood");
-        
     }
 }
