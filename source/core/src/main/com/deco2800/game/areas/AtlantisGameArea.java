@@ -78,7 +78,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
-        //Test minimap component
+        //Add minimap component
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
         //Set tile size for camera

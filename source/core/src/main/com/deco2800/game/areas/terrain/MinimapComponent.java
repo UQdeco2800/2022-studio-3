@@ -41,7 +41,7 @@ public class MinimapComponent extends RenderComponent {
     private final OrthographicCamera camera;
 
     /**
-     * Size of the minimap as a float - square side length
+     * Scale the Minimap in size multiplicatively
      */
     private final float MINIMAP_SCALE = 1.5f;
 
