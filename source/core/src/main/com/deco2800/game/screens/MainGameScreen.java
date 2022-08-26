@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.dialoguebox.DialogueBox;
+import com.deco2800.game.components.dialoguebox.DialogueBoxActions;
+import com.deco2800.game.components.dialoguebox.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -38,11 +41,15 @@ public class MainGameScreen extends ScreenAdapter {
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
     private final GdxGame game;
+
+    private final DialogueBox dialogueBox;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
+
+        this.dialogueBox = new DialogueBox("", "");
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());

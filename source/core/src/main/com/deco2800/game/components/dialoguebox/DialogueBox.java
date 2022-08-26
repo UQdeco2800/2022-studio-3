@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -45,15 +46,16 @@ public class DialogueBox extends Actor {
      *
      * @param title - dialogue box title
      * @param text  - dialogue box text
-     * @param skin  - dialogue box ui style
      */
-    public DialogueBox(String title, String text, Skin skin) {
+    public DialogueBox(String title, String text) {
 
-        this.dialogueTitle = new Label(title, skin);
-        this.dialogueText = new Label(text, skin);
+        Skin dialogueSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+
+        this.dialogueTitle = new Label(title, dialogueSkin);
+        this.dialogueText = new Label(text, dialogueSkin);
         /* TODO: set image to be mutable */
         this.dialogueImage = new Image(new Texture(Gdx.files.internal("images/dialogue_box_image_default.png")));
-        this.dismissButton = new TextButton("x", skin);
+        this.dismissButton = new TextButton("x", dialogueSkin);
         this.dialogueTexture = new Texture(Gdx.files.internal("images/dialogue_box_background.png"));
         this.hidden = false;
 
@@ -91,7 +93,8 @@ public class DialogueBox extends Actor {
         final float dialogueBoxY = this.getY();
 
         /* dismissButton */
-        this.dismissButton.setPosition(dialogueBoxX + spacer, dialogueBoxY + dialogueBoxHeight - dismissButtonHeight - spacer);
+        this.dismissButton.setPosition(dialogueBoxX + spacer,
+                dialogueBoxY + dialogueBoxHeight - dismissButtonHeight - spacer);
 
         /* text */
         this.dialogueText.setAlignment(Align.left);
@@ -165,6 +168,7 @@ public class DialogueBox extends Actor {
 
     /**
      * Sets the current dialogue box text
+     *
      * @param text - text to be set
      *             <p>
      *             Note: if text is null or empty, the text is cleared
@@ -176,6 +180,7 @@ public class DialogueBox extends Actor {
 
     /**
      * Sets the current dialogue box texture
+     *
      * @param texture - texture to be set
      *                <p>
      *                Note: if texture is null, no change to the current texture is made
@@ -189,6 +194,7 @@ public class DialogueBox extends Actor {
 
     /**
      * Sets the current dialogue box image
+     *
      * @param image - image to be set
      *              <p>
      *              Note: if image is null, the dialogue box image is not drawn
@@ -214,5 +220,15 @@ public class DialogueBox extends Actor {
 
         if (this.isHidden())
             this.setVisible(true);
+    }
+
+    public boolean addListener(EventListener listener) {
+
+        if (listener == null)
+            return false;
+
+        this.dismissButton.addListener(listener);
+
+        return true;
     }
 }
