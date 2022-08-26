@@ -5,25 +5,27 @@ import com.deco2800.game.utils.random.RandomTimer;
 import com.deco2800.game.services.GameTime;
 
 public class RandomInterrupt {
-
     /**
-     * Interrupt the game if the timer is expired.
-     * @return timeScale to 0 if the time runs out.
+     * Call the GameTime class.
      */
-    public void interruptGame() {
-        RandomTimer rT = new RandomTimer(0,300); // Initial for example
-        GameTime gT = new GameTime();
-        if (rT.isRandomTimerExpired()) {
-            gT.setTimeScale(0f); // No way to revert it back for now.
-        }
-    }
+    GameTime gT = new GameTime();
 
     /**
-     * Resume the game regardles if it interrupted or not
+     * set the random interrupt with lower bound and upper bound.
+     * @return pause the game after random time between lowerBound and upperBound
+     */
+    public RandomInterrupt(int lowerBound, int upperBound) {
+        RandomTimer rT = new RandomTimer(lowerBound,upperBound);
+        while (!(rT.isRandomTimerExpired())) {
+            continue;
+        }
+        gT.setTimeScale(0f);
+    }
+    /**
+     * Resume the game regardles if it is interrupted or not
      * @return timeScale to 1
      */
     public void resumeGame() {
-        GameTime gT = new GameTime();
         gT.setTimeScale(1f);
     }
 }
