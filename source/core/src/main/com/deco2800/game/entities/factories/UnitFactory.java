@@ -22,12 +22,12 @@ public class UnitFactory {
     public static Entity createExampleUnit() {
         ArrayList<Entity> troops = new ArrayList<>();
         for (int i = 0; i < stats.troops; i++) {
-            //TODO: add propagation of animations to this construction
+            //TODO: add animations to this construction
             Entity troop = new Entity().addComponent(new TextureRenderComponent(
                             "images/simpleman.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
                     .addComponent(new CombatStatsComponent(stats.health,
                             stats.baseAttack, stats.baseDefence));
             PhysicsUtils.setScaledCollider(troop, 0.8f, 1f);
@@ -38,7 +38,10 @@ public class UnitFactory {
         // TODO: add control to unit entity
         Entity unit =
                 new Entity().addComponent(new TroopContainerComponent(troops,
-                        50f));
+                        50f))
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+        PhysicsUtils.setRadiusCollider(unit, stats.movementRadius);
         return unit;
     }
 }

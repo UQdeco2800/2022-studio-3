@@ -16,6 +16,15 @@ public class PhysicsUtils {
             boundingBox, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
   }
 
+  public static void setScaledRadius(Entity entity, float scale) {
+
+  }
+
+  public static void setRadiusCollider(Entity entity, float radius) {
+    entity.getComponent(ColliderComponent.class)
+            .setAsRadius(radius);
+  }
+
   private PhysicsUtils() {
     throw new IllegalStateException("Instantiating static util class");
   }
