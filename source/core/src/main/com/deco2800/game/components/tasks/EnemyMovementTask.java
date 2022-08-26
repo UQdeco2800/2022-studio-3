@@ -9,12 +9,12 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 /**
  * enemy move toward a target in constant speed
  */
-public class moveTask extends DefaultTask implements PriorityTask {
+public class EnemyMovementTask extends DefaultTask implements PriorityTask {
     private final Vector2 target;
     private MovementTask movementTask;
     private final float speed;
 
-    public moveTask(Vector2 target, float speed) {
+    public EnemyMovementTask(Vector2 target, float speed) {
         this.target = target;
         this.speed = speed;
     }
