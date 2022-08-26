@@ -77,9 +77,6 @@ public class MapGenerator {
      * @param cityWidth  width of city size in tiles
      * @param cityHeight height of city size in tiles
      * @param islandSize total length of the island in tiles
-     * @requires islandSize < (mapWidth - citySize), islandSize < 2, mapWidth > 0, mapHeight > 0,
-     * citySize >= 1
-     * @ensures there is enough room to fit the island and the city
      */
     public MapGenerator(int mapWidth, int mapHeight, int cityWidth, int cityHeight, int islandSize)
             throws IllegalArgumentException {
@@ -301,8 +298,6 @@ public class MapGenerator {
     /**
      * Adds a coordinate to the map as an island tile
      * @param position the position of the island tile to be added
-     * @requires position to be within the map bounds
-     * @ensures the coordinate can be added without crashing
      */
     private void addPoint(Coordinate position) {
         map[position.getY()][position.getX()] = islandChar;
