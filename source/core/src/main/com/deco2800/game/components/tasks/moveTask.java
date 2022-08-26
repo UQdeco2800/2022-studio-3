@@ -45,8 +45,8 @@ public class moveTask extends DefaultTask implements PriorityTask {
     private void updateSpeed () {
         Body body = this.owner.getEntity().getComponent(PhysicsComponent.class).getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = new Vector2(speed, 0).scl(new Vector2(3f,
-                3f));
+        Vector2 desiredVelocity = new Vector2(speed, 0).scl(new Vector2(2f,
+                2f));
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
