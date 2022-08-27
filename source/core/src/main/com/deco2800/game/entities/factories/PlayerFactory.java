@@ -54,7 +54,7 @@ public class PlayerFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                    .addComponent(new BoxBoyActions())
+                    .addComponent(new BoxBoyActions());
                     //.addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
                     //.addComponent(new PlayerStatsDisplay());
 

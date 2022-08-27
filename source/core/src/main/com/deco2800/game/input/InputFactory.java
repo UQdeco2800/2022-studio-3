@@ -55,4 +55,11 @@ public abstract class InputFactory {
    * @return Terminal input handler
    */
   public abstract InputComponent createForTerminal();
+  
+  /**
+   * Creates an input handler for the camera
+   *
+   * @return Terminal input handler
+   */
+  public abstract InputComponent createForCamera();
 }
