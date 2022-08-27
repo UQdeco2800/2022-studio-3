@@ -14,6 +14,9 @@ import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
+import com.deco2800.game.worker.BaseFactory;
+import com.deco2800.game.worker.WorkerFactory;
+import com.deco2800.game.worker.type.MinerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -80,11 +83,10 @@ public class ForestGameArea extends GameArea {
     //spawnGhosts();
     //spawnGhostKing();
     spawnMiner(); // Spawns a new worker unit
-    spawnStone(); // Spawns a new stone unit to test Miner entity
-    spawnTree(); // Spawns a new stone unit to test Forager entity
+    // spawnStone(); // Spawns a new stone unit to test Miner entity
+    // spawnTree(); // Spawns a new stone unit to test Forager entity
     spawnMiner();
     spawnBase(); // Spawns a base to test storage transfer`
-
     playMusic();
   }
 
@@ -138,9 +140,9 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(tree2, new GridPoint2(0,10), false, false);
 
     Entity tree3 = ObstacleFactory.createTree();
-    spawnEntityAt(tree3, new GridPoint2(10,0), false, false);
+    spawnEntityAt(tree3, new GridPoint2(10,0), false, false); 
+  }
 
-<<<<<<< HEAD
   private void spawnBase() {
     Entity newBase = BaseFactory.createBase();
     spawnEntityAt(newBase, BASE_SPAWN, true, true);
@@ -168,8 +170,6 @@ public class ForestGameArea extends GameArea {
   private void spawnWorker() {
     Entity newWorker = WorkerFactory.createWorker();
     spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
-=======
->>>>>>> 23c426ae811714bff5c126e14f5352a501cd514d
   }
 
   private Entity spawnPlayer() {
