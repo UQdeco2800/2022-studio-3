@@ -1,15 +1,12 @@
 {
-  "ghoul": {
-    "baseHealth": 40.0,
-    "baseAttack": 10.0,
-    "baseDefence": 10.0,
-    "baseSpeed": 10.0
+  "ghost": {
+    "health": 40,
+    "baseAttack": 10
   },
-  "demon": {
-    "baseHealth": 40.0,
-    "baseAttack": 20.0,
-    "baseDefence": 10.0,
-    "baseSpeed": 5.0
+  "ghostKing": {
+    "health": 100,
+    "baseAttack": 25,
+    "spookyFactor": 7
   }
 }
 

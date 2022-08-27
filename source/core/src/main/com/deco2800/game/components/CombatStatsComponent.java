@@ -8,27 +8,67 @@ import org.slf4j.LoggerFactory;
  * which engage it combat should have an instance of this class registered. This class can be
  * extended for more specific combat needs.
  */
-public class CombatStatsComponent extends BaseEntityStatsComponent {
+public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
-  private float attack;
-  private float defence;
-  private float speed;
+  private int health;
+  private int baseAttack;
 
-  public CombatStatsComponent(float health, float attack, float defence, float speed) {
-    super(health);
-    setAttack(attack);
-    setDefence(defence);
-    setSpeed(speed);
+  public CombatStatsComponent(int health, int baseAttack) {
+    setHealth(health);
+    setBaseAttack(baseAttack);
   }
 
   /**
-   * Returns the entity's attack damage.
+   * Returns true if the entity's has 0 health, otherwise false.
    *
-   * @return attack damage
+   * @return is player dead
    */
-  public float getAttack() {
-    return attack;
+  public Boolean isDead() {
+    return health == 0;
+  }
+
+  /**
+   * Returns the entity's health.
+   *
+   * @return entity's health
+   */
+  public int getHealth() {
+    return health;
+  }
+
+  /**
+   * Sets the entity's health. Health has a minimum bound of 0.
+   *
+   * @param health health
+   */
+  public void setHealth(int health) {
+    if (health >= 0) {
+      this.health = health;
+    } else {
+      this.health = 0;
+    }
+    if (entity != null) {
+      entity.getEvents().trigger("updateHealth", this.health);
+    }
+  }
+
+  /**
+   * Adds to the player's health. The amount added can be negative.
+   *
+   * @param health health to add
+   */
+  public void addHealth(int health) {
+    setHealth(this.health + health);
+  }
+
+  /**
+   * Returns the entity's base attack damage.
+   *
+   * @return base attack damage
+   */
+  public int getBaseAttack() {
+    return baseAttack;
   }
 
   /**
@@ -36,60 +76,16 @@ public class CombatStatsComponent extends BaseEntityStatsComponent {
    *
    * @param attack Attack damage
    */
-  public void setAttack(float attack) {
+  public void setBaseAttack(int attack) {
     if (attack >= 0) {
-      this.attack = attack;
+      this.baseAttack = attack;
     } else {
-      logger.error("Can not set attack to a negative attack value");
-    }
-  }
-
-  /**
-   * Returns the entity's defence ability
-   *
-   * @return defence ability
-   */
-  public float getDefence() {
-    return defence;
-  }
-
-  /**
-   * Sets the entity's defence ability, Defence ability has a minimum bound of 0.
-   *
-   * @param defence Defence ability
-   */
-  public void setDefence(float defence) {
-    if (defence >= 0) {
-      this.defence = defence;
-    } else {
-      logger.error("Can not set defence to a negative defence value");
-    }
-  }
-
-  /**
-   * Returns the entity's speed, this speed values applies for attacks and movement
-   *
-   * @return entity's speed
-   */
-  public float getSpeed() {
-    return speed;
-  }
-
-  /**
-   * Sets the entity's speed, Speed has a minimum bound of 0.
-   *
-   * @param speed Speed of the entity
-   */
-  public void setSpeed(float speed) {
-    if (speed >= 0) {
-      this.speed = speed;
-    } else {
-      logger.error("Can not set speed to a negative speed value");
+      logger.error("Can not set base attack to a negative attack value");
     }
   }
 
   public void hit(CombatStatsComponent attacker) {
-    float newHealth = getHealth() - attacker.getAttack();
+    int newHealth = getHealth() - attacker.getBaseAttack();
     setHealth(newHealth);
   }
 }
