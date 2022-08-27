@@ -12,12 +12,12 @@ import com.deco2800.game.physics.components.HitboxComponent;
 public class StoneFactory {
     private static final ResourceConfig stats = FileLoader.readClass(ResourceConfig.class, "configs/stone.json");
 
-    public static Entity createStone(){
+    public static Entity createStone() {
         return new Entity()
             .addComponent(new TextureRenderComponent("images/mud.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
             .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));
-    }
+    } 
 }
