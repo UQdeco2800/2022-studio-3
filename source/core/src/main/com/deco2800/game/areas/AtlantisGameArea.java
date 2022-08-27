@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.ObstacleFactory;
@@ -38,7 +39,9 @@ public class AtlantisGameArea extends GameArea {
             "images/hex_grass_3.png",
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
-            "images/iso_grass_3.png"
+            "images/iso_grass_3.png",
+            "images/Information_Box_Deepsea.png"
+
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -71,6 +74,11 @@ public class AtlantisGameArea extends GameArea {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Atlantis' Legacy"));
         spawnEntity(ui);
+
+        Entity infoUi = new Entity();
+        infoUi.addComponent(new InfoBoxDisplay());
+        spawnEntity(infoUi);
+        System.out.println("3");
     }
 
     private void spawnTerrain() {
