@@ -3,6 +3,9 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
+import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
@@ -14,14 +17,11 @@ import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.worker.BaseFactory;
-import com.deco2800.game.worker.WorkerFactory;
-import com.deco2800.game.worker.resources.Stone;
-import com.deco2800.game.worker.resources.Tree;
-import com.deco2800.game.worker.type.MinerFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class ForestGameArea extends GameArea {
@@ -29,31 +29,21 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
-  private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 MINER_SPAWN = new GridPoint2(20, 20);
-  private static final GridPoint2 FORAGER_SPAWN = new GridPoint2(20, 15);
-  private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
-  private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
-  private static final GridPoint2 BASE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-          "images/base.png",
-          "images/worker.png",
-          "images/worker_highlight.png",
-          "images/mud.png",
-          "images/box_boy_leaf.png",
-          "images/tree.png",
-          "images/ghost_king.png",
-          "images/ghost_1.png",
-          "images/grass_1.png",
-          "images/grass_2.png",
-          "images/grass_3.png",
-          "images/hex_grass_1.png",
-          "images/hex_grass_2.png",
-          "images/hex_grass_3.png",
-          "images/iso_grass_1.png",
-          "images/iso_grass_2.png",
-          "images/iso_grass_3.png"
+    "images/box_boy_leaf.png",
+    "images/tree.png",
+    "images/ghost_king.png",
+    "images/ghost_1.png",
+    "images/grass_1.png",
+    "images/grass_2.png",
+    "images/grass_3.png",
+    "images/hex_grass_1.png",
+    "images/hex_grass_2.png",
+    "images/hex_grass_3.png",
+    "images/iso_grass_1.png",
+    "images/iso_grass_2.png",
+    "images/iso_grass_3.png"
   };
   private static final String[] forestTextureAtlases = {
     "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -79,15 +69,10 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    //spawnTrees();
-    //player = spawnPlayer();
+    spawnTrees();
+    player = spawnPlayer();
     //spawnGhosts();
     //spawnGhostKing();
-    spawnMiner(); // Spawns a new worker unit
-    //spawnStone(); // Spawns a new stone unit to test Miner entity
-    // spawnTree(); // Spawns a new stone unit to test Forager entity
-    spawnMiner();
-    spawnBase(); // Spawns a base to test storage transfer`
 
     playMusic();
   }
@@ -100,94 +85,59 @@ public class ForestGameArea extends GameArea {
 
   private void spawnTerrain() {
     // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO_ISO);
     spawnEntity(new Entity().addComponent(terrain));
+
+    //Move camera to player
+    MapGenerator mg = terrainFactory.getMapGenerator();
+    Map<String, Coordinate> cityDetails = mg.getCityDetails();
+    Coordinate centre = cityDetails.get("Centre");
+    Vector2 centreWorld = terrain.tileToWorldPosition(centre.getX(), mg.getHeight() - centre.getY());
+    terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-    // Left
-    spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-    // Right
-    spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
-    // Top
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
-    // Bottom
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+
+
+    for (int i = 0; i < mg.getWidth(); i++) {
+      for (int j = 0; j < mg.getHeight(); j++) {
+        if (mg.getMap()[j][i] == mg.getOceanChar()) {
+          Vector2 test = terrain.tileToWorldPosition(i,j);
+          GridPoint2 coord = new GridPoint2(i, mg.getHeight()-j);
+          spawnEntityAt(
+                  ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
+                  new GridPoint2(i, mg.getHeight() - j),
+                  true,
+                  false);
+        }
+      }
+    }
+
   }
 
   private void spawnTrees() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
-    }
-  }
+    Entity tree = ObstacleFactory.createTree();
+    spawnEntityAt(tree, new GridPoint2(0,0), false, false);
 
-  /**
-   * Creates and spawns a new Stone unit.
-   */
-  private void spawnStone() {
-    Entity newStone = Stone.createStone();
-    spawnEntityAt(newStone, STONE_SPAWN, true, true);
-  }
+    Entity tree2 = ObstacleFactory.createTree();
+    spawnEntityAt(tree2, new GridPoint2(0,10), false, false);
 
-  /**
-   * Creates and spawns a new Tree unit.
-   */
-  private void spawnTree() {
-    Entity newTree = Tree.createTree();
-    spawnEntityAt(newTree, TREE_SPAWN, true, true);
-  }
+    Entity tree3 = ObstacleFactory.createTree();
+    spawnEntityAt(tree3, new GridPoint2(10,0), false, false);
 
-  private void spawnBase() {
-    Entity newBase = BaseFactory.createBase();
-    spawnEntityAt(newBase, BASE_SPAWN, true, true);
-
-  }
-
-  /**
-   * Creates and spawns a new Miner unit
-   */
-  private void spawnMiner(){
-    Entity newMiner = MinerFactory.createMiner();
-    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
-  }
-
-  /**
-   * Creates and spawns a new Forager unit
-   */
-  /*private void spawnForager(){
-    Entity newForager = WorkerFactory.createForager();
-    spawnEntityAt(newForager, FORAGER_SPAWN, true, true);
-  }*/
-
-  /**
-   * Creates a new worker unit and spawns it somewhere random on the map.
-   */
-  private void spawnWorker() {
-    Entity newWorker = WorkerFactory.createWorker();
-    spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
   }
 
   private Entity spawnPlayer() {
+    MapGenerator mg = terrainFactory.getMapGenerator();
+    Map<String, Coordinate> cityDetails = mg.getCityDetails();
+    Coordinate centre = cityDetails.get("Centre");
+    GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
+    spawnEntityAt(newPlayer, spawn, true, true);
     return newPlayer;
   }
 
@@ -212,10 +162,10 @@ public class ForestGameArea extends GameArea {
   }
 
   private void playMusic() {
-    Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-    music.setLooping(true);
-    music.setVolume(0.3f);
-    music.play();
+    //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    //music.setLooping(true);
+    //music.setVolume(0.3f);
+    //music.play();
   }
 
   private void loadAssets() {

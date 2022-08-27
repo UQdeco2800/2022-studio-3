@@ -40,4 +40,15 @@ public class TouchInputFactory extends InputFactory{
     logger.debug("Creating terminal input handler");
     return new TouchTerminalInputComponent();
   }
+  
+  /**
+   * Creates an input handler for the camera
+   *
+   * @return Camera input handler
+   */
+  @Override
+  public InputComponent createForCamera() {
+    logger.debug("Creating camera input handler");
+    return new CameraInputComponent();
+  }
 }
