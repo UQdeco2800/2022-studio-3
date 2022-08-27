@@ -15,7 +15,6 @@ import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.worker.BaseFactory;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.resources.Stone;
 import com.deco2800.game.worker.resources.Tree;
@@ -139,12 +138,6 @@ public class ForestGameArea extends GameArea {
   private void spawnTree() {
     Entity newTree = Tree.createTree();
     spawnEntityAt(newTree, TREE_SPAWN, true, true);
-  }
-
-  private void spawnBase() {
-    Entity newBase = BaseFactory.createBase();
-    spawnEntityAt(newBase, BASE_SPAWN, true, true);
-
   }
 
   /**
