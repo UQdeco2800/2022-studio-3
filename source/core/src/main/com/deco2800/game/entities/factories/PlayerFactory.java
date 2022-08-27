@@ -1,6 +1,8 @@
 package com.deco2800.game.entities.factories;
 
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.player.BoxBoyActions;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
@@ -30,21 +32,31 @@ public class PlayerFactory {
    * Create a player entity.
    * @return entity
    */
-  public static Entity createPlayer() {
+  public static Entity createPlayer(ForestGameArea forestGameArea) {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-            .addComponent(new PlayerActions())
-            .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
-            .addComponent(new InventoryComponent(stats.gold))
-            .addComponent(inputComponent)
-            .addComponent(new PlayerStatsDisplay());
+            .addComponent(new PlayerActions(forestGameArea))
+            //.addComponent(new InventoryComponent(stats.gold))
+            .addComponent(inputComponent);
+            //.addComponent(new PlayerStatsDisplay());
+
+    return player;
+  }
+
+  public static Entity createBoxBoy() {
+
+    Entity player =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                    .addComponent(new BoxBoyActions())
+                    .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
+                    .addComponent(new PlayerStatsDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);

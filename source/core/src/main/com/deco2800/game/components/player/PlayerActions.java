@@ -1,9 +1,13 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -12,60 +16,51 @@ import com.deco2800.game.services.ServiceLocator;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
 
-  private PhysicsComponent physicsComponent;
-  private Vector2 walkDirection = Vector2.Zero.cpy();
-  private boolean moving = false;
+  private ForestGameArea forestGameArea;
+
+  private Array<Entity> friendlyUnits;
+
+  private Array<Entity> selectedUnits;
+  private Entity selectedUnit;
+
+  public PlayerActions(ForestGameArea forestGameArea) {
+    this.forestGameArea = forestGameArea;
+  }
 
   @Override
   public void create() {
-    physicsComponent = entity.getComponent(PhysicsComponent.class);
-    entity.getEvents().addListener("walk", this::walk);
-    entity.getEvents().addListener("walkStop", this::stopWalking);
-    entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("selectUnit", this::selectUnit);
+    entity.getEvents().addListener("selectUnits", this::selectUnits);
+
+//    entity.getEvents().addListener("walk", this::);
+//    entity.getEvents().addListener("walkStop", this::);
   }
 
   @Override
   public void update() {
-    if (moving) {
-      updateSpeed();
-    }
+
   }
 
-  private void updateSpeed() {
-    Body body = physicsComponent.getBody();
-    Vector2 velocity = body.getLinearVelocity();
-    Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
-    // impulse = (desiredVel - currentVel) * mass
-    Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
-    body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+  public void selectUnits(int startX, int startY, int endX, int endY) {
+    System.out.println(startX);
+    System.out.println(startY);
+    System.out.println(endX);
+    System.out.println(endY);
+//    for (Entity entity: friendlyUnits) {
+//      entity.getPosition()
+//    }
   }
 
-  /**
-   * Moves the player towards a given direction.
-   *
-   * @param direction direction to move in
-   */
-  void walk(Vector2 direction) {
-    this.walkDirection = direction;
-    moving = true;
+  public void selectUnit(int xCoordinate, int yCoordinate) {
+    System.out.println(xCoordinate);
+    System.out.println(yCoordinate);
   }
+//    for (Entity entity: friendlyUnits) {
+//      if (entity.getPosition().epsilonEquals()) {
+//        this.selectedUnit
+//      }
+//    }
+//  }
 
-  /**
-   * Stops the player from walking.
-   */
-  void stopWalking() {
-    this.walkDirection = Vector2.Zero.cpy();
-    updateSpeed();
-    moving = false;
-  }
-
-  /**
-   * Makes the player attack.
-   */
-  void attack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
-  }
 }

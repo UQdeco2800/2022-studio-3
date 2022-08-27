@@ -76,6 +76,20 @@ public class EventHandler {
   }
 
   /**
+   * Add a listener to an event with three arguments
+   *
+   * @param eventName name of the event
+   * @param listener function to call when event fires
+   * @param <T0> Type of arg 0
+   * @param <T1> Type of arg 1
+   * @param <T2> Type of arg 2
+   * @param <T3> Type of arg 3
+   */
+  public <T0, T1, T2, T3> void addListener(String eventName, EventListener4<T0, T1, T2, T3> listener) {
+    registerListener(eventName, listener);
+  }
+
+  /**
    * Trigger an event with no arguments
    *
    * @param eventName name of the event
@@ -134,6 +148,27 @@ public class EventHandler {
         eventName,
         (EventListener listener) ->
             ((EventListener3<T0, T1, T2>) listener).handle(arg0, arg1, arg2));
+  }
+
+  /**
+   * Trigger an event with one argument
+   *
+   * @param eventName name of the event
+   * @param arg0 arg 0 to pass to event
+   * @param arg1 arg 1 to pass to event
+   * @param arg2 arg 2 to pass to event
+   * @param <T0> Type of arg 0
+   * @param <T1> Type of arg 1
+   * @param <T2> Type of arg 2
+   * @param <T3> Type of arg 3
+   */
+  @SuppressWarnings("unchecked")
+  public <T0, T1, T2, T3> void trigger(String eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3) {
+    logTrigger(eventName);
+    forEachListener(
+            eventName,
+            (EventListener listener) ->
+                    ((EventListener4<T0, T1, T2, T3>) listener).handle(arg0, arg1, arg2, arg3));
   }
 
   private void registerListener(String eventName, EventListener listener) {
