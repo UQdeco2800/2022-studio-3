@@ -1,6 +1,7 @@
 package com.deco2800.game.entities.factories;
 
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.player.BoxBoyActions;
 import com.deco2800.game.components.player.InventoryComponent;
@@ -32,13 +33,13 @@ public class PlayerFactory {
    * Create a player entity.
    * @return entity
    */
-  public static Entity createPlayer(ForestGameArea forestGameArea) {
+  public static Entity createPlayer(GameArea gameArea) {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForPlayer();
 
     Entity player =
         new Entity()
-            .addComponent(new PlayerActions(forestGameArea))
+            .addComponent(new PlayerActions(gameArea))
             //.addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent);
             //.addComponent(new PlayerStatsDisplay());

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -19,15 +20,15 @@ import com.deco2800.game.utils.math.RandomUtils;
  */
 public class PlayerActions extends Component {
 
-  private ForestGameArea forestGameArea;
+  private GameArea gameArea;
 
   private Array<Entity> friendlyUnits = new Array<>();
 
   private Array<Entity> selectedUnits = new Array<>();
   private Entity selectedUnit = null;
 
-  public PlayerActions(ForestGameArea forestGameArea) {
-    this.forestGameArea = forestGameArea;
+  public PlayerActions(GameArea gameArea) {
+    this.gameArea = gameArea;
   }
 
   @Override
@@ -41,7 +42,6 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-
   }
 
   public void selectUnits(int startX, int startY, int endX, int endY) {
@@ -59,11 +59,7 @@ public class PlayerActions extends Component {
   public void selectUnit(int xCoordinate, int yCoordinate) {
     selectedUnits = new Array<>();
     selectedUnit = null;
-    System.out.println(xCoordinate);
-    System.out.println(yCoordinate);
-    Vector2 position = ServiceLocator.getRenderService().getStage().screenToStageCoordinates( new Vector2(xCoordinate, yCoordinate) );
-    System.out.println(position.x);
-    System.out.println(position.y);
+    System.out.println(xCoordinate + ":" + yCoordinate);
     for (Entity entity: friendlyUnits) {
       Vector2 startPosition = entity.getPosition();
       Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);

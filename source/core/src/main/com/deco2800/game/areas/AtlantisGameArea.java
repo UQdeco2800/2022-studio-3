@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -62,6 +63,7 @@ public class AtlantisGameArea extends GameArea {
         displayUI();
         spawnTerrain();
         player = spawnPlayer();
+        spawnBoxBoy();
         playMusic();
     }
 
@@ -143,11 +145,19 @@ public class AtlantisGameArea extends GameArea {
         }
     }
 
+    private Entity spawnPlayer() {
+
+        Entity newPlayer = PlayerFactory.createPlayer(this);
+        spawnEntity(newPlayer);
+
+        return newPlayer;
+    }
+
     /**
      * Spawns player at the centre of the Atlantean city
      * @return Entity corresponding to the spawned player
      */
-    private Entity spawnPlayer() {
+    private Entity spawnBoxBoy() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         //Get details of where the city is located
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
@@ -156,8 +166,9 @@ public class AtlantisGameArea extends GameArea {
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
-        Entity newPlayer = PlayerFactory.createPlayer();
+        Entity newPlayer = PlayerFactory.createBoxBoy();
         spawnEntityAt(newPlayer, spawn, true, true);
+        player.getComponent(PlayerActions.class).addFriendly(newPlayer);
 
         //Move camera to player
         Vector2 centreWorld = terrain.tileToWorldPosition(spawn.x, spawn.y);
@@ -168,7 +179,7 @@ public class AtlantisGameArea extends GameArea {
 
 
     private void playMusic() {
-        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        //Music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
         //music.setLooping(true);
         //music.setVolume(0.3f);
         //music.play();

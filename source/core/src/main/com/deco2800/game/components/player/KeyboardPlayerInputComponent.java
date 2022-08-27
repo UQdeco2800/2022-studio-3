@@ -103,8 +103,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("selectUnits", touchDownX, touchDownX, touchUpX, touchUpY);
     }
-    this.touchDownX = -1;
-    this.touchDownY = -1;
     return true;
   }
 
