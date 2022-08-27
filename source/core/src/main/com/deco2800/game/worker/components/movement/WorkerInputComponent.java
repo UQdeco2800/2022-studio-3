@@ -52,10 +52,6 @@ public class WorkerInputComponent extends InputComponent {
             // Determine if user is trying to select the entity.
             if (inEntityBounds(cursorWorldPos.x, cursorWorldPos.y)) {
                 isSelected = true;
-                // Change sprite to worker_highlight.png
-                entity.getComponent(TextureRenderComponent.class).setTexture(
-                        ServiceLocator.getResourceService().getAsset("images/worker_highlight.png", Texture.class)
-                );
             }
         }
         return false;
@@ -72,10 +68,6 @@ public class WorkerInputComponent extends InputComponent {
         if (keyCode == Input.Keys.ESCAPE) {
             // Deselect the worker (if not already)
             isSelected = false;
-            // Change sprite to worker.png
-            entity.getComponent(TextureRenderComponent.class).setTexture(
-                    ServiceLocator.getResourceService().getAsset("images/worker.png", Texture.class)
-            );
         }
         return false;
     }

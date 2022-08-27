@@ -48,7 +48,6 @@ public class ResourceCollectComponent extends Component {
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
-
         BaseComponent isBase = target.getComponent(BaseComponent.class);
         if (isBase != null) {
             loadToBase(targetStats);
@@ -56,7 +55,7 @@ public class ResourceCollectComponent extends Component {
             Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
             MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
             ForagerComponent collectorIsForager = collectorType.getComponent(ForagerComponent.class);
-            if (collectorIsMiner != null){
+            if (collectorIsMiner != null) {
                 // If the worker type is Miner
                 collectStone(targetStats);
             } else if(collectorIsForager != null){
