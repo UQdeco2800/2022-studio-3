@@ -12,6 +12,8 @@ public class RandomInterrupt {
 
     /**
      * set the random interrupt with lower bound and upper bound.
+     * @param lowerBound: integer for the fastest time to wait for interrupt
+     * @param upperBound: integer for the slowest time to wait for interrupt
      * @return pause the game after random time between lowerBound and upperBound
      */
     public RandomInterrupt(int lowerBound, int upperBound) {

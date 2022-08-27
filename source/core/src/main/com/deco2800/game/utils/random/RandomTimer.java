@@ -19,6 +19,10 @@ public class RandomTimer {
 
     /**
      * Setting up random timer to the class variable.
+     *
+     * @param lowerIntervalSeconds is for the lowest possible randomization value
+     * @param upperIntervalSeconds is for the highest possible randomization value
+     *
      * @return setting delay for the RandomTimer class.
      */
     public RandomTimer(int lowerIntervalSeconds, int upperIntervalSeconds) {
