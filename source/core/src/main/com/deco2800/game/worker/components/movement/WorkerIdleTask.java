@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(WorkerIdleTask.class);
-
+    private boolean idling = true;
     private WorkerMovementTask movementTask;
     private Vector2 startPos;
 
@@ -33,6 +33,11 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     public void update() {
         if (movementTask.isMoving()) {
             movementTask.update();
+        } else if (!idling) {
+            owner.getEntity().getEvents().trigger("workerIdleAnimate");
+            idling = true;
+        } else {
+            idling = false;
         }
     }
 
@@ -46,5 +51,7 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         movementTask.stop();
         movementTask.setTarget(target);
         movementTask.start();
+        // Trigger movement animation
+        owner.getEntity().getEvents().trigger("workerWalkAnimate");
     }
 }

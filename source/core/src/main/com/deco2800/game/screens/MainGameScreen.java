@@ -70,7 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
 
-    //Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
+    // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
     AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
     AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
     atlantisGameArea.create();

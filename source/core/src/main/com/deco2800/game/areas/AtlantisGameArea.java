@@ -13,6 +13,7 @@ import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.worker.type.ForagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Map;
@@ -37,10 +38,12 @@ public class AtlantisGameArea extends GameArea {
             "images/hex_grass_3.png",
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
-            "images/iso_grass_3.png"
+            "images/iso_grass_3.png",
+            "images/forager.png"
     };
     private static final String[] forestTextureAtlases = {
-            "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+            "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
+            "images/forager.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -61,8 +64,9 @@ public class AtlantisGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        player = spawnPlayer();
+        //player = spawnPlayer();
         playMusic();
+        spawnForager();
     }
 
     private void displayUI() {
@@ -166,6 +170,23 @@ public class AtlantisGameArea extends GameArea {
         return newPlayer;
     }
 
+    /**
+     * Spawns forager at the centre of the Atlantean city
+     * @return entity corresponding to the spawned forager
+     */
+    private Entity spawnForager() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        // Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        // Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        // Spawn forager at centre of city
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+
+        Entity newForager = ForagerFactory.createForager();
+        spawnEntityAt(newForager, spawn, true, true);
+        return newForager;
+    }
 
     private void playMusic() {
         //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);

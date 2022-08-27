@@ -3,7 +3,6 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainFactory;
@@ -12,7 +11,6 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -25,7 +23,6 @@ import com.deco2800.game.worker.type.MinerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.Map;
 
 /** Forest area for the demo game with trees, a player, and some enemies. */
@@ -43,8 +40,7 @@ public class ForestGameArea extends GameArea {
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/base.png",
-    "images/worker.png",
-    "images/worker_highlight.png",
+    "images/forager.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -85,8 +81,6 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
-    spawnMiner(); // Spawns a new worker unit
-    spawnBase(); // Spawns a base to test storage transfer`
     //spawnGhosts();
     //spawnGhostKing();
 
@@ -104,7 +98,7 @@ public class ForestGameArea extends GameArea {
     terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO_ISO);
     spawnEntity(new Entity().addComponent(terrain));
 
-    //Move camera to player
+    // Move camera to player
     MapGenerator mg = terrainFactory.getMapGenerator();
     Map<String, Coordinate> cityDetails = mg.getCityDetails();
     Coordinate centre = cityDetails.get("Centre");
@@ -123,7 +117,8 @@ public class ForestGameArea extends GameArea {
                   ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
                   new GridPoint2(i, mg.getHeight() - j),
                   true,
-                  false);
+                  false
+          );
         }
       }
     }

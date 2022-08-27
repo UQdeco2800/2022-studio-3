@@ -10,7 +10,6 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
@@ -33,7 +32,6 @@ public class WorkerFactory {
         AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
         Entity worker =
                 new Entity()
-                        .addComponent(new TextureRenderComponent("images/worker.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
@@ -45,7 +43,6 @@ public class WorkerFactory {
 
         PhysicsUtils.setScaledCollider(worker, 2f, 2f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
-        worker.getComponent(TextureRenderComponent.class).scaleEntity();
         return worker;
     }
 

@@ -1,0 +1,47 @@
+forager.png
+size: 3072, 1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+forager_idle
+  rotate: false
+  xy: 256, 256
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+forager_move
+  rotate: false
+  xy: 256, 256
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+forager_move
+  rotate: false
+  xy: 1280, 256
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 1
+forager_move
+  rotate: false
+  xy: 256, 256
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 2
+ forager_move
+   rotate: false
+   xy: 2304, 256
+   size: 512, 512
+   orig: 512, 512
+   offset: 0, 0
+   index: 3
+ default
+   rotate: false
+   xy: 256, 256
+   size: 512, 512
+   orig: 512, 512
+   offset: 0, 0
+   index: 0
