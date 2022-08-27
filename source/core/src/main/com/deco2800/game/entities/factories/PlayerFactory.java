@@ -55,7 +55,7 @@ public class PlayerFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
                     .addComponent(new BoxBoyActions())
-                    .addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
+                    //.addComponent(new CombatStatsComponent(stats.health, stats.baseAttack))
                     .addComponent(new PlayerStatsDisplay());
 
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
