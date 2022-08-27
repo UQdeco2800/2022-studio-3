@@ -17,6 +17,11 @@ import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.worker.BaseFactory;
+import com.deco2800.game.worker.WorkerFactory;
+import com.deco2800.game.worker.resources.Stone;
+import com.deco2800.game.worker.resources.Tree;
+import com.deco2800.game.worker.type.MinerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +34,17 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 MINER_SPAWN = new GridPoint2(20, 20);
+  private static final GridPoint2 FORAGER_SPAWN = new GridPoint2(20, 15);
+  private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
+  private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
+  private static final GridPoint2 BASE_SPAWN = new GridPoint2(23, 15);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
+    "images/base.png",
+    "images/worker.png",
+    "images/worker_highlight.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
     "images/ghost_king.png",
@@ -71,6 +85,8 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    spawnMiner(); // Spawns a new worker unit
+    spawnBase(); // Spawns a base to test storage transfer`
     //spawnGhosts();
     //spawnGhostKing();
 
@@ -98,8 +114,6 @@ public class ForestGameArea extends GameArea {
     // Terrain walls
     float tileSize = terrain.getTileSize();
 
-
-
     for (int i = 0; i < mg.getWidth(); i++) {
       for (int j = 0; j < mg.getHeight(); j++) {
         if (mg.getMap()[j][i] == mg.getOceanChar()) {
@@ -114,6 +128,44 @@ public class ForestGameArea extends GameArea {
       }
     }
 
+  }
+
+  /**
+   * Creates and spawns a new Stone entity.
+   */
+  private void spawnStone() {
+    Entity newStone = Stone.createStone();
+    spawnEntityAt(newStone, STONE_SPAWN, true, true);
+  }
+
+  /**
+   * Creates and spawns a new Tree entity.
+   */
+  private void spawnTree() {
+    Entity newTree = Tree.createTree();
+    spawnEntityAt(newTree, TREE_SPAWN, true, true);
+  }
+
+  private void spawnBase() {
+    Entity newBase = BaseFactory.createBase();
+    spawnEntityAt(newBase, BASE_SPAWN, true, true);
+
+  }
+
+  /**
+   * Creates and spawns a new Miner unit
+   */
+  private void spawnMiner(){
+    Entity newMiner = MinerFactory.createMiner();
+    spawnEntityAt(newMiner, MINER_SPAWN, true, true);
+  }
+
+  /**
+   * Creates a new Worker unit.
+   */
+  private void spawnWorker() {
+    Entity newWorker = WorkerFactory.createWorker();
+    spawnEntityAt(newWorker, WORKER_SPAWN, true, true);
   }
 
   private void spawnTrees() {
