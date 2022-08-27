@@ -67,6 +67,9 @@ public class ForestGameArea extends GameArea {
     spawnTerrain();
     spawnTrees();
     player = spawnPlayer();
+    for (int i = 0; i < 1; i++) {
+      spawnBoxBoy();
+    }
     //spawnGhosts();
     //spawnGhostKing();
 
@@ -129,9 +132,10 @@ public class ForestGameArea extends GameArea {
   private void spawnBoxBoy() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity tree = ObstacleFactory.createTree();
-    spawnEntityAt(tree, randomPos, true, false);
+    GridPoint2 randomPos = new GridPoint2(30, 15);
+    Entity boxBoy = PlayerFactory.createBoxBoy();
+    spawnEntityAt(boxBoy, randomPos, true, false);
+    player.getComponent(PlayerActions.class).addFriendly(boxBoy);
   }
 
   private void spawnGhosts() {

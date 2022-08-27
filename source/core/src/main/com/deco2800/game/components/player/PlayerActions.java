@@ -4,12 +4,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.RandomUtils;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -19,10 +21,10 @@ public class PlayerActions extends Component {
 
   private ForestGameArea forestGameArea;
 
-  private Array<Entity> friendlyUnits;
+  private Array<Entity> friendlyUnits = new Array<>();
 
-  private Array<Entity> selectedUnits;
-  private Entity selectedUnit;
+  private Array<Entity> selectedUnits = new Array<>();
+  private Entity selectedUnit = null;
 
   public PlayerActions(ForestGameArea forestGameArea) {
     this.forestGameArea = forestGameArea;
@@ -43,24 +45,38 @@ public class PlayerActions extends Component {
   }
 
   public void selectUnits(int startX, int startY, int endX, int endY) {
-    System.out.println(startX);
-    System.out.println(startY);
-    System.out.println(endX);
-    System.out.println(endY);
-//    for (Entity entity: friendlyUnits) {
-//      entity.getPosition()
-//    }
+    selectedUnits = new Array<>();
+    selectedUnit = null;
+    for (Entity entity: friendlyUnits) {
+      Vector2 centrePosition = entity.getCenterPosition();
+      if (RandomUtils.contains(centrePosition.x, startX, endX)
+              && RandomUtils.contains(centrePosition.y, startY, endY)) {
+        selectedUnits.add(entity);
+      }
+    }
   }
 
   public void selectUnit(int xCoordinate, int yCoordinate) {
+    selectedUnits = new Array<>();
+    selectedUnit = null;
     System.out.println(xCoordinate);
     System.out.println(yCoordinate);
+    Vector2 position = ServiceLocator.getRenderService().getStage().screenToStageCoordinates( new Vector2(xCoordinate, yCoordinate) );
+    System.out.println(position.x);
+    System.out.println(position.y);
+    for (Entity entity: friendlyUnits) {
+      Vector2 startPosition = entity.getPosition();
+      Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
+      if (RandomUtils.contains(xCoordinate, startPosition.x, endPosition.x)
+          && RandomUtils.contains(yCoordinate, startPosition.y, endPosition.y)) {
+        selectedUnit = entity;
+      }
+    }
   }
-//    for (Entity entity: friendlyUnits) {
-//      if (entity.getPosition().epsilonEquals()) {
-//        this.selectedUnit
-//      }
-//    }
-//  }
+
+  public void addFriendly(Entity entity) {
+    friendlyUnits.add(entity);
+    System.out.println(entity.getCenterPosition());
+  }
 
 }

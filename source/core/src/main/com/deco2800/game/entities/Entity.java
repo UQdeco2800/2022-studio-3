@@ -220,7 +220,6 @@ public class Entity {
     }
     createdComponents = components.values().toArray();
     for (Component component : createdComponents) {
-      System.out.println(component.getClass());
       component.create();
     }
     created = true;
