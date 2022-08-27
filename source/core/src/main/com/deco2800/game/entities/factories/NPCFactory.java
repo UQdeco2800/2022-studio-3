@@ -7,11 +7,11 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-//import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
-//import com.deco2800.game.entities.configs.GhostKingConfig;
+import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -38,12 +38,13 @@ public class NPCFactory {
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
   /**
-   * Creates a ghoul entity
+   * Creates a ghost entity.
    *
+   * @param target entity to chase
    * @return entity
    */
-  public static Entity createGhoul() {
-    Entity ghoul = createBaseNPC();
+  public static Entity createGhost(Entity target) {
+    Entity ghost = createBaseNPC(target);
     BaseEntityConfig config = configs.ghost;
 
     AnimationRenderComponent animator =
@@ -52,53 +53,52 @@ public class NPCFactory {
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
-    ghoul
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) // casting to int temporary!
+    ghost
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 
-    ghoul.getComponent(AnimationRenderComponent.class).scaleEntity();
+    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    return ghoul;
+    return ghost;
   }
 
   /**
-   * Creates a ghoul entity
+   * Creates a ghost king entity.
    *
+   * @param target entity to chase
    * @return entity
    */
-  public static Entity createDemon() {
-    Entity demon = createBaseNPC();
-    BaseEntityConfig config = configs.ghost;
+  public static Entity createGhostKing(Entity target) {
+    Entity ghostKing = createBaseNPC(target);
+    GhostKingConfig config = configs.ghostKing;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+            ServiceLocator.getResourceService()
+                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
 
-    demon
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack)) // casting to int temporary!
+    ghostKing
+        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
         .addComponent(animator)
         .addComponent(new GhostAnimationController());
 
-    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-    return demon;
+    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
+    return ghostKing;
   }
-
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
    * @return entity
    */
-  private static Entity createBaseNPC() {
-
+  private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-//            .addTask(new ChaseTask(target, 10, 3f, 4f)); //<- don't know if this is relevant now
+            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
+            .addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
