@@ -13,8 +13,8 @@ import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.Map;
 /** Atlantis game area for creating the map the game is played in */
 public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-
+    private static final int NUM_TREES = 5;
     private static final String[] forestTextures = {
             "images/Ocean.png",
             "images/Sand.png",
@@ -68,8 +68,9 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         //player = spawnPlayer();
         playMusic();
-        spawnForager();
-        spawnWorkerBase();
+        //spawnForager();
+        //spawnWorkerBase();
+        //spawnTrees();
     }
 
     private void displayUI() {
@@ -174,89 +175,35 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
+     * Spawns forager at the centre of the Atlantean city
+     * @return entity corresponding to the spawned forager
+     */
+    private Entity spawnForager() {
+        GridPoint2 spawn = RandomPointGenerator.getCityCenter(terrainFactory);
+        Entity newForager = ForagerFactory.createForager();
+        spawnEntityAt(newForager, spawn, true, true);
+        return newForager;
+    }
+
+    /**
      * Randomly spawns a worker base on the map
      */
     private void spawnWorkerBase() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-        GridPoint2 randomPos = getRandomPointInRange(0.25);
+        GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity workerBase = WorkerBaseFactory.createWorkerBase();
         spawnEntityAt(workerBase, randomPos, false, false);
     }
 
     /**
-     * Get a random point within a certain range of the map centre.
+     * Spawns random tree within the city which is used by a forager to collect wood.
      *
-     * @param scale the scaling factor for the city map (between 0 and 1)
-     * @throws IllegalArgumentException if scale < 0 or scale 1
-     *
-     * @return a random point in the range
      */
-    public GridPoint2 getRandomPointInRange(double scale) throws IllegalArgumentException {
-        if (scale < 0 || scale > 1) {
-            throw new IllegalArgumentException("Must be a ratio between 0.0 and 1.0!");
+    private void spawnTrees() {
+        for (int i = 0; i < NUM_TREES; i++) {
+            GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
+            Entity tree = TreeFactory.createTree();
+            spawnEntityAt(tree, randomPos, false, false);
         }
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        // Get details of where the city is located
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        // Get top left-corner of city
-        Coordinate topLeftCorner = cityDetails.get("NW");
-        // Get bottom right-corner of city
-        Coordinate bottomRightCorner = cityDetails.get("SE");
-        // Get width and height of city
-        float width = bottomRightCorner.getX() - topLeftCorner.getX();
-        float height = bottomRightCorner.getY() - topLeftCorner.getY();
-        // Re-scale width and height and divide by 2
-        int rescaledHalfWidth = (int) (scale * width / 2);
-        int rescaledHalfHeight = (int) (scale * height / 2);
-        // Get city center
-        Coordinate center = cityDetails.get("Centre");
-        // Rescale corners
-        Coordinate rescaledTopLeftCorner = new Coordinate(
-                center.getX() - rescaledHalfWidth,
-                center.getY() - rescaledHalfHeight
-        );
-        Coordinate rescaledBottomRightCorner = new Coordinate(
-                center.getX() + rescaledHalfWidth,
-                center.getY() + rescaledHalfHeight
-        );
-        // Convert to grid points
-        GridPoint2 topLeftGridPoint = new GridPoint2(
-                rescaledTopLeftCorner.getX(),
-                mg.getHeight() - rescaledBottomRightCorner.getY()
-        );
-        GridPoint2 bottomRightGridPoint = new GridPoint2(
-                rescaledBottomRightCorner.getX(),
-                mg.getHeight() - rescaledTopLeftCorner.getY()
-        );
-        System.out.println(topLeftGridPoint);
-        System.out.println(bottomRightGridPoint);
-        // Return random point in range
-        return RandomUtils.random(topLeftGridPoint, bottomRightGridPoint);
-    }
-
-    /**
-     * Get the centre of the city
-     */
-    public GridPoint2 getCityCenter() {
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        // Get details of where the city is located
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        // Store centre of city
-        Coordinate centre = cityDetails.get("Centre");
-        return new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-    }
-
-    /**
-     * Spawns forager at the centre of the Atlantean city
-     * @return entity corresponding to the spawned forager
-     */
-    private Entity spawnForager() {
-        GridPoint2 spawn = getCityCenter();
-
-        Entity newForager = ForagerFactory.createForager();
-        spawnEntityAt(newForager, spawn, true, true);
-        return newForager;
     }
 
     private void playMusic() {

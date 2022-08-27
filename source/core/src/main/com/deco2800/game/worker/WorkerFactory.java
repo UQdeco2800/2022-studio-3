@@ -15,9 +15,7 @@ import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
 import com.deco2800.game.worker.components.movement.WorkerIdleTask;
 
-/**
- * Factory to create a worker entity
- */
+/** Factory to create a worker entity */
 public class WorkerFactory {
     private static final WorkerConfig stats =
             FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
@@ -41,7 +39,7 @@ public class WorkerFactory {
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 
-        PhysicsUtils.setScaledCollider(worker, 2f, 2f);
+        PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
         return worker;
     }

@@ -2,7 +2,7 @@ package com.deco2800.game.worker.components.type;
 
 import com.deco2800.game.components.Component;
 
-public class ForagerComponent extends Component{
+public class ForagerComponent extends Component {
     private int isForager;
 
     public ForagerComponent(){

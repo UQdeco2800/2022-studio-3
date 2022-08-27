@@ -9,7 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Movement task for the worker.
+ * Implements a movement task for a Worker. A worker moves to a specified target until they arrive, or
+ * get stuck.
  */
 public class WorkerMovementTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(WorkerMovementTask.class);
@@ -77,6 +78,10 @@ public class WorkerMovementTask extends DefaultTask {
 
     public boolean isMoving() {
         return movementComponent.getMoving();
+    }
+
+    public void setStopDistance(float stopDistance) {
+        this.stopDistance = stopDistance;
     }
 
     private boolean didMove() {

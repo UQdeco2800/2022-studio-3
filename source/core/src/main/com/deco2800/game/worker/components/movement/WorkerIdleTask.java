@@ -6,9 +6,12 @@ import com.deco2800.game.ai.tasks.PriorityTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Default state of the worker when they have nothing to do. Waits until a movement task is triggered.
+ */
 public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(WorkerIdleTask.class);
-    private boolean idling = true;
+    private boolean idling = false;
     private WorkerMovementTask movementTask;
     private Vector2 startPos;
 
@@ -34,10 +37,9 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         if (movementTask.isMoving()) {
             movementTask.update();
         } else if (!idling) {
+            // Start idling again
             owner.getEntity().getEvents().trigger("workerIdleAnimate");
             idling = true;
-        } else {
-            idling = false;
         }
     }
 
@@ -53,5 +55,24 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         movementTask.start();
         // Trigger movement animation
         owner.getEntity().getEvents().trigger("workerWalkAnimate");
+        idling = false;
+    }
+
+    /**
+     * Return the current movement task
+     *
+     * @return the movement task
+     */
+    public WorkerMovementTask getMovementTask() {
+        return this.movementTask;
+    }
+
+    /**
+     * Return whether the worker is currently idling.
+     *
+     * @return True if the worker is stationary. False otherwise.
+     */
+    public boolean isIdling() {
+        return this.idling;
     }
 }

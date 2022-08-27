@@ -16,8 +16,8 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerFactory;
-import com.deco2800.game.worker.resources.Stone;
-import com.deco2800.game.worker.resources.Tree;
+import com.deco2800.game.worker.resources.StoneFactory;
+import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.MinerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,15 +128,15 @@ public class ForestGameArea extends GameArea {
    * Creates and spawns a new Stone entity.
    */
   private void spawnStone() {
-    Entity newStone = Stone.createStone();
+    Entity newStone = StoneFactory.createStone();
     spawnEntityAt(newStone, STONE_SPAWN, true, true);
   }
 
   /**
-   * Creates and spawns a new Tree entity.
+   * Creates and spawns a new TreeFactory entity.
    */
   private void spawnTree() {
-    Entity newTree = Tree.createTree();
+    Entity newTree = TreeFactory.createTree();
     spawnEntityAt(newTree, TREE_SPAWN, true, true);
   }
 

@@ -10,8 +10,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * Input handler for the player for keyboard and touch (mouse) input.
- * This input handler uses keyboard and touch input.
+ * Input handler for selecting, un-selecting and moving worker units
  */
 public class WorkerInputComponent extends InputComponent {
     private final Vector2 walkDirection = Vector2.Zero.cpy();
@@ -22,14 +21,15 @@ public class WorkerInputComponent extends InputComponent {
         super(5);
         this.camera = ServiceLocator.getEntityService().getCamera();
     }
-    
+
     /**
-     * Triggers worker movement on left-mouse click.
+     * Determines whether to select unit on left-mouse click
+     * Moves a selected unit on right-mouse click
      *
      * @param screenX The x coordinate, origin is in the upper left corner
      * @param screenY The y coordinate, origin is in the upper left corner
      * @param pointer the pointer for the event
-     * @param button the button
+     * @param button  the button
      * @return whether the input was processed
      */
     @Override
@@ -41,7 +41,7 @@ public class WorkerInputComponent extends InputComponent {
                 // Worker is selected. Prepare to move to cursor location.
                 // Find the difference between the entity position and its central point
                 Vector2 entityDeltas = entity.getPosition().sub(entity.getCenterPosition());
-                // Find  target vector such that when the entity reaches the target, it's
+                // Find target vector such that when the entity reaches the target, it's
                 // central point will align with the cursor
                 Vector2 centerTarget = cursorWorldPos.add(entityDeltas);
                 // Trigger WorkerMovementTask
@@ -70,6 +70,15 @@ public class WorkerInputComponent extends InputComponent {
             isSelected = false;
         }
         return false;
+    }
+
+    /**
+     * Return whether the entity is selected or not
+     *
+     * @return True if the entity is selected. False otherwise.
+     */
+    public boolean isSelected() {
+        return this.isSelected;
     }
 
     /**
@@ -102,7 +111,6 @@ public class WorkerInputComponent extends InputComponent {
      *
      * @param x the x coordinate of the point's world position
      * @param y the y coordinate of the point's world position
-     *
      * @return true if the point is in the entity's bounds. False otherwise.
      */
     public boolean inEntityBounds(float x, float y) {

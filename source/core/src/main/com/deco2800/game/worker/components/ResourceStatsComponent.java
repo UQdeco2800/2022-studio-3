@@ -133,9 +133,9 @@ public class ResourceStatsComponent extends Component {
      */
     public int collectWood(CollectStatsComponent collector){
         int newWood = getWood() - collector.getCollectionAmount();
-        logger.info("[+] num of stone in Tree() before : " + Integer.toString(getWood()));
+        logger.info("[+] num of wood in TreeFactory() before : " + Integer.toString(getWood()));
         setWood(newWood);
-        logger.info("[+] num of stone in Tree() after : " + Integer.toString(getWood()));
+        logger.info("[+] num of wood in TreeFactory() after : " + Integer.toString(getWood()));
         return collector.getCollectionAmount();
     }
 
@@ -144,7 +144,7 @@ public class ResourceStatsComponent extends Component {
         int newIron = getIron() - collector.getCollectionAmount();
         logger.info("[+] num of iron in Mine() before : " + Integer.toString(getIron()));
         setIron(newIron);
-        logger.info("[+] num of stone in Tree() after : " + Integer.toString(getIron()));
+        logger.info("[+] num of stone in TreeFactory() after : " + Integer.toString(getIron()));
         return collector.getCollectionAmount();
     }
     */
