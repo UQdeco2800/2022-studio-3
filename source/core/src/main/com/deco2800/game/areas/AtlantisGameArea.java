@@ -78,7 +78,7 @@ public class AtlantisGameArea extends GameArea {
         //spawnWorkerBase();
         //spawnTrees();
         //spawnStone();
-        spawnMiner();
+        //spawnMiner();
     }
 
     private void displayUI() {
