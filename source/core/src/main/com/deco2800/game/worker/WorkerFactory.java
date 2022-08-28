@@ -10,10 +10,10 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.WorkerInventoryComponent;
 import com.deco2800.game.worker.components.movement.WorkerIdleTask;
+import com.deco2800.game.services.ServiceLocator;
 
 /** Factory to create a worker entity */
 public class WorkerFactory {

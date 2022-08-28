@@ -71,13 +71,13 @@ public class AtlantisGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        //player = spawnPlayer();
+        player = spawnPlayer();
         playMusic();
-        spawnForager();
-        spawnForager();
-        spawnWorkerBase();
-        spawnTrees();
-        spawnStone();
+        //spawnForager();
+        //spawnForager();
+        //spawnWorkerBase();
+        //spawnTrees();
+        //spawnStone();
         spawnMiner();
     }
 

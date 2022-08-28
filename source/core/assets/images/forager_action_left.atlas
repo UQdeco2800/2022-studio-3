@@ -5,22 +5,22 @@ filter: Linear,Linear
 repeat: none
 foragerActionLeft2
   rotate: false
-  xy: 0, 0
-  size: 2048, 2048
-  orig: 2048, 2048
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
   index: -1
 foragerActionLeft3
   rotate: false
-  xy: 2048, 0
-  size: 2048, 2048
-  orig: 2048, 2048
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
   index: -1
 foragerForward3
   rotate: false
-  xy: 4096, 0
-  size: 2048, 2048
-  orig: 2048, 2048
+  xy: 4608, 512
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
   index: -1

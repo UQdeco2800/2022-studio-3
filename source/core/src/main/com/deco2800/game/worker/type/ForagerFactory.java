@@ -5,13 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
 
+import com.deco2800.game.worker.components.CollectStatsComponent;
+import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerConfig;
 import com.deco2800.game.worker.WorkerFactory;
-import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.ForagerAnimationController;
-import com.deco2800.game.worker.components.type.ForagerComponent;
 
 public class ForagerFactory {
     private static final WorkerConfig stats = FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
@@ -31,8 +31,8 @@ public class ForagerFactory {
                 .addComponent(animator)
                 .addComponent(new ForagerAnimationController());
         forager.getComponent(AnimationRenderComponent.class).scaleEntity();
-        forager.scaleHeight(3f);
-        forager.scaleWidth(3f);
+        forager.scaleHeight(1.5f);
+        forager.scaleWidth(1.5f);
         return forager;
     }
 }
