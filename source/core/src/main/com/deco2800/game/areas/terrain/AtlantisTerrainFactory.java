@@ -81,6 +81,8 @@ public class AtlantisTerrainFactory {
         TiledMap tiledMap = createMapTiles(tilePixelSize);
         //Make renderer for map
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
+        // Register map details with MapService
+        ServiceLocator.getMapService().registerMapDetails(mapWidth, mapHeight);
         //Return the component
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
@@ -137,6 +139,8 @@ public class AtlantisTerrainFactory {
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     cell.setTile(sandTile);
+                    // add coordinate to MapService
+                    ServiceLocator.getMapService().addIslandTile(x, y);
                 } else {
                     cell.setTile(grassTile);
                 }
