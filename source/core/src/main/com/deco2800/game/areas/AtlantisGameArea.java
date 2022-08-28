@@ -17,6 +17,8 @@ import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
+import com.deco2800.game.worker.type.MinerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Map;
@@ -71,10 +73,12 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         //player = spawnPlayer();
         playMusic();
+        //spawnForager();
         spawnForager();
         spawnWorkerBase();
         spawnTrees();
         spawnStone();
+        //spawnMiner();
     }
 
     private void displayUI() {
@@ -187,6 +191,16 @@ public class AtlantisGameArea extends GameArea {
         Entity newForager = ForagerFactory.createForager();
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
+    }
+
+    /**
+    * Creates and spawns a new Miner unit
+    */
+    private Entity spawnMiner(){
+        GridPoint2 spawn = RandomPointGenerator.getCityCenter(terrainFactory);
+        Entity newMiner = MinerFactory.createMiner();
+        spawnEntityAt(newMiner, spawn, true, true);
+        return newMiner;
     }
 
     /**

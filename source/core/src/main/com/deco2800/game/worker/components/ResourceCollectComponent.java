@@ -1,11 +1,14 @@
 package com.deco2800.game.worker.components;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
@@ -16,8 +19,11 @@ import org.slf4j.LoggerFactory;
 public class ResourceCollectComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
     private short targetLayer;
+    public static final long COLLECTION_TIME = 2500;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
+    private final GameTime gameTime;
+    private long lastTimeMined;
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -25,6 +31,8 @@ public class ResourceCollectComponent extends Component {
      */
     public ResourceCollectComponent(short targetLayer) {
         this.targetLayer = targetLayer;
+        this.gameTime = ServiceLocator.getTimeSource();
+        this.lastTimeMined = 0;
     }
 
     @Override
@@ -45,29 +53,39 @@ public class ResourceCollectComponent extends Component {
             return;
         }
 
+        logger.info("Collided " + Long.toString(this.gameTime.getTime()));
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
+        if (targetStats == null) {
+            logger.info("Resource Stats not found");
+            return;
+        }
         BaseComponent isBase = target.getComponent(BaseComponent.class);
         if (isBase != null) {
             loadToBase(targetStats);
-        } else if (targetStats != null) {
-            Entity collectorType = ((BodyUserData) me.getBody().getUserData()).entity;
-            MinerComponent collectorIsMiner = collectorType.getComponent(MinerComponent.class);
-            ForagerComponent collectorIsForager = collectorType.getComponent(ForagerComponent.class);
+            logger.info("Loading to Base");
+            return;
+        }
+
+        Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
+        MinerComponent collectorIsMiner = collector.getComponent(MinerComponent.class);
+        ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
+
+        if (this.lastTimeMined == 0 || this.gameTime.getTimeSince(this.lastTimeMined) >= COLLECTION_TIME) {
+            // not enough time has elapsed for collector to collect resource
             if (collectorIsMiner != null) {
                 // If the worker type is Miner
                 collectStone(targetStats);
-            } else if(collectorIsForager != null){
+            } else if (collectorIsForager != null){
                 // If the worker type is Forager
                 collectWood(targetStats);
-            } else{
-                targetStats.collect(collectStats);
             }
+            this.lastTimeMined = this.gameTime.getTime();                    
         }
     }
 
-    private void collectStone(ResourceStatsComponent targetStats){
+    private void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
         // Add the number of collected resource to the worker inventory
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
@@ -88,8 +106,7 @@ public class ResourceCollectComponent extends Component {
         baseStats.addIron(inventory.unloadMetal());
         baseStats.addStone(inventory.unloadStone());
         baseStats.addWood(inventory.unloadWood());
-        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getStone()) + " stones");
-        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getIron()) + " metal");
-        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getWood()) + " wood");
+        logger.info("[+] The worker now has " + Integer.toString(inventory.getWood()) + " wood and " + Integer.toString(inventory.getStone()) + " stone");
+        logger.info("[+] The base now has " + Integer.toString(baseStats.getWood()) + " wood and " + Integer.toString(baseStats.getStone()) + " stone");
     }
 }
