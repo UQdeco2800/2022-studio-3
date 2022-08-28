@@ -30,6 +30,6 @@ public class DialogueBoxActions extends Component {
     public void onDismiss() {
 
         logger.info("Hiding dialogue box");
-        this.dialogueBox.hide();
+        this.dialogueBox.setDialogueTitle("NEW TITLE");
     }
 }
