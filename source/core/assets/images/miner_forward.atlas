@@ -3,31 +3,38 @@ size: 4096, 4096
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-minerFront1
+miner_forward_idle
   rotate: false
   xy: 0, 0
   size: 2048, 2048
   orig: 2048, 2048
   offset: 0, 0
-  index: -1
-minerFront2
+  index: 0
+miner_forward_move
   rotate: false
   xy: 2048, 0
   size: 2048, 2048
   orig: 2048, 2048
   offset: 0, 0
-  index: -1
-minerFront3
+  index: 1
+miner_forward_move
   rotate: false
   xy: 0, 2048
   size: 2048, 2048
   orig: 2048, 2048
   offset: 0, 0
-  index: -1
-minerFront4
+  index: 2
+miner_forward_move
   rotate: false
   xy: 2048, 2048
   size: 2048, 2048
   orig: 2048, 2048
   offset: 0, 0
-  index: -1
+  index: 3
+default
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 0

@@ -3,7 +3,8 @@ package com.deco2800.game.worker.components;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
-public class ForagerAnimationController extends Component {
+public class MinerAnimationController extends Component {
+    
     AnimationRenderComponent animator;
 
     @Override
@@ -15,10 +16,12 @@ public class ForagerAnimationController extends Component {
     }
 
     void animateIdle() {
-        animator.startAnimation("forager_forward_idle");
+        animator.startAnimation("miner_forward_idle");
     }
 
     void animateMove() {
-        animator.startAnimation("forager_forward_move");
+        animator.startAnimation("miner_forward_move");
     }
 }
+
+

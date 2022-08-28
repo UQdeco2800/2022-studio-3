@@ -50,7 +50,7 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -73,12 +73,12 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         //player = spawnPlayer();
         playMusic();
-        //spawnForager();
+        spawnForager();
         spawnForager();
         spawnWorkerBase();
         spawnTrees();
         spawnStone();
-        //spawnMiner();
+        spawnMiner();
     }
 
     private void displayUI() {
@@ -187,7 +187,7 @@ public class AtlantisGameArea extends GameArea {
      * @return entity corresponding to the spawned forager
      */
     private Entity spawnForager() {
-        GridPoint2 spawn = RandomPointGenerator.getCityCenter(terrainFactory);
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newForager = ForagerFactory.createForager();
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
@@ -197,7 +197,7 @@ public class AtlantisGameArea extends GameArea {
     * Creates and spawns a new Miner unit
     */
     private Entity spawnMiner(){
-        GridPoint2 spawn = RandomPointGenerator.getCityCenter(terrainFactory);
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newMiner = MinerFactory.createMiner();
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;

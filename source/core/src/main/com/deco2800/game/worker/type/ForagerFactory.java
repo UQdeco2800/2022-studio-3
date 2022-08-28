@@ -20,10 +20,10 @@ public class ForagerFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/forager.atlas", TextureAtlas.class));
+                                .getAsset("images/forager_forward.atlas", TextureAtlas.class));
 
-        animator.addAnimation("forager_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("forager_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_idle", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_move", 0.1f, Animation.PlayMode.LOOP);
 
         Entity forager = WorkerFactory.createWorker()
                 .addComponent(new ForagerComponent())
@@ -31,8 +31,8 @@ public class ForagerFactory {
                 .addComponent(animator)
                 .addComponent(new ForagerAnimationController());
         forager.getComponent(AnimationRenderComponent.class).scaleEntity();
-        forager.scaleHeight(1.5f);
-        forager.scaleWidth(1.5f);
+        forager.scaleHeight(3f);
+        forager.scaleWidth(3f);
         return forager;
     }
 }
