@@ -8,21 +8,21 @@ public class ResourceStatsComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceStatsComponent.class);
     private int wood;
     private int stone;
-    private int iron;
+    private int metal;
 
-    public ResourceStatsComponent(int wood, int stone, int iron) {
+    public ResourceStatsComponent(int wood, int stone, int metal) {
         setWood(wood);
         setStone(stone);
-        setIron(iron);
+        setMetal(metal);
     }
 
     /**
-     * Returns true if the entity has 0 wood & 0 stone & 0 iron, otherwise false.
+     * Returns true if the entity has 0 wood & 0 stone & 0 metal, otherwise false.
      *
      * @return is resource dead
      */
     public Boolean isDead() {
-        return wood == 0 && stone == 0 && iron == 0;
+        return wood == 0 && stone == 0 && metal == 0;
     }
 
     /**
@@ -44,12 +44,12 @@ public class ResourceStatsComponent extends Component {
     }
 
     /**
-     * Returns the entity's iron.
+     * Returns the entity's metal.
      *
-     * @return entity's iron
+     * @return entity's metal
      */
-    public int getIron() {
-        return iron;
+    public int getMetal() {
+        return metal;
     }
 
     /**
@@ -79,14 +79,14 @@ public class ResourceStatsComponent extends Component {
         }
     }
 
-    public void setIron(int iron){
-        if (iron >= 0) {
-            this.iron = iron;
+    public void setMetal(int metal){
+        if (metal >= 0) {
+            this.metal = metal;
         } else {
-            this.iron = 0;
+            this.metal = 0;
         }
         if (entity != null) {
-            entity.getEvents().trigger("updateIron", this.iron);
+            entity.getEvents().trigger("updateMetal", this.metal);
         }
     }
 
@@ -103,8 +103,8 @@ public class ResourceStatsComponent extends Component {
         setStone(this.stone + stone);
     }
 
-    public void addIron(int iron) {
-        setIron(this.iron + iron);
+    public void addMetal(int metal) {
+        setMetal(this.metal + metal);
     }
 
     /**
@@ -143,14 +143,12 @@ public class ResourceStatsComponent extends Component {
         return collectionAmount;
     }
 
-    /* 
-    public int collectIron(CollectStatsComponent collector){
-        int newIron = getIron() - collector.getCollectionAmount();
-        logger.info("[+] num of iron in Mine() before : " + Integer.toString(getIron()));
-        setIron(newIron);
-        logger.info("[+] num of stone in TreeFactory() after : " + Integer.toString(getIron()));
+    public int collectmetal(CollectStatsComponent collector){
+        int newmetal = getMetal() - collector.getCollectionAmount();
+        logger.info("[+] num of metal in Mine() before : " + Integer.toString(getMetal()));
+        setMetal(newmetal);
+        logger.info("[+] num of stone in TreeFactory() after : " + Integer.toString(getMetal()));
         return collector.getCollectionAmount();
     }
-    */
     
 }

@@ -20,7 +20,7 @@ public class TreeFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
-            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));
+            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal));
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         tree.getComponent(TextureRenderComponent.class).scaleEntity();
         return tree;
