@@ -1,0 +1,33 @@
+forager_left.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+foragerLeft1
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerLeft2
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerLeft3
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerLeft4
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
