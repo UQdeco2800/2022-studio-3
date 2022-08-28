@@ -1,6 +1,7 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.mainmenu.MainMenuActions;
@@ -26,6 +27,10 @@ public class MainMenuScreen extends ScreenAdapter {
   private final Renderer renderer;
   private static final String[] mainMenuTextures = {"images/box_boy_title.png"};
 
+  private static final String menuMusic = "sounds/menu.wav";
+
+  private static final String[] mainMenuMusic = {menuMusic};
+
   public MainMenuScreen(GdxGame game) {
     this.game = game;
 
@@ -34,11 +39,11 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+    playMusic();
   }
 
   @Override
@@ -67,6 +72,8 @@ public class MainMenuScreen extends ScreenAdapter {
   public void dispose() {
     logger.debug("Disposing main menu screen");
 
+    ServiceLocator.getResourceService().getAsset(menuMusic, Music.class).stop();
+
     renderer.dispose();
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
@@ -74,11 +81,20 @@ public class MainMenuScreen extends ScreenAdapter {
 
     ServiceLocator.clear();
   }
+  /**
+   * */
+  private void playMusic() {
+    Music music = ServiceLocator.getResourceService().getAsset(menuMusic, Music.class);
+    music.setLooping(true);
+    music.setVolume(0.5f);
+    music.play();
+  }
 
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+    resourceService.loadMusic(mainMenuMusic);
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -86,6 +102,7 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
+    resourceService.unloadAssets(mainMenuMusic);
   }
 
   /**
