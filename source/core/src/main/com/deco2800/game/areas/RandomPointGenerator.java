@@ -32,7 +32,6 @@ public class RandomPointGenerator {
      *
      * @param scale the scaling factor for the city map (between 0 and 1)
      * @param terrainFactory the factory for the Atlantis map
-     * @throws IllegalArgumentException if scale < 0 or scale > 1
      *
      * @return the re-scaled width
      */
@@ -58,7 +57,6 @@ public class RandomPointGenerator {
      *
      * @param scale the scaling factor for the city map (between 0 and 1)
      * @param terrainFactory the factory for the Atlantis map
-     * @throws IllegalArgumentException if scale < 0 or scale > 1
      *
      * @return the re-scaled height
      */
@@ -84,7 +82,6 @@ public class RandomPointGenerator {
      *
      * @param scale the scaling factor for the city map (between 0 and 1)
      * @param terrainFactory the factory for the Atlantis map
-     * @throws IllegalArgumentException if scale < 0 or scale > 1
      *
      * @return the re-scaled top-left corner
      */
@@ -121,7 +118,6 @@ public class RandomPointGenerator {
      *
      * @param scale the scaling factor for the city map (between 0 and 1)
      * @param terrainFactory the factory for the Atlantis map
-     * @throws IllegalArgumentException if scale < 0 or scale > 1
      *
      * @return the re-scaled bottom-right corner
      */
@@ -160,7 +156,6 @@ public class RandomPointGenerator {
      *
      * @param scale the scaling factor for the city map (between 0 and 1)
      * @param terrainFactory the factory for the Atlantis map
-     * @throws IllegalArgumentException if scale < 0 or scale > 1
      *
      * @return a random point in the range
      */
