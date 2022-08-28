@@ -71,13 +71,11 @@ public class MainMenuScreen extends ScreenAdapter {
   public void dispose() {
     logger.debug("Disposing main menu screen");
 
-    ServiceLocator.getResourceService().getAsset(menuMusic, Music.class).stop();
-
     renderer.dispose();
+    ServiceLocator.getResourceService().getAsset(menuMusic, Music.class).stop();
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getEntityService().dispose();
-
     ServiceLocator.clear();
   }
   /**
