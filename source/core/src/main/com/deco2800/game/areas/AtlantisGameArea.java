@@ -55,7 +55,7 @@ public class AtlantisGameArea extends GameArea {
             "images/forager_forward.atlas", "images/miner_forward.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+    private static final String backgroundMusic = "sounds/menu.wav";
     private static final String[] atlantisMusic = {backgroundMusic};
 
     private final AtlantisTerrainFactory terrainFactory;
@@ -240,10 +240,10 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void playMusic() {
-        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-        //music.setLooping(true);
-        //music.setVolume(0.3f);
-        //music.play();
+        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     private void loadAssets() {
