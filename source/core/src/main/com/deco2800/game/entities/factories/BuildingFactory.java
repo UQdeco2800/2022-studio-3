@@ -36,7 +36,7 @@ public class BuildingFactory {
         townHall.scaleWidth(4f);
         PhysicsUtils.setScaledCollider(townHall, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        townHall.addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        townHall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return townHall;
     }
 
@@ -51,7 +51,7 @@ public class BuildingFactory {
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return barracks;
     }
 
@@ -66,7 +66,7 @@ public class BuildingFactory {
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return barracks;
     }
 
