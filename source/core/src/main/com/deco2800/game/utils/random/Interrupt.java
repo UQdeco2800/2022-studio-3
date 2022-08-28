@@ -1,10 +1,10 @@
 package com.deco2800.game.utils.random;
 
 import com.deco2800.game.utils.random.PseudoRandom;
-import com.deco2800.game.utils.random.RandomTimer;
+import com.deco2800.game.utils.random.Timer;
 import com.deco2800.game.services.GameTime;
 
-public class RandomInterrupt {
+public class Interrupt {
     /**
      * Call the GameTime class.
      */
@@ -16,9 +16,9 @@ public class RandomInterrupt {
      * @param upperBound: integer for the slowest time to wait for interrupt
      * @return pause the game after random time between lowerBound and upperBound
      */
-    public RandomInterrupt(int lowerBound, int upperBound) {
-        RandomTimer rT = new RandomTimer(lowerBound,upperBound);
-        while (!(rT.isRandomTimerExpired())) {
+    public Interrupt(int lowerBound, int upperBound) {
+        Timer t = new Timer(lowerBound,upperBound);
+        while (!(t.isTimerExpired())) {
             continue;
         }
         gT.setTimeScale(0f);

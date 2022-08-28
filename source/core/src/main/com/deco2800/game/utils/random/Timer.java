@@ -5,7 +5,7 @@ import java.lang.*;
 import com.deco2800.game.utils.random.PseudoRandom;
 
 
-public class RandomTimer {
+public class Timer {
 
     /**
      * Initiating the start variable.
@@ -25,7 +25,7 @@ public class RandomTimer {
      *
      * @return setting delay for the RandomTimer class.
      */
-    public RandomTimer(int lowerIntervalSeconds, int upperIntervalSeconds) {
+    public Timer(int lowerIntervalSeconds, int upperIntervalSeconds) {
         int randomIntervalInt = PseudoRandom.seedRandomInt(lowerIntervalSeconds, upperIntervalSeconds);
         long delay = Long.valueOf(randomIntervalInt);
         this.delay = delay;
@@ -43,7 +43,7 @@ public class RandomTimer {
      * Checking whether or not if the timer is already expired or not.
      * @return boolean of time expiration.
      */
-    public boolean isRandomTimerExpired() {
+    public boolean isTimerExpired() {
         return (System.currentTimeMillis() - this.start) > this.delay;
     }
 
@@ -52,7 +52,7 @@ public class RandomTimer {
      * @return Time left if it exists or time expiration info if it is not.
      */
     public void timeLeft() {
-        if (isRandomTimerExpired()) {
+        if (isTimerExpired()) {
             System.out.println("Timer expired");
         } else {
             System.out.println("Time left = " + (this.delay - (System.currentTimeMillis() - this.start)));
