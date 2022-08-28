@@ -30,10 +30,10 @@ public class InfoBoxDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch)  {
-        backgroundBoxImage.setWidth(Gdx.graphics.getWidth());
-        backgroundBoxImage.setHeight(Gdx.graphics.getHeight());
+        backgroundBoxImage.setWidth(1000);
+        backgroundBoxImage.setHeight(700);
 
-        backgroundBoxImage.setPosition(0f, 0f);
+        backgroundBoxImage.setPosition(-128f, -307f);
         // draw is handled by the stage
     }
 }
