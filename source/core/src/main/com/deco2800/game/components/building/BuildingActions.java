@@ -37,13 +37,12 @@ public class BuildingActions extends Component {
     }
 
     public void create() {
+        entity.getEvents().addListener("startPlacing", this::startPlacing);
         entity.getEvents().addListener("placing", this::placing);
         entity.getEvents().addListener("place", this::place);
-        entity.getEvents().addListener("cancelPlacement", this::cancelPlacement);
         entity.getEvents().addListener("levelUp", this::addLevel); // Not caused by any event yet
         physicsComponent = entity.getComponent(PhysicsComponent.class);
-        physicsComponent.setEnabled(false);
-        placed = false;
+        placed = true;
     }
 
     /**
@@ -69,6 +68,12 @@ public class BuildingActions extends Component {
         return position;
     }
 
+    public void startPlacing() {
+        if (!placed) {return;}
+        placed = false;
+        physicsComponent.setEnabled(false);
+    }
+
     public void placing(int screenX, int screenY) {
         if (placed) {return;}
         Vector2 position = mouseToGrid(screenX, screenY);
@@ -81,10 +86,5 @@ public class BuildingActions extends Component {
         physicsComponent.setEnabled(true);
         Vector2 position = mouseToGrid(screenX, screenY);
         entity.setPosition(position);
-    }
-
-    public void cancelPlacement() {
-        if (placed) {return;}
-        entity.dispose();
     }
 }

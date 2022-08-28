@@ -75,18 +75,6 @@ public class TouchPlayerInputComponent extends InputComponent {
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
         return true;
-      case Input.Keys.G:
-        entity.getEvents().trigger("spawnTownHall");
-        return true;
-      case Input.Keys.H:
-        entity.getEvents().trigger("spawnWall");
-        return true;
-      case Input.Keys.J:
-        entity.getEvents().trigger("spawnBarracks");
-        return true;
-      case Input.Keys.K:
-        entity.getEvents().trigger("spawnMedievalBarracks");
-        return true;
       default:
         return false;
     }
@@ -102,8 +90,6 @@ public class TouchPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("attack");
     if (button == Input.Buttons.LEFT) {
       entity.getEvents().trigger("place", screenX, screenY);
-    } else if (button == Input.Buttons.RIGHT) {
-      entity.getEvents().trigger("cancelPlacement");
     }
     return true;
   }
