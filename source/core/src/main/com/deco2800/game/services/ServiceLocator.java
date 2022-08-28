@@ -23,6 +23,7 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static MapService mapService;
 
 
   public static EntityService getEntityService() {
@@ -47,6 +48,10 @@ public class ServiceLocator {
 
   public static ResourceService getResourceService() {
     return resourceService;
+  }
+  
+  public static MapService getMapService() {
+    return mapService;
   }
 
   public static void registerEntityService(EntityService service) {
@@ -77,6 +82,11 @@ public class ServiceLocator {
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
+  }
+  
+  public static void registerMapService(MapService source) {
+    logger.debug("Registering map service {}", source);
+    mapService = source;
   }
 
   public static void clear() {

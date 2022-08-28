@@ -88,7 +88,7 @@ public class ForestGameArea extends GameArea {
     terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO_ISO);
     spawnEntity(new Entity().addComponent(terrain));
 
-    //Move camera to player
+    // Move camera to player
     MapGenerator mg = terrainFactory.getMapGenerator();
     Map<String, Coordinate> cityDetails = mg.getCityDetails();
     Coordinate centre = cityDetails.get("Centre");
