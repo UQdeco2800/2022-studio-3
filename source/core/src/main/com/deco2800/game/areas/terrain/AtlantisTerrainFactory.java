@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
@@ -57,6 +58,7 @@ public class AtlantisTerrainFactory {
         this.textures = new HashMap<>();
     }
 
+
     /**
      * Create all textures needed to generate the AtlantisMap
      */
@@ -80,7 +82,7 @@ public class AtlantisTerrainFactory {
         //Make renderer for map
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
         //Return the component
-        return new TerrainComponent(camera, tiledMap, renderer, orientation, mapTileScale);
+        return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
     /**
@@ -114,9 +116,14 @@ public class AtlantisTerrainFactory {
      * @param layer the layer with which to be filled with cells
      */
     private void fillTiles(TiledMapTileLayer layer) {
+        //Set terrainTiles based on textures stored in textures
         TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
         TerrainTile oceanTile = new TerrainTile(textures.get("Ocean"));
+        //Set id for each tile - used for visualising minimap
+        grassTile.setId(0);
+        sandTile.setId(1);
+        oceanTile.setId(2);
 
         //Load the map from the map generator
         char[][] map = mapGenerator.getMap();
