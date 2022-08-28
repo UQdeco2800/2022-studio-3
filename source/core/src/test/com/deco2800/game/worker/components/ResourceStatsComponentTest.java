@@ -55,7 +55,7 @@ class ResourceStatsComponentTest {
     }
 
     @Test
-    void addWood() {
+    void shouldAddWood() {
         ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
 
         resourceStatsComponent.addWood(5);
@@ -63,7 +63,7 @@ class ResourceStatsComponentTest {
     }
 
     @Test
-    void addStone() {
+    void shouldAddStone() {
         ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
 
         resourceStatsComponent.addStone(5);
@@ -71,7 +71,7 @@ class ResourceStatsComponentTest {
     }
 
     @Test
-    void addMetal() {
+    void shouldAddMetal() {
         ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
 
         resourceStatsComponent.addMetal(5);
@@ -79,14 +79,42 @@ class ResourceStatsComponentTest {
     }
 
     @Test
-    void collect() {
-    }
-
-    @Test
     void collectStone() {
+        CollectStatsComponent collectStatsComponent = new CollectStatsComponent(10);
+        ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
+
+        assertEquals(10, collectStatsComponent.getCollectionAmount());
+        assertEquals(10, resourceStatsComponent.getStone());
+
+        resourceStatsComponent.collectStone(collectStatsComponent);
+        assertEquals(0, resourceStatsComponent.collectStone(collectStatsComponent));
+
+
     }
 
     @Test
     void collectWood() {
+        CollectStatsComponent collectStatsComponent = new CollectStatsComponent(10);
+        ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
+
+        assertEquals(10, collectStatsComponent.getCollectionAmount());
+        assertEquals(10, resourceStatsComponent.getWood());
+
+        resourceStatsComponent.collectWood(collectStatsComponent);
+        assertEquals(0, resourceStatsComponent.collectWood(collectStatsComponent));
+
+    }
+
+    @Test
+    void collectMetal() {
+        CollectStatsComponent collectStatsComponent = new CollectStatsComponent(10);
+        ResourceStatsComponent resourceStatsComponent = new ResourceStatsComponent(10,10,10);
+
+        assertEquals(10, collectStatsComponent.getCollectionAmount());
+        assertEquals(10, resourceStatsComponent.getMetal());
+
+        resourceStatsComponent.collectMetal(collectStatsComponent);
+        assertEquals(0, resourceStatsComponent.collectMetal(collectStatsComponent));
+
     }
 }
