@@ -47,15 +47,14 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+            ServiceLocator.getResourceService().getAsset("images/blue_joker.atlas", TextureAtlas.class));
+    animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
     ghoul
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack,
             config.baseDefence)) // casting to int temporary!
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        .addComponent(animator);
+//        .addComponent(new GhostAnimationController());
 
     ghoul.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -73,15 +72,14 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+            ServiceLocator.getResourceService().getAsset("images/blue_joker.atlas", TextureAtlas.class));
+    animator.addAnimation("idle", 0.1f, Animation.PlayMode.LOOP);
 
     demon
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack,
             config.baseDefence)) // casting to int temporary!
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        .addComponent(animator);
+//        .addComponent(new GhostAnimationController());
 
     demon.getComponent(AnimationRenderComponent.class).scaleEntity();
 
