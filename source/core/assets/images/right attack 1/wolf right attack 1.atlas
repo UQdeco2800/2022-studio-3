@@ -1,0 +1,41 @@
+ghost.png
+size: 248, 248
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+
+angry_float
+  rotate: false
+  xy: 4, 28
+  size: 99, 56
+  orig: 99, 56
+  offset: 0, 0
+  index: 0
+angry_float
+  rotate: false
+  xy: 95, 22
+  size: 86, 53
+  orig: 86, 53
+  offset: 0, 0
+  index: 1
+angry_float
+  rotate: false
+  xy: 174, 0
+  size: 61, 72
+  orig: 61, 72
+  offset: 0, 0
+  index: 2
+angry_float
+  rotate: false
+  xy: 20, 100
+  size: 87, 81
+  orig: 87, 81
+  offset: 0, 0
+  index: 3
+angry_float
+  rotate: false
+  xy: 167, 100
+  size: 61, 72
+  orig: 61, 72
+  offset: 0, 0
+  index: 4
