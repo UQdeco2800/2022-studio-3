@@ -213,16 +213,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Rnadomly spawns a stone on the map
-     */
-    private Entity spawnStone(){
-        Entity stone = StoneFactory.createStone();
-        GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        spawnEntityAt(stone, randomPos, true, true);
-        return stone;
-    }
-
-    /**
      * Spawns random tree within the city which is used by a forager to collect wood.
      *
      */

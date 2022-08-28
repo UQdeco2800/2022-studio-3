@@ -64,7 +64,6 @@ public class Miner {
         ResourceStatsComponent stone_resource = stone_entity.getComponent(ResourceStatsComponent.class);
         stone_resource.collectStone(miner_collector);
 
-        assertFalse(stone_resource.getStone() != 1);
-        assertTrue(stone_resource.getStone() == 1);
+        assertTrue(stone_resource.getStone() == 8);
     }
 }

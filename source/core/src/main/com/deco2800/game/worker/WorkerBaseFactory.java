@@ -23,7 +23,7 @@ public class WorkerBaseFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron))
+            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
             .addComponent(new BaseComponent());
         newBase.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         newBase.getComponent(TextureRenderComponent.class).scaleEntity();
