@@ -31,7 +31,7 @@ public class PseudoRandom {
     /**
      * This method generates pseudo-randomly generated integers between
      * the specified lowerBound and upperBound.
-     * NOTE: lowerBound must be less then upperBound.
+     * NOTE: lowerBound must be less than upperBound.
      *
      * @param lowerBound: Integer lower bound.
      * @param upperBound: Integer upper bound.
