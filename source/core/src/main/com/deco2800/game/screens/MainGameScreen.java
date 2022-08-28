@@ -41,15 +41,11 @@ public class MainGameScreen extends ScreenAdapter {
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
 
     private final GdxGame game;
-
-    private final DialogueBox dialogueBox;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
-
-        this.dialogueBox = new DialogueBox("", "");
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());

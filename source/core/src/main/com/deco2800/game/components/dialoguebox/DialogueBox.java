@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 public class DialogueBox extends Actor {
@@ -30,15 +28,6 @@ public class DialogueBox extends Actor {
 
     private Image dialogueImage;
 
-    /**
-     * Dismiss this dialogueBox
-     */
-    private final TextButton dismissButton;
-
-    /**
-     * Set to true if the dialogue box is currently hidde, false on else
-     */
-    private boolean hidden;
 
     /**
      * Represents a dialogue box containing a title and text and allowing
@@ -55,9 +44,7 @@ public class DialogueBox extends Actor {
         this.dialogueText = new Label(text, dialogueSkin);
         /* TODO: set image to be mutable */
         this.dialogueImage = new Image(new Texture(Gdx.files.internal("images/dialogue_box_image_default.png")));
-        this.dismissButton = new TextButton("x", dialogueSkin);
         this.dialogueTexture = new Texture(Gdx.files.internal("images/dialogue_box_background.png"));
-        this.hidden = false;
 
         this.setSize(Gdx.graphics.getWidth(), 150f);
         this.setPosition(0f, 0f);
@@ -80,9 +67,6 @@ public class DialogueBox extends Actor {
         final float dialogueBoxHeight = 150f;
         final float dialogueBoxWidth = screenWidth - 550f;
 
-        final float dismissButtonHeight = this.dismissButton.getHeight();
-        final float dismissButtonWidth = this.dismissButton.getWidth();
-
         final float spacer = 5f;
 
         /* dialogue box */
@@ -92,16 +76,12 @@ public class DialogueBox extends Actor {
         final float dialogueBoxX = this.getX();
         final float dialogueBoxY = this.getY();
 
-        /* dismissButton */
-        this.dismissButton.setPosition(dialogueBoxX + spacer,
-                dialogueBoxY + dialogueBoxHeight - dismissButtonHeight - spacer);
-
         /* text */
         this.dialogueText.setAlignment(Align.left);
         this.dialogueText.setWrap(true);
-        this.dialogueText.setSize(dialogueBoxWidth - dismissButtonWidth - imageSize - titleWidth - spacer,
+        this.dialogueText.setSize(dialogueBoxWidth - (15 * spacer) - imageSize - titleWidth - spacer,
                 dialogueBoxHeight);
-        this.dialogueText.setPosition(dialogueBoxX + dismissButtonWidth + 2 * spacer,
+        this.dialogueText.setPosition(dialogueBoxX + 17 * spacer,
                 dialogueBoxY);
 
         /* image */
@@ -123,7 +103,6 @@ public class DialogueBox extends Actor {
                 this.dialogueTexture.getWidth(), this.dialogueTexture.getHeight(), false, false);
         this.dialogueTitle.draw(batch, parentAlpha);
         this.dialogueText.draw(batch, parentAlpha);
-        this.dismissButton.draw(batch, parentAlpha);
 
         if (this.dialogueImage != null)
             this.dialogueImage.draw(batch, parentAlpha);
@@ -159,11 +138,6 @@ public class DialogueBox extends Actor {
     public String getDialogueText() {
 
         return this.dialogueText.getText().toString();
-    }
-
-    public boolean isHidden() {
-
-        return this.hidden;
     }
 
     /**
@@ -202,33 +176,5 @@ public class DialogueBox extends Actor {
     public void setDialogueImage(Texture image) {
 
         this.dialogueImage = (image != null) ? new Image(image) : null;
-    }
-
-    /**
-     * Hide the dialogue box if it is currently being shown
-     */
-    public void hide() {
-
-        if (!this.isHidden())
-            this.setVisible(false);
-    }
-
-    /**
-     * Show the dialogue box if it is currently being hidden
-     */
-    public void show() {
-
-        if (this.isHidden())
-            this.setVisible(true);
-    }
-
-    public boolean addListener(EventListener listener) {
-
-        if (listener == null)
-            return false;
-
-        this.dismissButton.addListener(listener);
-
-        return true;
     }
 }
