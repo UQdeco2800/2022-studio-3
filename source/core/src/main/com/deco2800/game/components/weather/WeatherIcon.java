@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.deco2800.game.utils.random.PseudoRandom;
 
 public class WeatherIcon extends Actor {
@@ -16,19 +15,19 @@ public class WeatherIcon extends Actor {
     private final Image weatherImage;
 
     private final String[] weatherFile = {
-            "cloud.png",
-            "flood.png",
-            "foggy.png",
-            "heavyrain.png",
-            "lighting.png",
-            "night.png",
-            "partlycloudy.png",
-            "rainy.png",
-            "sleet.png",
-            "snowy.png",
-            "stormy.png",
-            "sunny.png",
-            "thunderstorm.png"
+            "images/cloud.png",
+            "images/flood.png",
+            "images/foggy.png",
+            "images/heavyrain.png",
+            "images/lighting.png",
+            "images/night.png",
+            "images/partlycloudy.png",
+            "images/rainy.png",
+            "images/sleet.png",
+            "images/snowy.png",
+            "images/stormy.png",
+            "images/sunny.png",
+            "images/thunderstorm.png"
     };
 
     public WeatherIcon() {
@@ -38,12 +37,12 @@ public class WeatherIcon extends Actor {
     }
 
     public void position() {
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2 - weatherImage.getWidth()/2, 128f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, 128f);
     }
 
     public String getRandomWeatherFileLocation() {
         int randomIndex = PseudoRandom.seedRandomInt(0, weatherFile.length);
-        return "image/"+weatherFile[randomIndex];
+        return weatherFile[randomIndex];
     }
 
     @Override
