@@ -67,6 +67,7 @@ public class AtlantisTerrainFactory {
         textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
         textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
         textures.put("Ocean", new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class)));
+        textures.put("Ocean", new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class)));
     }
 
     public TerrainComponent createAtlantisTerrainComponent() {
