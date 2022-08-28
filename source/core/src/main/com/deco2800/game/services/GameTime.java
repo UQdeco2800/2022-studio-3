@@ -10,6 +10,7 @@ public class GameTime {
   private static Logger logger = LoggerFactory.getLogger(GameTime.class);
   private final long startTime;
   private float timeScale = 1f;
+  private boolean isPaused = false;
 
   public GameTime() {
     startTime = TimeUtils.millis();
@@ -43,5 +44,27 @@ public class GameTime {
 
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
+  }
+  /**
+   * @return whether the game is paused
+   */
+  public boolean isPaused() {
+    return isPaused;
+  }
+
+  /**
+   * Pauses the game
+   */
+  public void paused() {
+    timeScale = 0f;
+    isPaused = true;
+  }
+
+  /**
+   * Unpauses the game
+   */
+  public void unpaused() {
+    timeScale = 1f;
+    isPaused = false;
   }
 }

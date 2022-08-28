@@ -9,15 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.input.*;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.GameTime;
+import com.sun.jdi.connect.spi.TransportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 
 /**
  * A ui component for displaying the Pause menu.
@@ -52,8 +53,6 @@ public class PauseMenuDisplay extends UIComponent {
           timeSource.paused();
           pauseWindow.setVisible(true);
           background.setVisible(true);
-          background.toFront();
-          pauseWindow.toFront();
           pmEnabled = true;
       } else {
           timeSource.unpaused();
@@ -66,25 +65,23 @@ public class PauseMenuDisplay extends UIComponent {
   private void addActors() {
     pauseWindow = new Table();
     background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
-    createMainmainTable();
+    createMainTable();
     pauseWindow.add(mainTable);
 
 
    pauseWindow.padTop(0);
    pauseWindow.padBottom(0);
-   pauseWindow.setVisible(true);
-   background.setVisible(true);
+   pauseWindow.setVisible(false);
+   background.setVisible(false);
    setPauseMenuSize();
 
    stage.addActor(background);
    stage.addActor(pauseWindow);
 
-   /**if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-       entity.getEvents().addListener("togglepause", this::togglePauseScreen);
-   }*/
+   entity.getEvents().addListener("togglepm", this::togglePauseScreen);
   }
 
-  private void createMainmainTable() {
+  private void createMainTable() {
     TextButton resumeBtn = new TextButton("Resume", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton menuBtn = new TextButton("Exit to Menu", skin);
@@ -161,8 +158,7 @@ public class PauseMenuDisplay extends UIComponent {
                 stage.getHeight() / 2 - pauseWindow.getHeight() / 2);
 
     }
-
-    @Override
+  @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
   }
