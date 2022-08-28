@@ -85,11 +85,11 @@ public class ResourceCollectComponent extends Component {
 
     private void loadToBase(ResourceStatsComponent baseStats) {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
-        baseStats.addIron(inventory.unloadMetal());
+        baseStats.addMetal(inventory.unloadMetal());
         baseStats.addStone(inventory.unloadStone());
         baseStats.addWood(inventory.unloadWood());
         logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getStone()) + " stones");
-        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getIron()) + " metal");
+        logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getMetal()) + " metal");
         logger.info("[+] The worker has unloaded" + Integer.toString(baseStats.getWood()) + " wood");
     }
 }

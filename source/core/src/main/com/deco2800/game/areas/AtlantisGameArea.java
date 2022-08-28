@@ -14,6 +14,7 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import org.slf4j.Logger;
@@ -41,11 +42,13 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/base.png"
+            "images/base.png",
+            "images/mud.png",
+            "images/duration_bar.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager.atlas"
+            "images/forager.atlas", "images/duration_bar.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -68,8 +71,9 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         //player = spawnPlayer();
         playMusic();
-        //spawnForager();
-        //spawnWorkerBase();
+        spawnForager();
+        spawnWorkerBase();
+        spawnStone();
         //spawnTrees();
     }
 
@@ -192,6 +196,16 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity workerBase = WorkerBaseFactory.createWorkerBase();
         spawnEntityAt(workerBase, randomPos, false, false);
+    }
+
+    /**
+     * Rnadomly spawns a stone on the map
+     */
+    private Entity spawnStone(){
+        Entity stone = StoneFactory.createStone();
+        GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        spawnEntityAt(stone, randomPos, true, true);
+        return stone;
     }
 
     /**
