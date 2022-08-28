@@ -28,7 +28,6 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final String[] mainMenuTextures = {"images/box_boy_title.png"};
 
   private static final String menuMusic = "sounds/menu.wav";
-
   private static final String[] mainMenuMusic = {menuMusic};
 
   public MainMenuScreen(GdxGame game) {
@@ -82,7 +81,8 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.clear();
   }
   /**
-   * */
+   * Adding function to play music with looping and volume set at 0.5
+   **/
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(menuMusic, Music.class);
     music.setLooping(true);
