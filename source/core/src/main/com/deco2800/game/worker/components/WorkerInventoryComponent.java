@@ -100,7 +100,7 @@ public class WorkerInventoryComponent extends Component {
    */
   public void setMetal(int metal) {
     if (metal >= 0) {
-      this.metal = stone;
+      this.metal = metal;
       logger.debug("Setting metal to {}", this.metal);
     }  
   }
