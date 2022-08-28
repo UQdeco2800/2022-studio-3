@@ -3,6 +3,7 @@ package com.deco2800.game.areas.terrain;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,39 +12,56 @@ import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 
-/** Factory for creating game terrains. */
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+/** Factory for creating game terrain. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(30, 30);
+  private static final int mapWidth = 100;
+  private static final int mapHeight = 45;
+  private static final int cityWidth = 7;
+  private static final int cityHeight = 7;
+  private static final int islandSize = 70;
+
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
   private static final int TUFT_TILE_COUNT = 30;
   private static final int ROCK_TILE_COUNT = 30;
-
   private final OrthographicCamera camera;
   private final TerrainOrientation orientation;
+
+  private final CameraComponent cameraComponent;
+  private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
   /**
    * Create a terrain factory with Orthogonal orientation
    *
-   * @param cameraComponent Camera to render terrains to. Must be ortographic.
+   * @param cameraComponent Camera to render terrain to. Must be orthographic.
    */
   public TerrainFactory(CameraComponent cameraComponent) {
-    this(cameraComponent, TerrainOrientation.ORTHOGONAL);
+    this(cameraComponent, TerrainOrientation.ISOMETRIC);
   }
 
   /**
    * Create a terrain factory
    *
-   * @param cameraComponent Camera to render terrains to. Must be orthographic.
+   * @param cameraComponent Camera to render terrain to. Must be orthographic.
    * @param orientation orientation to render terrain at
    */
   public TerrainFactory(CameraComponent cameraComponent, TerrainOrientation orientation) {
     this.camera = (OrthographicCamera) cameraComponent.getCamera();
     this.orientation = orientation;
+
+    this.cameraComponent = cameraComponent;
   }
 
   /**
@@ -118,8 +136,8 @@ public class TerrainFactory {
     fillTiles(layer, MAP_SIZE, grassTile);
 
     // Add some grass and rocks
-    fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
-    fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
+    //fillTilesAtRandom(layer, MAP_SIZE, grassTuftTile, TUFT_TILE_COUNT);
+    //fillTilesAtRandom(layer, MAP_SIZE, rockTile, ROCK_TILE_COUNT);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -138,18 +156,46 @@ public class TerrainFactory {
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    for (int x = 0; x < mapSize.x; x++) {
-      for (int y = 0; y < mapSize.y; y++) {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    TextureRegion isoGrass =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_1.png", Texture.class));
+    TextureRegion isoTuft =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_3.png", Texture.class));
+    TextureRegion isoRock =
+            new TextureRegion(resourceService.getAsset("images/iso_grass_2.png", Texture.class));
+    TerrainTile grassTile = new TerrainTile(isoGrass);
+    TerrainTile tuftTile = new TerrainTile(isoTuft);
+    TerrainTile rockTile = new TerrainTile(isoRock);
+
+    char[][] map = mapGenerator.getMap();
+    for (int x = 0; x < mapWidth; x++) {
+      for (int y = 0; y < mapHeight; y++) {
         Cell cell = new Cell();
-        cell.setTile(tile);
-        layer.setCell(x, y, cell);
+        if (map[y][x] == mapGenerator.getOceanChar()) {
+          //Set ocean tiles to "rock" textures
+          cell.setTile(rockTile);
+        } else if (map[y][x] == mapGenerator.getIslandChar()) {
+          //Set island tiles to "grass" textures
+          cell.setTile(grassTile);
+        } else {
+          cell.setTile(tuftTile);
+        }
+        layer.setCell(x, mapHeight - y, cell);
       }
     }
   }
 
+  public CameraComponent getCameraComponent() {
+    return this.cameraComponent;
+  }
+
+  public MapGenerator getMapGenerator() {
+    return this.mapGenerator;
+  }
+
   /**
    * This enum should contain the different terrains in your game, e.g. forest, cave, home, all with
-   * the same oerientation. But for demonstration purposes, the base code has the same level in 3
+   * the same orientation. But for demonstration purposes, the base code has the same level in 3
    * different orientations.
    */
   public enum TerrainType {
