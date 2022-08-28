@@ -20,16 +20,27 @@ public class BuildingActions extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildingActions.class);
     private boolean placed;
-    private TextureRenderComponent textureRenderComponent;
     private PhysicsComponent physicsComponent;
-    private CameraComponent cameraComponent;
+
+    private int level;
+
+    public BuildingActions(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void addLevel() {
+        this.level++;
+    }
 
     public void create() {
         entity.getEvents().addListener("placing", this::placing);
         entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("cancelPlacement", this::cancelPlacement);
-        textureRenderComponent = entity.getComponent(TextureRenderComponent.class);
-        textureRenderComponent.setEnabled(true);
+        entity.getEvents().addListener("levelUp", this::addLevel); // Not caused by any event yet
         physicsComponent = entity.getComponent(PhysicsComponent.class);
         physicsComponent.setEnabled(false);
         placed = false;
@@ -76,5 +87,4 @@ public class BuildingActions extends Component {
         if (placed) {return;}
         entity.dispose();
     }
-
 }

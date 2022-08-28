@@ -1,7 +1,6 @@
 package com.deco2800.game.entities.configs;
 
-public class BuildingConfig {
-    public BaseEntityConfig ghost = new BaseEntityConfig();
-    public GhostKingConfig ghostKing = new GhostKingConfig();
-
+public class BuildingConfigs {
+    public TownHallConfig townHall = new TownHallConfig();
+    public BarracksConfig barracks = new BarracksConfig();
 }
