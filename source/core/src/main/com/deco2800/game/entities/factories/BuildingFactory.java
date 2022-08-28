@@ -13,18 +13,31 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
+/**
+ * Factory to create a building entity with predefined components.
+ * <p> Each building entity type should have a creation method that returns a corresponding entity.
+ * <p> Predefined buildings properties are loaded from a config stored as a json file and should have
+ * the properties stored in 'BuildingConfigs'.
+ */
 public class BuildingFactory {
     // Default physical collider of buildings made through building factory
     private static final float COLLIDER_SCALE = 0.9f;
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
 
+    /**
+     * @return a new Entity with universal building components
+     */
     public static Entity createBaseBuilding() {
         return new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
+    /**
+     * Creates entity, adds and configures TownHall components
+     * @return TownHall Entity
+     */
     public static Entity createTownHall() {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
@@ -40,6 +53,10 @@ public class BuildingFactory {
         return townHall;
     }
 
+    /**
+     * Creates entity, adds and configures Barracks components
+     * @return Barracks Entity
+     */
     public static Entity createBarracks() {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
@@ -55,6 +72,10 @@ public class BuildingFactory {
         return barracks;
     }
 
+    /**
+     * Creates entity, adds and configures MedievalBarracks components
+     * @return MedievalBarracks Entity
+     */
     public static Entity createBarracksMedieval() {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
@@ -70,6 +91,10 @@ public class BuildingFactory {
         return barracks;
     }
 
+    /**
+     * Creates entity, adds and configures Wall components
+     * @return Barracks Entity
+     */
     public static Entity createWall() {
         Entity barracks = createBaseBuilding();
         System.out.println(configs);
