@@ -1,0 +1,33 @@
+miner_left.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerLeft1
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+minerLeft2
+  rotate: false
+  xy: 2048, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+minerLeft3
+  rotate: false
+  xy: 0, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+minerLeft4
+  rotate: false
+  xy: 2048, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
