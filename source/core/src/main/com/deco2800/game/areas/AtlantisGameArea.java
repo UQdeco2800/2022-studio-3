@@ -17,6 +17,8 @@ import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
+import com.deco2800.game.worker.type.MinerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Map;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final int NUM_TREES = 5;
+    private static final int NUM_STONE = 10;
     private static final String[] forestTextures = {
             "images/Ocean.png",
             "images/Sand.png",
@@ -43,11 +46,11 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
             "images/base.png",
-            "images/mud.png",
+            "images/stone.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager.atlas", "images/duration_bar/duration_bar.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -71,9 +74,11 @@ public class AtlantisGameArea extends GameArea {
         //player = spawnPlayer();
         playMusic();
         spawnForager();
+        spawnForager();
         spawnWorkerBase();
+        spawnTrees();
         spawnStone();
-        //spawnTrees();
+        spawnMiner();
     }
 
     private void displayUI() {
@@ -182,10 +187,20 @@ public class AtlantisGameArea extends GameArea {
      * @return entity corresponding to the spawned forager
      */
     private Entity spawnForager() {
-        GridPoint2 spawn = RandomPointGenerator.getCityCenter(terrainFactory);
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newForager = ForagerFactory.createForager();
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
+    }
+
+    /**
+    * Creates and spawns a new Miner unit
+    */
+    private Entity spawnMiner(){
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        Entity newMiner = MinerFactory.createMiner();
+        spawnEntityAt(newMiner, spawn, true, true);
+        return newMiner;
     }
 
     /**
@@ -216,6 +231,17 @@ public class AtlantisGameArea extends GameArea {
             GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
             Entity tree = TreeFactory.createTree();
             spawnEntityAt(tree, randomPos, false, false);
+        }
+    }
+
+    /**
+     * Spawns random stones within the city which is used by a miner to collect stone.
+     *
+     */
+    private void spawnStone() {
+        for (int i = 0; i < NUM_STONE; i++) {
+            GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 1);
+            spawnEntityAt(StoneFactory.createStone(), randomPos, false, false);
         }
     }
 

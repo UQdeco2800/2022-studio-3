@@ -1,0 +1,40 @@
+forager_forward.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+forager_forward_idle
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 0
+forager_forward_move
+  rotate: false
+  xy: 2048, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 2
+forager_forward_move
+  rotate: false
+  xy: 0, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 2
+forager_forward_move
+  rotate: false
+  xy: 2048, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: 0

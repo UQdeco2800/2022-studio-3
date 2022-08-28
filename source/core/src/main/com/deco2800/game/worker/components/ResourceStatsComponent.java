@@ -108,35 +108,39 @@ public class ResourceStatsComponent extends Component {
     }
 
     /**
-     * Collects wood from the entity based on the amount which the
-     * collector can collect at a time.
-     * @param collector the collector
-     */
-    public void collect(CollectStatsComponent collector) {
-        int newWood = getWood() - collector.getCollectionAmount();
-        setWood(newWood);
-    }
-
-    /**
      * Collects stone
      */
     public int collectStone(CollectStatsComponent collector){
-        int newStone = getStone() - collector.getCollectionAmount();
-        logger.info("[+] num of stone in Stone() before : " + Integer.toString(getStone()));
-        setStone(newStone);
-        logger.info("[+] num of stone in Stone() after : " + Integer.toString(getStone()));
-        return collector.getCollectionAmount();
+        int collectionAmount;
+        logger.info("[+] num of stone in Rock before : " + Integer.toString(getStone()));
+        if (getStone() == 0) {
+            collectionAmount = 0;
+        } else if (collector.getCollectionAmount() > getStone()) {
+            collectionAmount = getStone();
+        } else {
+            collectionAmount = collector.getCollectionAmount();
+        }
+        setWood(getStone() - collectionAmount);
+        logger.info("[+] num of stone in Rock after : " + Integer.toString(getStone()));
+        return collectionAmount;
     }
 
     /**
      * Collects stone
      */
-    public int collectWood(CollectStatsComponent collector){
-        int newWood = getWood() - collector.getCollectionAmount();
-        logger.info("[+] num of wood in TreeFactory() before : " + Integer.toString(getWood()));
-        setWood(newWood);
-        logger.info("[+] num of wood in TreeFactory() after : " + Integer.toString(getWood()));
-        return collector.getCollectionAmount();
+    public int collectWood(CollectStatsComponent collector) {
+        int collectionAmount;
+        logger.info("[+] num of wood in Tree before : " + Integer.toString(getWood()));
+        if (getWood() == 0) {
+            collectionAmount = 0;
+        } else if (collector.getCollectionAmount() > getWood()) {
+            collectionAmount = getWood();
+        } else {
+            collectionAmount = collector.getCollectionAmount();
+        }
+        setWood(getWood() - collectionAmount);
+        logger.info("[+] num of wood in Tree after : " + Integer.toString(getWood()));
+        return collectionAmount;
     }
 
     public int collectmetal(CollectStatsComponent collector){
