@@ -114,19 +114,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Dispose all entities.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.deco2800.game.entities.Entity)" class="member-name-link">register</a><wbr>(<a href="Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.graphics.Camera</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCamera()" class="member-name-link">getCamera</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Register a new entity with the entity service.</div>
+<div class="block">Finds the game camera which is registered with an entity in the EntityService, and returns it.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unregister(com.deco2800.game.entities.Entity)" class="member-name-link">unregister</a><wbr>(<a href="Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.deco2800.game.entities.Entity)" class="member-name-link">register</a><wbr>(<a href="Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Unregister an entity with the entity service.</div>
+<div class="block">Register a new entity with the entity service.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unregister(com.deco2800.game.entities.Entity)" class="member-name-link">unregister</a><wbr>(<a href="Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unregister an entity with the entity service.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update all registered entities.</div>
 </div>
 </div>
@@ -194,6 +199,18 @@ loadScripts(document, 'script');</script>
 <h3>dispose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span>()</div>
 <div class="block">Dispose all entities.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCamera()">
+<h3>getCamera</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.graphics.Camera</span>&nbsp;<span class="element-name">getCamera</span>()</div>
+<div class="block">Finds the game camera which is registered with an entity in the EntityService, and returns it.
+ Otherwise, returns null if no such entity exists.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the game camera</dd>
+</dl>
 </section>
 </li>
 </ul>

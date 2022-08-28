@@ -32,3 +32,10 @@ com.deco2800.game.ui.terminal
 com.deco2800.game.ui.terminal.commands
 com.deco2800.game.utils
 com.deco2800.game.utils.math
+com.deco2800.game.worker
+com.deco2800.game.worker.components
+com.deco2800.game.worker.components.duration
+com.deco2800.game.worker.components.movement
+com.deco2800.game.worker.components.type
+com.deco2800.game.worker.resources
+com.deco2800.game.worker.type
