@@ -92,6 +92,14 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
     }
 
+    private void collectMetal(ResourceStatsComponent targetStats){
+        int numCollected = targetStats.collectStone(collectStats);
+        // Add the number of collected resource to the worker inventory
+        WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
+        inventory.addMetal(numCollected);
+        logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " metals");
+    }
+
     private void collectWood(ResourceStatsComponent targetStats){
         int numCollected = targetStats.collectWood(collectStats);
         // Add the number of collected resource to the worker inventory
@@ -102,7 +110,7 @@ public class ResourceCollectComponent extends Component {
 
     private void loadToBase(ResourceStatsComponent baseStats) {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
-        baseStats.addIron(inventory.unloadMetal());
+        baseStats.addMetal(inventory.unloadMetal());
         baseStats.addStone(inventory.unloadStone());
         baseStats.addWood(inventory.unloadWood());
         logger.info("[+] The worker now has " + Integer.toString(inventory.getWood()) + " wood and " + Integer.toString(inventory.getStone()) + " stone");

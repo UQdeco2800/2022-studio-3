@@ -8,5 +8,5 @@ import com.deco2800.game.entities.configs.BaseEntityConfig;
 public class ResourceConfig extends BaseEntityConfig {
     public int stone = 0;
     public int wood = 0;
-    public int iron = 0;
+    public int metal = 0;
 }

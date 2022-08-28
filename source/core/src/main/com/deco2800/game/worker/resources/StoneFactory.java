@@ -19,7 +19,7 @@ public class StoneFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
-            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.iron));
+            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal));
         newStone.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         newStone.getComponent(TextureRenderComponent.class).scaleEntity();
         return newStone;
