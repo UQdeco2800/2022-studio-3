@@ -120,7 +120,7 @@ public class ResourceStatsComponent extends Component {
         } else {
             collectionAmount = collector.getCollectionAmount();
         }
-        setWood(getStone() - collectionAmount);
+        setStone(getStone() - collectionAmount);
         logger.info("[+] num of stone in Rock after : " + Integer.toString(getStone()));
         return collectionAmount;
     }
@@ -143,12 +143,19 @@ public class ResourceStatsComponent extends Component {
         return collectionAmount;
     }
 
-    public int collectmetal(CollectStatsComponent collector){
-        int newmetal = getMetal() - collector.getCollectionAmount();
-        logger.info("[+] num of metal in Mine() before : " + Integer.toString(getMetal()));
-        setMetal(newmetal);
-        logger.info("[+] num of stone in TreeFactory() after : " + Integer.toString(getMetal()));
-        return collector.getCollectionAmount();
+    public int collectMetal(CollectStatsComponent collector){
+        int collectionAmount;
+        logger.info("[+] num of metal in Mine before : " + Integer.toString(getMetal()));
+        if (getMetal() == 0) {
+            collectionAmount = 0;
+        } else if (collector.getCollectionAmount() > getMetal()) {
+            collectionAmount = getMetal();
+        } else {
+            collectionAmount = collector.getCollectionAmount();
+        }
+        setMetal(getMetal() - collectionAmount);
+        logger.info("[+] num of metal in Mine after : " + Integer.toString(getMetal()));
+        return collectionAmount;
     }
     
 }
