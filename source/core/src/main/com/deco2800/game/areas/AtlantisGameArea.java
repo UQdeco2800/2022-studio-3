@@ -44,11 +44,10 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_3.png",
             "images/base.png",
             "images/mud.png",
-            "images/duration_bar.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager.atlas", "images/duration_bar.atlas"
+            "images/forager.atlas", "images/duration_bar/duration_bar.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";

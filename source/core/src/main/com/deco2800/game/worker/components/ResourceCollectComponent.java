@@ -6,6 +6,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.worker.components.duration.StoneDurationEntity;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
@@ -58,14 +59,9 @@ public class ResourceCollectComponent extends Component {
             if (collectorIsMiner != null) {
                 // If the worker type is Miner
                 collectStone(targetStats);
-                // Trigger the animation
-                target.getEvents().trigger("miningAnimate");
             } else if(collectorIsForager != null){
                 // If the worker type is Forager
-                collectStone(targetStats);
-                // Trigger the animation
-                target.getEvents().trigger("miningAnimate");
-                //collectWood(targetStats);
+                collectWood(targetStats);
             } else{
                 targetStats.collect(collectStats);
             }
