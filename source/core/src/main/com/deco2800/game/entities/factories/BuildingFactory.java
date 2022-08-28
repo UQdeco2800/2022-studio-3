@@ -61,7 +61,7 @@ public class BuildingFactory {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
-        barracks.addComponent(new TextureRenderComponent("images/barracks atlantis.png"))
+        barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
                 .addComponent(new BuildingActions(config.level));
 
         barracks.getComponent(TextureRenderComponent.class).scaleEntity();

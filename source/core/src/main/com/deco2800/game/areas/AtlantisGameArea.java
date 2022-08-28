@@ -49,7 +49,7 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
             "images/Base.png",
-            "images/barracks atlantis.png",
+            "images/isometric barracks current.png",
             "images/barracks medieval.png",
             "images/wall_1.png",
             "images/base.png",
