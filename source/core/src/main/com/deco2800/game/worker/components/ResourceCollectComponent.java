@@ -6,7 +6,6 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
-import com.deco2800.game.worker.components.duration.StoneDurationEntity;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
@@ -59,6 +58,7 @@ public class ResourceCollectComponent extends Component {
             if (collectorIsMiner != null) {
                 // If the worker type is Miner
                 collectStone(targetStats);
+                collectMetal(targetStats);
             } else if(collectorIsForager != null){
                 // If the worker type is Forager
                 collectWood(targetStats);
@@ -74,6 +74,14 @@ public class ResourceCollectComponent extends Component {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
         inventory.addStone(numCollected);
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
+    }
+
+    private void collectMetal(ResourceStatsComponent targetStats){
+        int numCollected = targetStats.collectStone(collectStats);
+        // Add the number of collected resource to the worker inventory
+        WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
+        inventory.addMetal(numCollected);
+        logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " metals");
     }
 
     private void collectWood(ResourceStatsComponent targetStats){

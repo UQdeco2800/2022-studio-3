@@ -10,14 +10,12 @@ public class StoneAnimationController extends Component{
     private static final Logger logger = LoggerFactory.getLogger(StoneAnimationController.class);
     AnimationRenderComponent animator;
 
-    @Override
-    public void create() {
-        super.create();
+    public void triggerAnimation(){
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("miningAnimate", this::animateMining);
     }
 
-    void animateMining(){
+    private void animateMining(){
         logger.info("[+] mining triggered");
         animator.startAnimation("duration-bar-0");
         animator.startAnimation("duration-bar-1");
