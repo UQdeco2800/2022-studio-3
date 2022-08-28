@@ -70,6 +70,22 @@ public class BuildingFactory {
         return barracks;
     }
 
+    public static Entity createWall() {
+        Entity barracks = createBaseBuilding();
+        System.out.println(configs);
+        WallConfig config = configs.wall;
+
+        barracks.addComponent(new TextureRenderComponent("images/wall_1.png"))
+                .addComponent(new BuildingActions(config.level));
+
+        barracks.getComponent(TextureRenderComponent.class).scaleEntity();
+        barracks.scaleWidth(0.5f);
+        PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
+
+        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        return barracks;
+    }
+
     private BuildingFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }

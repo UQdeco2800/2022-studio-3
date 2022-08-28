@@ -8,5 +8,10 @@
     "health": 200,
     "baseAttack": 0,
     "level": 1
+  },
+  "wall": {
+    "health": 500,
+    "baseAttack": 0,
+    "level": 1
   }
 }
