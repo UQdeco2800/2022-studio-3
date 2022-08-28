@@ -14,7 +14,7 @@ public class StoneFactory {
 
     public static Entity createStone() {
         return new Entity()
-            .addComponent(new TextureRenderComponent("images/mud.png"))
+            .addComponent(new TextureRenderComponent("images/stone.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))

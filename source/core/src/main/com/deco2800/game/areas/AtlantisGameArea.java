@@ -14,6 +14,7 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final int NUM_TREES = 5;
+    private static final int NUM_STONE = 10;
     private static final String[] forestTextures = {
             "images/Ocean.png",
             "images/Sand.png",
@@ -41,7 +43,8 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/base.png"
+            "images/base.png",
+            "images/stone.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -68,9 +71,10 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         //player = spawnPlayer();
         playMusic();
-        //spawnForager();
-        //spawnWorkerBase();
-        //spawnTrees();
+        spawnForager();
+        spawnWorkerBase();
+        spawnTrees();
+        spawnStone();
     }
 
     private void displayUI() {
@@ -203,6 +207,17 @@ public class AtlantisGameArea extends GameArea {
             GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
             Entity tree = TreeFactory.createTree();
             spawnEntityAt(tree, randomPos, false, false);
+        }
+    }
+
+    /**
+     * Spawns random stones within the city which is used by a miner to collect stone.
+     *
+     */
+    private void spawnStone() {
+        for (int i = 0; i < NUM_STONE; i++) {
+            GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 1);
+            spawnEntityAt(StoneFactory.createStone(), randomPos, false, false);
         }
     }
 
