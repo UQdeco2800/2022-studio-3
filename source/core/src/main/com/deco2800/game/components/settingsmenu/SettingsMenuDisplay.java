@@ -176,6 +176,7 @@ public class SettingsMenuDisplay extends UIComponent {
           public void changed(ChangeEvent changeEvent, Actor actor) {
             logger.debug("Apply button clicked");
             applyChanges();
+            exitMenu();
           }
         });
 

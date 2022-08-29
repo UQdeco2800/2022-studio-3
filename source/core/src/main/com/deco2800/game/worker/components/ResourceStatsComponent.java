@@ -14,7 +14,7 @@ public class ResourceStatsComponent extends WorkerInventoryComponent {
     }
 
     /**
-     * Returns true if the entity has 0 wood & 0 stone & 0 metal, otherwise false.
+     * Returns true if the entity has 0 wood and 0 stone and 0 metal, otherwise false.
      *
      * @return is resource dead
      */
