@@ -1,12 +1,15 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
@@ -45,6 +48,10 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
+            "images/Base.png",
+            "images/isometric barracks current.png",
+            "images/barracks medieval.png",
+            "images/wall_1.png",
             "images/base.png",
             "images/stone.png"
     };
@@ -53,7 +60,7 @@ public class AtlantisGameArea extends GameArea {
             "images/forager_forward.atlas", "images/miner_forward.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
+    private static final String backgroundMusic = "sounds/menu.wav";
     private static final String[] atlantisMusic = {backgroundMusic};
 
     private final AtlantisTerrainFactory terrainFactory;
@@ -91,7 +98,9 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
-        spawnEntity(new Entity().addComponent(terrain));
+        //Add minimap component
+        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
+        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
@@ -101,6 +110,13 @@ public class AtlantisGameArea extends GameArea {
 
         //Spawn boundaries around the map itself
         spawnMapBounds();
+
+        // GridPoint2 cityCentre = new GridPoint2(mg.getCityDetails().get("Centre").getX(),
+        //        mg.getCityDetails().get("Centre").getY());
+        spawnTownHall();
+        spawnBarracks(3);
+        spawnWalls();
+
     }
 
     /**
@@ -183,6 +199,54 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
+     * Spawns TownHall in city center
+     */
+    private void spawnTownHall() {
+        Entity townHall = BuildingFactory.createTownHall();
+        spawnEntityAt(townHall, RandomPointGenerator.getCityCenter(terrainFactory), true, true);
+    }
+
+    /**
+     * Spawns Barracks in random locations around city
+     * @param num number of Barracks to spawn in the city
+     */
+    private void spawnBarracks(int num) {
+        for (int i = 0; i < num; i++) {
+            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity barracks = BuildingFactory.createBarracks();
+            spawnEntityAt(barracks, position, true, true);
+        }
+    }
+
+    /**
+     * Spawns Medieval Barracks in random locations around city
+     * @param num number of Barracks to spawn in the city
+     */
+    private void spawnBarracksMedieval(int num) {
+        for (int i = 0; i < num; i++) {
+            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity barracks = BuildingFactory.createBarracksMedieval();
+            spawnEntityAt(barracks, position, true, true);
+        }
+    }
+
+    /**
+     * Spawns a line of walls along bottom city border and right city border
+     */
+    private void spawnWalls() {
+        GridPoint2 position = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory,1);
+        for (int j = 0; j < 40; j++) {
+            Entity wall = BuildingFactory.createWall();
+            spawnEntityAt(wall, position.add(0, -1), true, true);
+        }
+        position = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory,1);
+        for (int j = 0; j < 40; j++) {
+            Entity wall = BuildingFactory.createWall();
+            spawnEntityAt(wall, position.add(1, 0), true, true);
+        }
+    }
+
+    /**
      * Spawns forager at the centre of the Atlantean city
      * @return entity corresponding to the spawned forager
      */
@@ -236,10 +300,10 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void playMusic() {
-        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-        //music.setLooping(true);
-        //music.setVolume(0.3f);
-        //music.play();
+        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     private void loadAssets() {

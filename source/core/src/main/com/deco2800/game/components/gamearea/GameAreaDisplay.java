@@ -3,6 +3,7 @@ package com.deco2800.game.components.gamearea;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.deco2800.game.components.dialoguebox.DialogueBox;
 import com.deco2800.game.ui.UIComponent;
 
 /**

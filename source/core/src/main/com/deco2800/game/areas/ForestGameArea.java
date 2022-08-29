@@ -8,9 +8,11 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -42,11 +44,15 @@ public class ForestGameArea extends GameArea {
     "images/forager.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
+    "images/Base.png",
+    "images/barracks atlantis.png",
+    "images/barracks medieval.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
     "images/grass_2.png",
     "images/grass_3.png",
+    "images/wall_1.png",
     "images/hex_grass_1.png",
     "images/hex_grass_2.png",
     "images/hex_grass_3.png",
@@ -60,6 +66,12 @@ public class ForestGameArea extends GameArea {
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
+
+  private static final float largeScale = 7f;
+
+  private static final float mediumScale = 5f;
+
+  private static final float smallScale = 3f;
 
   private final TerrainFactory terrainFactory;
 
@@ -78,13 +90,20 @@ public class ForestGameArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
+    // spawnWalls();
+    spawnTownHall(new GridPoint2(9, 7));
+    spawnBarracks(new GridPoint2(3, 6));
+    spawnBarracksMedieval(new GridPoint2(13, 6));
+    spawnWalls(0,3);
     player = spawnPlayer();
-    //spawnGhosts();
-    //spawnGhostKing();
+    ServiceLocator.registerGameArea(this);
+    // spawnGhosts();
+    // spawnGhostKing();
 
     playMusic();
   }
+
 
   private void displayUI() {
     Entity ui = new Entity();
@@ -106,6 +125,8 @@ public class ForestGameArea extends GameArea {
 
     // Terrain walls
     float tileSize = terrain.getTileSize();
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
     for (int i = 0; i < mg.getWidth(); i++) {
       for (int j = 0; j < mg.getHeight(); j++) {
@@ -161,15 +182,54 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     Entity tree = ObstacleFactory.createTree();
-    spawnEntityAt(tree, new GridPoint2(0,0), false, false);
-
-    Entity tree2 = ObstacleFactory.createTree();
-    spawnEntityAt(tree2, new GridPoint2(0,10), false, false);
-
-    Entity tree3 = ObstacleFactory.createTree();
-    spawnEntityAt(tree3, new GridPoint2(10,0), false, false);
-
+    spawnEntityAt(tree, new GridPoint2(0, 0), false, false);
   }
+
+  private void spawnWalls(int xPos, int yPos) {
+
+    for (int i=0; i<15; i++) {
+      Entity wall = BuildingFactory.createWall();
+      wall.setScale(1f, 2f);
+      spawnEntityAt(wall, new GridPoint2(xPos+i, yPos), true, true);
+
+    }
+    for (int i=0; i<15; i++) {
+      Entity wall = BuildingFactory.createWall();
+      wall.setScale(1f, 2f);
+      spawnEntityAt(wall, new GridPoint2(xPos+i, yPos+7), true, true);
+
+    }
+    for (int i=0; i<7; i++) {
+      Entity wall = BuildingFactory.createWall();
+      wall.setScale(1f, 2f);
+      spawnEntityAt(wall, new GridPoint2(xPos+16, yPos+i), true, true);
+    }
+    for (int i=0; i<7; i++) {
+      Entity wall = BuildingFactory.createWall();
+      wall.setScale(1f, 2f);
+      spawnEntityAt(wall, new GridPoint2(xPos, yPos+i), true, true);
+    }
+  }
+
+  private void spawnTownHall(GridPoint2 position) {
+    Entity townHall = BuildingFactory.createTownHall();
+    townHall.setScale(largeScale, largeScale);
+    spawnEntityAt(townHall, position, true, true);
+  }
+
+  private void spawnBarracks(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracks();
+    barracks.setScale(mediumScale, mediumScale);
+    spawnEntityAt(barracks, position, true, true);
+  }
+
+  private void spawnBarracksMedieval(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracksMedieval();
+    barracks.setScale(mediumScale, mediumScale);
+    spawnEntityAt(barracks, position, true, true);
+  }
+
+
 
   private Entity spawnPlayer() {
     MapGenerator mg = terrainFactory.getMapGenerator();
@@ -187,8 +247,8 @@ public class ForestGameArea extends GameArea {
 
     for (int i = 0; i < NUM_GHOSTS; i++) {
       GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity ghost = NPCFactory.createGhost(player);
-      spawnEntityAt(ghost, randomPos, true, true);
+      Entity ghoul = NPCFactory.createGhoul();
+      spawnEntityAt(ghoul, randomPos, true, true);
     }
   }
 
@@ -197,7 +257,7 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-    Entity ghostKing = NPCFactory.createGhostKing(player);
+    Entity ghostKing = NPCFactory.createDemon();
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
 
