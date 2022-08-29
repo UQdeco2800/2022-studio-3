@@ -1,0 +1,40 @@
+miner_forward.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+miner_forward_idle
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+miner_forward_move
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 1
+miner_forward_move
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+miner_forward_move
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0

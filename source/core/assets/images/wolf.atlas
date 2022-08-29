@@ -1,0 +1,226 @@
+
+wolf.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+idle-east
+  rotate: false
+  xy: 160, 37
+  size: 58, 59
+  orig: 58, 59
+  offset: 0, 0
+  index: 0
+
+idle-west
+
+rotate: false
+  xy: 238, 34
+  size: 58, 59
+  orig: 58, 59
+  offset: 0, 0
+  index: 0
+
+
+attack-east
+  rotate: false
+  xy: 14, 113
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 0
+
+attack-east
+  rotate: false
+  xy: 84, 121
+  size: 65, 85
+  orig: 65, 85
+  offset: 0, 0
+  index: 1
+
+attack-east
+  rotate: false
+  xy: 166, 129
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 2
+
+attack-east
+  rotate: false
+  xy: 242, 130
+  size: 76, 58
+  orig: 76, 58
+  offset: 0, 0
+  index: 3
+
+attack-north
+  rotate: false
+  xy: 9, 225
+  size: 59, 54
+  orig: 59, 54
+  offset: 0, 0
+  index: 0
+
+attack-north
+  rotate: false
+  xy: 79, 224
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 1
+
+attack-north
+  rotate: false
+  xy: 237, 196
+  size: 87, 80
+  orig: 87, 80
+  offset: 0, 0
+  index: 2
+
+attack-north
+  rotate: false
+  xy: 356, 218
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 3
+
+attack-south
+  rotate: false
+  xy: 356, 121
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 0
+
+
+move-south
+  rotate: false
+  xy: 438, 114
+  size: 65, 85
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+
+attack-south
+  rotate: false
+  xy: 530, 113
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 2
+
+attack-south
+  rotate: false
+  xy: 619, 113
+  size: 76, 58
+  orig: 76, 58
+  offset: 0, 0
+  index: 3
+
+attack-west
+  rotate: false
+  xy: 474, 229
+  size: 59, 54
+  orig: 59, 54
+  offset: 0, 0
+  index: 0
+
+attack-west
+  rotate: false
+  xy: 574, 230
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 1
+
+attack-west
+  rotate: false
+  xy: 657, 226
+  size: 59, 59
+  orig: 59, 59
+  offset: 0, 0
+  index: 2
+
+attack-west
+  rotate: false
+  xy: 741, 220
+  size: 59, 65
+  orig: 59, 65
+  offset: 0, 0
+  index: 3
+
+attack-west
+  rotate: false
+  xy: 722, 111
+  size: 87, 80
+  orig: 87, 80
+  offset: 0, 0
+  index: 4
+
+move-east
+  rotate: false
+  xy: 657,24
+  size: 64, 57
+  orig: 64, 57
+  offset: 0, 0
+  index: 0
+
+move-east
+  rotate: false
+  xy: 742, 29
+  size: 59, 58
+  orig: 59, 58
+  offset: 0, 0
+  index: 1
+
+move-north
+  rotate: false
+  xy: 238, 34
+  size: 58, 59
+  orig: 58, 59
+  offset: 0, 0
+  index: 0
+
+move-north
+  rotate: false
+  xy: 309, 39
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 1
+
+move-south
+  rotate: false
+  xy: 482, 30
+  size: 59, 58
+  orig: 59, 58
+  offset: 0, 0
+  index: 0
+
+move-south
+  xy: 572, 28
+  size: 64, 57
+  orig: 64, 57
+  offset: 0, 0
+  index: 1
+
+
+move-west
+  rotate: false
+  xy: 7, 39
+  size: 59, 54
+  orig: 59, 54
+  offset: 0, 0
+  index: 0
+
+move-west
+  rotate: false
+  xy: 80, 39
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 1
+
+
