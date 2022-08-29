@@ -5,9 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.deco2800.game.services.GameTime;
 import com.deco2800.game.utils.random.PseudoRandom;
+import com.deco2800.game.utils.random.Timer;
 
 public class WeatherIcon extends Actor {
+    /**
+     * Tracks time interval to change weather icon on display.
+     */
+    Timer timer;
 
     /**
      * Initiate the Image for the weather image.
@@ -31,9 +37,14 @@ public class WeatherIcon extends Actor {
     };
 
     public WeatherIcon() {
+        this.timer = new Timer(0, 30);
         this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
+    }
+
+    public Boolean hasTimerExpired() {
+        return timer.isTimerExpired();
     }
 
     public void layout() {

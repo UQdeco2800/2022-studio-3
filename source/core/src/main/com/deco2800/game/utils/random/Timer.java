@@ -1,11 +1,10 @@
 package com.deco2800.game.utils.random;
-
-import java.time.*;
-import java.lang.*;
-import com.deco2800.game.utils.random.PseudoRandom;
+import com.deco2800.game.services.GameTime;
 
 
 public class Timer {
+
+    GameTime gt = new GameTime();
 
     /**
      * Initiating the start variable.
@@ -15,7 +14,7 @@ public class Timer {
     /**
      * Initiating the delay variable.
      */
-    long delay;
+    public long delay;
 
     /**
      * Setting up timer to the class variable.
@@ -36,7 +35,7 @@ public class Timer {
      * @return setting start variable with the current time for the Timer class.
      */
     public void start() {
-        this.start = System.currentTimeMillis();
+        this.start = gt.getTime();
     }
 
     /**
@@ -44,18 +43,20 @@ public class Timer {
      * @return boolean of time expiration.
      */
     public boolean isTimerExpired() {
-        return (System.currentTimeMillis() - this.start) > this.delay;
+        return (gt.getTime() - this.start) > this.delay;
     }
 
     /**
      * Checking whether if the timer is already expired or not.
      * @return Time left if it exists or time expiration info if it is not.
      */
-    public void timeLeft() {
+    public long timeLeft() {
         if (isTimerExpired()) {
             System.out.println("Timer expired");
+            return 0;
         } else {
-            System.out.println("Time left = " + (this.delay - (System.currentTimeMillis() - this.start)));
+            System.out.println("Time left = " + (this.delay - (gt.getTime() - this.start)));
+            return this.delay - (gt.getTime() - this.start);
         }
     }
 }
