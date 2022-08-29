@@ -111,6 +111,7 @@ public class BuildingFactory {
         return barracks;
     }
 
+
     private BuildingFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
