@@ -27,7 +27,7 @@ public class WeatherIcon extends Actor {
     /**
      * Initiate the Image for the weather image.
      */
-    private final Image weatherImage;
+    private Image weatherImage;
 
     private final String[] weatherFile = {
             "images/cloudy.png",
@@ -69,6 +69,12 @@ public class WeatherIcon extends Actor {
         return timer.isTimerExpired();
     }
 
+    public void changeWeatherImage() {
+        this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
+        this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        layout();
+
+    }
 
     public void layout() {
         /**

@@ -47,8 +47,8 @@ public class WeatherIconDisplay extends UIComponent {
     @Override
     public void update() {
         if (timer.isTimerExpired()) {
-            this.dispose();
-            addActors();
+            this.weatherIcon.changeWeatherImage();
+            this.timer = new Timer(0, 10000);
         }
         int timeLeft = (int) timer.timeLeft() / 1000;
         CharSequence text = String.format("%d", timeLeft);
