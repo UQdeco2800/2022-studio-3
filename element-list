@@ -6,12 +6,15 @@ com.deco2800.game.areas.MapGenerator
 com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.building
+com.deco2800.game.components.dialoguebox
 com.deco2800.game.components.friendly
 com.deco2800.game.components.gamearea
 com.deco2800.game.components.maingame
 com.deco2800.game.components.mainmenu
 com.deco2800.game.components.npc
+com.deco2800.game.components.pausemenu
 com.deco2800.game.components.player
+com.deco2800.game.components.resources
 com.deco2800.game.components.settingsmenu
 com.deco2800.game.components.tasks
 com.deco2800.game.concurrency
