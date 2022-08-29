@@ -33,11 +33,12 @@ public class WeatherIcon extends Actor {
     public WeatherIcon() {
         this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        position();
+        layout();
     }
 
-    public void position() {
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, 128f);
+    public void layout() {
+        weatherImage.setSize(128f, 128f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-160f);
     }
 
     public String getRandomWeatherFileLocation() {
