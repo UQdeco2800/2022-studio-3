@@ -9,6 +9,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
@@ -47,6 +48,10 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
+            "images/Base.png",
+            "images/isometric barracks current.png",
+            "images/barracks medieval.png",
+            "images/wall_1.png",
             "images/base.png",
             "images/stone.png"
     };
@@ -105,6 +110,13 @@ public class AtlantisGameArea extends GameArea {
 
         //Spawn boundaries around the map itself
         spawnMapBounds();
+
+        // GridPoint2 cityCentre = new GridPoint2(mg.getCityDetails().get("Centre").getX(),
+        //        mg.getCityDetails().get("Centre").getY());
+        spawnTownHall();
+        spawnBarracks(3);
+        spawnWalls();
+
     }
 
     /**
@@ -184,6 +196,54 @@ public class AtlantisGameArea extends GameArea {
         terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
 
         return newPlayer;
+    }
+
+    /**
+     * Spawns TownHall in city center
+     */
+    private void spawnTownHall() {
+        Entity townHall = BuildingFactory.createTownHall();
+        spawnEntityAt(townHall, RandomPointGenerator.getCityCenter(terrainFactory), true, true);
+    }
+
+    /**
+     * Spawns Barracks in random locations around city
+     * @param num number of Barracks to spawn in the city
+     */
+    private void spawnBarracks(int num) {
+        for (int i = 0; i < num; i++) {
+            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity barracks = BuildingFactory.createBarracks();
+            spawnEntityAt(barracks, position, true, true);
+        }
+    }
+
+    /**
+     * Spawns Medieval Barracks in random locations around city
+     * @param num number of Barracks to spawn in the city
+     */
+    private void spawnBarracksMedieval(int num) {
+        for (int i = 0; i < num; i++) {
+            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity barracks = BuildingFactory.createBarracksMedieval();
+            spawnEntityAt(barracks, position, true, true);
+        }
+    }
+
+    /**
+     * Spawns a line of walls along bottom city border and right city border
+     */
+    private void spawnWalls() {
+        GridPoint2 position = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory,1);
+        for (int j = 0; j < 40; j++) {
+            Entity wall = BuildingFactory.createWall();
+            spawnEntityAt(wall, position.add(0, -1), true, true);
+        }
+        position = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory,1);
+        for (int j = 0; j < 40; j++) {
+            Entity wall = BuildingFactory.createWall();
+            spawnEntityAt(wall, position.add(1, 0), true, true);
+        }
     }
 
     /**

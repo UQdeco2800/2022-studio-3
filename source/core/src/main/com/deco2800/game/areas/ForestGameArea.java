@@ -8,6 +8,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
@@ -42,6 +43,10 @@ public class ForestGameArea extends GameArea {
     "images/forager.png",
     "images/box_boy_leaf.png",
     "images/tree.png",
+    "images/Base.png",
+    "images/barracks atlantis.png",
+    "images/barracks medieval.png",
+    "images/wall_1.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -79,9 +84,15 @@ public class ForestGameArea extends GameArea {
 
     spawnTerrain();
     spawnTrees();
+    // spawnWalls();
+    spawnTownHall(new GridPoint2(4, 2));
+    spawnBarracks(new GridPoint2(2, 2));
+    spawnBarracksMedieval(new GridPoint2(2, 4));
+
     player = spawnPlayer();
-    //spawnGhosts();
-    //spawnGhostKing();
+
+    // spawnGhosts();
+    // spawnGhostKing();
 
     playMusic();
   }
@@ -169,6 +180,21 @@ public class ForestGameArea extends GameArea {
     Entity tree3 = ObstacleFactory.createTree();
     spawnEntityAt(tree3, new GridPoint2(10,0), false, false);
 
+  }
+
+  private void spawnTownHall(GridPoint2 position) {
+    Entity townHall = BuildingFactory.createTownHall();
+    spawnEntityAt(townHall, position, true, true);
+  }
+
+  private void spawnBarracks(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracks();
+    spawnEntityAt(barracks, position, true, true);
+  }
+
+  private void spawnBarracksMedieval(GridPoint2 position) {
+    Entity barracks = BuildingFactory.createBarracksMedieval();
+    spawnEntityAt(barracks, position, true, true);
   }
 
   private Entity spawnPlayer() {
