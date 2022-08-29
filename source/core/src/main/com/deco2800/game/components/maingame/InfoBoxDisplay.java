@@ -17,11 +17,15 @@ import java.security.Provider;
 
 public class InfoBoxDisplay extends UIComponent {
 
+    //Table displayed for unit picture
     Table pictureTable;
+    //Table displayed for corresponding stats on units
     Table infoTable;
 
+    //initial height and width of the box, can be imple
     float initialHeight;
     float initialWidth;
+    //The image that is always in the background of our information
     private Image backgroundBoxImage;
 
 
