@@ -88,8 +88,8 @@ public class WeatherIcon extends Actor {
          */
         this.timerLabel.setAlignment(Align.left);
         this.timerLabel.setWrap(true);
-        this.timerLabel.setSize(2f,2f);
-        this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
+        this.timerLabel.setSize(3f,3f);
+        this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 10f, Gdx.graphics.getHeight()-75f);
     }
 
     public String getRandomWeatherFileLocation() {
