@@ -51,24 +51,8 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("start");
                     }
                 });
+        
 
-        loadBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Load button clicked");
-                        entity.getEvents().trigger("load");
-                    }
-                });
-
-        settingsBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Settings button clicked");
-                        entity.getEvents().trigger("settings");
-                    }
-                });
 
         exitBtn.addListener(
                 new ChangeListener() {
