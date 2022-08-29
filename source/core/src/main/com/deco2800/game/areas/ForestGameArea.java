@@ -182,7 +182,8 @@ public class ForestGameArea extends GameArea {
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
     Entity tree = ObstacleFactory.createTree();
-    spawnEntityAt(tree, new GridPoint2(0,0), false, false);
+    spawnEntityAt(tree, new GridPoint2(0, 0), false, false);
+  }
 
   private void spawnWalls(int xPos, int yPos) {
 
