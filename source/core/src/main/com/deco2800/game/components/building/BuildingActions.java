@@ -117,4 +117,10 @@ public class BuildingActions extends Component {
         Vector2 position = mouseToGrid(screenX, screenY);
         entity.setPosition(position);
     }
+
+    public void cancelPlacement() {
+        if (placed) {return;}
+        entity.dispose();
+    }
+
 }
