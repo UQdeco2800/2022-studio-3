@@ -1,6 +1,7 @@
 package com.deco2800.game.components.friendlyunits;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,6 +16,10 @@ public class MouseInputComponent extends InputComponent {
     int touchDownX;
     int touchDownY;
 
+    /**
+     * Controls the input of the mouse, whether it be clicked or clicked and dragged so that when the player does so,
+     * a trigger is sent to the Selectable component with the location and type of click movement
+     */
     public MouseInputComponent() {
         super(5);
         shapeRenderer = new ShapeRenderer();
@@ -22,8 +27,10 @@ public class MouseInputComponent extends InputComponent {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        this.touchDownX = screenX;
-        this.touchDownY = screenY;
+        if (button == Input.Buttons.LEFT) {
+            this.touchDownX = screenX;
+            this.touchDownY = screenY;
+        }
         return false;
     }
 
@@ -38,7 +45,6 @@ public class MouseInputComponent extends InputComponent {
 //        shapeRenderer.setColor(Color.RED);
 //        shapeRenderer.rect(300,300,20,20); //assuming you have created those x, y, width and height variables
 //        shapeRenderer.end();
-
         return true;
     }
     @Override
@@ -47,11 +53,12 @@ public class MouseInputComponent extends InputComponent {
         int touchUpX = screenX;
         int touchUpY = screenY;
 //        int touchUpY = Gdx.graphics.getHeight() - screenY;
-
-        if (touchDownX == touchUpX && touchDownY == touchUpY) {
-            entity.getEvents().trigger("click", touchUpX, touchUpY);
-        } else {
-            entity.getEvents().trigger("dragAndClick", touchDownX, touchDownY, touchUpX, touchUpY);
+        if (button == Input.Buttons.LEFT) {
+            if (touchDownX == touchUpX && touchDownY == touchUpY) {
+                entity.getEvents().trigger("click", touchUpX, touchUpY);
+            } else {
+                entity.getEvents().trigger("dragAndClick", touchDownX, touchDownY, touchUpX, touchUpY);
+            }
         }
         return false;
     }
