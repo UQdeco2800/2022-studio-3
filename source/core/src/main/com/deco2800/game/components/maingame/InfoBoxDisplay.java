@@ -35,6 +35,9 @@ public class InfoBoxDisplay extends UIComponent {
         addActors();
     }
 
+    /**
+     * We add the background information box first and then the tables fill up the whitespace in the information box
+     */
     private void addActors() {
         backgroundBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/Information_Box_Deepsea.png", Texture.class));
 
@@ -60,12 +63,15 @@ public class InfoBoxDisplay extends UIComponent {
         stage.addActor(pictureTable);
         stage.addActor(infoTable);
 
-
-
     }
 
+    /**
+     * At each draw function we should update the tables to see if there are any new selected units
+     * and draw them appropriately
+     */
     public void updateTables() {
         Array<Entity> selectedEntities = new Array<>();
+        //Check for selected units
         for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
             SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
             if (selectedComponent != null && selectedComponent.isSelected()) {
@@ -73,15 +79,19 @@ public class InfoBoxDisplay extends UIComponent {
             }
         }
 
+        //clear old tables
         pictureTable.clear();
         infoTable.clear();
+
+        //If there are entities selected
         if (!selectedEntities.isEmpty()) {
             int length = selectedEntities.size;
             int sideLength = (int) Math.ceil(Math.sqrt(length));
-            System.out.println(sideLength);
             int column = 0;
             int row = 1;
 
+            // add pictures to the table. Pictures right now are just hearts but can be updated later on
+            // to represent the entity
             for (Entity entity: selectedEntities) {
                 if (column == sideLength) {
                     pictureTable.row();
@@ -106,6 +116,8 @@ public class InfoBoxDisplay extends UIComponent {
                 row++;
             }
 
+
+            //Added functionality later because there is currently not enough information on the units we will have
             Label dummyText = new Label(String.format("This is dummy text"), skin, "large");
             infoTable.add(dummyText);
             infoTable.row();
