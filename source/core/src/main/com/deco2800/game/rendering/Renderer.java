@@ -47,6 +47,7 @@ public class Renderer implements Disposable {
         debugRenderer);
   }
 
+
   /**
    * Create a renderer
    *
@@ -92,6 +93,7 @@ public class Renderer implements Disposable {
     return camera;
   }
 
+
   /** Render everything to the render service. */
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
@@ -101,8 +103,6 @@ public class Renderer implements Disposable {
     batch.begin();
     renderService.render(batch);
     batch.end();
-    debugRenderer.render(projMatrix);
-
     stage.act();
     stage.draw();
   }

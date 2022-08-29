@@ -11,6 +11,8 @@ import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.pausemenu.PauseMenuActions;
+import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -38,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png", "images/right_side_box.png", "images/TransBox.png"};
+  private static final String[] mainGameTextures = {"images/heart.png","images/bigblack.png"};
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
   private final GdxGame game;
@@ -70,7 +72,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
 
-    //Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
+    // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
     AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
     AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
     atlantisGameArea.create();
@@ -138,6 +140,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
+        .addComponent(new PauseMenuDisplay(this.game))
+        .addComponent(new PauseMenuActions(this.game))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGameExitDisplay())

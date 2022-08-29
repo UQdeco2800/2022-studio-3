@@ -60,7 +60,8 @@ public class EntityService {
   }
 
   /**
-   * Dummy function that we took from team 8. Will be in the main file when we merge
+   * Finds the game camera which is registered with an entity in the EntityService, and returns it.
+   * Otherwise, returns null if no such entity exists.
    *
    * @return the game camera
    */
@@ -73,7 +74,6 @@ public class EntityService {
     }
     return null;
   }
-
 
   public Array<Entity> getEntities() {
     return this.entities;

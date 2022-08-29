@@ -2,6 +2,7 @@ package com.deco2800.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -91,7 +92,6 @@ public class CameraInputComponent extends InputComponent {
                 verticalChange = 0;
             }
         }
-
         super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }
@@ -103,6 +103,7 @@ public class CameraInputComponent extends InputComponent {
     public void updateDirection() {
         int currentX = Gdx.input.getX();
         int currentY = Gdx.input.getY();
+
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 

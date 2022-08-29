@@ -29,7 +29,7 @@ public class MainGameExitDisplay extends UIComponent {
     table.setFillParent(true);
 
     TextButton mainMenuBtn = new TextButton("Exit", skin);
-
+    TextButton pauseMenuBtn = new TextButton("Pause", skin);
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
       new ChangeListener() {
@@ -40,8 +40,18 @@ public class MainGameExitDisplay extends UIComponent {
         }
       });
 
-    table.add(mainMenuBtn).padTop(10f).padRight(10f);
+    pauseMenuBtn.addListener(
+            new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                logger.debug("Pause button clicked");
+                entity.getEvents().trigger("togglepm");
+              }
+            });
 
+
+    table.add(mainMenuBtn).padTop(10f).padRight(10f);
+    table.add(pauseMenuBtn.padTop(10f)).padRight(10f);
     stage.addActor(table);
   }
 

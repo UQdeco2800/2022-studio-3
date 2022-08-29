@@ -54,6 +54,13 @@ public abstract class InputFactory {
   public abstract InputComponent createForFriendlyUnit();
 
   /**
+   * Creates an input handler for the worker
+   *
+   * @return Worker input handler
+   */
+  public abstract InputComponent createForWorker();
+
+  /**
    * Creates an input handler for the terminal
    *
    * @return Terminal input handler
