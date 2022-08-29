@@ -102,7 +102,10 @@ public class InfoBoxDisplay extends UIComponent {
                 row++;
             }
 
-            Label boxBoyText = new Label("Box Boy Stats", skin, "large");
+            Label dummyText = new Label(String.format("This is dummy text"), skin, "large");
+            infoTable.add(dummyText);
+            infoTable.row();
+            Label boxBoyText = new Label(String.format("BoxBoy:   %d", length), skin, "large");
             infoTable.add(boxBoyText);
 
 
