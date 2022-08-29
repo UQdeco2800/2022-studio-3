@@ -1,12 +1,17 @@
 package com.deco2800.game.areas.terrain;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.rendering.RenderComponent;
 
 /**
@@ -22,6 +27,7 @@ public class TerrainComponent extends RenderComponent {
   private final TerrainOrientation orientation;
   private final float tileSize;
 
+
   public TerrainComponent(
       OrthographicCamera camera,
       TiledMap map,
@@ -34,6 +40,7 @@ public class TerrainComponent extends RenderComponent {
     this.tileSize = tileSize;
     this.tiledMapRenderer = renderer;
   }
+
 
   public Vector2 tileToWorldPosition(GridPoint2 tilePos) {
     return tileToWorldPosition(tilePos.x, tilePos.y);
