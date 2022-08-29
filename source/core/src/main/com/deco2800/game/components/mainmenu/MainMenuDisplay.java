@@ -51,7 +51,7 @@ public class MainMenuDisplay extends UIComponent {
                         entity.getEvents().trigger("start");
                     }
                 });
-        
+
 
 
         exitBtn.addListener(
@@ -65,10 +65,6 @@ public class MainMenuDisplay extends UIComponent {
                 });
 
         table.add(startBtn).padTop(30f);
-        table.row();
-        table.add(loadBtn).padTop(15f);
-        table.row();
-        table.add(settingsBtn).padTop(15f);
         table.row();
         table.add(exitBtn).padTop(15f);
 
