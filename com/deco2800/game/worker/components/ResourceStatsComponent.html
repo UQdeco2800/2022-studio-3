@@ -72,13 +72,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../components/Component.html" title="class in com.deco2800.game.components">com.deco2800.game.components.Component</a>
+<div class="inheritance"><a href="WorkerInventoryComponent.html" title="class in com.deco2800.game.worker.components">com.deco2800.game.worker.components.WorkerInventoryComponent</a>
 <div class="inheritance">com.deco2800.game.worker.components.ResourceStatsComponent</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ResourceStatsComponent</span>
-<span class="extends-implements">extends <a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a></span></div>
+<span class="extends-implements">extends <a href="WorkerInventoryComponent.html" title="class in com.deco2800.game.worker.components">WorkerInventoryComponent</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,64 +119,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addMetal(int)" class="member-name-link">addMetal</a><wbr>(int&nbsp;metal)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectMetal(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectMetal</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addStone(int)" class="member-name-link">addStone</a><wbr>(int&nbsp;stone)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addWood(int)" class="member-name-link">addWood</a><wbr>(int&nbsp;wood)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds to the entity's wood.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectmetal(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectmetal</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectStone(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectStone</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Collects stone</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectWood(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectWood</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectStone(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectStone</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Collects stone</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetal()" class="member-name-link">getMetal</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectWood(com.deco2800.game.worker.components.CollectStatsComponent)" class="member-name-link">collectWood</a><wbr>(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the entity's metal.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStone()" class="member-name-link">getStone</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the entity's stone.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWood()" class="member-name-link">getWood</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the entity's wood.</div>
+<div class="block">Collects stone</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDead()" class="member-name-link">isDead</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if the entity has 0 wood and 0 stone and 0 metal, otherwise false.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMetal(int)" class="member-name-link">setMetal</a><wbr>(int&nbsp;metal)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStone(int)" class="member-name-link">setStone</a><wbr>(int&nbsp;stone)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWood(int)" class="member-name-link">setWood</a><wbr>(int&nbsp;wood)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the entity's wood.</div>
 </div>
 </div>
 </div>
-</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.deco2800.game.worker.components.WorkerInventoryComponent">Methods inherited from class&nbsp;com.deco2800.game.worker.components.<a href="WorkerInventoryComponent.html" title="class in com.deco2800.game.worker.components">WorkerInventoryComponent</a></h3>
+<code><a href="WorkerInventoryComponent.html#addMetal(int)">addMetal</a>, <a href="WorkerInventoryComponent.html#addStone(int)">addStone</a>, <a href="WorkerInventoryComponent.html#addWood(int)">addWood</a>, <a href="WorkerInventoryComponent.html#getMetal()">getMetal</a>, <a href="WorkerInventoryComponent.html#getStone()">getStone</a>, <a href="WorkerInventoryComponent.html#getWood()">getWood</a>, <a href="WorkerInventoryComponent.html#hasMetal(int)">hasMetal</a>, <a href="WorkerInventoryComponent.html#hasStone(int)">hasStone</a>, <a href="WorkerInventoryComponent.html#hasWood(int)">hasWood</a>, <a href="WorkerInventoryComponent.html#setMetal(int)">setMetal</a>, <a href="WorkerInventoryComponent.html#setStone(int)">setStone</a>, <a href="WorkerInventoryComponent.html#setWood(int)">setWood</a>, <a href="WorkerInventoryComponent.html#unloadMetal()">unloadMetal</a>, <a href="WorkerInventoryComponent.html#unloadStone()">unloadStone</a>, <a href="WorkerInventoryComponent.html#unloadWood()">unloadWood</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.deco2800.game.components.Component">Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <code><a href="../../components/Component.html#create()">create</a>, <a href="../../components/Component.html#dispose()">dispose</a>, <a href="../../components/Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../../components/Component.html#getEntity()">getEntity</a>, <a href="../../components/Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../../components/Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../../components/Component.html#toString()">toString</a>, <a href="../../components/Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../../components/Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../../components/Component.html#update()">update</a></code></div>
@@ -220,85 +188,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getWood()">
-<h3>getWood</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getWood</span>()</div>
-<div class="block">Returns the entity's wood.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>entity's wood</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getStone()">
-<h3>getStone</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getStone</span>()</div>
-<div class="block">Returns the entity's stone.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>entity's stone</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getMetal()">
-<h3>getMetal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMetal</span>()</div>
-<div class="block">Returns the entity's metal.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>entity's metal</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setWood(int)">
-<h3>setWood</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWood</span><wbr><span class="parameters">(int&nbsp;wood)</span></div>
-<div class="block">Sets the entity's wood. Wood has a minimum bound of 0.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>wood</code> - wood</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setStone(int)">
-<h3>setStone</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStone</span><wbr><span class="parameters">(int&nbsp;stone)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="setMetal(int)">
-<h3>setMetal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMetal</span><wbr><span class="parameters">(int&nbsp;metal)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="addWood(int)">
-<h3>addWood</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addWood</span><wbr><span class="parameters">(int&nbsp;wood)</span></div>
-<div class="block">Adds to the entity's wood. The amount added can be negative.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>wood</code> - wood to add</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="addStone(int)">
-<h3>addStone</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addStone</span><wbr><span class="parameters">(int&nbsp;stone)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="addMetal(int)">
-<h3>addMetal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addMetal</span><wbr><span class="parameters">(int&nbsp;metal)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="collectStone(com.deco2800.game.worker.components.CollectStatsComponent)">
 <h3>collectStone</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">collectStone</span><wbr><span class="parameters">(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</span></div>
@@ -313,9 +202,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="collectmetal(com.deco2800.game.worker.components.CollectStatsComponent)">
-<h3>collectmetal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">collectmetal</span><wbr><span class="parameters">(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</span></div>
+<section class="detail" id="collectMetal(com.deco2800.game.worker.components.CollectStatsComponent)">
+<h3>collectMetal</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">collectMetal</span><wbr><span class="parameters">(<a href="CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a>&nbsp;collector)</span></div>
 </section>
 </li>
 </ul>
