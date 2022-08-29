@@ -46,19 +46,15 @@ public class WeatherIcon extends Actor {
     };
 
     public WeatherIcon(Label countdownTimer) {
-        /**
-         * Initiate the countdownSkin
-         */
-
 
         /**
-         * Initiate timer and its label.
+         * Initiate timerLabel with countdownTimer
          */
+        this.timerLabel = countdownTimer;
 
         /**
          * Initiate weatherImage
          */
-        this.timerLabel = countdownTimer;
         this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
