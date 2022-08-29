@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -45,12 +46,12 @@ public class InfoBoxDisplay extends UIComponent {
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
         pictureTable.setHeight(135);
-        pictureTable.setPosition(38, Gdx.graphics.getHeight() - 748);
+        pictureTable.setPosition(38, Gdx.graphics.getHeight() - 745);
 
         this.infoTable = new Table();
         infoTable.setWidth(305);
         infoTable.setHeight(135);
-        infoTable.setPosition(200, Gdx.graphics.getHeight() - 748);
+        infoTable.setPosition(200, Gdx.graphics.getHeight() - 745);
 
         stage.addActor(pictureTable);
         stage.addActor(infoTable);
@@ -69,23 +70,40 @@ public class InfoBoxDisplay extends UIComponent {
         }
 
         pictureTable.clear();
+        infoTable.clear();
         if (!selectedEntities.isEmpty()) {
             int length = selectedEntities.size;
             int sideLength = (int) Math.ceil(Math.sqrt(length));
-            int row = 0;
+            System.out.println(sideLength);
+            int column = 0;
+            int row = 1;
 
             for (Entity entity: selectedEntities) {
-                if (row == sideLength) {
+                if (column == sideLength) {
                     pictureTable.row();
-                    row = 0;
+                    column = 0;
+                    row++;
                 }
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
                         .getAsset("images/heart.png", Texture.class));
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
+                column++;
+            }
+
+            while (row < sideLength) {
+                Image blankImage = new Image(ServiceLocator.getResourceService()
+                        .getAsset("images/white.png", Texture.class));
+                pictureTable.row();
+                blankImage.setHeight(135/sideLength);
+                blankImage.setWidth(135/sideLength);
+                pictureTable.add(blankImage);
                 row++;
             }
+
+            Label boxBoyText = new Label("Box Boy Stats", skin, "large");
+            infoTable.add(boxBoyText);
 
 
         }

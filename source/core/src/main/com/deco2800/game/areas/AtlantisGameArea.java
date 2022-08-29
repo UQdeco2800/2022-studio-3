@@ -40,8 +40,9 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/Information_Box_Deepsea.png"
-
+            "images/Information_Box_Deepsea.png",
+            "images/TransBox.png",
+            "images/white.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
@@ -66,8 +67,9 @@ public class AtlantisGameArea extends GameArea {
         displayUI();
         spawnTerrain();
         player = spawnPlayer();
-        spawnPlayer();
-        spawnPlayer();
+        for (int i = 0; i < 10; i++) {
+            spawnPlayer();
+        }
         playMusic();
     }
 
