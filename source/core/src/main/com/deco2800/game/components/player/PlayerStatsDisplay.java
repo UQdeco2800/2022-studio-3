@@ -34,6 +34,7 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
+
     table.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
@@ -48,6 +49,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthLabel = new Label(healthText, skin, "large");
 
     table.add(heartImage).size(heartSideLength).pad(5);
+    table.row();
     table.add(healthLabel);
     stage.addActor(table);
   }

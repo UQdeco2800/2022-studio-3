@@ -33,19 +33,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        return true;
+        return false;
       default:
         return false;
     }
@@ -63,48 +63,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        return true;
+        return false;
       default:
         return false;
     }
   }
 
-  @Override
-  public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    this.touchDownX = screenX;
-    this.touchDownY = Gdx.graphics.getHeight() - screenY;
-    return true;
-  }
-
-  @Override
-  public boolean touchDragged(int screenX, int screenY, int pointer) {
-    //entity.getEvents().trigger("dragSelect", screenX, screenY);
-    return true;
-  }
-  @Override
-  public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    int touchUpX = screenX;
-    int touchUpY = Gdx.graphics.getHeight() - screenY;
-
-    if (touchDownX == touchUpX && touchDownY == touchUpY) {
-      entity.getEvents().trigger("selectUnit", touchUpX, touchUpY);
-    } else {
-      entity.getEvents().trigger("selectUnits", touchDownX, touchDownX, touchUpX, touchUpY);
-    }
-    return true;
-  }
 
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {
