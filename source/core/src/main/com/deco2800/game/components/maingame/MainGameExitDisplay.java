@@ -39,6 +39,7 @@ public class MainGameExitDisplay extends UIComponent {
           entity.getEvents().trigger("exit");
         }
       });
+
     pauseMenuBtn.addListener(
             new ChangeListener() {
               @Override
