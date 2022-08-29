@@ -84,7 +84,7 @@ public class ResourceCollectComponent extends Component {
         }
     }
 
-    private void collectStone(ResourceStatsComponent targetStats) {
+    public void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
         // Add the number of collected resource to the worker inventory
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
@@ -92,7 +92,7 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
     }
 
-    private void collectMetal(ResourceStatsComponent targetStats){
+    public void collectMetal(ResourceStatsComponent targetStats){
         int numCollected = targetStats.collectStone(collectStats);
         // Add the number of collected resource to the worker inventory
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
@@ -100,7 +100,7 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " metals");
     }
 
-    private void collectWood(ResourceStatsComponent targetStats){
+    public void collectWood(ResourceStatsComponent targetStats){
         int numCollected = targetStats.collectWood(collectStats);
         // Add the number of collected resource to the worker inventory
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
@@ -108,7 +108,7 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getWood()) + " woods");
     }
 
-    private void loadToBase(ResourceStatsComponent baseStats) {
+    public void loadToBase(ResourceStatsComponent baseStats) {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
         baseStats.addMetal(inventory.unloadMetal());
         baseStats.addStone(inventory.unloadStone());
