@@ -141,11 +141,11 @@ public class MainGameScreen extends ScreenAdapter {
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
+        .addComponent(new WeatherIconDisplay())
         .addComponent(new MainGameExitDisplay())
         .addComponent(new Terminal())
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay())
-        .addComponent(new WeatherIconDisplay());
+        .addComponent(new TerminalDisplay());
     ServiceLocator.getEntityService().register(ui);
   }
 }

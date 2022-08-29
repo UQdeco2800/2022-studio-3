@@ -15,7 +15,7 @@ public class WeatherIcon extends Actor {
     private final Image weatherImage;
 
     private final String[] weatherFile = {
-            "images/cloud.png",
+            "images/cloudy.png",
             "images/flood.png",
             "images/foggy.png",
             "images/heavyrain.png",
