@@ -17,7 +17,7 @@ public class WeatherIconDisplay extends UIComponent {
 
 
     private void addActors() {
-        this.weatherIcon = new WeatherIcon();
+        this.weatherIcon = new WeatherIcon("countdownTimer");
         stage.addActor(this.weatherIcon);
     }
 

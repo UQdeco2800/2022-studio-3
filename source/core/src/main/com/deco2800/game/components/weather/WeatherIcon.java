@@ -5,15 +5,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.utils.random.PseudoRandom;
 import com.deco2800.game.utils.random.Timer;
+import com.badlogic.gdx.utils.Align;
+
 
 public class WeatherIcon extends Actor {
     /**
      * Tracks time interval to change weather icon on display.
      */
     Timer timer;
+
+    /**
+     * To display the Timer
+     */
+    private final Label timerLabel;
 
     /**
      * Initiate the Image for the weather image.
@@ -36,9 +45,23 @@ public class WeatherIcon extends Actor {
             "images/thunderstorm.png"
     };
 
-    public WeatherIcon() {
+    public WeatherIcon(String countdownTimer) {
+        /**
+         * Initiate the countdownSkin
+         */
+        Skin countdownSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
+
+        /**
+         * Initiate timer and its label.
+         */
         this.timer = new Timer(0, 30);
+        this.timerLabel = new Label(countdownTimer, countdownSkin);
+
+        /**
+         * Initiate weatherImage
+         */
         this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
+
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
     }
@@ -47,9 +70,21 @@ public class WeatherIcon extends Actor {
         return timer.isTimerExpired();
     }
 
+
     public void layout() {
-        weatherImage.setSize(128f, 128f);
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-160f);
+        /**
+         * For weatherImage
+         */
+        weatherImage.setSize(100f, 100f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
+
+        /**
+         * For timer
+         */
+        this.timerLabel.setAlignment(Align.left);
+        this.timerLabel.setWrap(true);
+        this.timerLabel.setSize(2f,2f);
+        this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
     }
 
     public String getRandomWeatherFileLocation() {
@@ -60,5 +95,17 @@ public class WeatherIcon extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         this.weatherImage.draw(batch, parentAlpha);
+        this.timerLabel.draw(batch, parentAlpha);
     }
+
+
+
+    public String getTimerLabel() {
+        return this.timerLabel.getText().toString();
+    }
+
+    public void setTimerLabel(String countdownTimer) {
+        this.timerLabel.setText(countdownTimer);
+    }
+
 }
