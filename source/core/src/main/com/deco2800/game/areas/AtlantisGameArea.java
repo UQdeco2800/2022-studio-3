@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -48,6 +50,9 @@ public class AtlantisGameArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
+            "images/Information_Box_Deepsea.png",
+            "images/TransBox.png",
+            "images/white.png",
             "images/Base.png",
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
@@ -79,6 +84,9 @@ public class AtlantisGameArea extends GameArea {
         displayUI();
         spawnTerrain();
         player = spawnPlayer();
+        for (int i = 0; i < 5; i++) {
+            spawnPlayer();
+        }
         playMusic();
         //spawnForager();
         //spawnForager();
@@ -92,6 +100,10 @@ public class AtlantisGameArea extends GameArea {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Atlantis' Legacy"));
         spawnEntity(ui);
+
+        Entity infoUi = new Entity();
+        infoUi.addComponent(new InfoBoxDisplay());
+        spawnEntity(infoUi);
     }
 
     private void spawnTerrain() {
@@ -174,6 +186,7 @@ public class AtlantisGameArea extends GameArea {
                     false);
         }
     }
+
 
     /**
      * Spawns player at the centre of the Atlantean city

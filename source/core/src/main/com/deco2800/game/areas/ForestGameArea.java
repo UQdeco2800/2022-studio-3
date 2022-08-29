@@ -7,6 +7,8 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.NPCFactory;
@@ -14,6 +16,7 @@ import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
+import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -31,6 +34,7 @@ public class ForestGameArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
   private static final int NUM_TREES = 7;
   private static final int NUM_GHOSTS = 2;
+
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final GridPoint2 WORKER_SPAWN = new GridPoint2(20, 20);
   private static final GridPoint2 MINER_SPAWN = new GridPoint2(20, 20);
@@ -38,6 +42,7 @@ public class ForestGameArea extends GameArea {
   private static final GridPoint2 STONE_SPAWN = new GridPoint2(23, 20);
   private static final GridPoint2 TREE_SPAWN = new GridPoint2(23, 15);
   private static final GridPoint2 BASE_SPAWN = new GridPoint2(23, 15);
+
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
     "images/base.png",
@@ -98,16 +103,12 @@ public class ForestGameArea extends GameArea {
     spawnWalls(0,3);
     player = spawnPlayer();
     ServiceLocator.registerGameArea(this);
-    // spawnGhosts();
-    // spawnGhostKing();
-
-    playMusic();
   }
 
 
   private void displayUI() {
     Entity ui = new Entity();
-    ui.addComponent(new GameAreaDisplay("Box Forest"));
+    ui.addComponent(new GameAreaDisplay("TOP LEFT"));
     spawnEntity(ui);
   }
 
@@ -232,14 +233,14 @@ public class ForestGameArea extends GameArea {
 
 
   private Entity spawnPlayer() {
-    MapGenerator mg = terrainFactory.getMapGenerator();
-    Map<String, Coordinate> cityDetails = mg.getCityDetails();
-    Coordinate centre = cityDetails.get("Centre");
-    GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+
     Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntityAt(newPlayer, spawn, true, true);
+    spawnEntity(newPlayer);
+
     return newPlayer;
   }
+
+
 
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
@@ -262,7 +263,7 @@ public class ForestGameArea extends GameArea {
   }
 
   private void playMusic() {
-    //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+    //Music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     //music.setLooping(true);
     //music.setVolume(0.3f);
     //music.play();
@@ -273,8 +274,8 @@ public class ForestGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(forestTextures);
     resourceService.loadTextureAtlases(forestTextureAtlases);
-    resourceService.loadSounds(forestSounds);
-    resourceService.loadMusic(forestMusic);
+    //resourceService.loadSounds(forestSounds);
+    //resourceService.loadMusic(forestMusic);
 
     while (!resourceService.loadForMillis(10)) {
       // This could be upgraded to a loading screen
@@ -287,14 +288,14 @@ public class ForestGameArea extends GameArea {
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(forestTextures);
     resourceService.unloadAssets(forestTextureAtlases);
-    resourceService.unloadAssets(forestSounds);
-    resourceService.unloadAssets(forestMusic);
+    //resourceService.unloadAssets(forestSounds);
+    //resourceService.unloadAssets(forestMusic);
   }
 
   @Override
   public void dispose() {
     super.dispose();
-    ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+    //ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
     this.unloadAssets();
   }
 }
