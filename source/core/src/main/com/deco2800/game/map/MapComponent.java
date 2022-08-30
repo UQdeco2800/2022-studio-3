@@ -1,6 +1,7 @@
 package com.deco2800.game.map;
 
-import 
+import com.deco2800.game.components.Component;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * If entity has a MapComponent they are added to the map.
