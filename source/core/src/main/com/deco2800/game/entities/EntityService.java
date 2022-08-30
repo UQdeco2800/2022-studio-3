@@ -1,8 +1,12 @@
 package com.deco2800.game.entities;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.CameraComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
@@ -53,5 +57,25 @@ public class EntityService {
     for (Entity entity : entities) {
       entity.dispose();
     }
+  }
+
+  /**
+   * Finds the game camera which is registered with an entity in the EntityService, and returns it.
+   * Otherwise, returns null if no such entity exists.
+   *
+   * @return the game camera
+   */
+  public Camera getCamera() {
+    for (Entity entity : entities) {
+      if (entity.getComponent(CameraComponent.class) != null) {
+        CameraComponent cameraComponent = entity.getComponent(CameraComponent.class);
+        return cameraComponent.getCamera();
+      }
+    }
+    return null;
+  }
+
+  public Array<Entity> getEntities() {
+    return this.entities;
   }
 }

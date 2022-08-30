@@ -13,6 +13,10 @@ public class RandomUtils {
     return new GridPoint2(MathUtils.random(start.x, end.x), MathUtils.random(start.y, end.y));
   }
 
+  public static boolean contains(float inside, float from, float to) {
+    return inside <= from && inside >= to || inside >= from && inside <= to;
+  }
+
   private RandomUtils() {
     throw new IllegalStateException("Instantiating static util class");
   }

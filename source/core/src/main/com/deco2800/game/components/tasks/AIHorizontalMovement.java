@@ -8,7 +8,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 /**
  * A class that makes enemies move horizontally in a constant speed.
  */
-public class left_rightTask extends DefaultTask implements PriorityTask {
+public class AIHorizontalMovement extends DefaultTask implements PriorityTask {
     private final int priority;
     private final float x;
     private float p_x = 0;
@@ -17,7 +17,7 @@ public class left_rightTask extends DefaultTask implements PriorityTask {
     /**
      * @param priority Task priority when chasing (0 when not chasing).
      */
-    public left_rightTask(float x, int priority) {
+    public AIHorizontalMovement(float x, int priority) {
         this.x = x;
         this.priority = priority;
     }

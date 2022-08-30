@@ -9,7 +9,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 /**
  * A class that makes enemies move vertically in a constant speed.
  */
-public class up_downTask extends DefaultTask implements PriorityTask {
+public class AIVerticalMovementTask extends DefaultTask implements PriorityTask {
     private final int priority;
     private final float y;
     private float p_y = 0;
@@ -18,7 +18,7 @@ public class up_downTask extends DefaultTask implements PriorityTask {
     /**
      * @param priority Task priority when chasing (0 when not chasing).
      */
-    public up_downTask(float y, int priority) {
+    public AIVerticalMovementTask(float y, int priority) {
         this.y = y;
         this.priority = priority;
     }

@@ -1,5 +1,6 @@
 package com.deco2800.game.input;
 
+import com.deco2800.game.components.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class InputFactory {
   private static final Logger logger = LoggerFactory.getLogger(InputFactory.class);
+
 
   /** Input device types */
   public enum InputType {
@@ -49,10 +51,26 @@ public abstract class InputFactory {
    */
   public abstract InputComponent createForPlayer();
 
+  public abstract InputComponent createForFriendlyUnit();
+
+  /**
+   * Creates an input handler for the worker
+   *
+   * @return Worker input handler
+   */
+  public abstract InputComponent createForWorker();
+
   /**
    * Creates an input handler for the terminal
    *
    * @return Terminal input handler
    */
   public abstract InputComponent createForTerminal();
+  
+  /**
+   * Creates an input handler for the camera
+   *
+   * @return Terminal input handler
+   */
+  public abstract InputComponent createForCamera();
 }

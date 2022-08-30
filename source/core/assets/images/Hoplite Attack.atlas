@@ -1,0 +1,19 @@
+Hoplite Attack.png
+size: 4096, 2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Hoplite Attack Right 2
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+Hoplite Attack Right
+  rotate: false
+  xy: 2048, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
