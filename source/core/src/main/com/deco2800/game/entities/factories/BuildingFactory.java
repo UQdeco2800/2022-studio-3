@@ -17,7 +17,7 @@ public class BuildingFactory {
         Entity wall = new Entity()
             .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TextureRenderComponent("images/wall.png")); // dummy image made by Sylvia
+            .addComponent(new TextureRenderComponent("images/wall_1.png")); // dummy image made by Sylvia
         wall.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         wall.getComponent(TextureRenderComponent.class).scaleEntity();
         wall.scaleWidth(1f);
