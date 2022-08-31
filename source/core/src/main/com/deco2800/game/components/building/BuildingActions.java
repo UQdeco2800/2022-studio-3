@@ -25,7 +25,7 @@ public class BuildingActions extends Component {
     private CameraComponent cameraComponent;
 
     public void create() {
-        entity.getEvents().addListener("placing", this::placing);
+        //entity.getEvents().addListener("placing", this::placing);
         entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("cancelPlacement", this::cancelPlacement);
         textureRenderComponent = entity.getComponent(TextureRenderComponent.class);
