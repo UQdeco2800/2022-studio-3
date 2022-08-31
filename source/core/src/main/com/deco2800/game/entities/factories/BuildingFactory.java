@@ -97,7 +97,7 @@ public class BuildingFactory {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
 
-        wall.addComponent(new TextureRenderComponent("images/wall_2.png"))
+        wall.addComponent(new TextureRenderComponent("images/stone_wall.png"))
             .addComponent(new BuildingActions(config.level));
 
         wall.scaleWidth(2f);
