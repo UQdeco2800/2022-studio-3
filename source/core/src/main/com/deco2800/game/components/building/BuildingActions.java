@@ -1,28 +1,18 @@
 package com.deco2800.game.components.building;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.deco2800.game.GdxGame;
-import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.player.InventoryComponent;
-import com.deco2800.game.components.player.TouchPlayerInputComponent;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.Util;
 
 /**
  * Action component for interacting with a building. Building events should be initialised in create()
  * and when triggered should call methods within this class.
  */
 public class BuildingActions extends Component {
-
-    private static final Logger logger = LoggerFactory.getLogger(BuildingActions.class);
     private boolean placed;
     private PhysicsComponent physicsComponent;
 
@@ -54,44 +44,33 @@ public class BuildingActions extends Component {
      * Called upon creation. Used to define events for event listener to trigger.
      */
     public void create() {
-        entity.getEvents().addListener("startPlacing", this::startPlacing); // Not triggered by any event yet
+        entity.getEvents().addListener("clicked", this::clicked); // Not triggered by any event yet
         entity.getEvents().addListener("placing", this::placing);
-        entity.getEvents().addListener("place", this::place);
         entity.getEvents().addListener("levelUp", this::addLevel); // Not triggered by any event yet
         physicsComponent = entity.getComponent(PhysicsComponent.class);
         placed = true;
     }
 
-    /**
-     * Converts mouse input units to game area grid point units and rounds to the nearest integer by scaling position
-     * vector
-     * @param screenX Mouse x coordinate
-     * @param screenY Mouse y coordinate
-     * @return 2-D vector for the position the mouse is on the screen
-     */
-    private static Vector2 mouseToGrid(int screenX, int screenY) {
-        // invert Y
-        screenY = Gdx.graphics.getHeight() - screenY;
-        // GameArea starts at x=240
-        screenX -= 240;
-        if (screenX < 0) {
-            screenX = 0;
-        }
-        Vector2 position = new Vector2(screenX, screenY);
-        // Scale from input units to grid point
-        position.scl(17.29f / (Gdx.graphics.getWidth() - 240), 11.3f / Gdx.graphics.getHeight());
-        // Snap to grid by rounding
-        position = new Vector2((int)(position.x), (int)(position.y));
-        return position;
+    public static Vector2 screenToPosition(int screenX, int screenY) {
+        Vector3 position = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
+        return new Vector2(position.x, position.y);
     }
 
-    /**
-     * Disables physics component and sets placed to false
-     */
-    public void startPlacing() {
-        if (!placed) {return;}
-        placed = false;
-        physicsComponent.setEnabled(false);
+    public void clicked(int screenX, int screenY) {
+        if (placed) {
+            startPlacing(screenX, screenY);
+        } else {
+            place(screenX, screenY);
+        }
+    }
+
+    public void startPlacing(int screenX, int screenY) {
+        Vector2 position = screenToPosition(screenX, screenY);
+        if (entity.getComponent(ColliderComponent.class).getFixture().testPoint(position)) {
+            Util.report("start placing");
+            placed = false;
+            physicsComponent.setEnabled(false);
+        }
     }
 
     /**
@@ -101,7 +80,8 @@ public class BuildingActions extends Component {
      */
     public void placing(int screenX, int screenY) {
         if (placed) {return;}
-        Vector2 position = mouseToGrid(screenX, screenY);
+        Util.report("placing");
+        Vector2 position = screenToPosition(screenX, screenY);
         entity.setPosition(position);
     }
 
@@ -112,15 +92,12 @@ public class BuildingActions extends Component {
      */
     public void place(int screenX, int screenY) {
         if (placed) {return;}
+        Util.report("place");
         placed = true;
         physicsComponent.setEnabled(true);
-        Vector2 position = mouseToGrid(screenX, screenY);
-        entity.setPosition(position);
-    }
-
-    public void cancelPlacement() {
-        if (placed) {return;}
-        entity.dispose();
+        Vector2 position = screenToPosition(screenX, screenY);
+        position.mulAdd(entity.getScale(), -0.5f);
+        entity.setPosition(new Vector2((int)position.x,(int)position.y));
     }
 
 }

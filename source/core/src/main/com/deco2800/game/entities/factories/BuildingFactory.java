@@ -31,7 +31,8 @@ public class BuildingFactory {
     public static Entity createBaseBuilding() {
         return new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new TouchPlayerInputComponent());
     }
 
     /**
@@ -43,11 +44,10 @@ public class BuildingFactory {
         TownHallConfig config = configs.townHall;
 
         townHall.addComponent(new TextureRenderComponent("images/base.png"))
-                .addComponent(new TouchPlayerInputComponent())
                 .addComponent(new BuildingActions(config.level));
-        townHall.getComponent(TextureRenderComponent.class).scaleEntity();
-        townHall.scaleWidth(4f);
-        PhysicsUtils.setScaledCollider(townHall, COLLIDER_SCALE, COLLIDER_SCALE);
+
+        townHall.scaleWidth(5f);
+        PhysicsUtils.setScaledColliderCentered(townHall, 0.5f, 0.5f);
 
         townHall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return townHall;
@@ -64,7 +64,6 @@ public class BuildingFactory {
         barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
                 .addComponent(new BuildingActions(config.level));
 
-        barracks.getComponent(TextureRenderComponent.class).scaleEntity();
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
@@ -83,7 +82,6 @@ public class BuildingFactory {
         barracks.addComponent(new TextureRenderComponent("images/barracks medieval.png"))
                 .addComponent(new BuildingActions(config.level));
 
-        barracks.getComponent(TextureRenderComponent.class).scaleEntity();
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
@@ -96,19 +94,17 @@ public class BuildingFactory {
      * @return Barracks Entity
      */
     public static Entity createWall() {
-        Entity barracks = createBaseBuilding();
-        System.out.println(configs);
+        Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
 
-        barracks.addComponent(new TextureRenderComponent("images/wall_1.png"))
-                .addComponent(new BuildingActions(config.level));
+        wall.addComponent(new TextureRenderComponent("images/stone_wall.png"))
+            .addComponent(new BuildingActions(config.level));
 
-        barracks.getComponent(TextureRenderComponent.class).scaleEntity();
-        barracks.scaleWidth(0.5f);
-        PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
+        wall.scaleWidth(2f);
+        PhysicsUtils.setScaledColliderCentered(wall, .2f, .2f);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
-        return barracks;
+        wall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        return wall;
     }
 
 

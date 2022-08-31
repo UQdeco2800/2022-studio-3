@@ -89,7 +89,7 @@ public class TouchPlayerInputComponent extends InputComponent {
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     entity.getEvents().trigger("attack");
     if (button == Input.Buttons.LEFT) {
-      entity.getEvents().trigger("place", screenX, screenY);
+      entity.getEvents().trigger("clicked", screenX, screenY);
     }
     return false;
   }
