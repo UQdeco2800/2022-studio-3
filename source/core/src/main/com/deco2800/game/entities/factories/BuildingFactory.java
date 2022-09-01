@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
@@ -44,7 +45,7 @@ public class BuildingFactory {
         TownHallConfig config = configs.townHall;
 
         townHall.addComponent(new TextureRenderComponent("images/base.png"))
-                .addComponent(new BuildingActions(config.level));
+                .addComponent(new BuildingActions(config.type, config.level));
 
         townHall.scaleWidth(5f);
         PhysicsUtils.setScaledColliderCentered(townHall, 0.5f, 0.5f);
@@ -62,7 +63,7 @@ public class BuildingFactory {
         BarracksConfig config = configs.barracks;
 
         barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
-                .addComponent(new BuildingActions(config.level));
+                .addComponent(new BuildingActions(config.type, config.level));
 
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
@@ -80,7 +81,7 @@ public class BuildingFactory {
         BarracksConfig config = configs.barracks;
 
         barracks.addComponent(new TextureRenderComponent("images/barracks medieval.png"))
-                .addComponent(new BuildingActions(config.level));
+                .addComponent(new BuildingActions(config.type, config.level));
 
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
@@ -98,9 +99,9 @@ public class BuildingFactory {
         WallConfig config = configs.wall;
 
         wall.addComponent(new TextureRenderComponent("images/stone_wall.png"))
-            .addComponent(new BuildingActions(config.level));
+            .addComponent(new BuildingActions(config.type, config.level));
 
-        wall.scaleWidth(2f);
+        wall.scaleWidth(2.2f);
         PhysicsUtils.setScaledColliderCentered(wall, .2f, .2f);
 
         wall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));

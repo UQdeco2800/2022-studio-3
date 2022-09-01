@@ -2,6 +2,7 @@ package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
@@ -15,6 +16,7 @@ import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -26,6 +28,8 @@ import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.Util;
+
 import java.util.Map;
 
 /** Atlantis game area for creating the map the game is played in */
@@ -128,7 +132,7 @@ public class AtlantisGameArea extends GameArea {
         // GridPoint2 cityCentre = new GridPoint2(mg.getCityDetails().get("Centre").getX(),
         //        mg.getCityDetails().get("Centre").getY());
         spawnTownHall();
-        spawnBarracks(3);
+        spawnBarracks();
         spawnWalls();
 
     }
@@ -217,19 +221,25 @@ public class AtlantisGameArea extends GameArea {
      * Spawns TownHall in city center
      */
     private void spawnTownHall() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate centre = mg.getCityDetails().get("Centre");
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
         Entity townHall = BuildingFactory.createTownHall();
-        spawnEntityAt(townHall, RandomPointGenerator.getCityCenter(terrainFactory), true, true);
+        spawnEntityAt(townHall, spawn, true, true);
     }
 
     /**
      * Spawns Barracks in random locations around city
      * @param num number of Barracks to spawn in the city
      */
-    private void spawnBarracks(int num) {
-        for (int i = 0; i < num; i++) {
-            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+    private void spawnBarracks() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate centre = mg.getCityDetails().get("Centre");
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+        spawn.add(0, -2);
+        for (int i = 0; i < 2; i++) {
             Entity barracks = BuildingFactory.createBarracks();
-            spawnEntityAt(barracks, position, true, true);
+            spawnEntityAt(barracks, spawn.add(4-12*i,0), true, true);
         }
     }
 
@@ -249,15 +259,39 @@ public class AtlantisGameArea extends GameArea {
      * Spawns a line of walls along bottom city border and right city border
      */
     private void spawnWalls() {
-        GridPoint2 position = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory,1);
-        for (int i = 0; i < 10; i++) {
-            position.add(-1, 0);
-            for (int j = 0; j < 10; j++) {
-                position.add(0, -1);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate corner;
+        GridPoint2 position;
+        int yLength = 10;
+        int xLength = 20;
+        String cityCorners[] = {"NW", "NE", "SW", "SE"};
+        int direction = 1;
+
+        for (int n = 0; n < 4; n++) {
+            corner = mg.getCityDetails().get(cityCorners[n]);
+            position = new GridPoint2(corner.getX(), mg.getHeight() - corner.getY() - 1);
+
+            for (int i = 0; i < xLength; i++) {
                 Entity wall = BuildingFactory.createWall();
-                spawnEntityAt(wall, position, true, true);
+                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService().getAsset("images/stone_wall_2_.png", Texture.class));
+                spawnEntityAt(wall, position.add(direction, 0), true, true);
             }
-            position.add(0, 10);
+            direction *= -1;
+        }
+        for (int n = 0; n < 4; n++) {
+            direction = n<2 ? -1 : 1;
+            corner = mg.getCityDetails().get(cityCorners[n]);
+            position = new GridPoint2(corner.getX(), mg.getHeight() - corner.getY() - 1);
+
+            Entity wall = BuildingFactory.createWall();
+            spawnEntityAt(wall, position, true, true);
+
+            for (int i = 0; i < yLength; i++) {
+                wall = BuildingFactory.createWall();
+                spawnEntityAt(wall, position.add(0, direction), true, true);
+                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService().getAsset("images/stone_wall_3.png", Texture.class));
+            }
+
         }
     }
 
