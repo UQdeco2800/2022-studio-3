@@ -8,8 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
@@ -89,17 +92,20 @@ public class InfoBoxDisplay extends UIComponent {
             int sideLength = (int) Math.ceil(Math.sqrt(length));
             int column = 0;
             int row = 1;
-
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
             for (Entity entity: selectedEntities) {
+
                 if (column == sideLength) {
                     pictureTable.row();
                     column = 0;
                     row++;
                 }
+
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset("images/heart.png", Texture.class));
+                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+
+
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
