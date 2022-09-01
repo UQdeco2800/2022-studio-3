@@ -56,7 +56,9 @@ public class AtlantisGameArea extends GameArea {
             "images/Base.png",
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
-            "images/wall_1.png",
+            "images/stone_wall.png",
+            "images/stone_wall_2_.png",
+            "images/stone_wall_3.png",
             "images/base.png",
             "images/stone.png"
     };
@@ -248,14 +250,14 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnWalls() {
         GridPoint2 position = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory,1);
-        for (int j = 0; j < 40; j++) {
-            Entity wall = BuildingFactory.createWall();
-            spawnEntityAt(wall, position.add(0, -1), true, true);
-        }
-        position = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory,1);
-        for (int j = 0; j < 40; j++) {
-            Entity wall = BuildingFactory.createWall();
-            spawnEntityAt(wall, position.add(1, 0), true, true);
+        for (int i = 0; i < 10; i++) {
+            position.add(-1, 0);
+            for (int j = 0; j < 10; j++) {
+                position.add(0, -1);
+                Entity wall = BuildingFactory.createWall();
+                spawnEntityAt(wall, position, true, true);
+            }
+            position.add(0, 10);
         }
     }
 
