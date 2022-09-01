@@ -13,6 +13,9 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create a building entity with predefined components.
@@ -32,8 +35,9 @@ public class BuildingFactory {
     public static Entity createBaseBuilding() {
         return new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TouchPlayerInputComponent());
+                .addComponent(new SelectableComponent())
+                .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
     /**
