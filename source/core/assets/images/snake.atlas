@@ -4,7 +4,7 @@ size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-idle
+default
   rotate: false
   xy: 132, 132
   size: 128, 128

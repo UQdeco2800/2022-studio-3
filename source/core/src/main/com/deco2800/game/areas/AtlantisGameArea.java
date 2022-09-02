@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
@@ -12,12 +13,14 @@ import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -62,7 +65,8 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/blue_joker.atlas",
+            "images/snake.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -87,6 +91,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
+        spawnGhosts();
         playMusic();
         //spawnForager();
         //spawnForager();
@@ -94,6 +99,16 @@ public class AtlantisGameArea extends GameArea {
         //spawnTrees();
         //spawnStone();
         //spawnMiner();
+    }
+    private void spawnGhosts() {
+        GridPoint2 minPos = new GridPoint2(0, 0);
+        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+            Entity ghoul = NPCFactory.createGhoul();
+            spawnEntityAt(ghoul, randomPos, true, true);
+        }
     }
 
     private void displayUI() {

@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 //import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.AIHorizontalMovement;
+import com.deco2800.game.components.tasks.AIVerticalMovementTask;
+import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -47,9 +51,9 @@ public class NPCFactory {
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+            ServiceLocator.getResourceService().getAsset("images/blue_joker.atlas", TextureAtlas.class));
+    animator.addAnimation("move-east", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move-west", 0.1f, Animation.PlayMode.LOOP);
 
 
     ghoul
@@ -97,7 +101,7 @@ public class NPCFactory {
 
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+            .addTask(new EnemyMovement());
 //            .addTask(new ChaseTask(target, 10, 3f, 4f)); //<- don't know if this is relevant now
     Entity npc =
         new Entity()
