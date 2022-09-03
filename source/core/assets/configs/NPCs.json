@@ -8,6 +8,18 @@
     "health": 40,
     "baseAttack": 15,
     "baseDefence": 0
+  },
+
+  "wolf": {
+    "health": 40,
+    "baseAttack": 15,
+    "baseDefence": 0
+  },
+
+  "titan": {
+    "health": 40,
+    "baseAttack": 15,
+    "baseDefence": 0
   }
 }
 

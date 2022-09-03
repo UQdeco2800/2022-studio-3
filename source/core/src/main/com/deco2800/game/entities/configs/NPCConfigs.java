@@ -6,4 +6,6 @@ package com.deco2800.game.entities.configs;
 public class NPCConfigs {
   public BaseEntityConfig ghoul = new BaseEntityConfig();
   public BaseEntityConfig demon = new BaseEntityConfig();
+  public BaseEntityConfig wolf = new BaseEntityConfig();
+  public BaseEntityConfig titan = new BaseEntityConfig();
 }
