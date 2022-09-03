@@ -30,19 +30,11 @@ public class WeatherIcon extends Actor {
     private Image weatherImage;
 
     private final String[] weatherFile = {
-            "images/cloudy.png",
-            "images/flood.png",
-            "images/foggy.png",
-            "images/heavyrain.png",
-            "images/lighting.png",
-            "images/night.png",
-            "images/partlycloudy.png",
-            "images/rainy.png",
-            "images/sleet.png",
-            "images/snowy.png",
-            "images/stormy.png",
-            "images/sunny.png",
-            "images/thunderstorm.png"
+            "images/cloudy.png",			// Does not affect movememnt 			// Affect lighting a little bit
+            "images/rainy.png",			    // Affecting movement a little bit		// Affect lighting
+            "images/snowy.png",			    // Affect movement a lot			    // Affect terrain and lighting 		        // Must not appear adjacently with sunny
+            "images/sunny.png",			    // Does not affect movement			    // Does not affect terrain and lighting 	// Must not appear adjacently with snowy
+            "images/thunderstorm.png"		// Affecting movement a little bit		// Affect lighting
     };
 
     public WeatherIcon(Label countdownTimer) {
