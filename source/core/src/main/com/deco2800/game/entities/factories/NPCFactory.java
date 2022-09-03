@@ -101,12 +101,12 @@ public class NPCFactory {
                     ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    demon
+    wolf
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
 
-    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
+    wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return wolf;
   }
@@ -117,7 +117,7 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createTitan() {
-    Entity wolf = createBaseNPC();
+    Entity titan = createBaseNPC();
     BaseEntityConfig config = configs.titan;
 
     AnimationRenderComponent animator =
@@ -125,12 +125,12 @@ public class NPCFactory {
                     ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
     animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    demon
+    titan
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
 
-    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
+    titan.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return titan;
   }
