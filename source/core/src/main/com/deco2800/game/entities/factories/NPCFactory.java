@@ -87,6 +87,54 @@ public class NPCFactory {
     return demon;
   }
 
+  /**
+   * Creates a wolf entity
+   *
+   * @return entity
+   */
+  public static Entity createWolf() {
+    Entity wolf = createBaseNPC();
+    BaseEntityConfig config = configs.wolf;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    demon
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+
+    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return wolf;
+  }
+
+  /**
+   * Creates a titan entity
+   *
+   * @return entity
+   */
+  public static Entity createTitan() {
+    Entity wolf = createBaseNPC();
+    BaseEntityConfig config = configs.titan;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    demon
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+
+    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return titan;
+  }
+
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
@@ -116,3 +164,5 @@ public class NPCFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
+
+
