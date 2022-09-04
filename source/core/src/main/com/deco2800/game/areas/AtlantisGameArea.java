@@ -225,38 +225,23 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = mg.getCityDetails().get("Centre");
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
         Entity townHall = BuildingFactory.createTownHall();
-        spawnEntityAt(townHall, spawn, true, true);
+        spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
     /**
-     * Spawns Barracks in random locations around city
-     * @param num number of Barracks to spawn in the city
+     * Spawns two Barracks in locations around the city
      */
     private void spawnBarracks() {
+        int offset = 10;
         MapGenerator mg = terrainFactory.getMapGenerator();
         Coordinate centre = mg.getCityDetails().get("Centre");
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        spawn.add(0, -2);
-        for (int i = 0; i < 2; i++) {
-            Entity barracks = BuildingFactory.createBarracks();
-            spawnEntityAt(barracks, spawn.add(4-12*i,0), true, true);
-        }
+        spawnEntityAt(BuildingFactory.createBarracks(), spawn.add(offset,0), true, true);
+        spawnEntityAt(BuildingFactory.createBarracks(), spawn.sub(offset*2,0), true, true);
     }
 
     /**
-     * Spawns Medieval Barracks in random locations around city
-     * @param num number of Barracks to spawn in the city
-     */
-    private void spawnBarracksMedieval(int num) {
-        for (int i = 0; i < num; i++) {
-            GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity barracks = BuildingFactory.createBarracksMedieval();
-            spawnEntityAt(barracks, position, true, true);
-        }
-    }
-
-    /**
-     * Spawns a line of walls along bottom city border and right city border
+     * Spawns corner bounding walls for the city
      */
     private void spawnWalls() {
         MapGenerator mg = terrainFactory.getMapGenerator();
@@ -264,7 +249,7 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 position;
         int yLength = 10;
         int xLength = 20;
-        String cityCorners[] = {"NW", "NE", "SW", "SE"};
+        String[] cityCorners = {"NW", "NE", "SW", "SE"};
         int direction = 1;
 
         for (int n = 0; n < 4; n++) {
