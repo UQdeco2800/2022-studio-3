@@ -55,7 +55,7 @@ public class Timer {
             System.out.println("Timer expired");
             return 0;
         } else {
-            System.out.println("Time left = " + (this.delay - (gt.getTime() - this.start)));
+//            System.out.println("Time left = " + (this.delay - (gt.getTime() - this.start)));
             return this.delay - (gt.getTime() - this.start);
         }
     }

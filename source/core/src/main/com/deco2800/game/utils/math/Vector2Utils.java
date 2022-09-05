@@ -36,6 +36,27 @@ public class  Vector2Utils {
     return Math.toDegrees(Math.atan2(to.y - from.y, to.x - from.x));
   }
 
+  /**
+   * Calculate the angle in radians of a vector
+   * @param vector The vector relative to origin
+   * @return Angle in radians
+   */
+  public static float vectorToAngle(Vector2 vector) {
+    return (float)Math.atan2(vector.y, vector.x);
+  }
+
+  /**
+   * Find the vector relative to origin pointing in given angle
+   * @param outVector Output vector relative to origin
+   * @param angle Angle in radians
+   * @return Vector pointing in given angle
+   */
+  public static Vector2 angleToVector(Vector2 outVector, float angle) {
+    outVector.x = -(float)Math.sin(angle);
+    outVector.y = (float)Math.cos(angle);
+    return outVector;
+  }
+
   private Vector2Utils() {
     throw new IllegalStateException("Instantiating static util class");
   }

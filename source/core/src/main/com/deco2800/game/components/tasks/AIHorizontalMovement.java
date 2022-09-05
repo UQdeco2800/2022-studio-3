@@ -38,7 +38,6 @@ public class AIHorizontalMovement extends DefaultTask implements PriorityTask {
     @Override
     public void update() {
         float position_x = this.owner.getEntity().getPosition().x;
-        Vector2 direction = this.owner.getEntity().getComponent(PhysicsMovementComponent.class).getTarget();
         if (isMove) {
             if(position_x <= p_x + x/2) {
                 this.owner.getEntity().getComponent(PhysicsComponent.class).getBody().setLinearVelocity(new Vector2(1,0));
