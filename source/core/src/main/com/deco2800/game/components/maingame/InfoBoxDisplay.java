@@ -8,9 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.configs.BuildingConfigs;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -24,6 +26,8 @@ public class InfoBoxDisplay extends UIComponent {
     Table pictureTable;
     //Table displayed for corresponding stats on units
     Table infoTable;
+
+    Table buildingTable;
 
     //initial height and width of the box, can be imple
     float initialHeight;
@@ -63,8 +67,15 @@ public class InfoBoxDisplay extends UIComponent {
         infoTable.setHeight(135);
         infoTable.setPosition(200, Gdx.graphics.getHeight() - 745);
 
+
+        this.buildingTable = new Table();
+        buildingTable.setWidth(100);
+        buildingTable.setHeight(100);
+        buildingTable.setPosition(200, Gdx.graphics.getHeight()-800);
+
         stage.addActor(pictureTable);
         stage.addActor(infoTable);
+        stage.addActor(buildingTable);
 
     }
 
@@ -85,7 +96,9 @@ public class InfoBoxDisplay extends UIComponent {
         //clear old tables
         pictureTable.clear();
         infoTable.clear();
-
+        buildingTable.clear();
+        String entityName = "";
+        boolean buildingSelected = false;
         //If there are entities selected
         if (!selectedEntities.isEmpty()) {
             int length = selectedEntities.size;
@@ -94,6 +107,9 @@ public class InfoBoxDisplay extends UIComponent {
             int row = 1;
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
+            Image levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/white.png", Texture.class));
+            buildingTable.add(levelUpImage);
+
             for (Entity entity: selectedEntities) {
 
                 if (column == sideLength) {
@@ -101,16 +117,40 @@ public class InfoBoxDisplay extends UIComponent {
                     column = 0;
                     row++;
                 }
+                //crashes game when not selecting building
+                if (entity.getComponent(BuildingActions.class) != null){
+                    switch (entity.getComponent(BuildingActions.class).getType()) {
+                        case TOWNHALL:
+                            entityName = "Town Hall";
+                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/base.png", Texture.class));
+                            break;
+                        case BARRACKS:
+                            entityName = "Barracks";
+                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/barracks medieval.png", Texture.class));
+                            break;
+                        case WALL:
+                            entityName = "Wall";
+                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/stone_wall.png", Texture.class));
+                            break;
+                    }
+                    buildingSelected = true;
+
+
+                }
+
 
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
                         .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
-
-
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
                 column++;
+                if (buildingSelected){
+                    break;
+                }
             }
+
+            buildingTable.add(levelUpImage);
 
             while (row < sideLength) {
                 Image blankImage = new Image(ServiceLocator.getResourceService()
@@ -124,11 +164,18 @@ public class InfoBoxDisplay extends UIComponent {
 
 
             //Added functionality later because there is currently not enough information on the units we will have
-            Label dummyText = new Label(String.format("This is dummy text"), skin, "large");
+            Label dummyText = new Label("This is "+ entityName, skin, "large");
             infoTable.add(dummyText);
             infoTable.row();
-            Label boxBoyText = new Label(String.format("BoxBoy:   %d", length), skin, "large");
-            infoTable.add(boxBoyText);
+            if (buildingSelected){
+                Label boxBoyText = new Label(String.format("%s:   %d", entityName, length), skin, "large");
+                infoTable.add(boxBoyText);
+            } else {
+                Label boxBoyText = new Label(String.format("Boxboy:   %d", length), skin, "large");
+                infoTable.add(boxBoyText);
+            }
+
+
         }
     }
 
