@@ -82,7 +82,7 @@ public class AtlantisTerrainFactory {
         //Make renderer for map
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
         // Register map details with MapService
-        ServiceLocator.getMapService().registerMapDetails(mapWidth, mapHeight, );
+        ServiceLocator.getMapService().registerMapDetails(mapWidth, mapHeight, mapTileScale);
         //Return the component
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }

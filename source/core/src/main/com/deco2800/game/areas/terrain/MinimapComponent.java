@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.Renderable;
 import com.deco2800.game.services.ResourceService;
@@ -103,6 +104,10 @@ public class MinimapComponent extends RenderComponent {
                 shapeRenderer.rect(world.x - ((mapWidth - i - 1) * tileWidth), world.y + (tileHeight * j), tileWidth, tileHeight);
             }
         }
+
+        // draw the entities onto the map screen
+        drawEntities(shapeRenderer, world, tileHeight, tileWidth, mapWidth);
+
         //Display field of view
         //Get edges of screen
         Vector3 worldSW = camera.unproject(new Vector3(0, screenHeight, 0));
@@ -156,6 +161,19 @@ public class MinimapComponent extends RenderComponent {
         //End shape rendering, restart batch
         shapeRenderer.end();
         batch.begin();
+    }
+
+    
+    private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
+        Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
+
+        shapeRenderer.setColor(Color.RED);
+
+        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
+            GridPoint2 position = item.getKey();
+
+            shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+        }
     }
 
     /**

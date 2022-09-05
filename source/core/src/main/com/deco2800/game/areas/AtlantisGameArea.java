@@ -12,6 +12,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -78,7 +79,7 @@ public class AtlantisGameArea extends GameArea {
         //spawnForager();
         //spawnForager();
         //spawnWorkerBase();
-        //spawnTrees();
+        // spawnTrees();
         //spawnStone();
         //spawnMiner();
     }
@@ -176,7 +177,7 @@ public class AtlantisGameArea extends GameArea {
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
-        Entity newPlayer = PlayerFactory.createPlayer();
+        Entity newPlayer = PlayerFactory.createPlayer().addComponent(new MapComponent());
         spawnEntityAt(newPlayer, spawn, true, true);
 
         //Move camera to player

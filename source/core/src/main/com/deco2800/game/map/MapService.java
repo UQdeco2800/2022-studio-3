@@ -16,6 +16,7 @@ import com.deco2800.game.map.util.OutOfBoundsException;
 public class MapService {
 	private final List<MapComponent> interactables = new ArrayList<>();
 	private final List<GridPoint2> islandTiles = new ArrayList<>();
+	// must update their positions
 	private final Map<GridPoint2, MapComponent> entityToPosition = new HashMap<>();
 	/**
      * Current tileSize of game
@@ -31,25 +32,29 @@ public class MapService {
      * Height of game map
      */
     private int mapHeight;
+
+	public Map<GridPoint2, MapComponent> getEntityOccupiedPositions() {
+		return new HashMap<>(entityToPosition);
+	}
 	
 	/**
 	 * 
 	 * @param comp
 	 * @throws IllegalEntityPlacementException
 	 */
-	public void register(MapComponent comp) throws IllegalEntityPlacementException {
+	public void register(MapComponent comp) { // throws IllegalEntityPlacementException {
 		interactables.add(comp);
 		GridPoint2 position = worldToTile(comp.getEntity().getPosition());
 
-		// check the tile is not already occupied
-		if (entityToPosition.get(position) != null) {
-			throw new OccupiedTileException();
-		}
+		// // check the tile is not already occupied
+		// if (entityToPosition.get(position) != null) {
+		// 	throw new OccupiedTileException();
+		// }
 
-		// check the tile is in the bounds of the island
-		if (!islandTiles.contains(position)) {
-			throw new OutOfBoundsException();
-		}
+		// // check the tile is in the bounds of the island
+		// if (!islandTiles.contains(position)) {
+		// 	throw new OutOfBoundsException();
+		// }
 
 		entityToPosition.put(position, comp);
 	}
@@ -71,12 +76,54 @@ public class MapService {
 	 * @param endY
 	 * @return
 	 */
-	public List<GridPoint2> getPath(float startX, float startY, float endX, float endY) {
+	public List<GridPoint2> getPath(GridPoint2 start, GridPoint2 goal) {
 		List<GridPoint2> path = new ArrayList<>();
 
-		// add BFS search here?
+		// BFS search
+		List<GridPoint2> fringe = new ArrayList<>();
+		List<GridPoint2> visited = new ArrayList<>();
+		if (goal.equals(start)) {
+			return path;
+		}
+		fringe.add(start);
+
+		while (fringe.size() > 0) {
+
+			GridPoint2 node = fringe.get(0);
+			if (goal.equals(node)) {
+				path.add(node);
+				return path;
+			}
+			
+			List<GridPoint2> children = getChildren(node);
+			for (GridPoint2 child : children) {
+				if (!visited.contains(child)) {
+					fringe.add(child);
+					visited.add(child);
+				}
+			}
+		}
 
 		return path;
+	}
+
+	/**
+	 * Helper function for tree based search.
+	 * 
+	 * @param node
+	 * @return
+	 */
+	private List<GridPoint2> getChildren(GridPoint2 node) {
+		List<GridPoint2> children = new ArrayList<>();
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				GridPoint2 child = new GridPoint2(node.x + i, node.y + j);
+				if (!(i == 0 && j == 0) && islandTiles.contains(child)) {
+					children.add(child);
+				}
+			}
+		}
+		return children;
 	}
 	
 	/**
