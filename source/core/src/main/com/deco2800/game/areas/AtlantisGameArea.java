@@ -56,7 +56,6 @@ public class AtlantisGameArea extends GameArea {
             "images/Base.png",
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
-            "images/wall_1.png",
             "images/base.png",
             "images/stone.png"
     };
@@ -88,12 +87,12 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         playMusic();
-        //spawnForager();
-        //spawnForager();
-        //spawnWorkerBase();
-        //spawnTrees();
-        //spawnStone();
-        //spawnMiner();
+        spawnForager();
+        spawnForager();
+        spawnWorkerBase();
+        spawnTrees();
+        spawnStone();
+        spawnMiner();
     }
 
     private void displayUI() {
@@ -127,7 +126,7 @@ public class AtlantisGameArea extends GameArea {
         //        mg.getCityDetails().get("Centre").getY());
         spawnTownHall();
         spawnBarracks(3);
-        spawnWalls();
+//        spawnWalls();
 
     }
 
