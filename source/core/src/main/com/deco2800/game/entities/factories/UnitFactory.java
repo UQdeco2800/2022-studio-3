@@ -4,6 +4,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
+import com.deco2800.game.entities.configs.UnitConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -15,21 +16,22 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 import java.util.ArrayList;
 
 public class UnitFactory {
-    private static final BaseUnitConfig stats =
-            FileLoader.readClass(BaseUnitConfig.class, "configs/ExampleUnit");
+    private static final UnitConfigs stats =
+            FileLoader.readClass(UnitConfigs.class, "configs/units");
 
 
     public static Entity createExampleUnit() {
         ArrayList<Entity> troops = new ArrayList<>();
-        for (int i = 0; i < stats.troops; i++) {
+        for (int i = 0; i < stats.example.troops; i++) {
             //TODO: add animations to this construction
             Entity troop = new Entity().addComponent(new TextureRenderComponent(
                             "images/simpleman.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
-                    .addComponent(new CombatStatsComponent(stats.health,
-                            stats.baseAttack, stats.baseDefence));
+                    .addComponent(new CombatStatsComponent(stats.example.health,
+                            stats.example.baseAttack,
+                            stats.example.baseDefence));
             PhysicsUtils.setScaledCollider(troop, 0.8f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.getComponent(TextureRenderComponent.class).scaleEntity();
@@ -41,7 +43,7 @@ public class UnitFactory {
                         50f))
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
-        PhysicsUtils.setRadiusCollider(unit, stats.movementRadius);
+        PhysicsUtils.setRadiusCollider(unit, stats.example.movementRadius);
         return unit;
     }
 }

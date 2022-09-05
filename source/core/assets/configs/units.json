@@ -1,8 +1,9 @@
 {
+  "example": {
   "troops": 3,
   "health": 5,
   "baseAttack": 2,
   "baseDefence": 1,
   "landSpeed": 1.0,
-  "movementRadius":100.0
+  "movementRadius":100.0}
 }
