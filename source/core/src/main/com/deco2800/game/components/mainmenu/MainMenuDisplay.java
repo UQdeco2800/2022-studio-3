@@ -41,13 +41,12 @@ public class MainMenuDisplay extends UIComponent {
         title.setPosition(0f, 0f);
         title.setWidth(Gdx.graphics.getWidth());
         title.setHeight(Gdx.graphics.getHeight());
-
-
+        
+        /* Load textures to create image buttons */
         Texture startTexture = new Texture(Gdx.files.internal("images/start-button.PNG"));
         Texture exitTexture = new Texture(Gdx.files.internal("images/exit-button.PNG"));
 
         ImageButton startBtn = new ImageButton(new TextureRegionDrawable(startTexture));
-
         ImageButton exitBtn = new ImageButton(new TextureRegionDrawable(exitTexture));
 
         // Triggers an event when the button is pressed
