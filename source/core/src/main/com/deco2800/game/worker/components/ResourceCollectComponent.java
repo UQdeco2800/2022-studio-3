@@ -1,10 +1,12 @@
 package com.deco2800.game.worker.components;
 
+import com.badlogic.gdx.math.Octree.Collider;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -19,6 +21,9 @@ public class ResourceCollectComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
     private short targetLayer;
     public static final long COLLECTION_TIME = 2500;
+    private Fixture other;
+    private Fixture me;
+    private boolean colliding;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
     private final GameTime gameTime;
@@ -32,6 +37,7 @@ public class ResourceCollectComponent extends Component {
         this.targetLayer = targetLayer;
         this.gameTime = ServiceLocator.getTimeSource();
         this.lastTimeMined = 0;
+        this.colliding = false;
     }
 
     @Override
@@ -41,17 +47,27 @@ public class ResourceCollectComponent extends Component {
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
+    @Override
+    public void update() {
+        if (this.colliding) {
+           this.onCollisionStart(this.me, this.other);
+        }
+    }
+
     private void onCollisionStart(Fixture me, Fixture other) {
+        if (this.lastTimeMined != 0 && this.gameTime.getTimeSince(this.lastTimeMined) < COLLECTION_TIME) {
+            return;
+        }
         if (hitboxComponent.getFixture() != me) {
+            logger.info("1");
             // Not triggered by hitbox, ignore
             return;
         }
-
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore
+            logger.info("2");
             return;
         }
-
         logger.info("Collided " + Long.toString(this.gameTime.getTime()));
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
@@ -60,29 +76,38 @@ public class ResourceCollectComponent extends Component {
             logger.info("Resource Stats not found");
             return;
         }
+        this.colliding = true;
+        this.other = other;
+        this.me = me;
         BaseComponent isBase = target.getComponent(BaseComponent.class);
         if (isBase != null) {
             loadToBase(targetStats);
             logger.info("Loading to Base");
             return;
         }
-
         Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
         MinerComponent collectorIsMiner = collector.getComponent(MinerComponent.class);
         ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
 
-        if (this.lastTimeMined == 0 || this.gameTime.getTimeSince(this.lastTimeMined) >= COLLECTION_TIME) {
-            // not enough time has elapsed for collector to collect resource
-            if (collectorIsMiner != null) {
-                // If the worker type is Miner
-                collectStone(targetStats);
-            } else if (collectorIsForager != null){
-                // If the worker type is Forager
-                collectWood(targetStats);
-            }
-            this.lastTimeMined = this.gameTime.getTime();                    
+
+        if (collectorIsMiner != null) {
+            // If the worker type is Miner
+            collectStone(targetStats);
+        } else if (collectorIsForager != null){
+            // If the worker type is Forager
+            collectWood(targetStats);
+        } else {
+            return;
+        }
+        this.lastTimeMined = this.gameTime.getTime();       
+
+        if (targetStats.isDead()) {
+            this.colliding = false;
+            this.lastTimeMined = 0;
         }
     }
+
+
 
     public void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
