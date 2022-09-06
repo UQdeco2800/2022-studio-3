@@ -93,9 +93,12 @@ public class ResourceCollectComponent extends Component {
         if (collectorIsMiner != null) {
             // If the worker type is Miner
             collectStone(targetStats);
+            collectMetal(targetStats);
+            collector.getEvents().trigger("workerMiningAnimate");
         } else if (collectorIsForager != null){
             // If the worker type is Forager
             collectWood(targetStats);
+            collector.getEvents().trigger("workerForagingAnimate");
         } else {
             return;
         }

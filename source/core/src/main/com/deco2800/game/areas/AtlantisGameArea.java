@@ -57,7 +57,7 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -80,12 +80,12 @@ public class AtlantisGameArea extends GameArea {
         spawnTerrain();
         player = spawnPlayer();
         playMusic();
-        //spawnForager();
+        spawnForager();
         //spawnForager();
         //spawnWorkerBase();
         //spawnTrees();
-        //spawnStone();
-        //spawnMiner();
+        spawnStone();
+        spawnMiner();
     }
 
     private void displayUI() {

@@ -24,6 +24,7 @@ public class ForagerFactory {
 
         animator.addAnimation("forager_forward_idle", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("forager_forward_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("foragerActionRight", 0.1f, Animation.PlayMode.LOOP);
 
         Entity forager = WorkerFactory.createWorker()
                 .addComponent(new ForagerComponent())

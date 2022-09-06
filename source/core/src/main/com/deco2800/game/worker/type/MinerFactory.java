@@ -25,6 +25,8 @@ public class MinerFactory {
 
         animator.addAnimation("miner_forward_idle", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("miner_forward_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("minerActionRight", 0.1f, Animation.PlayMode.LOOP);
+
         Entity newMiner = WorkerFactory.createWorker()
             .addComponent(new MinerComponent())
             .addComponent(new CollectStatsComponent(2))
