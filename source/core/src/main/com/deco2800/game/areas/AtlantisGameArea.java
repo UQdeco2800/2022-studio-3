@@ -26,6 +26,8 @@ import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /** Atlantis game area for creating the map the game is played in */
@@ -71,11 +73,13 @@ public class AtlantisGameArea extends GameArea {
 
     private final AtlantisTerrainFactory terrainFactory;
 
+    private final HashMap<Vector2, Entity> obstacleMap;
     private Entity player;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
+        obstacleMap = new HashMap<Vector2, Entity>();
     }
 
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
@@ -226,6 +230,7 @@ public class AtlantisGameArea extends GameArea {
     private void spawnTownHall() {
         Entity townHall = BuildingFactory.createTownHall();
         spawnEntityAt(townHall, RandomPointGenerator.getCityCenter(terrainFactory), true, true);
+        obstacleMap.put(terrain.tileToWorldPosition(RandomPointGenerator.getCityCenter(terrainFactory)), townHall);
     }
 
     /**
@@ -237,6 +242,7 @@ public class AtlantisGameArea extends GameArea {
             GridPoint2 position = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             Entity barracks = BuildingFactory.createBarracks();
             spawnEntityAt(barracks, position, true, true);
+            obstacleMap.put(terrain.tileToWorldPosition(position), barracks);
         }
     }
 
@@ -259,12 +265,17 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 position = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory,1);
         for (int j = 0; j < 40; j++) {
             Entity wall = BuildingFactory.createWall();
-            spawnEntityAt(wall, position.add(0, -1), true, true);
+            GridPoint2 newPosition = position.add(0, -1);
+            spawnEntityAt(wall, newPosition, true, true);
+            obstacleMap.put(terrain.tileToWorldPosition(newPosition), wall);
+
         }
         position = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory,1);
         for (int j = 0; j < 40; j++) {
             Entity wall = BuildingFactory.createWall();
-            spawnEntityAt(wall, position.add(1, 0), true, true);
+            GridPoint2 newPosition = position.add(1, 0);
+            spawnEntityAt(wall, newPosition, true, true);
+            obstacleMap.put(terrain.tileToWorldPosition(newPosition), wall);
         }
     }
 

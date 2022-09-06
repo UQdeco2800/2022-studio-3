@@ -82,6 +82,10 @@ public class MovementTask extends DefaultTask {
     }
   }
 
+  public Vector2 getTarget() {
+    return this.target;
+  }
+
   private boolean didMove() {
     return owner.getEntity().getPosition().dst2(lastPos) > 0.001f;
   }

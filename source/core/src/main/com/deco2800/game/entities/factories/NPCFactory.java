@@ -2,15 +2,9 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.areas.RandomPointGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.npc.EnemyAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 //import com.deco2800.game.components.tasks.ChaseTask;
@@ -18,7 +12,6 @@ import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
-import com.deco2800.game.entities.configs.SnakeConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -41,10 +34,7 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class NPCFactory {
   private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
-  private static final String MOVE_LEFT = "moveLeft";
-  private static final String MOVE_RIGHT = "moveRight";
-  private static final String MOVE_UP = "moveUp";
-  private static final String MOVE_DOWN = "moveDown";
+
 
   /**
    * Creates a ghoul entity
@@ -62,6 +52,7 @@ public class NPCFactory {
     animator.addAnimation("move-west", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("move-south", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("move-north", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
     ghoul
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack,
@@ -98,40 +89,6 @@ public class NPCFactory {
     return demon;
   }
 
-  public static Entity createSnake(Entity target, GameArea gameArea) {
-    SnakeConfig config = configs.snake;
-    AITaskComponent aiComponent =
-            new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(3f, 2f), 0f));
-
-    AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService()
-                            .getAsset("images/alienMonster.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.2f, Animation.PlayMode.LOOP);
-
-    Entity Snake = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0))
-            .addComponent(aiComponent);
-
-    Snake.addComponent(animator)
-            .addComponent(new EnemyAnimationController());
-    animator.addAnimation(MOVE_LEFT, 0.4f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_RIGHT, 0.4f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_UP, 0.4f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_DOWN, 0.4f, Animation.PlayMode.LOOP);
-
-    PhysicsUtils.setScaledCollider(Snake, 1f,1f);
-    Snake.scaleHeight(2f);
-    return Snake;
-  }
-
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
@@ -160,5 +117,3 @@ public class NPCFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
-
-
