@@ -29,12 +29,26 @@ public class WeatherIcon extends Actor {
      */
     private Image weatherImage;
 
+    private Image weatherFilter;
+
     private final String[] weatherFile = {
-            "images/cloudy.png",			// Does not affect movememnt 			// Affect lighting a little bit
-            "images/rainy.png",			    // Affecting movement a little bit		// Affect lighting
-            "images/snowy.png",			    // Affect movement a lot			    // Affect terrain and lighting 		        // Must not appear adjacently with sunny
-            "images/sunny.png",			    // Does not affect movement			    // Does not affect terrain and lighting 	// Must not appear adjacently with snowy
-            "images/thunderstorm.png"		// Affecting movement a little bit		// Affect lighting
+            // Does not affect movememnt, affect lighting a little bit
+            "images/cloudy.png",
+            // Affecting movement a little bit, affect lighting
+            "images/rainy.png",
+            // Affect movement a lot, affect terrain and lighting, must not appear adjacently with sunny
+            "images/snowy.png",
+            // Does not affect movement, does not affect terrain and lighting, must not appear adjacently with snowy
+            "images/sunny.png",
+            // Affecting movement a little bit, affect lighting
+            "images/thunderstorm.png"
+    };
+    private final String[] weatherFilterFile = {
+            "images/weather-filter/cloudy-filter.png",
+            "images/weather-filter/rainy-filter.png",
+            "images/weather-filter/snowy-filter.png",
+            "images/weather-filter/sunny-filter.png",
+            "images/weather-filter/rainy-filter.png",
     };
 
     public WeatherIcon(Label countdownTimer) {
@@ -47,7 +61,13 @@ public class WeatherIcon extends Actor {
         /**
          * Initiate weatherImage
          */
-        this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
+        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
+
+        /**
+         * Initiate weatherFilter
+         */
+        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
+
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
@@ -58,7 +78,8 @@ public class WeatherIcon extends Actor {
     }
 
     public void changeWeatherImage() {
-        this.weatherImage = new Image(new Texture(getRandomWeatherFileLocation()));
+        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
+        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
 
@@ -69,7 +90,14 @@ public class WeatherIcon extends Actor {
          * For weatherImage
          */
         weatherImage.setSize(100f, 100f);
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f - weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-120f);
+
+        /**
+         * For weatherFilter
+         */
+        weatherImage.setSize(1920f, 1080f);
+        weatherFilter.setPosition(0,0);
+
 
         /**
          * For timer
@@ -80,13 +108,21 @@ public class WeatherIcon extends Actor {
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 10f, Gdx.graphics.getHeight()-75f);
     }
 
-    public String getRandomWeatherFileLocation() {
-        int randomIndex = PseudoRandom.seedRandomInt(0, weatherFile.length);
-        return weatherFile[randomIndex];
+    public int getRandomWeatherFileIndexLocation() {
+        return PseudoRandom.seedRandomInt(0, weatherFile.length);
+
+    }
+
+    public String[] getRandomWeatherFile() {
+        int index = getRandomWeatherFileIndexLocation();
+        String[] randomWeather = {weatherFile[index], weatherFilterFile[index]};
+        return randomWeather;
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        this.weatherFilter.draw(batch, parentAlpha);
         this.weatherImage.draw(batch, parentAlpha);
         this.timerLabel.draw(batch, parentAlpha);
     }
