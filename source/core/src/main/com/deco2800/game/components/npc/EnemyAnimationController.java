@@ -20,9 +20,8 @@ public class EnemyAnimationController extends Component {
         entity.getEvents().addListener("goDown", this::animateDown);
     }
 
-    public void animateLeft(){ animator.startAnimation("floatLeft"); }
-
-    public void animateRight(){ animator.startAnimation("floatLeft"); }
-    public void animateUp(){ animator.startAnimation("floatUp"); }
-    public void animateDown(){ animator.startAnimation("floatDown"); }
+    public void animateLeft(){ animator.startAnimation("move-west"); }
+    public void animateRight(){ animator.startAnimation("move-east"); }
+    public void animateUp(){ animator.startAnimation("move-north"); }
+    public void animateDown(){ animator.startAnimation("move-south"); }
 }
