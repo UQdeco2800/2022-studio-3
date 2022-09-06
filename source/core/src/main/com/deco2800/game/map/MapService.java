@@ -255,7 +255,7 @@ public class MapService {
 	public void addIslandTile(int x, int y) {
 		islandTiles.add(new GridPoint2(x, y));
 	}
-	
+
 	/**
 	 * Returns true if position is occupied by an entity, else false.
 	 * 
@@ -288,7 +288,7 @@ public class MapService {
 	 */
 	public static GridPoint2 worldToTile(Vector2 position) {
 		return MapService.worldToTile(position.x, position.y);
-	} 
+	}
 	
 	/**
      * Converts a world point to a position on the tile map

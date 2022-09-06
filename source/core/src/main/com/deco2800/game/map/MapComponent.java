@@ -19,4 +19,9 @@ public class MapComponent extends Component {
 		super.dispose();
 		ServiceLocator.getMapService().unregister(this);
     }
+
+	@Override
+	public void update() {
+		ServiceLocator.getMapService().update(this);
+	}
 }
