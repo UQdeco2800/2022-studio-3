@@ -3,6 +3,7 @@ package com.deco2800.game.physics.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.ai.movement.MovementController;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
   private boolean movementEnabled = true;
+
+  private String previousDirection = null;
 
 
 
@@ -29,6 +32,44 @@ public class PhysicsMovementComponent extends Component implements MovementContr
    */
   public PhysicsMovementComponent(Vector2 speed) {
     maxSpeed = speed;
+  }
+
+  public void faceLeft() {
+    previousDirection = "left";
+    this.getEntity().getEvents().trigger("goLeft");
+  }
+
+  public void faceRight() {
+    previousDirection = "right";
+    this.getEntity().getEvents().trigger("goRight");
+  }
+
+  public void faceUp() {
+    previousDirection = "up";
+    this.getEntity().getEvents().trigger("goUp");
+  }
+
+  public void faceDown() {
+    previousDirection = "down";
+    this.getEntity().getEvents().trigger("goDown");
+  }
+
+  public void changeAnimation() {
+    if (Boolean.FALSE.equals(this.getEntity().getComponent(CombatStatsComponent.class).isDead())) {
+      if (Math.abs(this.getDirection().x) > Math.abs(this.getDirection().y)) {
+        if (this.getDirection().x < 0) {
+          faceLeft();
+        } else if (this.getDirection().x > 0) {
+          faceRight();
+        }
+      } else {
+        if (this.getDirection().y > 0) {
+          faceUp();
+        } else if (this.getDirection().y < 0) {
+          faceDown();
+        }
+      }
+    }
   }
 
   @Override
@@ -84,6 +125,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
     setToVelocity(body, desiredVelocity);
+    changeAnimation();
   }
 
   private void setToVelocity(Body body, Vector2 desiredVelocity) {
