@@ -163,7 +163,9 @@ public class MinimapComponent extends RenderComponent {
         batch.begin();
     }
 
-    
+    /**
+     * Helper function that draws an entity on the minimap.
+     */
     private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
         Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
 
