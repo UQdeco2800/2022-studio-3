@@ -15,6 +15,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  */
 public class ObstacleFactory {
 
+
   /**
    * Creates a tree entity.
    * @return entity
@@ -30,6 +31,7 @@ public class ObstacleFactory {
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
     tree.scaleHeight(2.5f);
     PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
+    System.out.println();
     return tree;
   }
 

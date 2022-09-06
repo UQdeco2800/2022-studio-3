@@ -1,5 +1,6 @@
 package com.deco2800.game.input;
 
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.ui.terminal.TouchTerminalInputComponent;
 import com.deco2800.game.worker.components.movement.WorkerInputComponent;
@@ -18,6 +19,12 @@ public class TouchInputFactory extends InputFactory{
   public InputComponent createForPlayer() {
     logger.debug("Creating player input handler");
     return new TouchPlayerInputComponent();
+  }
+
+  @Override
+  public InputComponent createForFriendlyUnit() {
+    logger.debug("Creating player input handler");
+    return new MouseInputComponent();
   }
 
   /**

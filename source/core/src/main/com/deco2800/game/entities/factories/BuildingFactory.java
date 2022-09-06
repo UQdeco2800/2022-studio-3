@@ -42,7 +42,7 @@ public class BuildingFactory {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
-        townHall.addComponent(new TextureRenderComponent("images/Base.png"))
+        townHall.addComponent(new TextureRenderComponent("images/base.png"))
                 .addComponent(new TouchPlayerInputComponent())
                 .addComponent(new BuildingActions(config.level));
         townHall.getComponent(TextureRenderComponent.class).scaleEntity();
