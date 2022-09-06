@@ -3,9 +3,9 @@ package com.deco2800.game.components.maingame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.components.building.Building;
@@ -17,6 +17,7 @@ import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import org.slf4j.helpers.Util;
 
 import java.security.Provider;
 
@@ -34,6 +35,8 @@ public class InfoBoxDisplay extends UIComponent {
     float initialWidth;
     //The image that is always in the background of our information
     private Image backgroundBoxImage;
+
+
 
 
     @Override
@@ -71,11 +74,13 @@ public class InfoBoxDisplay extends UIComponent {
         this.buildingTable = new Table();
         buildingTable.setWidth(100);
         buildingTable.setHeight(100);
-        buildingTable.setPosition(200, Gdx.graphics.getHeight()-800);
+        buildingTable.setPosition(400, Gdx.graphics.getHeight()-680);
 
         stage.addActor(pictureTable);
         stage.addActor(infoTable);
         stage.addActor(buildingTable);
+
+
 
     }
 
@@ -107,9 +112,6 @@ public class InfoBoxDisplay extends UIComponent {
             int row = 1;
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
-            Image levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/white.png", Texture.class));
-            buildingTable.add(levelUpImage);
-
             for (Entity entity: selectedEntities) {
 
                 if (column == sideLength) {
@@ -119,23 +121,16 @@ public class InfoBoxDisplay extends UIComponent {
                 }
                 //crashes game when not selecting building
                 if (entity.getComponent(BuildingActions.class) != null){
-                    switch (entity.getComponent(BuildingActions.class).getType()) {
-                        case TOWNHALL:
-                            entityName = "Town Hall";
-                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/base.png", Texture.class));
-                            break;
-                        case BARRACKS:
-                            entityName = "Barracks";
-                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/barracks medieval.png", Texture.class));
-                            break;
-                        case WALL:
-                            entityName = "Wall";
-                            levelUpImage = new Image(ServiceLocator.getResourceService().getAsset("images/stone_wall.png", Texture.class));
-                            break;
-                    }
-                    buildingSelected = true;
-
-
+                    TextButton levelUp = new TextButton("Level Up", skin);
+                    levelUp.addListener(
+                            new ChangeListener() {
+                                @Override
+                                public void changed(ChangeEvent changeEvent, Actor actor) {
+                                    Util.report("level up");
+                                    entity.getEvents().trigger("levelUp");
+                                }
+                            });
+                    buildingTable.add(levelUp);
                 }
 
 
@@ -150,7 +145,6 @@ public class InfoBoxDisplay extends UIComponent {
                 }
             }
 
-            buildingTable.add(levelUpImage);
 
             while (row < sideLength) {
                 Image blankImage = new Image(ServiceLocator.getResourceService()
