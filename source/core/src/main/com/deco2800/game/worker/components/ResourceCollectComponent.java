@@ -37,7 +37,6 @@ public class ResourceCollectComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
-        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         collectStats = entity.getComponent(CollectStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
@@ -83,25 +82,6 @@ public class ResourceCollectComponent extends Component {
             }
             this.lastTimeMined = this.gameTime.getTime();                    
         }
-    }
-
-    private void onCollisionEnd(Fixture me, Fixture other) {
-        if (hitboxComponent.getFixture() != me) {
-            // Not triggered by hitbox, ignore
-            return;
-        }
-
-        if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
-            // Doesn't match our target layer, ignore
-            return;
-        }
-
-        Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-        ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
-        if (targetStats == null || targetStats.isDead()) {
-            return;
-        }
-        entity.getEvents().trigger("collisionStart");
     }
 
     public void collectStone(ResourceStatsComponent targetStats) {

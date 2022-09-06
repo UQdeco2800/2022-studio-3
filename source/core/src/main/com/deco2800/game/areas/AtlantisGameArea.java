@@ -113,10 +113,13 @@ public class AtlantisGameArea extends GameArea {
 
         // GridPoint2 cityCentre = new GridPoint2(mg.getCityDetails().get("Centre").getX(),
         //        mg.getCityDetails().get("Centre").getY());
-        spawnTownHall();
+        //spawnTownHall();
         spawnBarracks(3);
         spawnWalls();
-
+        spawnForager();
+        spawnMiner();
+        spawnMiner();
+        spawnTrees();
     }
 
     /**
