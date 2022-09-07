@@ -107,6 +107,8 @@ public class ResourceCollectComponent extends Component {
         if (targetStats.isDead()) {
             this.colliding = false;
             this.lastTimeMined = 0;
+            target.dispose();
+            ServiceLocator.getEntityService().unregister(target);
         }
     }
 
