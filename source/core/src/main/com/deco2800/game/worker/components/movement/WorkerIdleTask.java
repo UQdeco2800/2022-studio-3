@@ -54,7 +54,18 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         movementTask.setTarget(target);
         movementTask.start();
         // Trigger movement animation
-        owner.getEntity().getEvents().trigger("workerWalkAnimate");
+        //owner.getEntity().getEvents().trigger("workerWalkAnimate");
+
+        // Get the vector of the target and the worker
+        // If target's X point is bigger than the worker's X point, call the right animation
+        // If target's X point is smaller than the worker's X point, call the left animation
+        if (target.x > owner.getEntity().getPosition().x){
+            owner.getEntity().getEvents().trigger("workerWalkRightAnimate");
+        } else if (target.x < owner.getEntity().getPosition().x) {
+            owner.getEntity().getEvents().trigger("workerWalkLeftAnimate");
+        } else {
+            owner.getEntity().getEvents().trigger("workerWalkAnimate");
+        }
         idling = false;
     }
 

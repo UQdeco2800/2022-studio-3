@@ -13,6 +13,8 @@ public class ForagerAnimationController extends Component {
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
         entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
         entity.getEvents().addListener("workerForagingAnimate", this::animateForaging);
+        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
+        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
     }
 
     void animateIdle() {
@@ -25,5 +27,13 @@ public class ForagerAnimationController extends Component {
 
     void animateForaging(){
         animator.startAnimation("foragerActionRight");
+    }
+
+    void animateRightMove() {
+        animator.startAnimation("foragerRight");
+    }
+
+    void animateLeftMove() {
+        animator.startAnimation("foragerLeft");
     }
 }
