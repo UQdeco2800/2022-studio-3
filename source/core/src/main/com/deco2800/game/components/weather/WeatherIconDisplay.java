@@ -8,16 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.deco2800.game.utils.random.Timer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.deco2800.game.services.GameTime;
-import com.deco2800.game.utils.random.PseudoRandom;
-import com.deco2800.game.utils.random.Timer;
-import com.badlogic.gdx.utils.Align;
 
 public class WeatherIconDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(WeatherIconDisplay.class);
