@@ -61,7 +61,7 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         // If target's X point is smaller than the worker's X point, call the left animation
         if (target.x > owner.getEntity().getPosition().x){
             owner.getEntity().getEvents().trigger("workerWalkRightAnimate");
-        } else if (target.x < owner.getEntity().getPosition().x) {
+        } else if (target.x < owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y) {
             owner.getEntity().getEvents().trigger("workerWalkLeftAnimate");
         } else {
             owner.getEntity().getEvents().trigger("workerWalkAnimate");
