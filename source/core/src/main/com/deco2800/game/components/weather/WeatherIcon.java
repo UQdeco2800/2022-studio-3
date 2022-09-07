@@ -48,7 +48,7 @@ public class WeatherIcon extends Actor {
             "images/weather-filter/rainy-filter.png",
             "images/weather-filter/snowy-filter.png",
             "images/weather-filter/sunny-filter.png",
-            "images/weather-filter/rainy-filter.png"
+            "images/weather-filter/thunderstorm-filter.png"
     };
 
     public WeatherIcon(Label countdownTimer) {
@@ -69,6 +69,7 @@ public class WeatherIcon extends Actor {
          * Initiate weatherFilter
          */
         this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
+
 
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -92,7 +93,7 @@ public class WeatherIcon extends Actor {
         /**
          * For weatherFilter
          */
-        weatherImage.setSize(1920f, 1080f);
+        weatherImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         weatherFilter.setPosition(0,0);
 
         /**
