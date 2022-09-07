@@ -120,6 +120,7 @@ public class AtlantisGameArea extends GameArea {
         spawnMiner();
         spawnMiner();
         spawnTrees();
+        spawnStone();
     }
 
     /**

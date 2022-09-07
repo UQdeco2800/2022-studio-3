@@ -13,6 +13,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
+import com.deco2800.game.worker.components.type.StoneComponent;
+import com.deco2800.game.worker.components.type.TreeComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,27 +61,25 @@ public class ResourceCollectComponent extends Component {
             return;
         }
         if (hitboxComponent.getFixture() != me) {
-            logger.info("1");
             // Not triggered by hitbox, ignore
             return;
         }
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore
-            logger.info("2");
             return;
         }
-        logger.info("Collided " + Long.toString(this.gameTime.getTime()));
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
         if (targetStats == null) {
-            logger.info("Resource Stats not found");
             return;
         }
         this.colliding = true;
         this.other = other;
         this.me = me;
         BaseComponent isBase = target.getComponent(BaseComponent.class);
+        TreeComponent isTree = target.getComponent(TreeComponent.class);
+        StoneComponent isStone = target.getComponent(StoneComponent.class);
         if (isBase != null) {
             loadToBase(targetStats);
             logger.info("Loading to Base");
@@ -90,12 +90,12 @@ public class ResourceCollectComponent extends Component {
         ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
 
 
-        if (collectorIsMiner != null) {
+        if (collectorIsMiner != null && isStone != null) {
             // If the worker type is Miner
             collectStone(targetStats);
             collectMetal(targetStats);
             collector.getEvents().trigger("workerMiningAnimate");
-        } else if (collectorIsForager != null){
+        } else if (collectorIsForager != null && isTree != null) {
             // If the worker type is Forager
             collectWood(targetStats);
             collector.getEvents().trigger("workerForagingAnimate");
@@ -109,8 +109,6 @@ public class ResourceCollectComponent extends Component {
             this.lastTimeMined = 0;
         }
     }
-
-
 
     public void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
