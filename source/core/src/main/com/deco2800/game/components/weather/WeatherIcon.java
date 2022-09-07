@@ -35,38 +35,40 @@ public class WeatherIcon extends Actor {
             // Does not affect movememnt, affect lighting a little bit
             "images/cloudy.png",
             // Affecting movement a little bit, affect lighting
-            "images/rainy.png",
+            "images/rainy.png", // "images/rainy.gif",
             // Affect movement a lot, affect terrain and lighting, must not appear adjacently with sunny
-            "images/snowy.png",
+            "images/snowy.png", // "images/snowy.gif",
             // Does not affect movement, does not affect terrain and lighting, must not appear adjacently with snowy
             "images/sunny.png",
             // Affecting movement a little bit, affect lighting
-            "images/thunderstorm.png"
+            "images/thunderstorm.png" //"images/thunderstorm.gif"
     };
     private final String[] weatherFilterFile = {
             "images/weather-filter/cloudy-filter.png",
             "images/weather-filter/rainy-filter.png",
             "images/weather-filter/snowy-filter.png",
             "images/weather-filter/sunny-filter.png",
-            "images/weather-filter/rainy-filter.png",
+            "images/weather-filter/rainy-filter.png"
     };
 
     public WeatherIcon(Label countdownTimer) {
+
 
         /**
          * Initiate timerLabel with countdownTimer
          */
         this.timerLabel = countdownTimer;
 
+        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
         /**
          * Initiate weatherImage
          */
-        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
+        this.weatherImage = new Image(new Texture(weatherFile[index]));
 
         /**
          * Initiate weatherFilter
          */
-        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
 
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -78,8 +80,9 @@ public class WeatherIcon extends Actor {
     }
 
     public void changeWeatherImage() {
-        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
-        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
+        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
+        this.weatherImage = new Image(new Texture(weatherFile[index]));
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
 
@@ -87,17 +90,16 @@ public class WeatherIcon extends Actor {
 
     public void layout() {
         /**
-         * For weatherImage
-         */
-        weatherImage.setSize(100f, 100f);
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-120f);
-
-        /**
          * For weatherFilter
          */
         weatherImage.setSize(1920f, 1080f);
         weatherFilter.setPosition(0,0);
 
+        /**
+         * For weatherImage
+         */
+        weatherImage.setSize(100f, 100f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f-weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
 
         /**
          * For timer
@@ -106,18 +108,6 @@ public class WeatherIcon extends Actor {
         this.timerLabel.setWrap(true);
         this.timerLabel.setSize(3f,3f);
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 10f, Gdx.graphics.getHeight()-75f);
-    }
-
-    public int getRandomWeatherFileIndexLocation() {
-        return PseudoRandom.seedRandomInt(0, weatherFile.length);
-
-    }
-
-    public String[] getRandomWeatherFile() {
-        int index = getRandomWeatherFileIndexLocation();
-        String[] randomWeather = {weatherFile[index], weatherFilterFile[index]};
-        return randomWeather;
-
     }
 
     @Override
