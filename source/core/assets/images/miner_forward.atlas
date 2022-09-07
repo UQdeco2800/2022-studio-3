@@ -79,3 +79,72 @@ minerActionRight
   orig: 1024, 1024
   offset: 0, 0
   index: 2
+
+miner_right.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+
+
+miner_left.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1

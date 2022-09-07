@@ -14,6 +14,8 @@ public class MinerAnimationController extends Component {
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
         entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
         entity.getEvents().addListener("workerMiningAnimate", this::animateMining);
+        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
+        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
     }
 
     void animateIdle() {
@@ -26,6 +28,14 @@ public class MinerAnimationController extends Component {
 
     void animateMining(){
         animator.startAnimation("minerActionRight");
+    }
+
+    void animateRightMove() {
+        animator.startAnimation("minerRight");
+    }
+
+    void animateLeftMove() {
+        animator.startAnimation("minerLeft");
     }
 }
 
