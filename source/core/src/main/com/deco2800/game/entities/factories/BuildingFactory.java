@@ -75,9 +75,9 @@ public class BuildingFactory {
         barracks.scaleWidth(5f);
         // Setting Isometric Collider
         PolygonShape boundingBox = new PolygonShape();
-        Vector2[] vertices = {new Vector2(0.6f,1.3f), new Vector2(2.5f,0.4f), // Bottom left, Bottom Right
-                new Vector2(4.3f,1.3f), new Vector2(2.5f,3.5f), // Top Right, Top Left
-                new Vector2(0.6f,2.6f), new Vector2(4.3f,2.6f)};
+        Vector2[] vertices = {new Vector2(0.6f,1.3f), new Vector2(2.5f,0.4f), // Bottom Left, Bottom Mid
+                new Vector2(4.3f,1.3f), new Vector2(2.5f,3.5f), // Bottom Right, Top Middle
+                new Vector2(0.6f,2.6f), new Vector2(4.3f,2.6f)}; // Top Left, Top Right
         boundingBox.set(vertices);
         barracks.getComponent(ColliderComponent.class).setShape(boundingBox);
 
@@ -99,7 +99,7 @@ public class BuildingFactory {
         wall.scaleWidth(2.2f);
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
         PolygonShape boundingBox = new PolygonShape();
-        Vector2 center = wall.getScale().scl(0.5f);
+        Vector2 center = wall.getCenterPosition(); // Collider to be set around center of entity
         boundingBox.setAsBox(center.x * 0.25f, center.y * 0.25f, center, (float) (60 * Math.PI / 180));
         wall.getComponent(ColliderComponent.class).setShape(boundingBox);
 
