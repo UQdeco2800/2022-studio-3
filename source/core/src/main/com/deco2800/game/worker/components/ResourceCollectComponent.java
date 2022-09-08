@@ -45,6 +45,7 @@ public class ResourceCollectComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         collectStats = entity.getComponent(CollectStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
@@ -133,6 +134,13 @@ public class ResourceCollectComponent extends Component {
             }
         }
     }
+
+    public void onCollisionEnd(Fixture me, Fixture other) {
+        this.colliding = false;
+        this.me = null;
+        this.other = null;
+    }
+        
 
     public void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
