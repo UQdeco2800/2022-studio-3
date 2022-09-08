@@ -8,4 +8,6 @@ public class NPCConfigs {
   public BaseEntityConfig demon = new BaseEntityConfig();
 
   public SnakeConfig snake = new SnakeConfig();
+  public BaseEntityConfig wolf = new BaseEntityConfig();
+  public BaseEntityConfig titan = new BaseEntityConfig();
 }

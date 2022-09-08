@@ -133,6 +133,54 @@ public class NPCFactory {
 //    return Snake;
 //  }
 
+  /**
+   * Creates a wolf entity
+   *
+   * @return entity
+   */
+  public static Entity createWolf() {
+    Entity wolf = createBaseNPC();
+    BaseEntityConfig config = configs.wolf;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    wolf
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+
+    wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return wolf;
+  }
+
+  /**
+   * Creates a titan entity
+   *
+   * @return entity
+   */
+  public static Entity createTitan() {
+    Entity titan = createBaseNPC();
+    BaseEntityConfig config = configs.titan;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    titan
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+
+    titan.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return titan;
+  }
+
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
@@ -144,6 +192,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
+//            .addTask(new ChaseTask(target, 10, 3f, 4f)); //<- don't know if this is relevant now
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
