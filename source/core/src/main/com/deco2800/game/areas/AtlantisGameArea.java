@@ -92,9 +92,15 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         playMusic();
+
+        // Spawn Buildings in the city
+        spawnTownHall();
+        spawnBarracks();
+        spawnWalls();
+
         spawnForager();
         spawnForager();
-        spawnWorkerBase();
+        // spawnWorkerBase();
         spawnTrees();
         spawnStone();
         spawnMiner();
@@ -126,12 +132,6 @@ public class AtlantisGameArea extends GameArea {
 
         //Spawn boundaries around the map itself
         spawnMapBounds();
-
-        // Spawn Buildings in the city
-        spawnTownHall();
-        spawnBarracks();
-        spawnWalls();
-
     }
 
     /**

@@ -15,6 +15,9 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.worker.components.ResourceStatsComponent;
+import com.deco2800.game.worker.components.type.BaseComponent;
+import com.deco2800.game.worker.resources.ResourceConfig;
 
 /**
  * Factory to create a building entity with predefined components.
@@ -25,6 +28,8 @@ import com.deco2800.game.services.ServiceLocator;
 public class BuildingFactory {
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
+    private static final ResourceConfig stats =
+            FileLoader.readClass(ResourceConfig.class, "configs/Base.json");
 
     /**
      * @return a new Entity with universal building components
@@ -47,7 +52,9 @@ public class BuildingFactory {
 
         townHall.addComponent(new TextureRenderComponent("images/base.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
+                .addComponent(new BaseComponent());
 
         townHall.scaleWidth(7f);
         // Setting Isometric Collider
