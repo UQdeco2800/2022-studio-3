@@ -90,10 +90,17 @@ public class ResourceCollectComponent extends Component {
             collectStone(targetStats);
             collectMetal(targetStats);
             collector.getEvents().trigger("workerMiningAnimate");
+            // Trigger the Miner's duration bar above the collector's head
+            Entity durationBar = collectorIsMiner.getDurationBarEntity();
+            durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);
+            durationBar.getEvents().trigger("durationBarAnimate");
         } else if (collectorIsForager != null && isTree != null) {
             // If the worker type is Forager
             collectWood(targetStats);
             collector.getEvents().trigger("workerForagingAnimate");
+            Entity durationBar = collectorIsForager.getDurationBarEntity();
+            durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);
+            durationBar.getEvents().trigger("durationBarAnimate");
         } else {
             return;
         }
@@ -107,6 +114,13 @@ public class ResourceCollectComponent extends Component {
             this.lastTimeMined = 0;
             target.dispose();
             ServiceLocator.getEntityService().unregister(target);
+            // Idle the duration bar
+            if(collectorIsMiner != null){
+                collectorIsMiner.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
+            }
+            if(collectorIsForager != null){
+                collectorIsForager.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
+            }
         }
     }
 
