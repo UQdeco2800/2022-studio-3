@@ -36,6 +36,8 @@ public class AtlantisGameArea extends GameArea {
     private static final int NUM_TREES = 5;
     private static final int NUM_STONE = 10;
     private static final String[] forestTextures = {
+            "test/files/dummyTexture.png",
+            "test/files/dummyOcean.png",
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
@@ -91,8 +93,8 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
-        playMusic();
-
+        //playMusic();
+        
         // Spawn Buildings in the city
         spawnTownHall();
         spawnBarracks();
