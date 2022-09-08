@@ -46,7 +46,7 @@ public class InfoBoxDisplay extends UIComponent {
 
         backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
         backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
-        backgroundBoxImage.setPosition(-0f, -0f);
+        backgroundBoxImage.setPosition(0f, 0f);
 
         stage.addActor(backgroundBoxImage);
 
