@@ -68,6 +68,9 @@ public class ResourceCollectComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
+        if ((BodyUserData) other.getBody().getUserData() == null) {
+            return;
+        }
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
@@ -89,11 +92,19 @@ public class ResourceCollectComponent extends Component {
             // If the worker type is Miner
             collectStone(targetStats);
             collectMetal(targetStats);
-            collector.getEvents().trigger("workerMiningAnimate");
+            if (target.getCenterPosition().x < collector.getCenterPosition().x) {
+                collector.getEvents().trigger("workerMiningAnimateLeft");
+            } else {
+                collector.getEvents().trigger("workerMiningAnimateRight");
+            }
         } else if (collectorIsForager != null && isTree != null) {
             // If the worker type is Forager
             collectWood(targetStats);
-            collector.getEvents().trigger("workerForagingAnimate");
+            if (target.getCenterPosition().x < collector.getCenterPosition().x) {
+                collector.getEvents().trigger("workerForagingAnimateLeft");
+            } else {
+                collector.getEvents().trigger("workerForagingAnimateRight");
+            }
         } else {
             return;
         }

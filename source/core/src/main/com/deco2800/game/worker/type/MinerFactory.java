@@ -25,6 +25,7 @@ public class MinerFactory {
 
         animator.addAnimation("miner_forward_idle", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("miner_forward_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("minerActionLeft", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("minerActionRight", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("minerRight", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("minerLeft", 0.1f, Animation.PlayMode.LOOP);
