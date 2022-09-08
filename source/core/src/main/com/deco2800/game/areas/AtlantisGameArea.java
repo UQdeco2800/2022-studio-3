@@ -28,8 +28,6 @@ import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.helpers.Util;
-
 import java.util.Map;
 
 /** Atlantis game area for creating the map the game is played in */
@@ -94,12 +92,12 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         playMusic();
-        //spawnForager();
-        //spawnForager();
-        //spawnWorkerBase();
-        //spawnTrees();
-        //spawnStone();
-        //spawnMiner();
+        spawnForager();
+        spawnForager();
+        spawnWorkerBase();
+        spawnTrees();
+        spawnStone();
+        spawnMiner();
     }
 
     private void displayUI() {

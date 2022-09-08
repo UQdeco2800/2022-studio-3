@@ -14,7 +14,6 @@ public class Interrupt {
      * set the interrupt with lower bound and upper bound.
      * @param lowerBound: integer for the fastest time to wait for interrupt
      * @param upperBound: integer for the slowest time to wait for interrupt
-     * @return pause the game after random time between lowerBound and upperBound
      */
     public Interrupt(int lowerBound, int upperBound) {
         Timer t = new Timer(lowerBound,upperBound);
@@ -25,7 +24,6 @@ public class Interrupt {
     }
     /**
      * Resume the game regardless if it is interrupted or not
-     * @return timeScale to 1
      */
     public void resumeGame() {
         gT.setTimeScale(1f);
