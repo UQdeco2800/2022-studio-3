@@ -91,7 +91,7 @@ public class TouchPlayerInputComponent extends InputComponent {
     if (button == Input.Buttons.LEFT) {
       entity.getEvents().trigger("place", screenX, screenY);
     }
-    return true;
+    return false;
   }
 
   private void triggerWalkEvent() {

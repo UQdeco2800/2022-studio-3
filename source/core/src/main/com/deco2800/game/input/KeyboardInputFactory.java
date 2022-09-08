@@ -1,4 +1,5 @@
 package com.deco2800.game.input;
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.ui.terminal.KeyboardTerminalInputComponent;
 import com.deco2800.game.worker.components.movement.WorkerInputComponent;
@@ -19,6 +20,12 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForPlayer() {
         logger.debug("Creating player input handler");
         return new KeyboardPlayerInputComponent();
+    }
+
+    @Override
+    public InputComponent createForFriendlyUnit() {
+        logger.debug("Creating unit input handler");
+        return new MouseInputComponent();
     }
 
     /**
