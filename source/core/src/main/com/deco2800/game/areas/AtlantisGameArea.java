@@ -14,6 +14,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -57,7 +58,8 @@ public class AtlantisGameArea extends GameArea {
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
             "images/base.png",
-            "images/stone.png"
+            "images/stone.png",
+            "images/simpleman.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -93,6 +95,7 @@ public class AtlantisGameArea extends GameArea {
         spawnTrees();
         spawnStone();
         spawnMiner();
+        spawnExampleUnit();
     }
 
     private void displayUI() {
@@ -278,6 +281,20 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
     }
+
+    /**
+     * Creates an example unit for testing formations and actions
+     *
+     * Places the unit relative to the city centre for convenience
+     */
+    private void spawnExampleUnit() {
+        Entity exampleUnit = UnitFactory.createExampleUnit();
+        GridPoint2 location =
+                RandomPointGenerator.getRandomPointInRange(terrainFactory,
+                        0.75);
+        spawnEntityAt(exampleUnit, location, true, true);
+    }
+
 
     /**
      * Randomly spawns a worker base on the map

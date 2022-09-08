@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class UnitFactory {
     private static final UnitConfigs stats =
-            FileLoader.readClass(UnitConfigs.class, "configs/units");
+            FileLoader.readClass(UnitConfigs.class, "configs/units.json");
 
 
     public static Entity createExampleUnit() {
@@ -32,18 +32,24 @@ public class UnitFactory {
                     .addComponent(new CombatStatsComponent(stats.example.health,
                             stats.example.baseAttack,
                             stats.example.baseDefence));
-            PhysicsUtils.setScaledCollider(troop, 0.8f, 1f);
+            PhysicsUtils.setScaledCollider(troop, 0.2f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.getComponent(TextureRenderComponent.class).scaleEntity();
+            troop.setScale(0.5f, 0.5f);
             troops.add(troop);
         }
         // TODO: add control to unit entity
         Entity unit =
                 new Entity().addComponent(new TroopContainerComponent(troops,
-                        50f))
+                        stats.example.movementRadius))
+                        .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
         PhysicsUtils.setRadiusCollider(unit, stats.example.movementRadius);
         return unit;
+    }
+
+    private UnitFactory() {
+        throw new IllegalStateException("Instantiating static util class");
     }
 }

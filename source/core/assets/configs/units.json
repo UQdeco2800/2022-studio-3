@@ -5,5 +5,5 @@
   "baseAttack": 2,
   "baseDefence": 1,
   "landSpeed": 1.0,
-  "movementRadius":100.0}
+  "movementRadius":0.75}
 }
