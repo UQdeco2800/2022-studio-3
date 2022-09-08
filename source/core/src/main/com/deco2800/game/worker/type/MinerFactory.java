@@ -4,6 +4,7 @@ import com.deco2800.game.worker.WorkerConfig;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.MinerAnimationController;
+import com.deco2800.game.worker.components.duration.DurationBarComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
