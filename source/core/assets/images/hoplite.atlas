@@ -1,0 +1,61 @@
+hoplite.png
+size: 1024, 384
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hoplite_backward_left_attack
+  rotate: false
+  xy: 0, 0
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+hoplite_backward_left_move
+  rotate: false
+  xy: 0, 128
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+hoplite_backward_right_attack
+  rotate: false
+  xy: 256, 0
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+hoplite_backward_right_move
+  rotate: false
+  xy: 512, 128
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+hoplite_forward_left_attack
+  rotate: false
+  xy: 512, 0
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+hoplite_forward_left_move
+  rotate: false
+  xy: 0, 256
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+hoplite_forward_right_attack
+  rotate: false
+  xy: 768, 0
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+hoplite_forward_right_move
+  rotate: false
+  xy: 512, 256
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
