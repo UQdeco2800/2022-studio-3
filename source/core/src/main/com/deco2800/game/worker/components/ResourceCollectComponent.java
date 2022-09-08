@@ -52,7 +52,7 @@ public class ResourceCollectComponent extends Component {
     @Override
     public void update() {
         if (this.colliding) {
-           this.onCollisionStart(this.me, this.other);
+            this.onCollisionStart(this.me, this.other);
         }
     }
 
@@ -74,9 +74,6 @@ public class ResourceCollectComponent extends Component {
         if (targetStats == null) {
             return;
         }
-        this.colliding = true;
-        this.other = other;
-        this.me = me;
         BaseComponent isBase = target.getComponent(BaseComponent.class);
         TreeComponent isTree = target.getComponent(TreeComponent.class);
         StoneComponent isStone = target.getComponent(StoneComponent.class);
@@ -88,8 +85,6 @@ public class ResourceCollectComponent extends Component {
         Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
         MinerComponent collectorIsMiner = collector.getComponent(MinerComponent.class);
         ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
-
-
         if (collectorIsMiner != null && isStone != null) {
             // If the worker type is Miner
             collectStone(targetStats);
@@ -102,10 +97,13 @@ public class ResourceCollectComponent extends Component {
         } else {
             return;
         }
-        this.lastTimeMined = this.gameTime.getTime();       
-
+        this.lastTimeMined = this.gameTime.getTime();    
+        this.colliding = true;
+        this.other = other;
+        this.me = me;   
         if (targetStats.isDead()) {
             this.colliding = false;
+            collector.getEvents().trigger("workerIdleAnimate");
             this.lastTimeMined = 0;
             target.dispose();
             ServiceLocator.getEntityService().unregister(target);
