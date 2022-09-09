@@ -2,13 +2,8 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.areas.RandomPointGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.npc.EnemyAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
@@ -17,8 +12,8 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
+import com.deco2800.game.entities.configs.BaseUnitConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
-import com.deco2800.game.entities.configs.SnakeConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -41,116 +36,112 @@ import com.deco2800.game.services.ServiceLocator;
  */
 public class NPCFactory {
   private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
-  private static final String MOVE_LEFT = "move-west";
-  private static final String MOVE_RIGHT = "move-east";
-  private static final String MOVE_UP = "move-north";
-  private static final String MOVE_DOWN = "move-south";
+  private static final String MOVE_WEST = "move-west";
+  private static final String MOVE_EAST = "move-east";
+  private static final String MOVE_NORTH = "move-north";
+  private static final String MOVE_SOUTH = "move-south";
+
+  private static final String ATTACK_NORTH = "attack-north";
+  private static final String ATTACK_SOUTH = "attack-south";
+  private static final String ATTACK_EAST = "attack-east";
+  private static final String ATTACK_WEST = "attack-west";
 
   /**
-   * Creates a ghoul entity
+   * Creates a Blue Joker enemy entity
    *
-   * @return entity
+   * @return Blue Joker enemy entity
    */
-  public static Entity createGhoul(AtlantisTerrainFactory terrainFactory) {
-    Entity ghoul = createBaseNPC(terrainFactory);
-    BaseEntityConfig config = configs.ghoul;
+  public static Entity createBlueJoker(AtlantisTerrainFactory terrainFactory) {
+    Entity blueJoker = createBaseNPC(terrainFactory);
+    BaseUnitConfig config = configs.blueJoker;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/blue_joker.atlas", TextureAtlas.class));
-    animator.addAnimation("move-east", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-west", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-south", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-north", 0.1f, Animation.PlayMode.LOOP);
 
-    ghoul
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack,
-            config.baseDefence))
-        .addComponent(animator)
-            //.addComponent(new GhostAnimationController());
-            .addComponent(new EnemyAnimationController());
+    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
-    ghoul.getComponent(AnimationRenderComponent.class).scaleEntity();
+    animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
 
-    return ghoul;
+    blueJoker
+              .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
+                                                     config.baseDefence, config.landSpeed))
+              .addComponent(animator)
+              .addComponent(new EnemyAnimationController());
+
+    blueJoker .getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    return blueJoker;
   }
 
   /**
-   * Creates a demon entity
+   * Creates a Snake entity
    *
-   * @return entity
+   * @return Snake entity
    */
-  public static Entity createDemon(AtlantisTerrainFactory terrainFactory) {
-    Entity demon = createBaseNPC(terrainFactory);
-    BaseEntityConfig config = configs.demon;
+  public static Entity createSnake(AtlantisTerrainFactory terrainFactory) {
+    Entity snake = createBaseNPC(terrainFactory);
+    BaseUnitConfig config = configs.snake;
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    demon
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            ServiceLocator.getResourceService().getAsset("images/snake.atlas", TextureAtlas.class));
+
+    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+    animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
+    snake
+        .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
+                                               config.baseDefence, config.landSpeed))
         .addComponent(animator)
-        .addComponent(new GhostAnimationController());
+        .addComponent(new EnemyAnimationController());
 
-    demon.getComponent(AnimationRenderComponent.class).scaleEntity();
+    snake.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    return demon;
+    return snake;
   }
-
-//  public static Entity createSnake(Entity target, GameArea gameArea) {
-//    SnakeConfig config = configs.snake;
-//    AITaskComponent aiComponent =
-//            new AITaskComponent()
-//                    .addTask(new WanderTask(new Vector2(3f, 2f), 0f));
-//
-//    AnimationRenderComponent animator =
-//            new AnimationRenderComponent(
-//                    ServiceLocator.getResourceService()
-//                            .getAsset("images/xxx.atlas", TextureAtlas.class));
-//    animator.addAnimation("xxx", 0.1f, Animation.PlayMode.LOOP);
-//
-//    Entity Snake = new Entity()
-//            .addComponent(new PhysicsComponent())
-//            .addComponent(new PhysicsMovementComponent())
-//            .addComponent(new ColliderComponent())
-//            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-//            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-//            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
-//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, 0))
-//            .addComponent(aiComponent);
-//
-//    Snake.addComponent(animator)
-//            .addComponent(new EnemyAnimationController());
-//    animator.addAnimation(MOVE_LEFT, 0.4f, Animation.PlayMode.LOOP);
-//    animator.addAnimation(MOVE_RIGHT, 0.4f, Animation.PlayMode.LOOP);
-//    animator.addAnimation(MOVE_UP, 0.4f, Animation.PlayMode.LOOP);
-//    animator.addAnimation(MOVE_DOWN, 0.4f, Animation.PlayMode.LOOP);
-//
-//    PhysicsUtils.setScaledCollider(Snake, 1f,1f);
-//    Snake.scaleHeight(2f);
-//    return Snake;
-//  }
 
   /**
    * Creates a wolf entity
    *
    * @return entity
    */
-  public static Entity createWolf() {
-    Entity wolf = createBaseNPC();
-    BaseEntityConfig config = configs.wolf;
+  public static Entity createWolf(AtlantisTerrainFactory terrainFactory) {
+    Entity wolf = createBaseNPC(terrainFactory);
+    BaseUnitConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+    animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
     wolf
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
+                                                   config.baseDefence, config.landSpeed))
             .addComponent(animator)
-            .addComponent(new GhostAnimationController());
+            .addComponent(new EnemyAnimationController());
 
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -162,17 +153,26 @@ public class NPCFactory {
    *
    * @return entity
    */
-  public static Entity createTitan() {
-    Entity titan = createBaseNPC();
-    BaseEntityConfig config = configs.titan;
+  public static Entity createTitan(AtlantisTerrainFactory terrainFactory) {
+    Entity titan = createBaseNPC(terrainFactory);
+    BaseUnitConfig config = configs.titan;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+    animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
     titan
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
+                                                   config.baseDefence, config.landSpeed))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
 
@@ -191,8 +191,7 @@ public class NPCFactory {
 
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f));
-//            .addTask(new ChaseTask(target, 10, 3f, 4f)); //<- don't know if this is relevant now
+            .addTask(new EnemyMovement(terrainFactory));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())

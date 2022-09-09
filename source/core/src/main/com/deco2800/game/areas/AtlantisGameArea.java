@@ -63,7 +63,7 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/blue_joker.atlas",
-            "images/snake.atlas"
+            "images/snake.atlas", "images/wolf.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -100,7 +100,7 @@ public class AtlantisGameArea extends GameArea {
     private void spawnGhouls() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity ghouls = NPCFactory.createGhoul(terrainFactory);
+            Entity ghouls = NPCFactory.createBlueJoker(terrainFactory);
             spawnEntityAt(ghouls, spawnPoint, true, true);
         }
     }

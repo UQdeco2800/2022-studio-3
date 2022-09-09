@@ -49,7 +49,7 @@ public class BuildingFactory {
         townHall.scaleWidth(4f);
         PhysicsUtils.setScaledCollider(townHall, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        townHall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        townHall.addComponent(new CombatStatsComponent(0, config.health, config.baseAttack, config.baseDefence, 0));
         return townHall;
     }
 
@@ -68,7 +68,7 @@ public class BuildingFactory {
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        barracks.addComponent(new CombatStatsComponent(0, config.health, config.baseAttack, config.baseDefence, 0));
         return barracks;
     }
 
@@ -87,7 +87,7 @@ public class BuildingFactory {
         barracks.scaleWidth(2f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        barracks.addComponent(new CombatStatsComponent(0, config.health, config.baseAttack, config.baseDefence, 0));
         return barracks;
     }
 
@@ -107,7 +107,7 @@ public class BuildingFactory {
         barracks.scaleWidth(0.5f);
         PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        barracks.addComponent(new CombatStatsComponent(0, config.health, config.baseAttack, config.baseDefence, 0));
         return barracks;
     }
 

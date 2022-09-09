@@ -1,25 +1,33 @@
 {
-  "ghoul": {
+  "blueJoker": {
+    "troops": 1,
     "health": 40,
     "baseAttack": 15,
-    "baseDefence": 0
+    "baseDefence": 0,
+    "landSpeed": 1.0
   },
-  "demon": {
+  "snake": {
+    "troops": 1,
     "health": 40,
     "baseAttack": 15,
-    "baseDefence": 0
+    "baseDefence": 0,
+    "landSpeed": 1.0
   },
 
   "wolf": {
+    "troops": 1,
     "health": 40,
     "baseAttack": 15,
-    "baseDefence": 0
+    "baseDefence": 0,
+    "landSpeed": 1.0
   },
 
   "titan": {
+    "troops": 1,
     "health": 40,
     "baseAttack": 15,
-    "baseDefence": 0
+    "baseDefence": 0,
+    "landSpeed": 1.0
   }
 }
 

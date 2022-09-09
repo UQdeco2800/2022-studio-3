@@ -4,6 +4,15 @@ size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+
+default
+  rotate: false
+  xy: 238, 34
+  size: 58, 59
+  orig: 58, 59
+  offset: 0, 0
+  index: 0
+
 idle-east
   rotate: false
   xy: 160, 37
@@ -13,8 +22,7 @@ idle-east
   index: 0
 
 idle-west
-
-rotate: false
+  rotate: false
   xy: 238, 34
   size: 58, 59
   orig: 58, 59
@@ -93,7 +101,6 @@ attack-south
   orig: 59, 59
   offset: 0, 0
   index: 0
-
 
 move-south
   rotate: false

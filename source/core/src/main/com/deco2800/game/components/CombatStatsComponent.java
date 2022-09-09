@@ -12,14 +12,51 @@ import static java.lang.Math.max;
 public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
+  private int troops;
   private int health;
   private int baseAttack;
   private int baseDefence;
+  private float landSpeed;
 
-  public CombatStatsComponent(int health, int baseAttack, int baseDefence) {
+  public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed) {
     setHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
+  }
+
+  /**
+   * Returns number of troops the unit has
+   *
+   * @return entity's troop count
+   */
+  public int getTroops() {
+    return troops;
+  }
+
+  /**
+   * Sets the number of troops the unit has
+   * @param troops number of troops to set.
+   */
+  public void setTroops(int troops) {
+    this.troops = troops;
+  }
+
+  /**
+   * Returns the land movement speed of the unit
+   *
+   * @return land movement speed of unit
+   */
+  public float getLandSpeed() {
+    return landSpeed;
+  }
+
+  /**
+   * Sets the land movement speed of unit
+   *
+   * @param landSpeed land movement speed to set
+   */
+  public void setLandSpeed(float landSpeed) {
+    this.landSpeed = landSpeed;
   }
 
   /**

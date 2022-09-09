@@ -28,8 +28,8 @@ public class UnitFactory {
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
-                    .addComponent(new CombatStatsComponent(stats.health,
-                            stats.baseAttack, stats.baseDefence));
+                    .addComponent(new CombatStatsComponent(stats.troops, stats.health,
+                            stats.baseAttack, stats.baseDefence, stats.landSpeed));
             PhysicsUtils.setScaledCollider(troop, 0.8f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.getComponent(TextureRenderComponent.class).scaleEntity();

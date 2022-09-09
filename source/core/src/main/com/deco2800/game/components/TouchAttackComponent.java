@@ -68,6 +68,7 @@ public class TouchAttackComponent extends Component {
 
     // Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+
     if (physicsComponent != null && knockbackForce > 0f) {
       Body targetBody = physicsComponent.getBody();
       Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());
