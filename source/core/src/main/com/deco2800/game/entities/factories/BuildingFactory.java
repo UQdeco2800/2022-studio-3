@@ -1,6 +1,9 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -47,6 +50,7 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
+        final float TH_SCALE = 7f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
@@ -56,13 +60,28 @@ public class BuildingFactory {
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent());
 
-        townHall.scaleWidth(7f);
+        townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
-        PolygonShape boundingBox = new PolygonShape();
-        Vector2[] vertices = {new Vector2(0.2f,2.7f), new Vector2(3.4f,1.2f), // Bottom left, Bottom Right
-                new Vector2(6.4f,3.5f), new Vector2(3.8f,5f)}; // Top Right, Top Left
+
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[] {      // Four vertices
+                31f, 607f,      // Vertex 0       3--2
+                499f, 835f,     // Vertex 1      /  /
+                958f, 515f,     // Vertex 2     /  /
+                486f, 289f      // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/base.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TH_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
         boundingBox.set(vertices);
-        townHall.getComponent(ColliderComponent.class).setShape(boundingBox);
+        townHall.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return townHall;
     }
@@ -72,21 +91,36 @@ public class BuildingFactory {
      * @return Barracks Entity
      */
     public static Entity createBarracks() {
+        final float BARRACKS_SCALE = 5f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
-        barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
+        barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 
-        barracks.scaleWidth(5f);
+        barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
-        PolygonShape boundingBox = new PolygonShape();
-        Vector2[] vertices = {new Vector2(0.6f,1.3f), new Vector2(2.5f,0.4f), // Bottom Left, Bottom Mid
-                new Vector2(4.3f,1.3f), new Vector2(2.5f,3.5f), // Bottom Right, Top Middle
-                new Vector2(0.6f,2.6f), new Vector2(4.3f,2.6f)}; // Top Left, Top Right
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1036f,    // Vertex 0        3
+                982f, 889f,     // Vertex 1    4 /   \ 2
+                982f, 761f,     // Vertex 2     |     |
+                605f, 581f,     // Vertex 3    5 \   / 1
+                222f, 736f,     // Vertex 4        0
+                222f, 874f      // Vertex 5
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(BARRACKS_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
         boundingBox.set(vertices);
-        barracks.getComponent(ColliderComponent.class).setShape(boundingBox);
+        barracks.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return barracks;
     }

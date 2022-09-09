@@ -8,8 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.maingame.DialogueBoxActions;
+import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -28,14 +29,19 @@ import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
-/** Atlantis game area for creating the map the game is played in */
+/**
+ * Atlantis game area for creating the map the game is played in
+ */
 public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final int NUM_TREES = 5;
     private static final int NUM_STONE = 10;
     private static final String[] forestTextures = {
+            "test/files/dummyTexture.png",
+            "test/files/dummyOcean.png",
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
@@ -55,14 +61,21 @@ public class AtlantisGameArea extends GameArea {
             "images/Information_Box_Deepsea.png",
             "images/TransBox.png",
             "images/white.png",
-            "images/Base.png",
-            "images/isometric barracks current.png",
-            "images/barracks medieval.png",
+            "images/barracks_level_1.0.png",
+            "images/barracks_level_1.1.png",
+            "images/barracks_level_1.2.png",
+            "images/barracks_level_2.0.png",
             "images/stone_wall.png",
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
             "images/stone.png"
+    };
+
+    private static final String[] uiTextures = {
+            "images/dialogue_box_pattern2_background.png",
+            "images/dialogue_box_image_default.png",
+            "images/exit-button.PNG"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -74,14 +87,19 @@ public class AtlantisGameArea extends GameArea {
 
     private final AtlantisTerrainFactory terrainFactory;
 
+    private final DialogueBoxDisplay dialogueBoxDisplay;
+
     private Entity player;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
+        dialogueBoxDisplay = new DialogueBoxDisplay();
     }
 
-    /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+    /**
+     * Create the game area, including terrain, static entities (trees), dynamic entities (player)
+     */
     @Override
     public void create() {
         loadAssets();
@@ -91,7 +109,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
-        playMusic();
+        //playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
@@ -114,6 +132,14 @@ public class AtlantisGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
         spawnEntity(infoUi);
+
+        Entity dialogueBox = new Entity();
+        dialogueBoxDisplay.setDialogue("This is example dialogue text");
+        dialogueBoxDisplay.setTitle("example title");
+        dialogueBox.addComponent(dialogueBoxDisplay);
+        dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
+
+        spawnEntity(dialogueBox);
     }
 
     private void spawnTerrain() {
@@ -163,7 +189,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         float tileSize = terrain.getTileSize();
         //North/South side bounds
-        for (int i = -1; i < mg.getWidth(); i ++) {
+        for (int i = -1; i < mg.getWidth(); i++) {
             spawnEntityAt(
                     ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
                     new GridPoint2(i, mg.getHeight()),
@@ -176,7 +202,7 @@ public class AtlantisGameArea extends GameArea {
                     false);
         }
         //East/West side bounds
-        for (int j = -1; j < mg.getHeight(); j ++) {
+        for (int j = -1; j < mg.getHeight(); j++) {
             spawnEntityAt(
                     ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
                     new GridPoint2(mg.getWidth(), j),
@@ -190,9 +216,9 @@ public class AtlantisGameArea extends GameArea {
         }
     }
 
-
     /**
      * Spawns player at the centre of the Atlantean city
+     *
      * @return Entity corresponding to the spawned player
      */
     private Entity spawnPlayer() {
@@ -292,6 +318,7 @@ public class AtlantisGameArea extends GameArea {
 
     /**
      * Spawns forager at the centre of the Atlantean city
+     *
      * @return entity corresponding to the spawned forager
      */
     private Entity spawnForager() {
@@ -302,9 +329,9 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-    * Creates and spawns a new Miner unit
-    */
-    private Entity spawnMiner(){
+     * Creates and spawns a new Miner unit
+     */
+    private Entity spawnMiner() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newMiner = MinerFactory.createMiner();
         spawnEntityAt(newMiner, spawn, true, true);
@@ -322,7 +349,6 @@ public class AtlantisGameArea extends GameArea {
 
     /**
      * Spawns random tree within the city which is used by a forager to collect wood.
-     *
      */
     private void spawnTrees() {
         for (int i = 0; i < NUM_TREES; i++) {
@@ -334,7 +360,6 @@ public class AtlantisGameArea extends GameArea {
 
     /**
      * Spawns random stones within the city which is used by a miner to collect stone.
-     *
      */
     private void spawnStone() {
         for (int i = 0; i < NUM_STONE; i++) {
@@ -354,6 +379,7 @@ public class AtlantisGameArea extends GameArea {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
+        resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
         resourceService.loadMusic(atlantisMusic);

@@ -36,6 +36,15 @@ public class InfoBoxDisplay extends UIComponent {
     //The image that is always in the background of our information
     private Image backgroundBoxImage;
 
+    //Button used for leveling up buildings
+    private TextButton levelUpBtn = new TextButton("Level Up", skin);
+
+    //Troop selection button for the barracks
+    private TextButton troopBtn = new TextButton("Spawn troop", skin);
+
+    //Button to create the magic bubble to save Atlantis
+    private TextButton bubbleBtn = new TextButton("Create bubble", skin);
+
 
 
 
@@ -56,7 +65,7 @@ public class InfoBoxDisplay extends UIComponent {
 
         backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
         backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
-        backgroundBoxImage.setPosition(-0f, -0f);
+        backgroundBoxImage.setPosition(0f, 0f);
 
         stage.addActor(backgroundBoxImage);
 
@@ -79,7 +88,28 @@ public class InfoBoxDisplay extends UIComponent {
         stage.addActor(pictureTable);
         stage.addActor(infoTable);
         stage.addActor(buildingTable);
-
+        levelUpBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        Util.report("level up");
+                        entity.getEvents().trigger("levelUp");
+                    }
+        });
+        bubbleBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Util.report("Create bubble");
+                entity.getEvents().trigger("bubble");
+            }
+        });
+        troopBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Util.report("Spawn troop");
+                entity.getEvents().trigger("spawnTroop");
+            }
+        });
 
 
     }
@@ -121,16 +151,16 @@ public class InfoBoxDisplay extends UIComponent {
                 }
                 //crashes game when not selecting building
                 if (entity.getComponent(BuildingActions.class) != null){
-                    TextButton levelUp = new TextButton("Level Up", skin);
-                    levelUp.addListener(
-                            new ChangeListener() {
-                                @Override
-                                public void changed(ChangeEvent changeEvent, Actor actor) {
-                                    Util.report("level up");
-                                    entity.getEvents().trigger("levelUp");
-                                }
-                            });
-                    buildingTable.add(levelUp);
+                    buildingTable.add(levelUpBtn);
+                    switch (entity.getComponent(BuildingActions.class).getType()){
+                        case TOWNHALL:
+                            buildingTable.add(bubbleBtn);
+                            break;
+                        case BARRACKS:
+                            buildingTable.add(troopBtn);
+                            break;
+
+                    }
                 }
 
 
