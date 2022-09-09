@@ -1,13 +1,15 @@
 package com.deco2800.game.components.weather;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.utils.random.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.deco2800.game.utils.random.Timer;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.Gdx;
+import com.deco2800.game.components.weather.WeatherIcon;
 
 public class WeatherIconDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(WeatherIconDisplay.class);
@@ -38,6 +40,7 @@ public class WeatherIconDisplay extends UIComponent {
     public void update() {
         if (timer.isTimerExpired()) {
             this.weatherIcon.changeWeatherImage();
+            ServiceLocator.getEntityService().trigger("changeWeather", this.weatherIcon.getMovementSpeed());
             this.timer = new Timer(0, 10000);
         }
         int timeLeft = (int) timer.timeLeft() / 1000;

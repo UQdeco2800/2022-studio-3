@@ -32,6 +32,11 @@ public class WeatherIcon extends Actor {
      */
     private Image weatherFilter;
 
+    /**
+     * Initiate the speed factor
+     */
+    private float speedFactor = 1f;
+
     private final String[] weatherFile = {
             // Does not affect movement, affect lighting of the environment
             "images/cloudy.png",
@@ -51,6 +56,13 @@ public class WeatherIcon extends Actor {
             "images/weather-filter/snowy-filter.png",
             "images/weather-filter/sunny-filter.png",
             "images/weather-filter/thunderstorm-filter.png"
+    };
+    private final float[] movementSpeedFactor = {
+            1.5f,
+            0.5f,
+            0.4f,
+            2f,
+            0.6f
     };
 
     public WeatherIcon(Label countdownTimer) {
@@ -79,9 +91,13 @@ public class WeatherIcon extends Actor {
         int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
         this.weatherImage = new Image(new Texture(weatherFile[index]));
         this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
+        this.speedFactor = this.movementSpeedFactor[index];
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
+    }
 
+    public float getMovementSpeed() {
+        return this.speedFactor;
     }
 
     public void layout() {
