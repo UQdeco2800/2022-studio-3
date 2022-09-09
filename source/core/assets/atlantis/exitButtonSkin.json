@@ -3,18 +3,6 @@
     button: {
       file: fonts/pixel_18.fnt
     }
-    font: {
-      file: fonts/pixel_18.fnt
-    }
-    title: {
-      file: fonts/pixel_32.fnt
-    }
-    font_small: {
-      file: fonts/pixel_16.fnt
-    }
-    font_large: {
-      file: fonts/pixel_26.fnt
-    }
   }
   com.badlogic.gdx.graphics.Color: {
     BLACK: {
