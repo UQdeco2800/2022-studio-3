@@ -95,7 +95,7 @@ public class BuildingFactory {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
-        barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
+        barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 
@@ -103,16 +103,16 @@ public class BuildingFactory {
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[]{
-                895f, 1649f,    // Vertex 0        3
-                1568f, 1312f,   // Vertex 1    4 /   \ 2
-                1568f, 1088f,   // Vertex 2     |     |
-                893f, 749f,     // Vertex 3    5 \   / 1
-                228f, 1078f,    // Vertex 4        0
-                228f, 1311f     // Vertex 5
+                605f, 1036f,    // Vertex 0        3
+                982f, 889f,     // Vertex 1    4 /   \ 2
+                982f, 761f,     // Vertex 2     |     |
+                605f, 581f,     // Vertex 3    5 \   / 1
+                222f, 736f,     // Vertex 4        0
+                222f, 874f      // Vertex 5
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
-                .getAsset("images/isometric barracks current.png", Texture.class)), points, null);
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
