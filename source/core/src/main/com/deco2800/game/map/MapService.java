@@ -124,7 +124,7 @@ public class MapService {
 	 * @throws OutOfBoundsException if the tile is not a land tile
 	 * @throws OccupiedTileException if the goal position is occupied by another entity
 	 */
-	public List<GridPoint2> findPathForEntity(MapComponent comp, GridPoint2 goal) throws OutOfBoundsException, OccupiedTileException {
+	public List<GridPoint2> getPath(MapComponent comp, GridPoint2 goal) throws OutOfBoundsException, OccupiedTileException {
 		if (isOccupied(goal)) {
 			throw new OccupiedTileException();
 		}
