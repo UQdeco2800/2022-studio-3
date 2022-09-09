@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.deco2800.game.services.GameTime;
 import com.deco2800.game.utils.random.PseudoRandom;
 import com.deco2800.game.utils.random.Timer;
 import com.badlogic.gdx.utils.Align;
@@ -29,47 +27,59 @@ public class WeatherIcon extends Actor {
      */
     private Image weatherImage;
 
+    /**
+     * Initiate the Image for the weather filter.
+     */
     private Image weatherFilter;
 
+    /**
+     * Initiate the speed factor
+     */
+    private float speedFactor = 1f;
+
     private final String[] weatherFile = {
-            // Does not affect movememnt, affect lighting a little bit
+            // Does not affect movement, affect lighting of the environment
             "images/cloudy.png",
-            // Affecting movement a little bit, affect lighting
-            "images/rainy.png",
-            // Affect movement a lot, affect terrain and lighting, must not appear adjacently with sunny
-            "images/snowy.png",
-            // Does not affect movement, does not affect terrain and lighting, must not appear adjacently with snowy
+            // Affecting movement, affect lighting of the environment
+            "images/rainy.png", // "images/rainy.gif"
+            // Affect movement a lot, affect terrain and lighting of the environment, must not appear adjacently with sunny
+            "images/snowy.png", // "images/snowy.gif"
+            // Does not affect movement, does not affect terrain and lighting of the environment,
+            // must not appear adjacently with snowy
             "images/sunny.png",
-            // Affecting movement a little bit, affect lighting
-            "images/thunderstorm.png"
+            // Affecting movement a bit, affect lighting of the environment
+            "images/thunderstorm.png" //"images/thunderstorm.gif"
     };
     private final String[] weatherFilterFile = {
             "images/weather-filter/cloudy-filter.png",
             "images/weather-filter/rainy-filter.png",
             "images/weather-filter/snowy-filter.png",
             "images/weather-filter/sunny-filter.png",
-            "images/weather-filter/rainy-filter.png",
+            "images/weather-filter/thunderstorm-filter.png"
+    };
+    private final float[] movementSpeedFactor = {
+            1.5f,
+            0.5f,
+            0.4f,
+            2f,
+            0.6f
     };
 
     public WeatherIcon(Label countdownTimer) {
 
-        /**
-         * Initiate timerLabel with countdownTimer
-         */
+        // Initiate timerLabel with countdownTimer
         this.timerLabel = countdownTimer;
 
-        /**
-         * Initiate weatherImage
-         */
-        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
+        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
 
-        /**
-         * Initiate weatherFilter
-         */
-        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
+        // Initiate weatherImage
+        this.weatherImage = new Image(new Texture(weatherFile[index]));
 
+        // Initiate weatherFilter
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         layout();
     }
 
@@ -78,46 +88,32 @@ public class WeatherIcon extends Actor {
     }
 
     public void changeWeatherImage() {
-        this.weatherImage = new Image(new Texture(getRandomWeatherFile()[0]));
-        this.weatherFilter = new Image(new Texture(getRandomWeatherFile()[1]));
+        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
+        this.weatherImage = new Image(new Texture(weatherFile[index]));
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
+        this.speedFactor = this.movementSpeedFactor[index];
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
+    }
 
+    public float getMovementSpeed() {
+        return this.speedFactor;
     }
 
     public void layout() {
-        /**
-         * For weatherImage
-         */
-        weatherImage.setSize(100f, 100f);
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-120f);
-
-        /**
-         * For weatherFilter
-         */
-        weatherImage.setSize(1920f, 1080f);
+        //  Layout for weatherFilter
+        weatherImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         weatherFilter.setPosition(0,0);
 
+        //  Layout for weatherImage
+        weatherImage.setSize(100f, 100f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f-weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
 
-        /**
-         * For timer
-         */
+        //  Layout for timer
         this.timerLabel.setAlignment(Align.left);
         this.timerLabel.setWrap(true);
         this.timerLabel.setSize(3f,3f);
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 10f, Gdx.graphics.getHeight()-75f);
-    }
-
-    public int getRandomWeatherFileIndexLocation() {
-        return PseudoRandom.seedRandomInt(0, weatherFile.length);
-
-    }
-
-    public String[] getRandomWeatherFile() {
-        int index = getRandomWeatherFileIndexLocation();
-        String[] randomWeather = {weatherFile[index], weatherFilterFile[index]};
-        return randomWeather;
-
     }
 
     @Override
