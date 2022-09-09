@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -36,19 +35,21 @@ public class DialogueBoxDisplay extends UIComponent {
         this.backgroundTexture = new Image(
                 ServiceLocator
                         .getResourceService()
-                        .getAsset("images/dialogue_box_background.png", Texture.class)
+                        .getAsset("images/dialogue_box_pattern2_background.png", Texture.class)
         );
         this.backgroundTexture.setWidth(1085f);
         this.backgroundTexture.setHeight(143f * 1.5f);
         this.backgroundTexture.setPosition(358f * 1.5f + 5f, 0f);
 
         this.title = new Label("EXAMPLE TITLE", skin);
-        this.title.setPosition(this.backgroundTexture.getX(), this.backgroundTexture.getHeight() - this.title.getHeight());
+        this.title.setPosition(this.backgroundTexture.getX() + 30f, this.backgroundTexture.getHeight() - this.title.getHeight() - 25f);
 
         this.dialogue = new Label("EXAMPLE DIALOGUE TEXT", skin);
-        this.dialogue.setPosition(this.backgroundTexture.getX(), this.backgroundTexture.getHeight() / 2f);
+        this.dialogue.setPosition(this.backgroundTexture.getX() + 30f, (this.backgroundTexture.getHeight() / 2f) - 25f);
 
-        this.dismissBtn = new TextButton("X", skin);
+        this.dismissBtn = new TextButton("", new Skin(Gdx.files.internal("atlantis/exitButtonSkin.json")));
+        this.dismissBtn.setWidth(45f);
+        this.dismissBtn.setHeight(25f);
         this.dismissBtn.setPosition(this.backgroundTexture.getX() + this.backgroundTexture.getWidth() - this.dismissBtn.getWidth(),
                 this.backgroundTexture.getHeight() - this.dismissBtn.getHeight());
         this.dismissBtn.addListener(new ChangeListener() {
@@ -65,7 +66,7 @@ public class DialogueBoxDisplay extends UIComponent {
         );
         this.image.setWidth(128f);
         this.image.setHeight(128f);
-        this.image.setPosition(this.backgroundTexture.getX() + this.backgroundTexture.getWidth() - this.image.getWidth(), 10f);
+        this.image.setPosition(this.backgroundTexture.getX() + this.backgroundTexture.getWidth() - this.image.getWidth() - 30f, 35f);
 
         stage.addActor(this.backgroundTexture);
         stage.addActor(this.dialogue);
