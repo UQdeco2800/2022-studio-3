@@ -61,9 +61,13 @@ public class AtlantisGameArea extends GameArea {
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
             "images/base.png",
-            "images/stone.png",
-            "images/dialogue_box_background.png",
-            "images/dialogue_box_image_default.png"
+            "images/stone.png"
+    };
+
+    private static final String[] uiTextures = {
+            "images/dialogue_box_pattern2_background.png",
+            "images/dialogue_box_image_default.png",
+            "images/exit-button.PNG"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -75,7 +79,7 @@ public class AtlantisGameArea extends GameArea {
 
     private final AtlantisTerrainFactory terrainFactory;
 
-    private static DialogueBoxDisplay dialogueBoxDisplay;
+    private final DialogueBoxDisplay dialogueBoxDisplay;
 
     private Entity player;
 
@@ -342,6 +346,7 @@ public class AtlantisGameArea extends GameArea {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(forestTextures);
+        resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
         resourceService.loadMusic(atlantisMusic);
