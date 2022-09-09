@@ -25,6 +25,14 @@ public class PhysicsUtils {
             .setAsRadius(radius);
   }
 
+  public static void setScaledColliderCentered(Entity entity, float scaleX, float scaleY) {
+    Vector2 boundingBox = entity.getScale().cpy().scl(scaleX, scaleY);
+    entity
+            .getComponent(ColliderComponent.class)
+            .setAsBoxAligned(
+                    boundingBox, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
+  }
+
   private PhysicsUtils() {
     throw new IllegalStateException("Instantiating static util class");
   }
