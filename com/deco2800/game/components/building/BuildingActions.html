@@ -101,7 +101,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">BuildingActions</a><wbr>(int&nbsp;level)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.deco2800.game.components.building.Building,int)" class="member-name-link">BuildingActions</a><wbr>(<a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a>&nbsp;type,
+ int&nbsp;level)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructs components with specified level</div>
 </div>
@@ -125,33 +126,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Increments level by 1</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cancelPlacement()" class="member-name-link">cancelPlacement</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called upon creation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevel()" class="member-name-link">getLevel</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevel()" class="member-name-link">getLevel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#place(int,int)" class="member-name-link">place</a><wbr>(int&nbsp;screenX,
- int&nbsp;screenY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">On Left mouse button down, the building will placed at the mouse position</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placing(int,int)" class="member-name-link">placing</a><wbr>(int&nbsp;screenX,
- int&nbsp;screenY)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">On mouse moved event, the Entity's position follows the mouse until placed</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startPlacing()" class="member-name-link">startPlacing</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Disables physics component and sets placed to false</div>
-</div>
 </div>
 </div>
 </div>
@@ -173,9 +157,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int)">
+<section class="detail" id="&lt;init&gt;(com.deco2800.game.components.building.Building,int)">
 <h3>BuildingActions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">BuildingActions</span><wbr><span class="parameters">(int&nbsp;level)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">BuildingActions</span><wbr><span class="parameters">(<a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a>&nbsp;type,
+ int&nbsp;level)</span></div>
 <div class="block">Constructs components with specified level</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -202,6 +187,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getType()">
+<h3>getType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="addLevel()">
 <h3>addLevel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addLevel</span>()</div>
@@ -217,45 +208,6 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="startPlacing()">
-<h3>startPlacing</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startPlacing</span>()</div>
-<div class="block">Disables physics component and sets placed to false</div>
-</section>
-</li>
-<li>
-<section class="detail" id="placing(int,int)">
-<h3>placing</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placing</span><wbr><span class="parameters">(int&nbsp;screenX,
- int&nbsp;screenY)</span></div>
-<div class="block">On mouse moved event, the Entity's position follows the mouse until placed</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>screenX</code> - Mouse x coordinate</dd>
-<dd><code>screenY</code> - Mouse y coordinate</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="place(int,int)">
-<h3>place</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">place</span><wbr><span class="parameters">(int&nbsp;screenX,
- int&nbsp;screenY)</span></div>
-<div class="block">On Left mouse button down, the building will placed at the mouse position</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>screenX</code> - Mouse x coordinate</dd>
-<dd><code>screenY</code> - Mouse y coordinate</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="cancelPlacement()">
-<h3>cancelPlacement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cancelPlacement</span>()</div>
 </section>
 </li>
 </ul>

@@ -205,6 +205,8 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="com/deco2800/game/entities/configs/BuildingConfigs.html#barracks" class="member-name-link">barracks</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BuildingConfigs.html" title="class in com.deco2800.game.entities.configs">BuildingConfigs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#BARRACKS" class="member-name-link">BARRACKS</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/BarracksConfig.html" class="type-name-link" title="class in com.deco2800.game.entities.configs">BarracksConfig</a> - Class in <a href="com/deco2800/game/entities/configs/package-summary.html">com.deco2800.game.entities.configs</a></dt>
 <dd>
 <div class="block">Defines the barracks properties stored in config file to be loaded by the Building Factory.</div>
@@ -243,11 +245,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html#BOTTOM" class="member-name-link">BOTTOM</a> - Enum constant in enum class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html" title="enum class in com.deco2800.game.physics.components">PhysicsComponent.AlignY</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html" class="type-name-link" title="enum class in com.deco2800.game.components.building">Building</a> - Enum Class in <a href="com/deco2800/game/components/building/package-summary.html">com.deco2800.game.components.building</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/building/BuildingActions.html" class="type-name-link" title="class in com.deco2800.game.components.building">BuildingActions</a> - Class in <a href="com/deco2800/game/components/building/package-summary.html">com.deco2800.game.components.building</a></dt>
 <dd>
 <div class="block">Action component for interacting with a building.</div>
 </dd>
-<dt><a href="com/deco2800/game/components/building/BuildingActions.html#%3Cinit%3E(int)" class="member-name-link">BuildingActions(int)</a> - Constructor for class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#%3Cinit%3E(com.deco2800.game.components.building.Building,int)" class="member-name-link">BuildingActions(Building, int)</a> - Constructor for class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
 <dd>
 <div class="block">Constructs components with specified level</div>
 </dd>
@@ -273,8 +277,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/deco2800/game/input/CameraInputComponent.html" class="type-name-link" title="class in com.deco2800.game.input">CameraInputComponent</a> - Class in <a href="com/deco2800/game/input/package-summary.html">com.deco2800.game.input</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/input/CameraInputComponent.html#%3Cinit%3E()" class="member-name-link">CameraInputComponent()</a> - Constructor for class com.deco2800.game.input.<a href="com/deco2800/game/input/CameraInputComponent.html" title="class in com.deco2800.game.input">CameraInputComponent</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/deco2800/game/components/building/BuildingActions.html#cancelPlacement()" class="member-name-link">cancelPlacement()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/physics/components/PhysicsComponent.AlignX.html#CENTER" class="member-name-link">CENTER</a> - Enum constant in enum class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsComponent.AlignX.html" title="enum class in com.deco2800.game.physics.components">PhysicsComponent.AlignX</a></dt>
 <dd>&nbsp;</dd>
@@ -586,10 +588,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/deco2800/game/entities/factories/BuildingFactory.html#createBarracks()" class="member-name-link">createBarracks()</a> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/BuildingFactory.html" title="class in com.deco2800.game.entities.factories">BuildingFactory</a></dt>
 <dd>
 <div class="block">Creates entity, adds and configures Barracks components</div>
-</dd>
-<dt><a href="com/deco2800/game/entities/factories/BuildingFactory.html#createBarracksMedieval()" class="member-name-link">createBarracksMedieval()</a> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/BuildingFactory.html" title="class in com.deco2800.game.entities.factories">BuildingFactory</a></dt>
-<dd>
-<div class="block">Creates entity, adds and configures MedievalBarracks components</div>
 </dd>
 <dt><a href="com/deco2800/game/entities/factories/BuildingFactory.html#createBaseBuilding()" class="member-name-link">createBaseBuilding()</a> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/BuildingFactory.html" title="class in com.deco2800.game.entities.factories">BuildingFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -1385,6 +1383,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/services/ServiceLocator.html#getTimeSource()" class="member-name-link">getTimeSource()</a> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#getType()" class="member-name-link">getType()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/areas/MapGenerator/MapGenerator.html#getWidth()" class="member-name-link">getWidth()</a> - Method in class com.deco2800.game.areas.MapGenerator.<a href="com/deco2800/game/areas/MapGenerator/MapGenerator.html" title="class in com.deco2800.game.areas.MapGenerator">MapGenerator</a></dt>
 <dd>
 <div class="block">Returns the current map width</div>
@@ -2049,14 +2049,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Wrapper for pinch stop that can be overridden.</div>
 </dd>
-<dt><a href="com/deco2800/game/components/building/BuildingActions.html#place(int,int)" class="member-name-link">place(int, int)</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
-<dd>
-<div class="block">On Left mouse button down, the building will placed at the mouse position</div>
-</dd>
-<dt><a href="com/deco2800/game/components/building/BuildingActions.html#placing(int,int)" class="member-name-link">placing(int, int)</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
-<dd>
-<div class="block">On mouse moved event, the Entity's position follows the mouse until placed</div>
-</dd>
 <dt><a href="com/deco2800/game/physics/PhysicsLayer.html#PLAYER" class="member-name-link">PLAYER</a> - Static variable in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsLayer.html" title="class in com.deco2800.game.physics">PhysicsLayer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/player/PlayerActions.html" class="type-name-link" title="class in com.deco2800.game.components.player">PlayerActions</a> - Class in <a href="com/deco2800/game/components/player/package-summary.html">com.deco2800.game.components.player</a></dt>
@@ -2522,6 +2514,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/deco2800/game/physics/PhysicsUtils.html#setScaledCollider(com.deco2800.game.entities.Entity,float,float)" class="member-name-link">setScaledCollider(Entity, float, float)</a> - Static method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsUtils.html" title="class in com.deco2800.game.physics">PhysicsUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/physics/PhysicsUtils.html#setScaledColliderCentered(com.deco2800.game.entities.Entity,float,float)" class="member-name-link">setScaledColliderCentered(Entity, float, float)</a> - Static method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsUtils.html" title="class in com.deco2800.game.physics">PhysicsUtils</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/GdxGame.html#setScreen(com.deco2800.game.GdxGame.ScreenType)" class="member-name-link">setScreen(GdxGame.ScreenType)</a> - Method in class com.deco2800.game.<a href="com/deco2800/game/GdxGame.html" title="class in com.deco2800.game">GdxGame</a></dt>
 <dd>
 <div class="block">Sets the game's screen to a new screen of the provided type.</div>
@@ -2656,10 +2650,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Moves the worker to the target</div>
 </dd>
-<dt><a href="com/deco2800/game/components/building/BuildingActions.html#startPlacing()" class="member-name-link">startPlacing()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
-<dd>
-<div class="block">Disables physics component and sets placed to false</div>
-</dd>
 <dt><a href="com/deco2800/game/ai/tasks/DefaultTask.html#status" class="member-name-link">status</a> - Variable in class com.deco2800.game.ai.tasks.<a href="com/deco2800/game/ai/tasks/DefaultTask.html" title="class in com.deco2800.game.ai.tasks">DefaultTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/worker/resources/ResourceConfig.html#stone" class="member-name-link">stone</a> - Variable in class com.deco2800.game.worker.resources.<a href="com/deco2800/game/worker/resources/ResourceConfig.html" title="class in com.deco2800.game.worker.resources">ResourceConfig</a></dt>
@@ -2772,6 +2762,8 @@ loadScripts(document, 'script');</script>
  may want to have in the game, such as audio, walking speed, traversability by AI, etc.</div>
 </dd>
 <dt><a href="com/deco2800/game/areas/terrain/TerrainTile.html#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.TextureRegion)" class="member-name-link">TerrainTile(TextureRegion)</a> - Constructor for class com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainTile.html" title="class in com.deco2800.game.areas.terrain">TerrainTile</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/rendering/TextureRenderComponent.html#texturePath" class="member-name-link">texturePath</a> - Variable in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/TextureRenderComponent.html" title="class in com.deco2800.game.rendering">TextureRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/rendering/TextureRenderComponent.html" class="type-name-link" title="class in com.deco2800.game.rendering">TextureRenderComponent</a> - Class in <a href="com/deco2800/game/rendering/package-summary.html">com.deco2800.game.rendering</a></dt>
 <dd>
@@ -2904,6 +2896,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/deco2800/game/entities/configs/BuildingConfigs.html#townHall" class="member-name-link">townHall</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BuildingConfigs.html" title="class in com.deco2800.game.entities.configs">BuildingConfigs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#TOWNHALL" class="member-name-link">TOWNHALL</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/TownHallConfig.html" class="type-name-link" title="class in com.deco2800.game.entities.configs">TownHallConfig</a> - Class in <a href="com/deco2800/game/entities/configs/package-summary.html">com.deco2800.game.entities.configs</a></dt>
 <dd>
 <div class="block">Defines the town hall properties stored in config file to be loaded by the Building Factory.</div>
@@ -2951,6 +2945,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/deco2800/game/components/friendly/TroopContainerComponent.html#%3Cinit%3E(java.util.ArrayList,float)" class="member-name-link">TroopContainerComponent(ArrayList&lt;Entity&gt;, float)</a> - Constructor for class com.deco2800.game.components.friendly.<a href="com/deco2800/game/components/friendly/TroopContainerComponent.html" title="class in com.deco2800.game.components.friendly">TroopContainerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/BaseUnitConfig.html#troops" class="member-name-link">troops</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BaseUnitConfig.html" title="class in com.deco2800.game.entities.configs">BaseUnitConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/entities/configs/BarracksConfig.html#type" class="member-name-link">type</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BarracksConfig.html" title="class in com.deco2800.game.entities.configs">BarracksConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/entities/configs/TownHallConfig.html#type" class="member-name-link">type</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/TownHallConfig.html" title="class in com.deco2800.game.entities.configs">TownHallConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/entities/configs/WallConfig.html#type" class="member-name-link">type</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/WallConfig.html" title="class in com.deco2800.game.entities.configs">WallConfig</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:U">U</h2>
@@ -3111,6 +3111,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="com/deco2800/game/files/FileLoader.Location.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.deco2800.game.files.<a href="com/deco2800/game/files/FileLoader.Location.html" title="enum class in com.deco2800.game.files">FileLoader.Location</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -3142,6 +3146,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/deco2800/game/areas/terrain/TerrainFactory.TerrainType.html#values()" class="member-name-link">values()</a> - Static method in enum class com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainFactory.TerrainType.html" title="enum class in com.deco2800.game.areas.terrain">TerrainFactory.TerrainType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#values()" class="member-name-link">values()</a> - Static method in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
@@ -3187,6 +3196,8 @@ the order they are declared.</div>
 <dt><a href="com/deco2800/game/components/tasks/WaitTask.html#%3Cinit%3E(float)" class="member-name-link">WaitTask(float)</a> - Constructor for class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/WaitTask.html" title="class in com.deco2800.game.components.tasks">WaitTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/BuildingConfigs.html#wall" class="member-name-link">wall</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BuildingConfigs.html" title="class in com.deco2800.game.entities.configs">BuildingConfigs</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#WALL" class="member-name-link">WALL</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/WallConfig.html" class="type-name-link" title="class in com.deco2800.game.entities.configs">WallConfig</a> - Class in <a href="com/deco2800/game/entities/configs/package-summary.html">com.deco2800.game.entities.configs</a></dt>
 <dd>
