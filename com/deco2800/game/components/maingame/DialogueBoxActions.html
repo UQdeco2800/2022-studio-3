@@ -5,7 +5,7 @@
 <title>DialogueBoxActions (core 1.0 API)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="description" content="declaration: package: com.deco2800.game.components.dialoguebox, class: DialogueBoxActions">
+<meta name="description" content="declaration: package: com.deco2800.game.components.maingame, class: DialogueBoxActions">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -67,20 +67,18 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.deco2800.game.components.dialoguebox</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.deco2800.game.components.maingame</a></div>
 <h1 title="Class DialogueBoxActions" class="title">Class DialogueBoxActions</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../Component.html" title="class in com.deco2800.game.components">com.deco2800.game.components.Component</a>
-<div class="inheritance">com.deco2800.game.components.dialoguebox.DialogueBoxActions</div>
+<div class="inheritance">com.deco2800.game.components.maingame.DialogueBoxActions</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DialogueBoxActions</span>
 <span class="extends-implements">extends <a href="../Component.html" title="class in com.deco2800.game.components">Component</a></span></div>
-<div class="block">This class listens to events relevant to the Dialogue Box and does something when one of the
- events is triggered</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -101,7 +99,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.deco2800.game.components.dialoguebox.DialogueBox)" class="member-name-link">DialogueBoxActions</a><wbr>(<a href="DialogueBox.html" title="class in com.deco2800.game.components.dialoguebox">DialogueBox</a>&nbsp;dialogueBox)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.deco2800.game.ui.UIComponent)" class="member-name-link">DialogueBoxActions</a><wbr>(<a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a>&nbsp;dialogueBox)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -121,11 +119,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onDismiss()" class="member-name-link">onDismiss</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">hides the dialogueBox when it is currently being shown</div>
 </div>
 </div>
 </div>
@@ -148,9 +141,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.deco2800.game.components.dialoguebox.DialogueBox)">
+<section class="detail" id="&lt;init&gt;(com.deco2800.game.ui.UIComponent)">
 <h3>DialogueBoxActions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DialogueBoxActions</span><wbr><span class="parameters">(<a href="DialogueBox.html" title="class in com.deco2800.game.components.dialoguebox">DialogueBox</a>&nbsp;dialogueBox)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DialogueBoxActions</span><wbr><span class="parameters">(<a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui">UIComponent</a>&nbsp;dialogueBox)</span></div>
 </section>
 </li>
 </ul>
@@ -172,13 +165,6 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="onDismiss()">
-<h3>onDismiss</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onDismiss</span>()</div>
-<div class="block">hides the dialogueBox when it is currently being shown</div>
 </section>
 </li>
 </ul>
