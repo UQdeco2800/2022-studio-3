@@ -22,7 +22,7 @@ public class MapService {
 	/* Stores all register entities */
 	private final List<MapComponent> interactables = new ArrayList<>();
 	/* Stores all island tile positions */
-	private final List<GridPoint2> islandTiles = new ArrayList<>();
+	public final List<GridPoint2> islandTiles = new ArrayList<>();
 	/* Stores the entity occupying a position */
 	private final Map<GridPoint2, MapComponent> positionToEntity = new HashMap<>();
 	/* Stores all positions entities occupy */
@@ -64,7 +64,6 @@ public class MapService {
 	 * Registers an entity with the MapService.
 	 * 
 	 * @param comp entity to register.
-	 * @throws IllegalEntityPlacementException
 	 */
 	public void register(MapComponent comp) {
 		interactables.add(comp);
@@ -144,11 +143,9 @@ public class MapService {
 	 * @return a list of positions indicating the shortest path
 	 */
 	public List<GridPoint2> getPath(GridPoint2 start, GridPoint2 goal) {
-		
-		List<Node> path = new ArrayList<>();
 
 		// BFS search. I don't believe there is a reasonable heuristic we can add here 
-		// considering there is little predictability to map generation/layout. Since 
+		// considering there is little predictability to map generation/layout atm. Since 
 		// this a dynamic environment there comes the issue of computational complexity.
 		// could potentially frame this as a stochastic environment and/or not flat
 		// Another option to reduce space + time complexity without the hassle is 
@@ -163,6 +160,7 @@ public class MapService {
 		while (fringe.size() > 0) {
 
 			Node node = fringe.get(0);
+			fringe.remove(0);
 			if (goal.equals(node.position)) {
 				return node.backtrack();
 			}
@@ -176,6 +174,7 @@ public class MapService {
 			}
 		}
 
+		// no solution
 		return new ArrayList<>();
 	}
 
@@ -212,32 +211,13 @@ public class MapService {
 		public boolean equals(Object o) {
 			if (o instanceof MapService.Node) {
 				Node n = (Node) o;
-				if (n.position.equals(n.position)) {
+				if (n.position.equals(this.position)) {
 					return true;
 				}
 			}
 
 			return false;
 		}
-	}
-
-	/**
-	 * Helper function for tree based search. DEPRECATED
-	 * 
-	 * @param node parent
-	 * @return list of successor nodes
-	 */
-	private List<GridPoint2> getChildren(GridPoint2 node) {
-		List<GridPoint2> children = new ArrayList<>();
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				GridPoint2 child = new GridPoint2(node.x + i, node.y + j);
-				if (!(i == 0 && j == 0) && islandTiles.contains(child)) {
-					children.add(child);
-				}
-			}
-		}
-		return children;
 	}
 	
 	/**
@@ -325,11 +305,11 @@ public class MapService {
         return new GridPoint2(tileX, tileY);
     }
 
-	public Vector2 tileToWorldPosition(GridPoint2 tilePos) {
+	public static Vector2 tileToWorldPosition(GridPoint2 tilePos) {
 		return tileToWorldPosition(tilePos.x, tilePos.y);
 	}
 
-	public Vector2 tileToWorldPosition(int x, int y) {
+	public static Vector2 tileToWorldPosition(int x, int y) {
 		return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 3.724f);
 	}
 }

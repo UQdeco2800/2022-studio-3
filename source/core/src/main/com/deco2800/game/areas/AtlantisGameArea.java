@@ -16,6 +16,7 @@ import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -89,11 +90,11 @@ public class AtlantisGameArea extends GameArea {
         }
         playMusic();
         spawnForager();
-        spawnForager();
+        // spawnForager();
         // spawnWorkerBase();
         spawnTrees();
         spawnStone();
-        spawnMiner();
+        // spawnMiner();
     }
 
     private void displayUI() {
@@ -111,7 +112,7 @@ public class AtlantisGameArea extends GameArea {
 
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
-        // register map details with MapService
+        // register map details with MapService (TODO: move somewhere nicer)
         ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
         //Add minimap component
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
@@ -299,7 +300,7 @@ public class AtlantisGameArea extends GameArea {
     private void spawnTrees() {
         for (int i = 0; i < NUM_TREES; i++) {
             GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
-            Entity tree = TreeFactory.createTree().addComponent(new MapComponent());
+            Entity tree = TreeFactory.createTree();
             spawnEntityAt(tree, randomPos, false, false);
         }
     }
