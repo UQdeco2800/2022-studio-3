@@ -17,6 +17,8 @@ import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -121,7 +123,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnWorkerBase();
         spawnTrees();
         spawnStone();
-        spawnMiner();
+        // spawnMiner();
     }
 
     private void displayUI() {
@@ -144,8 +146,11 @@ public class AtlantisGameArea extends GameArea {
 
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
+
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
+        // register map details with MapService (TODO: move somewhere nicer)
+        ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
         //Add minimap component
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
@@ -230,7 +235,7 @@ public class AtlantisGameArea extends GameArea {
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
-        Entity newPlayer = PlayerFactory.createPlayer();
+        Entity newPlayer = PlayerFactory.createPlayer().addComponent(new MapComponent());
         spawnEntityAt(newPlayer, spawn, true, true);
 
         //Move camera to player
@@ -248,7 +253,7 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = mg.getCityDetails().get("Centre");
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        Entity townHall = BuildingFactory.createTownHall();
+        Entity townHall = BuildingFactory.createTownHall().addComponent(new MapComponent());
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
@@ -323,7 +328,7 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnForager() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newForager = ForagerFactory.createForager();
+        Entity newForager = ForagerFactory.createForager().addComponent(new MapComponent());
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
     }
@@ -333,7 +338,7 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnMiner() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newMiner = MinerFactory.createMiner();
+        Entity newMiner = MinerFactory.createMiner().addComponent(new MapComponent());
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
     }
@@ -343,7 +348,7 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnWorkerBase() {
         GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity workerBase = WorkerBaseFactory.createWorkerBase();
+        Entity workerBase = WorkerBaseFactory.createWorkerBase().addComponent(new MapComponent());
         spawnEntityAt(workerBase, randomPos, false, false);
     }
 
