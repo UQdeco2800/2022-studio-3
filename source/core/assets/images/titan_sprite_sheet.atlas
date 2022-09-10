@@ -1,0 +1,229 @@
+titan_sprite_sheet.png
+size: 2048, 1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Titan_Backward_Left_Attack
+  rotate: false
+  xy: 0, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Attack2
+  rotate: false
+  xy: 256, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk
+  rotate: false
+  xy: 512, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk2
+  rotate: false
+  xy: 768, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk3
+  rotate: false
+  xy: 1024, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk4
+  rotate: false
+  xy: 1280, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk5
+  rotate: false
+  xy: 1536, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Left_Walk6
+  rotate: false
+  xy: 1792, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Attack
+  rotate: false
+  xy: 0, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Attack2
+  rotate: false
+  xy: 256, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk
+  rotate: false
+  xy: 512, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk2
+  rotate: false
+  xy: 768, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk3
+  rotate: false
+  xy: 1024, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk4
+  rotate: false
+  xy: 1280, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk5
+  rotate: false
+  xy: 1536, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Backward_Right_Walk6
+  rotate: false
+  xy: 1792, 256
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk
+  rotate: false
+  xy: 0, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk2
+  rotate: false
+  xy: 256, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk3
+  rotate: false
+  xy: 512, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk4
+  rotate: false
+  xy: 768, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk5
+  rotate: false
+  xy: 1024, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Foreward_Left_Walk6
+  rotate: false
+  xy: 1280, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Left_Attack
+  rotate: false
+  xy: 1536, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Left_Attack2
+  rotate: false
+  xy: 1792, 512
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Attack
+  rotate: false
+  xy: 0, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Attack2
+  rotate: false
+  xy: 256, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk
+  rotate: false
+  xy: 512, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk2
+  rotate: false
+  xy: 768, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk3
+  rotate: false
+  xy: 1024, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk4
+  rotate: false
+  xy: 1280, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk5
+  rotate: false
+  xy: 1536, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Titan_Forward_Right_Walk6
+  rotate: false
+  xy: 1792, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
