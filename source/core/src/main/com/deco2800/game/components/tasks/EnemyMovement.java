@@ -35,10 +35,6 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   private Vector2 startPos;
 
   private MovementTask movementTask;
-  private EnemyMovementNorth movementNorth;
-  private EnemyMovementSouth movementSouth;
-  private EnemyMovementEast movementEast;
-  private EnemyMovementWest movementWest;
 
   private Task currentTask;
 
@@ -82,14 +78,6 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
     setCurrentTask(movementTask);
-
-    movementNorth = new EnemyMovementNorth(terrainFactory, this.owner);
-    movementSouth = new EnemyMovementSouth(terrainFactory, this.owner);
-    movementWest = new EnemyMovementWest(terrainFactory, this.owner);
-    movementEast = new EnemyMovementEast(terrainFactory, this.owner);
-
-    this.owner.getEntity().getEvents().trigger("goDefault");
-
 //    this.owner.getEntity().getEvents().trigger("enemy-movement");
   }
 
@@ -108,20 +96,20 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
 
-    Vector2 position = (this.owner.getEntity().getCenterPosition());
+    Vector2 position = (destinationPoint.cpy()).sub(this.owner.getEntity().getCenterPosition());
     MapGenerator mg = terrainFactory.getMapGenerator();
     if (position.x >= 0 && position.y >= 0) {
       System.out.println("North: " + position);
-      swapTask(movementNorth);
+      this.owner.getEntity().getEvents().trigger("goNorth");
     } else if (position.x <= 0 && position.y <= 0) {
       System.out.println("South: " + position);
-      swapTask(movementSouth);
+      this.owner.getEntity().getEvents().trigger("goSouth");
     } else if (position.x <= 0 && position.y >= 0) {
       System.out.println("West: " + position);
-      swapTask(movementWest);
+      this.owner.getEntity().getEvents().trigger("goWest");
     } else if (position.x >= 0 && position.y <= 0) {
       System.out.println("East: " + position);
-      swapTask(movementEast);
+      this.owner.getEntity().getEvents().trigger("goEast");
     }
 //    if (!foundPath) {
 //      try {
