@@ -11,9 +11,8 @@ import com.deco2800.game.components.TouchAttackComponent;
 //import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
-import com.deco2800.game.entities.configs.NPCConfigs;
+import com.deco2800.game.entities.configs.EnemyConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -29,13 +28,13 @@ import com.deco2800.game.services.ServiceLocator;
  *
  * <p>Each NPC entity type should have a creation method that returns a corresponding entity.
  * Predefined entity properties can be loaded from configs stored as json files which are defined in
- * "NPCConfigs".
+ * "EnemyConfigs".
  *
  * <p>If needed, this factory can be separated into more specific factories for entities with
  * similar characteristics.
  */
-public class NPCFactory {
-  private static final NPCConfigs configs = FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+public class EnemyFactory {
+  private static final EnemyConfigs configs = FileLoader.readClass(EnemyConfigs.class, "configs/Enemies.json");
   private static final String MOVE_WEST = "move-west";
   private static final String MOVE_EAST = "move-east";
   private static final String MOVE_NORTH = "move-north";
@@ -52,7 +51,7 @@ public class NPCFactory {
    * @return Blue Joker enemy entity
    */
   public static Entity createBlueJoker(AtlantisTerrainFactory terrainFactory) {
-    Entity blueJoker = createBaseNPC(terrainFactory);
+    Entity blueJoker = createBaseEnemy(terrainFactory);
     BaseUnitConfig config = configs.blueJoker;
 
     AnimationRenderComponent animator =
@@ -63,7 +62,8 @@ public class NPCFactory {
     animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("default", 1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("default", 1f, Animation.PlayMode.NORMAL);
 
     animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
@@ -87,7 +87,7 @@ public class NPCFactory {
    * @return Snake entity
    */
   public static Entity createSnake(AtlantisTerrainFactory terrainFactory) {
-    Entity snake = createBaseNPC(terrainFactory);
+    Entity snake = createBaseEnemy(terrainFactory);
     BaseUnitConfig config = configs.snake;
 
     AnimationRenderComponent animator =
@@ -121,7 +121,7 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createWolf(AtlantisTerrainFactory terrainFactory) {
-    Entity wolf = createBaseNPC(terrainFactory);
+    Entity wolf = createBaseEnemy(terrainFactory);
     BaseUnitConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
@@ -154,17 +154,17 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createTitan(AtlantisTerrainFactory terrainFactory) {
-    Entity titan = createBaseNPC(terrainFactory);
+    Entity titan = createBaseEnemy(terrainFactory);
     BaseUnitConfig config = configs.titan;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
-    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation(MOVE_EAST, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.2f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.2f, Animation.PlayMode.NORMAL);
 
     animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
@@ -187,7 +187,7 @@ public class NPCFactory {
    *
    * @return entity
    */
-  private static Entity createBaseNPC(AtlantisTerrainFactory terrainFactory) {
+  private static Entity createBaseEnemy(AtlantisTerrainFactory terrainFactory) {
 
     AITaskComponent aiComponent =
         new AITaskComponent()
@@ -205,7 +205,7 @@ public class NPCFactory {
     return npc;
   }
 
-  private NPCFactory() {
+  private EnemyFactory() {
     throw new IllegalStateException("Instantiating static util class");
   }
 }

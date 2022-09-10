@@ -1,6 +1,10 @@
 package com.deco2800.game.components.npc;
 
+import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.areas.RandomPointGenerator;
+import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
 /**
@@ -14,14 +18,37 @@ public class EnemyAnimationController extends Component {
     public void create() {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("goLeft", this::animateLeft);
-        entity.getEvents().addListener("goRight", this::animateRight);
-        entity.getEvents().addListener("goUp", this::animateUp);
-        entity.getEvents().addListener("goDown", this::animateDown);
+        entity.getEvents().addListener("goWest", this::animateWest);
+        entity.getEvents().addListener("goEast", this::animateEast);
+        entity.getEvents().addListener("goNorth", this::animateNorth);
+        entity.getEvents().addListener("goSouth", this::animateSouth);
+        entity.getEvents().addListener("goDefault", this::animateDefault);
     }
 
-    public void animateLeft(){ animator.startAnimation("move-west"); }
-    public void animateRight(){ animator.startAnimation("move-east"); }
-    public void animateUp(){ animator.startAnimation("move-north"); }
-    public void animateDown(){ animator.startAnimation("move-south"); }
+    @Override
+    public void update() {
+        Vector2 position = this.entity.getCenterPosition();
+
+//        if (position.x >= 0 && position.y >= 0) {
+//            System.out.println("North: " + position);
+//            this.animateNorth();
+//        } else if (position.x <= 0 && position.y <= 0) {
+//            System.out.println("South: " + position);
+//            this.animateSouth();
+//        } else if (position.x <= 0 && position.y >= 0) {
+//            System.out.println("West: " + position);
+//            this.animateWest();
+//        } else if (position.x >= 0 && position.y <= 0) {
+//            System.out.println("East: " + position);
+//            this.animateEast();
+//        }
+    }
+
+    public void animateWest(){ animator.startAnimation("move-west"); }
+    public void animateEast(){ animator.startAnimation("move-east"); }
+    public void animateNorth(){ animator.startAnimation("move-north"); }
+    public void animateSouth(){ animator.startAnimation("move-south"); }
+    public void animateDefault() {
+        animator.startAnimation("default");
+    }
 }

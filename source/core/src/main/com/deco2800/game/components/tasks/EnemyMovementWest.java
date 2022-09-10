@@ -2,8 +2,6 @@ package com.deco2800.game.components.tasks;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
@@ -12,24 +10,11 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.RandomPointGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainComponent;
-import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.map.util.OccupiedTileException;
-import com.deco2800.game.map.util.OutOfBoundsException;
-import com.deco2800.game.physics.BodyUserData;
-import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
-import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.utils.math.Vector2Utils;
-import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.logging.Logger;
-
-public class EnemyMovement extends DefaultTask implements PriorityTask {
+public class EnemyMovementWest extends DefaultTask implements PriorityTask {
 
   private Vector2 destinationPoint;
   private Vector2 startPos;
@@ -38,7 +23,8 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   private EnemyMovementNorth movementNorth;
   private EnemyMovementSouth movementSouth;
   private EnemyMovementEast movementEast;
-  private EnemyMovementWest movementWest;
+
+
 
   private Task currentTask;
 
@@ -51,10 +37,11 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
 
   private HitboxComponent hitboxComponent;
 
-  public EnemyMovement(AtlantisTerrainFactory terrainFactory) {
+  public EnemyMovementWest(AtlantisTerrainFactory terrainFactory, TaskRunner owner) {
     this.target = RandomPointGenerator.getCityCenter(terrainFactory);
     this.terrainFactory = terrainFactory;
     terrain = terrainFactory.createAtlantisTerrainComponent();
+    this.owner = owner;
   }
 
   /**
@@ -63,6 +50,14 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   @Override
   public int getPriority() {
     return 1;
+  }
+
+  private void swapTask(Task newTask) {
+    if (currentTask != null) {
+      currentTask.stop();
+    }
+    currentTask = newTask;
+    currentTask.start();
   }
 
   private boolean foundPath = false;
@@ -85,21 +80,13 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
 
     movementNorth = new EnemyMovementNorth(terrainFactory, this.owner);
     movementSouth = new EnemyMovementSouth(terrainFactory, this.owner);
-    movementWest = new EnemyMovementWest(terrainFactory, this.owner);
     movementEast = new EnemyMovementEast(terrainFactory, this.owner);
 
-    this.owner.getEntity().getEvents().trigger("goDefault");
+    this.owner.getEntity().getEvents().trigger("goWest");
 
 //    this.owner.getEntity().getEvents().trigger("enemy-movement");
   }
 
-  private void swapTask(Task newTask) {
-    if (currentTask != null) {
-      currentTask.stop();
-    }
-    currentTask = newTask;
-    currentTask.start();
-  }
   private final GameTime gameTime = ServiceLocator.getTimeSource();
   private long lastTIme = gameTime.getTime();
   /**
@@ -112,13 +99,12 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     MapGenerator mg = terrainFactory.getMapGenerator();
     if (position.x >= 0 && position.y >= 0) {
       System.out.println("North: " + position);
-      swapTask(movementNorth);
     } else if (position.x <= 0 && position.y <= 0) {
       System.out.println("South: " + position);
       swapTask(movementSouth);
     } else if (position.x <= 0 && position.y >= 0) {
       System.out.println("West: " + position);
-      swapTask(movementWest);
+//      swapTask(movementWest);
     } else if (position.x >= 0 && position.y <= 0) {
       System.out.println("East: " + position);
       swapTask(movementEast);

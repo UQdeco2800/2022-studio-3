@@ -143,6 +143,7 @@ public class AtlantisTerrainFactory {
                     ServiceLocator.getMapService().addIslandTile(x, y);
                 } else {
                     cell.setTile(grassTile);
+                    ServiceLocator.getMapService().addIslandTile(x, y);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely
                 layer.setCell(x, mapHeight - 1 - y, cell);

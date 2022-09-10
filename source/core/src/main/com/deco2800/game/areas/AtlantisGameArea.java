@@ -11,7 +11,7 @@ import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
-import com.deco2800.game.entities.factories.NPCFactory;
+import com.deco2800.game.entities.factories.EnemyFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
@@ -57,7 +57,7 @@ public class AtlantisGameArea extends GameArea {
             "images/Base.png",
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
-            "images/wall_1.png",
+//            "images/wall_1.png",
             "images/base.png",
             "images/stone.png"
     };
@@ -89,7 +89,10 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
-        spawnGhouls();
+        spawnBlueJokers();
+//        spawnWolf();
+//        spawnTitan();
+//        spawnSnakes();
         playMusic();
         //spawnForager();
         //spawnForager();
@@ -98,13 +101,35 @@ public class AtlantisGameArea extends GameArea {
         //spawnStone();
         //spawnMiner();
     }
-    private void spawnGhouls() {
+    private void spawnBlueJokers() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity ghouls = NPCFactory.createBlueJoker(terrainFactory);
-            spawnEntityAt(ghouls, spawnPoint, true, true);
+            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
     }
+//    private void spawnSnakes() {
+//        for (int i = 0; i < 10; i++) {
+//            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+//            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+//            spawnEntityAt(snake, spawnPoint, true, true);
+//        }
+//    }
+//
+//    private void spawnTitan() {
+//        for (int i = 0; i < 10; i++) {
+//            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+//            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+//            spawnEntityAt(titan, spawnPoint, true, true);
+//        }
+//    }
+//    private void spawnWolf() {
+//        for (int i = 0; i < 10; i++) {
+//            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+//            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+//            spawnEntityAt(wolf, spawnPoint, true, true);
+//        }
+//    }
 
     private void displayUI() {
         Entity ui = new Entity();
@@ -225,7 +250,7 @@ public class AtlantisGameArea extends GameArea {
      * Spawns TownHall in city center
      */
     private void spawnTownHall() {
-        Entity townHall = BuildingFactory.createTownHall();
+        Entity townHall = BuildingFactory.createTownHall().addComponent(new MapComponent());
         spawnEntityAt(townHall, RandomPointGenerator.getCityCenter(terrainFactory), true, true);
     }
 

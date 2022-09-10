@@ -100,7 +100,7 @@ public class BuildingFactory {
         System.out.println(configs);
         WallConfig config = configs.wall;
 
-        barracks.addComponent(new TextureRenderComponent("images/wall_1.png"))
+        barracks.addComponent(new TextureRenderComponent("images/tree.png")) //wall_1.png
                 .addComponent(new BuildingActions(config.level));
 
         barracks.getComponent(TextureRenderComponent.class).scaleEntity();
