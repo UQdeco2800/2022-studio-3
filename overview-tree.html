@@ -78,6 +78,8 @@ loadScripts(document, 'script');</script>
 <li><a href="com/deco2800/game/events/listeners/package-tree.html">com.deco2800.game.events.listeners</a>, </li>
 <li><a href="com/deco2800/game/files/package-tree.html">com.deco2800.game.files</a>, </li>
 <li><a href="com/deco2800/game/input/package-tree.html">com.deco2800.game.input</a>, </li>
+<li><a href="com/deco2800/game/map/package-tree.html">com.deco2800.game.map</a>, </li>
+<li><a href="com/deco2800/game/map/util/package-tree.html">com.deco2800.game.map.util</a>, </li>
 <li><a href="com/deco2800/game/physics/package-tree.html">com.deco2800.game.physics</a>, </li>
 <li><a href="com/deco2800/game/physics/components/package-tree.html">com.deco2800.game.physics.components</a>, </li>
 <li><a href="com/deco2800/game/physics/raycast/package-tree.html">com.deco2800.game.physics.raycast</a>, </li>
@@ -167,6 +169,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/InventoryComponent.html" class="type-name-link" title="class in com.deco2800.game.components.player">InventoryComponent</a></li>
 <li class="circle">com.deco2800.game.components.maingame.<a href="com/deco2800/game/components/maingame/MainGameActions.html" class="type-name-link" title="class in com.deco2800.game.components.maingame">MainGameActions</a></li>
 <li class="circle">com.deco2800.game.components.mainmenu.<a href="com/deco2800/game/components/mainmenu/MainMenuActions.html" class="type-name-link" title="class in com.deco2800.game.components.mainmenu">MainMenuActions</a></li>
+<li class="circle">com.deco2800.game.map.<a href="com/deco2800/game/map/MapComponent.html" class="type-name-link" title="class in com.deco2800.game.map">MapComponent</a></li>
 <li class="circle">com.deco2800.game.worker.components.<a href="com/deco2800/game/worker/components/MinerAnimationController.html" class="type-name-link" title="class in com.deco2800.game.worker.components">MinerAnimationController</a></li>
 <li class="circle">com.deco2800.game.worker.components.type.<a href="com/deco2800/game/worker/components/type/MinerComponent.html" class="type-name-link" title="class in com.deco2800.game.worker.components.type">MinerComponent</a></li>
 <li class="circle">com.deco2800.game.components.pausemenu.<a href="com/deco2800/game/components/pausemenu/PauseMenuActions.html" class="type-name-link" title="class in com.deco2800.game.components.pausemenu">PauseMenuActions</a></li>
@@ -257,6 +260,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.deco2800.game.utils.random.<a href="com/deco2800/game/utils/random/Interrupt.html" class="type-name-link" title="class in com.deco2800.game.utils.random">Interrupt</a></li>
 <li class="circle">com.deco2800.game.concurrency.<a href="com/deco2800/game/concurrency/JobSystem.html" class="type-name-link" title="class in com.deco2800.game.concurrency">JobSystem</a></li>
 <li class="circle">com.deco2800.game.areas.MapGenerator.<a href="com/deco2800/game/areas/MapGenerator/MapGenerator.html" class="type-name-link" title="class in com.deco2800.game.areas.MapGenerator">MapGenerator</a></li>
+<li class="circle">com.deco2800.game.map.<a href="com/deco2800/game/map/MapService.html" class="type-name-link" title="class in com.deco2800.game.map">MapService</a></li>
 <li class="circle">com.deco2800.game.worker.type.<a href="com/deco2800/game/worker/type/MinerFactory.html" class="type-name-link" title="class in com.deco2800.game.worker.type">MinerFactory</a></li>
 <li class="circle">com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/NPCConfigs.html" class="type-name-link" title="class in com.deco2800.game.entities.configs">NPCConfigs</a></li>
 <li class="circle">com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" class="type-name-link" title="class in com.deco2800.game.entities.factories">NPCFactory</a></li>
@@ -290,6 +294,21 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.deco2800.game.utils.<a href="com/deco2800/game/utils/StringDecorator.html" class="type-name-link" title="class in com.deco2800.game.utils">StringDecorator</a>&lt;T&gt;</li>
 <li class="circle">com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainFactory.html" class="type-name-link" title="class in com.deco2800.game.areas.terrain">TerrainFactory</a></li>
 <li class="circle">com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainTile.html" class="type-name-link" title="class in com.deco2800.game.areas.terrain">TerrainTile</a> (implements com.badlogic.gdx.maps.tiled.TiledMapTile)</li>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" class="type-name-link external-link" title="class or interface in java.lang">Throwable</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" class="type-name-link external-link" title="class or interface in java.lang">Exception</a>
+<ul>
+<li class="circle">com.deco2800.game.map.util.<a href="com/deco2800/game/map/util/IllegalEntityPlacementException.html" class="type-name-link" title="class in com.deco2800.game.map.util">IllegalEntityPlacementException</a>
+<ul>
+<li class="circle">com.deco2800.game.map.util.<a href="com/deco2800/game/map/util/OccupiedTileException.html" class="type-name-link" title="class in com.deco2800.game.map.util">OccupiedTileException</a></li>
+<li class="circle">com.deco2800.game.map.util.<a href="com/deco2800/game/map/util/OutOfBoundsException.html" class="type-name-link" title="class in com.deco2800.game.map.util">OutOfBoundsException</a></li>
+</ul>
+</li>
+<li class="circle">com.deco2800.game.map.util.<a href="com/deco2800/game/map/util/NoEntityException.html" class="type-name-link" title="class in com.deco2800.game.map.util">NoEntityException</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">com.deco2800.game.utils.random.<a href="com/deco2800/game/utils/random/Timer.html" class="type-name-link" title="class in com.deco2800.game.utils.random">Timer</a></li>
 <li class="circle">com.deco2800.game.worker.resources.<a href="com/deco2800/game/worker/resources/TreeFactory.html" class="type-name-link" title="class in com.deco2800.game.worker.resources">TreeFactory</a></li>
 <li class="circle">com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/UnitFactory.html" class="type-name-link" title="class in com.deco2800.game.entities.factories">UnitFactory</a></li>
