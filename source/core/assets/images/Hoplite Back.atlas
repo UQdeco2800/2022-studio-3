@@ -1,0 +1,33 @@
+Hoplite Back.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Hoplite Backward Right 2
+  rotate: false
+  xy: 0, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+Hoplite Backward Right 3
+  rotate: false
+  xy: 2048, 0
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+Hoplite Backward Right 4
+  rotate: false
+  xy: 0, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+Hoplite Backward Right
+  rotate: false
+  xy: 2048, 2048
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1

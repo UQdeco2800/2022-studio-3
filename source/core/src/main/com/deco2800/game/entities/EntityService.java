@@ -6,6 +6,8 @@ import com.deco2800.game.components.CameraComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
@@ -73,11 +75,8 @@ public class EntityService {
     return null;
   }
 
-  /**
-   * Returns the list of entities registered with the entity service. 
-   * @return list of entities.
-   */
+
   public Array<Entity> getEntities() {
-    return entities;
+    return this.entities;
   }
 }
