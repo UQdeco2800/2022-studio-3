@@ -240,5 +240,6 @@ public class DialogueBoxDisplay extends UIComponent {
         this.dialogue.remove();
         this.backgroundTexture.remove();
         this.image.remove();
+        this.dismissBtn.remove();
     }
 }
