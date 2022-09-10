@@ -35,23 +35,56 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   }
 
   public void faceLeft() {
-    previousDirection = "left";
-    this.getEntity().getEvents().trigger("goLeft");
+    if (previousDirection != null) {
+      if (!previousDirection.equals("left")) {
+        previousDirection = "left";
+        this.getEntity().getEvents().trigger("goWest");
+      }
+    } else {
+      previousDirection = "left";
+      this.getEntity().getEvents().trigger("goWest");
+    }
+
   }
 
   public void faceRight() {
-    previousDirection = "right";
-    this.getEntity().getEvents().trigger("goRight");
+    if (previousDirection != null) {
+      if (!previousDirection.equals("right")) {
+        previousDirection = "right";
+        this.getEntity().getEvents().trigger("goEast");
+      }
+    } else {
+      previousDirection = "right";
+      this.getEntity().getEvents().trigger("goEast");
+    }
+
+//
   }
 
   public void faceUp() {
-    previousDirection = "up";
-    this.getEntity().getEvents().trigger("goUp");
+    if (previousDirection != null) {
+      if (!previousDirection.equals("up")) {
+        previousDirection = "up";
+        this.getEntity().getEvents().trigger("goNorth");
+      }
+    } else {
+      previousDirection = "up";
+      this.getEntity().getEvents().trigger("goNorth");
+    }
+
   }
 
   public void faceDown() {
-    previousDirection = "down";
-    this.getEntity().getEvents().trigger("goDown");
+    if (previousDirection != null) {
+      if (!previousDirection.equals("down")) {
+        previousDirection = "down";
+        this.getEntity().getEvents().trigger("goSouth");
+      }
+    } else {
+      previousDirection = "down";
+      this.getEntity().getEvents().trigger("goSouth");
+    }
+
   }
 
   public void changeAnimation() {

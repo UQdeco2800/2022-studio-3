@@ -78,7 +78,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     movementTask.create(owner);
     movementTask.start();
     setCurrentTask(movementTask);
-//    this.owner.getEntity().getEvents().trigger("enemy-movement");
+    this.owner.getEntity().getEvents().trigger("goWest");
   }
 
   private void swapTask(Task newTask) {
@@ -98,19 +98,19 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
 
     Vector2 position = (destinationPoint.cpy()).sub(this.owner.getEntity().getCenterPosition());
     MapGenerator mg = terrainFactory.getMapGenerator();
-    if (position.x >= 0 && position.y >= 0) {
-      System.out.println("North: " + position);
-      this.owner.getEntity().getEvents().trigger("goNorth");
-    } else if (position.x <= 0 && position.y <= 0) {
-      System.out.println("South: " + position);
-      this.owner.getEntity().getEvents().trigger("goSouth");
-    } else if (position.x <= 0 && position.y >= 0) {
-      System.out.println("West: " + position);
-      this.owner.getEntity().getEvents().trigger("goWest");
-    } else if (position.x >= 0 && position.y <= 0) {
-      System.out.println("East: " + position);
-      this.owner.getEntity().getEvents().trigger("goEast");
-    }
+//    if (position.x >= 0 && position.y >= 0) {
+//      System.out.println("North: " + position);
+//      this.owner.getEntity().getEvents().trigger("goNorth");
+//    } else if (position.x <= 0 && position.y <= 0) {
+//      System.out.println("South: " + position);
+//      this.owner.getEntity().getEvents().trigger("goSouth");
+//    } else if (position.x <= 0 && position.y >= 0) {
+//      System.out.println("West: " + position);
+//      this.owner.getEntity().getEvents().trigger("goWest");
+//    } else if (position.x >= 0 && position.y <= 0) {
+//      System.out.println("East: " + position);
+//      this.owner.getEntity().getEvents().trigger("goEast");
+//    }
 //    if (!foundPath) {
 //      try {
 //        List<GridPoint2> path = ServiceLocator.getMapService().findPathForEntity(this.owner.getEntity()
