@@ -4,7 +4,6 @@ size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-
 default
   rotate: false
   xy: 238, 34
@@ -12,7 +11,6 @@ default
   orig: 58, 59
   offset: 0, 0
   index: 0
-
 idle-east
   rotate: false
   xy: 160, 37
@@ -20,7 +18,6 @@ idle-east
   orig: 58, 59
   offset: 0, 0
   index: 0
-
 idle-west
   rotate: false
   xy: 238, 34
@@ -28,8 +25,6 @@ idle-west
   orig: 58, 59
   offset: 0, 0
   index: 0
-
-
 attack-east
   rotate: false
   xy: 14, 113
@@ -37,7 +32,6 @@ attack-east
   orig: 59, 59
   offset: 0, 0
   index: 0
-
 attack-east
   rotate: false
   xy: 84, 121
@@ -45,7 +39,6 @@ attack-east
   orig: 65, 85
   offset: 0, 0
   index: 1
-
 attack-east
   rotate: false
   xy: 166, 129
@@ -53,7 +46,6 @@ attack-east
   orig: 59, 59
   offset: 0, 0
   index: 2
-
 attack-east
   rotate: false
   xy: 242, 130
@@ -61,7 +53,6 @@ attack-east
   orig: 76, 58
   offset: 0, 0
   index: 3
-
 attack-north
   rotate: false
   xy: 9, 225
@@ -69,7 +60,6 @@ attack-north
   orig: 59, 54
   offset: 0, 0
   index: 0
-
 attack-north
   rotate: false
   xy: 79, 224
@@ -77,7 +67,6 @@ attack-north
   orig: 59, 52
   offset: 0, 0
   index: 1
-
 attack-north
   rotate: false
   xy: 237, 196
@@ -85,7 +74,6 @@ attack-north
   orig: 87, 80
   offset: 0, 0
   index: 2
-
 attack-north
   rotate: false
   xy: 356, 218
@@ -93,7 +81,6 @@ attack-north
   orig: 59, 59
   offset: 0, 0
   index: 3
-
 attack-south
   rotate: false
   xy: 356, 121
@@ -101,7 +88,6 @@ attack-south
   orig: 59, 59
   offset: 0, 0
   index: 0
-
 move-south
   rotate: false
   xy: 438, 114
@@ -109,7 +95,6 @@ move-south
   orig: 128, 128
   offset: 0, 0
   index: 1
-
 attack-south
   rotate: false
   xy: 530, 113
@@ -117,7 +102,6 @@ attack-south
   orig: 59, 59
   offset: 0, 0
   index: 2
-
 attack-south
   rotate: false
   xy: 619, 113
@@ -125,7 +109,6 @@ attack-south
   orig: 76, 58
   offset: 0, 0
   index: 3
-
 attack-west
   rotate: false
   xy: 474, 229
@@ -133,7 +116,6 @@ attack-west
   orig: 59, 54
   offset: 0, 0
   index: 0
-
 attack-west
   rotate: false
   xy: 574, 230
@@ -141,7 +123,6 @@ attack-west
   orig: 59, 52
   offset: 0, 0
   index: 1
-
 attack-west
   rotate: false
   xy: 657, 226
@@ -149,7 +130,6 @@ attack-west
   orig: 59, 59
   offset: 0, 0
   index: 2
-
 attack-west
   rotate: false
   xy: 741, 220
@@ -157,7 +137,6 @@ attack-west
   orig: 59, 65
   offset: 0, 0
   index: 3
-
 attack-west
   rotate: false
   xy: 722, 111
@@ -165,7 +144,6 @@ attack-west
   orig: 87, 80
   offset: 0, 0
   index: 4
-
 move-east
   rotate: false
   xy: 657,24
@@ -173,7 +151,6 @@ move-east
   orig: 64, 57
   offset: 0, 0
   index: 0
-
 move-east
   rotate: false
   xy: 742, 29
@@ -181,7 +158,6 @@ move-east
   orig: 59, 58
   offset: 0, 0
   index: 1
-
 move-north
   rotate: false
   xy: 238, 34
@@ -189,7 +165,6 @@ move-north
   orig: 58, 59
   offset: 0, 0
   index: 0
-
 move-north
   rotate: false
   xy: 309, 39
@@ -197,7 +172,6 @@ move-north
   orig: 59, 52
   offset: 0, 0
   index: 1
-
 move-south
   rotate: false
   xy: 482, 30
@@ -205,15 +179,12 @@ move-south
   orig: 59, 58
   offset: 0, 0
   index: 0
-
 move-south
   xy: 572, 28
   size: 64, 57
   orig: 64, 57
   offset: 0, 0
   index: 1
-
-
 move-west
   rotate: false
   xy: 7, 39
@@ -221,7 +192,6 @@ move-west
   orig: 59, 54
   offset: 0, 0
   index: 0
-
 move-west
   rotate: false
   xy: 80, 39
@@ -229,5 +199,3 @@ move-west
   orig: 59, 52
   offset: 0, 0
   index: 1
-
-

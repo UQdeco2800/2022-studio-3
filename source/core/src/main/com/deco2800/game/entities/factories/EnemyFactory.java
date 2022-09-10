@@ -10,6 +10,7 @@ import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 //import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.*;
+import com.deco2800.game.entities.EnemyEntity;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
 import com.deco2800.game.entities.configs.EnemyConfigs;
@@ -125,8 +126,7 @@ public class EnemyFactory {
     BaseUnitConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
-            new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
     animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
@@ -193,7 +193,7 @@ public class EnemyFactory {
         new AITaskComponent()
             .addTask(new EnemyMovement(terrainFactory));
     Entity npc =
-        new Entity()
+        new EnemyEntity()
             .addComponent(new PhysicsComponent())
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
@@ -202,6 +202,7 @@ public class EnemyFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    System.out.println(npc.getClass());
     return npc;
   }
 

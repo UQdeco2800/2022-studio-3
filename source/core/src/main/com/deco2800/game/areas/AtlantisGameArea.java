@@ -57,14 +57,14 @@ public class AtlantisGameArea extends GameArea {
             "images/Base.png",
             "images/isometric barracks current.png",
             "images/barracks medieval.png",
-//            "images/wall_1.png",
+            /*"images/wall_1.png",*/
             "images/base.png",
             "images/stone.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/blue_joker.atlas",
-            "images/snake.atlas", "images/wolf.atlas"
+            "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -90,7 +90,7 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         spawnBlueJokers();
-//        spawnWolf();
+        spawnWolf();
 //        spawnTitan();
 //        spawnSnakes();
 //        playMusic();
@@ -123,13 +123,13 @@ public class AtlantisGameArea extends GameArea {
 //            spawnEntityAt(titan, spawnPoint, true, true);
 //        }
 //    }
-//    private void spawnWolf() {
-//        for (int i = 0; i < 10; i++) {
-//            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-//            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
-//            spawnEntityAt(wolf, spawnPoint, true, true);
-//        }
-//    }
+    private void spawnWolf() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(wolf, spawnPoint, true, true);
+        }
+    }
 
     private void displayUI() {
         Entity ui = new Entity();
