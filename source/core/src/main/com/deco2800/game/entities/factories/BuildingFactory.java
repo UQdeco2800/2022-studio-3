@@ -32,7 +32,7 @@ public class BuildingFactory {
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
     private static final ResourceConfig stats =
-            FileLoader.readClass(ResourceConfig.class, "configs/Base.json");
+            FileLoader.readClass(ResourceConfig.class, "configs/base.json");
 
     /**
      * @return a new Entity with universal building components
