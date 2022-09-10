@@ -135,7 +135,6 @@ public class MainGameScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
-    DialogueBoxDisplay dialogueBoxDisplay = new DialogueBoxDisplay();
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
