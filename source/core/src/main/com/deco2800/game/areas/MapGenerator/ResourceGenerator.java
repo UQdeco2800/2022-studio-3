@@ -123,8 +123,15 @@ public class ResourceGenerator {
                 //If this resource has no valid placing position, try to generate a new map or throw exception
                 if (resource.getPotentialPlacements().size() == 0) {
                     if (generationAttempts++ < MAX_GENERATION_ATTEMPTS) {
+                        //Re-generate map
                         mg.generateMap();
+                        //Re-initialize values
                         resourceSetup();
+                        //Recursively call placeResources to try again
+                        // (will stop if hits base case of generation attempts exceeding limit)
+                        placeResources();
+                        //Execute no more code in this run of the function
+                        return;
                     } else {
                         //After a number of attempts, stop trying to fill island with resources
                         throw new IllegalArgumentException("Invalid map space to place desired resources");
