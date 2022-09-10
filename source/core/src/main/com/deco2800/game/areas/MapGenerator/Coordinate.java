@@ -61,6 +61,17 @@ public class Coordinate {
     }
 
     /**
+     * Returns whether a coord is in map bounds
+     * @param mapWidth width of the map
+     * @param mapHeight height of the map
+     * @return true if in bounds, false otherwise
+     */
+    public boolean inBounds(int mapWidth, int mapHeight) {
+        return this.x >= 0 && this.x < mapWidth && this.y >= 0
+                && this.y < mapHeight;
+    }
+
+    /**
      * Coordinates are equal if their x and y values coincide. The equals function is overriden
      * to reflect this
      * @param other other object being compared to this coordinate
