@@ -18,10 +18,38 @@ public class EnemyAnimationController extends Component {
         entity.getEvents().addListener("goRight", this::animateRight);
         entity.getEvents().addListener("goUp", this::animateUp);
         entity.getEvents().addListener("goDown", this::animateDown);
+        entity.getEvents().addListener("stopUp", this::stopUp);
+        entity.getEvents().addListener("stopDown", this::stopDown);
+        entity.getEvents().addListener("stopLeft", this::stopLeft);
+        entity.getEvents().addListener("stopRight", this::stopRight);
     }
 
-    public void animateLeft(){ animator.startAnimation("move-west"); }
-    public void animateRight(){ animator.startAnimation("move-east"); }
-    public void animateUp(){ animator.startAnimation("move-north"); }
-    public void animateDown(){ animator.startAnimation("move-south"); }
+    public void animateLeft() {
+        animator.startAnimation("move-west");
+    }
+
+    public void animateRight() {
+        animator.startAnimation("move-east");
+    }
+
+    public void animateUp() {
+        animator.startAnimation("move-north");
+    }
+
+    public void animateDown() {
+        animator.startAnimation("move-south");
+    }
+
+    public void stopDown() {
+        animator.startAnimation("default");
+    }
+    public void stopLeft() {
+        animator.startAnimation("default");
+    }
+    public void stopRight() {
+        animator.startAnimation("default");
+    }
+    public void stopUp() {
+        animator.startAnimation("default");
+    }
 }

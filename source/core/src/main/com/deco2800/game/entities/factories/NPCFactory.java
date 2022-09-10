@@ -58,10 +58,12 @@ public class NPCFactory {
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
             ServiceLocator.getResourceService().getAsset("images/blue_joker.atlas", TextureAtlas.class));
-    animator.addAnimation("move-east", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-west", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-south", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("move-north", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+    animator.addAnimation("move-east", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move-west", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move-south", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("move-north", 0.4f, Animation.PlayMode.LOOP);
+    animator.startAnimation("default");
 
     ghoul
         .addComponent(new CombatStatsComponent(config.health, config.baseAttack,
