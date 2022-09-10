@@ -279,8 +279,7 @@ public class ResourceGenerator {
 
         //If distance is too high, weight points with higher distance seen as more favourable
         if (preferredDistance >= maxXDistance) {
-            int powerLimiter = (mg.getIslandSize() / 25) + 1;
-            return (int)(Math.pow(2, distance/powerLimiter));
+            return (int)(Math.pow(2, 10.5 * distance / maxXDistance));
         } else if (preferredDistance <= 4) {
             //If distance is too close to centre, weight points with lower distance seen as more favourable
             return (int) Math.pow(2, 9/distance);
