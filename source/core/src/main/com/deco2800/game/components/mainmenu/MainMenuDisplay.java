@@ -30,14 +30,12 @@ public class MainMenuDisplay extends UIComponent {
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-        Image title =
+        Image titleImage =
                 new Image(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/title-atlantis.png", Texture.class));
 
-        title.setPosition(0f, 0f);
-        title.setWidth(Gdx.graphics.getWidth());
-        title.setHeight(Gdx.graphics.getHeight());
+        titleImage.setFillParent(true);
 
         TextButton startBtn = new TextButton("Start", skin);
         TextButton exitBtn = new TextButton("Exit", skin);
@@ -68,7 +66,7 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).padTop(15f);
 
-        stage.addActor(title);
+        stage.addActor(titleImage);
         stage.addActor(table);
     }
 
