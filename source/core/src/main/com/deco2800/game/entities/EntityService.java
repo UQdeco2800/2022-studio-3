@@ -72,4 +72,12 @@ public class EntityService {
     }
     return null;
   }
+
+  /**
+   * Returns the list of entities registered with the entity service. 
+   * @return list of entities.
+   */
+  public Array<Entity> getEntities() {
+    return entities;
+  }
 }

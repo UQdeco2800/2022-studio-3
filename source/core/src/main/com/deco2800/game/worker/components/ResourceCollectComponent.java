@@ -10,6 +10,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.worker.components.movement.WorkerIdleTask;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
@@ -45,7 +46,6 @@ public class ResourceCollectComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
-        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
         collectStats = entity.getComponent(CollectStatsComponent.class);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
@@ -57,6 +57,12 @@ public class ResourceCollectComponent extends Component {
         }
     }
 
+    /**
+     * Called when the entity starts colliding with another entity.
+     * Collects the resource if the target is a resource.
+     * @param me The entity's fixture
+     * @param other The collided entity's fixture
+     */
     private void onCollisionStart(Fixture me, Fixture other) {
         if (this.lastTimeMined != 0 && this.gameTime.getTimeSince(this.lastTimeMined) < COLLECTION_TIME) {
             return;
@@ -69,7 +75,7 @@ public class ResourceCollectComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
-        if ((BodyUserData) other.getBody().getUserData() == null) {
+        if (me == null || (BodyUserData) other.getBody().getUserData() == null) {
             return;
         }
         // Try to collect resources from target.
@@ -83,7 +89,6 @@ public class ResourceCollectComponent extends Component {
         StoneComponent isStone = target.getComponent(StoneComponent.class);
         if (isBase != null) {
             loadToBase(targetStats);
-            logger.info("Loading to Base");
             return;
         }
         Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
@@ -115,33 +120,79 @@ public class ResourceCollectComponent extends Component {
         } else {
             return;
         }
-        this.lastTimeMined = this.gameTime.getTime();    
-        this.colliding = true;
-        this.other = other;
-        this.me = me;   
+        startCollecting(me, other);
         if (targetStats.isDead()) {
-            this.colliding = false;
+            stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
-            this.lastTimeMined = 0;
             target.dispose();
             ServiceLocator.getEntityService().unregister(target);
+            returnToBase();
+            
             // Idle the duration bar
+            /*
             if(collectorIsMiner != null){
                 collectorIsMiner.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
             }
             if(collectorIsForager != null){
                 collectorIsForager.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
             }
+            */
+        }        
+    }
+
+    /**
+     * Called when collector starts collecting resources.
+     * @param me The entity's fixture
+     * @param other The collided entity's fixture
+     */
+    public void startCollecting(Fixture me, Fixture other) {
+        if (this.lastTimeMined == 0) {
+            this.lastTimeMined = this.gameTime.getTime();
+            this.colliding = true;
+            this.other = other;
+            this.me = me;   
         }
     }
 
-    public void onCollisionEnd(Fixture me, Fixture other) {
+    /**
+     * Called when collector stops collecting resources.
+     */
+    public void stopCollecting() {
         this.colliding = false;
         this.me = null;
         this.other = null;
+        this.lastTimeMined = 0;
+    }
+        
+    /**
+     * Gets the base entity.
+     * @return The base entity.
+     */
+    public Entity getBase() {
+        Entity base = null;
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            if (entity.getComponent(BaseComponent.class) != null) {
+                base = entity;
+            }
+        }
+        return base;
+    }
+
+    /**
+     * Directs the worker to the base after resource collection
+     */
+    public void returnToBase() {
+        Entity base = this.getBase();
+        if (base != null) {
+            entity.getEvents().trigger("workerWalk", this.getBase().getCenterPosition());
+        }   
     }
         
 
+    /**
+     * Adds the collected stone to the worker inventory.
+     * @param targetStats The resource stats of the target.
+     */
     public void collectStone(ResourceStatsComponent targetStats) {
         int numCollected = targetStats.collectStone(collectStats);
         // Add the number of collected resource to the worker inventory
@@ -150,6 +201,10 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " stones");
     }
 
+    /**
+     * Adds the collected metal to the worker inventory.
+     * @param targetStats The resource stats of the target.
+     */
     public void collectMetal(ResourceStatsComponent targetStats){
         int numCollected = targetStats.collectStone(collectStats);
         // Add the number of collected resource to the worker inventory
@@ -158,6 +213,10 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getStone()) + " metals");
     }
 
+    /**
+     * Adds the collected wood to the worker inventory.
+     * @param targetStats The resource stats of the target.
+     */
     public void collectWood(ResourceStatsComponent targetStats){
         int numCollected = targetStats.collectWood(collectStats);
         // Add the number of collected resource to the worker inventory
@@ -166,6 +225,10 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The worker has " + Integer.toString(inventory.getWood()) + " woods");
     }
 
+    /**
+     * Loads the collected resources to the base.
+     * @param baseStats The resource stats of the base.
+     */
     public void loadToBase(ResourceStatsComponent baseStats) {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
         baseStats.addMetal(inventory.unloadMetal());
