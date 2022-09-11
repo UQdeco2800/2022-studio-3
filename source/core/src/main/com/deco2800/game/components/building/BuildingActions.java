@@ -42,7 +42,7 @@ public class BuildingActions extends Component {
      */
     public void addLevel() {
         this.level++;
-        //entity.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService().getAsset(""));
+        entity.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService().getAsset("images/barracks_level_1.0.png", Texture.class));
     }
 
     /**
@@ -122,7 +122,6 @@ public class BuildingActions extends Component {
      */
     public void create() {
         entity.getEvents().addListener("levelUp", this::addLevel); // Not triggered by any event yet
-
     }
 
 }
