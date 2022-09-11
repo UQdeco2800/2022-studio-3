@@ -1,0 +1,13 @@
+
+exitButtonSkin.png
+size: 256, 256
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+exit-button
+  rotate: false
+  xy: 1, 79
+  size: 168, 88
+  orig: 168, 88
+  offset: 0, 0
+  index: -1
