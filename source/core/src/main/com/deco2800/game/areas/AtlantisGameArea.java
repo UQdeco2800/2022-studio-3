@@ -74,6 +74,7 @@ public class AtlantisGameArea extends GameArea {
             "images/stone.png"
     };
 
+    /* TODO: remove unused textures wasting precious resources */
     private static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
