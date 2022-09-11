@@ -59,6 +59,9 @@ public class MapService {
 	 */
 	public void update(MapComponent comp) {
 		List<GridPoint2> oldPositions = entityToPositions.get(comp);
+		if (oldPositions == null) {
+			return;
+		}
 		List<GridPoint2> newPositions = getAllOccupiedPositions(comp);
 		for (GridPoint2 pos : oldPositions) {
 			positionToEntity.remove(pos);
