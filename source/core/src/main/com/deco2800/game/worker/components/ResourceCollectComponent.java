@@ -3,6 +3,7 @@ package com.deco2800.game.worker.components;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -16,6 +17,8 @@ import com.deco2800.game.worker.components.type.TreeComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 public class ResourceCollectComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
@@ -121,7 +124,10 @@ public class ResourceCollectComponent extends Component {
         if (targetStats.isDead()) {
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
+            //target.getComponent(MapComponent.class).dispose();
+            //ServiceLocator.getMapService().unregister(target.getComponent(MapComponent.class));
             target.dispose();
+
             ServiceLocator.getEntityService().unregister(target);
             returnToBase();
             
