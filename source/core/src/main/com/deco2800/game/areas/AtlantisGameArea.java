@@ -109,7 +109,7 @@ public class AtlantisGameArea extends GameArea {
     @Override
     public void create() {
         loadAssets();
-        displayUI();
+        //displayUI();
         spawnTerrain();
         player = spawnPlayer();
         for (int i = 0; i < 5; i++) {
