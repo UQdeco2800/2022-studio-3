@@ -11,7 +11,8 @@ import com.deco2800.game.physics.components.PhysicsComponent;
  * and when triggered should call methods within this class.
  */
 public class PlayerActions extends Component {
-    private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres per second
+    private final float speed = 3f;
+    private Vector2 vel = new Vector2(this.speed, this.speed); // Metres per second
     private PhysicsComponent physicsComponent;
     private SelectableComponent selectableComponent;
     private Vector2 walkDirection = Vector2.Zero.cpy();
@@ -24,6 +25,7 @@ public class PlayerActions extends Component {
 
         this.getEntity().getEvents().addListener("walk", this::walk);
         this.getEntity().getEvents().addListener("walStop", this::stopWalking);
+        this.getEntity().getEvents().addListener("changeWeather", this::changeWeather);
     }
 
     @Override
@@ -33,11 +35,15 @@ public class PlayerActions extends Component {
         }
     }
 
+    void changeWeather(float factor) {
+        float newSpeed = this.speed * factor;
+        this.vel = new Vector2(newSpeed, newSpeed);
+    }
 
     private void updateSpeed() {
         Body body = physicsComponent.getBody();
         Vector2 velocity = body.getLinearVelocity();
-        Vector2 desiredVelocity = walkDirection.cpy().scl(MAX_SPEED);
+        Vector2 desiredVelocity = walkDirection.cpy().scl(this.vel);
         // impulse = (desiredVel - currentVel) * mass
         Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
