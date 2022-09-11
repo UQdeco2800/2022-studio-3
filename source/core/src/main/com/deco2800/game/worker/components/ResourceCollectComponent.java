@@ -80,16 +80,6 @@ public class ResourceCollectComponent extends Component {
         if (me == null || (BodyUserData) other.getBody().getUserData() == null) {
             return;
         }
-        /**
-         * If 'other' doesn't have components related to 'attack', 'other' will be assumed as enemy
-         */
-        Entity isEnemy = ((BodyUserData) other.getBody().getUserData()).entity;
-        TouchAttackComponent hasAttackComponent_ = isEnemy.getComponent(TouchAttackComponent.class);
-        CombatStatsComponent hasCombatStatsComponent_ = isEnemy.getComponent(CombatStatsComponent.class);
-        if(hasAttackComponent_ != null || hasCombatStatsComponent_ != null){
-            returnToBase();
-            return;
-        }
         // Try to collect resources from target.
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         ResourceStatsComponent targetStats = target.getComponent(ResourceStatsComponent.class);
