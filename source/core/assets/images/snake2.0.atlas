@@ -1,291 +1,284 @@
-snake2.0.png
-size: 1792, 2816
+snake.png
+size: 390, 1820
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
-default
+attack_east1
   rotate: false
-  xy: 0, 0
+  xy: 1, 1
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 0
-move-west
+attack_east2
   rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 0
-move-west
-  rotate: false
-  xy: 128, 0
+  xy: 131, 1
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
-move-west
+attack_east3
   rotate: false
-  xy: 0, 128
+  xy: 261, 1
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
-move-west
+attack_east4
   rotate: false
-  xy: 128, 128
+  xy: 1, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
-attack-west
+attack_east5
   rotate: false
-  xy: 0, 256
+  xy: 131, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
-attack-west
+attack_east6
   rotate: false
-  xy: 128, 256
+  xy: 261, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 5
-attack-west
+attack_north1
   rotate: false
-  xy: 0, 384
+  xy: 1, 261
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 6
-attack-west
+attack_north2
   rotate: false
-  xy: 128, 384
+  xy: 131, 261
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 7
-attack-west
+attack_north3
   rotate: false
-  xy: 0, 512
+  xy: 261, 261
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 8
-move-north
+attack_north4
   rotate: false
-  xy: 128, 512
+  xy: 1, 391
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 9
-move-north
+attack_north5
   rotate: false
-  xy: 0, 640
+  xy: 131, 391
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 10
-move-north
+attack_south1
   rotate: false
-  xy: 128, 640
+  xy: 261, 391
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 11
-move-north
+attack_south2
   rotate: false
-  xy: 0, 768
+  xy: 1, 521
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 12
-attack-north
+attack_south3
   rotate: false
-  xy: 128, 768
+  xy: 131, 521
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 13
-attack-north
+attack_south4
   rotate: false
-  xy: 0, 896
+  xy: 261, 521
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 14
-attack-north
+attack_south5
   rotate: false
-  xy: 128, 896
+  xy: 1, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 15
-attack-north
+attack_west1
   rotate: false
-  xy: 0, 1024
+  xy: 131, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 16
-attack-north
+attack_west2
   rotate: false
-  xy: 128, 1024
+  xy: 261, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 17
-move-south
+attack_west3
   rotate: false
-  xy: 0, 1152
+  xy: 1, 781
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 18
-move-south
+attack_west4
   rotate: false
-  xy: 128, 1152
+  xy: 131, 781
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 19
-move-south
+attack_west5
   rotate: false
-  xy: 0, 1280
+  xy: 261, 781
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 20
-move-south
+attack_west6
   rotate: false
-  xy: 128, 1280
+  xy: 1, 911
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 21
-move-south
+move_east1
   rotate: false
-  xy: 0, 1408
+  xy: 131, 911
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 22
-attack-south
+move_east2
   rotate: false
-  xy: 128, 1408
+  xy: 261, 911
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 23
-attack-south
+move_east3
   rotate: false
-  xy: 0, 1536
+  xy: 1, 1041
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 24
-attack-south
+move_east4
   rotate: false
-  xy: 128, 1536
+  xy: 131, 1041
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 25
-attack-south
+move_east5
   rotate: false
-  xy: 0, 1664
+  xy: 261, 1041
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 26
-attack-south
+move_north1
   rotate: false
-  xy: 128, 1664
+  xy: 1, 1171
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 27
-attack-south
+move_north2
   rotate: false
-  xy: 0, 1792
+  xy: 131, 1171
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 28
-move-east
+move_north3
   rotate: false
-  xy: 128, 1792
+  xy: 261, 1171
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 29
-move-east
+move_north4
   rotate: false
-  xy: 0, 1920
+  xy: 1, 1301
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 30
-move-east
+move_south1
   rotate: false
-  xy: 128, 1920
+  xy: 131, 1301
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 31
-move-east
+move_south2
   rotate: false
-  xy: 0, 2048
+  xy: 261, 1301
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 32
-move-east
+move_south3
   rotate: false
-  xy: 128, 2048
+  xy: 1, 1431
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 33
-attack-east
+move_south4
   rotate: false
-  xy: 0, 2176
+  xy: 131, 1431
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 34
-attack-east
+move_west1
   rotate: false
-  xy: 128, 2176
+  xy: 261, 1431
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 35
-attack-east
+move_west2
   rotate: false
-  xy: 0, 2304
+  xy: 1, 1561
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 36
-attack-east
+move_west3
   rotate: false
-  xy: 128, 2304
+  xy: 131, 1561
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 37
-attack-east
+move_west4
   rotate: false
-  xy: 0, 2432
+  xy: 261, 1561
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 38
-attack-east
+move_west5
   rotate: false
-  xy: 128, 2432
+  xy: 1, 1691
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
