@@ -166,7 +166,7 @@ public class TroopContainerComponent extends Component {
             out.add(centrePos);
         } else if (n > 1) {
             Vector2 cur =
-                    Vector2.Y.scl(boundingRadius*7f/12f)
+                    Vector2.Y.cpy().scl(boundingRadius*7f/12f)
                              .rotateDeg(225).add(centrePos);
             for (int i = 0; i < n; i++) {
                 out.add(cur.cpy());
