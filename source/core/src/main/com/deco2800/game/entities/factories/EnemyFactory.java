@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -63,7 +64,6 @@ public class EnemyFactory {
     animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("default", 1f, Animation.PlayMode.NORMAL);
     animator.addAnimation("default", 1f, Animation.PlayMode.NORMAL);
 
     animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
