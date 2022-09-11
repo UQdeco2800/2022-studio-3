@@ -9,6 +9,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class TextureRenderComponent extends RenderComponent {
   private Texture texture;
   private Texture textureOG;
+  public String texturePath;
 
 
   /**
@@ -17,6 +18,7 @@ public class TextureRenderComponent extends RenderComponent {
    */
   public TextureRenderComponent(String texturePath) {
     this(ServiceLocator.getResourceService().getAsset(texturePath, Texture.class));
+    this.texturePath = texturePath;
   }
 
 //...

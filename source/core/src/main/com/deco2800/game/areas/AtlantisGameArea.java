@@ -73,6 +73,7 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
+            "images/Base_Highlight",
             "images/stone.png"
     };
 
