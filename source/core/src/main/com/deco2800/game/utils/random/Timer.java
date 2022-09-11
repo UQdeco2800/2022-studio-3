@@ -21,8 +21,6 @@ public class Timer {
      *
      * @param lowerIntervalSeconds is for the lowest possible randomization value
      * @param upperIntervalSeconds is for the highest possible randomization value
-     *
-     * @return setting delay for the Timer class.
      */
     public Timer(int lowerIntervalSeconds, int upperIntervalSeconds) {
         int randomIntervalInt = PseudoRandom.seedRandomInt(lowerIntervalSeconds, upperIntervalSeconds);
@@ -32,7 +30,6 @@ public class Timer {
 
     /**
      * Setting up the start variable to the current time.
-     * @return setting start variable with the current time for the Timer class.
      */
     public void start() {
         this.start = gt.getTime();
@@ -40,7 +37,6 @@ public class Timer {
 
     /**
      * Checking whether if the timer is already expired or not.
-     * @return boolean of time expiration.
      */
     public boolean isTimerExpired() {
         return (gt.getTime() - this.start) > this.delay;
@@ -48,7 +44,6 @@ public class Timer {
 
     /**
      * Checking whether if the timer is already expired or not.
-     * @return Time left if it exists or time expiration info if it is not.
      */
     public long timeLeft() {
         if (isTimerExpired()) {
