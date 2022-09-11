@@ -42,7 +42,6 @@ public class BuildingActions extends Component {
      */
     public void addLevel() {
         this.level++;
-        entity.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService().getAsset("images/barracks_level_1.0.png", Texture.class));
     }
 
     /**
