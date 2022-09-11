@@ -33,7 +33,11 @@ public class ServiceLocator {
   public static EntityService getEntityService() {
     return entityService;
   }
-  
+
+  public static MapService getMapService() {
+    return mapService;
+  }
+
   public static RenderService getRenderService() {
     return renderService;
   }
@@ -53,15 +57,15 @@ public class ServiceLocator {
   public static ResourceService getResourceService() {
     return resourceService;
   }
-  
-  public static MapService getMapService() {
-    return mapService;
-  }
 
   public static ForestGameArea getGameArea(){
     return gameArea;
   }
 
+  public static void registerMapService(MapService service) {
+    logger.debug("Registering map service {}", service);
+    mapService = service;
+  }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -91,11 +95,6 @@ public class ServiceLocator {
   public static void registerResourceService(ResourceService source) {
     logger.debug("Registering resource service {}", source);
     resourceService = source;
-  }
-  
-  public static void registerMapService(MapService source) {
-    logger.debug("Registering map service {}", source);
-    mapService = source;
   }
 
   public static void registerGameArea(ForestGameArea source){

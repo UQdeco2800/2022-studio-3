@@ -11,6 +11,7 @@ import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -20,6 +21,8 @@ import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.map.MapService;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -28,6 +31,9 @@ import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
+import com.deco2800.game.worker.components.duration.DurationBarFactory;
+import com.deco2800.game.worker.components.type.ForagerComponent;
+import com.deco2800.game.worker.components.type.MinerComponent;
 
 
 import org.slf4j.Logger;
@@ -84,8 +90,7 @@ public class AtlantisGameArea extends GameArea {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/miner_action_right.atlas",
-        "images/duration_bar/duration-bar.atlas",
+            "images/newwolf.atlas", "images/miner_action_right.atlas", "images/duration_bar/duration-bar.atlas",
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -115,6 +120,19 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
+        //playMusic();
+
+        // Spawn Buildings in the city
+        spawnTownHall();
+        spawnBarracks();
+        spawnWalls();
+
+        spawnForager();
+        spawnForager();
+        // spawnWorkerBase();
+        spawnTrees();
+        spawnStone();
+        // spawnMiner();
         //playMusic();
 
         // Spawn Buildings in the city
@@ -414,7 +432,6 @@ public class AtlantisGameArea extends GameArea {
 
     /**
      * Spawns random tree within the city which is used by a forager to collect wood.
-     *
      */
     private void spawnTrees() {
         for (int i = 0; i < NUM_TREES; i++) {
