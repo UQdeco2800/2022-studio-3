@@ -111,11 +111,7 @@ class BuildingFactoryTest {
 
         townHall
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TextureRenderComponent("images/base.png"))
-                .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
-                .addComponent(new BaseComponent());
+                .addComponent(new TextureRenderComponent("images/base.png"));
 
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
@@ -144,10 +140,6 @@ class BuildingFactoryTest {
         // Check TownHall has correct components
         assertInstanceOf(ColliderComponent.class, townHall.getComponent(ColliderComponent.class));
         assertInstanceOf(TextureRenderComponent.class, townHall.getComponent(TextureRenderComponent.class));
-        assertInstanceOf(BuildingActions.class, townHall.getComponent(BuildingActions.class));
-        assertInstanceOf(CombatStatsComponent.class, townHall.getComponent(CombatStatsComponent.class));
-        assertInstanceOf(ResourceStatsComponent.class, townHall.getComponent(ResourceStatsComponent.class));
-        assertInstanceOf(BaseComponent.class, townHall.getComponent(BaseComponent.class));
 
         assertEquals(4, boundingBox.getVertexCount());
     }
