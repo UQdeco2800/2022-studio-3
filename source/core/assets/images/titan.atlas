@@ -1,8 +1,16 @@
+
 titan.png
 size: 2048, 256
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest, Nearest
 repeat: none
+default
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
 attack-east
   rotate: false
   xy: 0, 0

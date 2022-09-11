@@ -175,7 +175,7 @@ public class EnemyFactory {
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
-            .addComponent(new GhostAnimationController());
+            .addComponent(new EnemyAnimationController());
 
     titan.getComponent(AnimationRenderComponent.class).scaleEntity();
 

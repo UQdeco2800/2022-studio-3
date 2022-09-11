@@ -23,10 +23,7 @@ public class EnemyAnimationController extends Component {
         entity.getEvents().addListener("goNorth", this::animateNorth);
         entity.getEvents().addListener("goSouth", this::animateSouth);
 
-        entity.getEvents().addListener("stopUp", this::stopUp);
-        entity.getEvents().addListener("stopDown", this::stopDown);
-        entity.getEvents().addListener("stopLeft", this::stopLeft);
-        entity.getEvents().addListener("stopRight", this::stopRight);
+        entity.getEvents().addListener("default", this::defaultAnimation);
 
         entity.getEvents().addListener("attackNorth", this::attackNorth);
         entity.getEvents().addListener("attackSouth", this::attackSouth);
@@ -34,42 +31,12 @@ public class EnemyAnimationController extends Component {
         entity.getEvents().addListener("attackEast", this::attackEast);
     }
 
-    @Override
-    public void update() {
-        Vector2 position = this.entity.getCenterPosition();
-
-//        if (position.x >= 0 && position.y >= 0) {
-//            System.out.println("North: " + position);
-//            this.animateNorth();
-//        } else if (position.x <= 0 && position.y <= 0) {
-//            System.out.println("South: " + position);
-//            this.animateSouth();
-//        } else if (position.x <= 0 && position.y >= 0) {
-//            System.out.println("West: " + position);
-//            this.animateWest();
-//        } else if (position.x >= 0 && position.y <= 0) {
-//            System.out.println("East: " + position);
-//            this.animateEast();
-//        }
-    }
-
     public void animateWest(){ animator.startAnimation("move-west"); }
     public void animateEast(){ animator.startAnimation("move-east"); }
     public void animateNorth(){ animator.startAnimation("move-north"); }
     public void animateSouth(){ animator.startAnimation("move-south"); }
-//    public void animateDefault() {
-//        animator.startAnimation("default");
-//    }
-    public void stopDown() {
-        animator.startAnimation("default");
-    }
-    public void stopLeft() {
-        animator.startAnimation("default");
-    }
-    public void stopRight() {
-        animator.startAnimation("default");
-    }
-    public void stopUp() {
+
+    public void defaultAnimation() {
         animator.startAnimation("default");
     }
 

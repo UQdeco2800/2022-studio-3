@@ -135,20 +135,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
       Body body = physicsComponent.getBody();
       setToVelocity(body, Vector2.Zero);
       if (previousDirection != null && !stop) {
-        switch (previousDirection) {
-          case "up":
-            this.getEntity().getEvents().trigger("stopUp");
-            break;
-          case "down":
-            this.getEntity().getEvents().trigger("stopDown");
-            break;
-          case "left":
-            this.getEntity().getEvents().trigger("stopLeft");
-            break;
-          case "right":
-            this.getEntity().getEvents().trigger("stopRight");
-            break;
-        }
+        this.getEntity().getEvents().trigger("default");
         stop = true;
       } else {
         stop = false;

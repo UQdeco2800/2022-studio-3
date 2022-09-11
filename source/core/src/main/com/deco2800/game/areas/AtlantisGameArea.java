@@ -90,11 +90,11 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
-//        spawnBlueJokers();
-//        spawnWolf();
+        spawnBlueJokers();
+        spawnWolf();
         spawnTitan();
-//        spawnSnakes();
-//        playMusic();
+        spawnSnakes();
+        playMusic();
         //spawnForager();
         //spawnForager();
         //spawnWorkerBase();
