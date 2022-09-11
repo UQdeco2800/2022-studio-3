@@ -16,6 +16,7 @@ com.deco2800.game.components.pausemenu
 com.deco2800.game.components.player
 com.deco2800.game.components.resources
 com.deco2800.game.components.settingsmenu
+com.deco2800.game.components.story
 com.deco2800.game.components.tasks
 com.deco2800.game.components.weather
 com.deco2800.game.concurrency
