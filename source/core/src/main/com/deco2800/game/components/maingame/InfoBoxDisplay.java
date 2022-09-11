@@ -218,10 +218,6 @@ public class InfoBoxDisplay extends UIComponent {
 
 
         } else {
-            backgroundBoxImage.setWidth(0);
-            backgroundBoxImage.setHeight(0);
-        }
-        else {
             pictureTable.remove();
             infoTable.remove();
             backgroundBoxImage.remove();
