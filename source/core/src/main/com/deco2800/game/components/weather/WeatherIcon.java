@@ -13,11 +13,6 @@ import com.badlogic.gdx.utils.Align;
 
 public class WeatherIcon extends Actor {
     /**
-     * Tracks time interval to change weather icon on display.
-     */
-    Timer timer;
-
-    /**
      * To display the Timer
      */
     private final Label timerLabel;
@@ -26,6 +21,11 @@ public class WeatherIcon extends Actor {
      * Initiate the Image for the weather image.
      */
     private Image weatherImage;
+
+    /**
+     * Stores the value of the current index.
+     */
+    private int currentIndex;
 
     /**
      * Initiate the Image for the weather filter.
@@ -70,28 +70,37 @@ public class WeatherIcon extends Actor {
         // Initiate timerLabel with countdownTimer
         this.timerLabel = countdownTimer;
 
-        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
+        this.currentIndex = PseudoRandom.seedRandomInt(0, weatherFile.length);
 
         // Initiate weatherImage
-        this.weatherImage = new Image(new Texture(weatherFile[index]));
+        this.weatherImage = new Image(new Texture(weatherFile[this.currentIndex]));
 
         // Initiate weatherFilter
-        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[this.currentIndex]));
+
+        // Initiate speedFactor
+        this.speedFactor = movementSpeedFactor[this.currentIndex];
 
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         layout();
     }
 
-    public Boolean hasTimerExpired() {
-        return timer.isTimerExpired();
+    public int getCurrentIndex() {
+        return this.currentIndex;
     }
 
     public void changeWeatherImage() {
-        int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
-        this.weatherImage = new Image(new Texture(weatherFile[index]));
-        this.weatherFilter = new Image(new Texture(weatherFilterFile[index]));
-        this.speedFactor = this.movementSpeedFactor[index];
+        while (true) {
+            int index = PseudoRandom.seedRandomInt(0, weatherFile.length);
+            if (index != this.currentIndex) {
+                this.currentIndex = index;
+                break;
+            }
+        }
+        this.weatherImage = new Image(new Texture(weatherFile[this.currentIndex]));
+        this.weatherFilter = new Image(new Texture(weatherFilterFile[this.currentIndex]));
+        this.speedFactor = this.movementSpeedFactor[this.currentIndex];
         this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         layout();
     }
