@@ -190,8 +190,11 @@ public class MinimapComponent extends RenderComponent {
 
 
         for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
-            GridPoint2 position = item.getKey();
-            shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            if (item.getValue().isDisplay()) {
+                GridPoint2 position = item.getKey();
+                shapeRenderer.setColor(item.getValue().getColour());
+                shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            }
         }
         shapeRenderer.end();
     }
