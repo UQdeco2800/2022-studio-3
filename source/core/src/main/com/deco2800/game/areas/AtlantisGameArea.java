@@ -126,18 +126,21 @@ public class AtlantisGameArea extends GameArea {
         //playMusic();
 
         // Spawn Buildings in the city
-//        spawnTownHall();
-//        spawnBarracks();
-//        spawnWalls();
-//
-//        spawnForager();
-//        spawnForager();
-//        // spawnWorkerBase();
-//        spawnTrees();
-//        spawnStone();
-        // spawnMiner();
-        spawnExampleUnit();
-        spawnUnit(UnitType.ARCHER, new GridPoint2(0,0));
+        spawnTownHall();
+        spawnBarracks();
+        spawnWalls();
+
+        spawnForager();
+        spawnForager();
+        // spawnWorkerBase();
+        spawnTrees();
+        spawnStone();
+         spawnMiner();
+        // spawnExampleUnit();
+        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
     }
 
     private void displayUI() {
