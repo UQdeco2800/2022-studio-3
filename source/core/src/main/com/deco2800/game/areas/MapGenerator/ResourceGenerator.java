@@ -58,7 +58,7 @@ public class ResourceGenerator {
         //Place each resource the desired number of times based on preferred distance
         placeResources();
         //Test output
-        writeCurrentResources("E:\\Deco2800 sprint 2\\Testing\\complete.txt");
+        //writeCurrentResources("E:\\Deco2800 sprint 2\\Testing\\complete.txt");
     }
 
     /**
@@ -150,7 +150,7 @@ public class ResourceGenerator {
                 }
 
             }
-            writeCurrentResources("E:\\Deco2800 sprint 2\\Testing\\after_" + resource.getName() + ".txt");
+            //writeCurrentResources("E:\\Deco2800 sprint 2\\Testing\\after_" + resource.getName() + ".txt");
         }
     }
 
