@@ -1,6 +1,7 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
@@ -22,6 +23,7 @@ import com.deco2800.game.map.MapService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
@@ -145,7 +147,7 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(dialogueBoxDisplay);
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
 
-        spawnEntity(dialogueBox);
+        // spawnEntity(dialogueBox);
     }
 
     private void spawnTerrain() {
@@ -239,7 +241,10 @@ public class AtlantisGameArea extends GameArea {
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
-        Entity newPlayer = PlayerFactory.createPlayer().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLACK);
+        Entity newPlayer = PlayerFactory.createPlayer().addComponent(mapComponent);
         spawnEntityAt(newPlayer, spawn, true, true);
 
         //Move camera to player
@@ -257,7 +262,10 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = mg.getCityDetails().get("Centre");
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        Entity townHall = BuildingFactory.createTownHall().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BROWN);
+        Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
@@ -332,7 +340,10 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnForager() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newForager = ForagerFactory.createForager().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.GREEN);
+        Entity newForager = ForagerFactory.createForager().addComponent(mapComponent);
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
     }
@@ -342,7 +353,10 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnMiner() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newMiner = MinerFactory.createMiner().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.YELLOW);
+        Entity newMiner = MinerFactory.createMiner().addComponent(mapComponent);
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
     }
@@ -352,7 +366,10 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnWorkerBase() {
         GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity workerBase = WorkerBaseFactory.createWorkerBase().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLUE);
+        Entity workerBase = WorkerBaseFactory.createWorkerBase().addComponent(mapComponent);
         spawnEntityAt(workerBase, randomPos, false, false);
     }
 
@@ -362,7 +379,7 @@ public class AtlantisGameArea extends GameArea {
     private void spawnTrees() {
         for (int i = 0; i < NUM_TREES; i++) {
             GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
-            Entity tree = TreeFactory.createTree();
+            Entity tree = TreeFactory.createTree().addComponent(new MapComponent());
             spawnEntityAt(tree, randomPos, false, false);
         }
     }
@@ -373,7 +390,7 @@ public class AtlantisGameArea extends GameArea {
     private void spawnStone() {
         for (int i = 0; i < NUM_STONE; i++) {
             GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 1);
-            spawnEntityAt(StoneFactory.createStone(), randomPos, false, false);
+            spawnEntityAt(StoneFactory.createStone().addComponent(new MapComponent()), randomPos, false, false);
         }
     }
 

@@ -188,12 +188,13 @@ public class MinimapComponent extends RenderComponent {
     private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
         Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
 
-        shapeRenderer.setColor(Color.RED);
-
         for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
-            GridPoint2 position = item.getKey();
+            if (item.getValue().isDisplay()) {
+                GridPoint2 position = item.getKey();
 
-            shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+                shapeRenderer.setColor(item.getValue().getColour());
+                shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            }
         }
     }
 
