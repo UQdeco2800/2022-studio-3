@@ -334,7 +334,6 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newForager = ForagerFactory.createForager().addComponent(new MapComponent());
         spawnEntityAt(newForager, spawn, true, true);
-        spawnEntityAt(newDurationBar, spawnDurationBar, true, true);
         return newForager;
     }
 
@@ -345,7 +344,6 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         Entity newMiner = MinerFactory.createMiner().addComponent(new MapComponent());
         spawnEntityAt(newMiner, spawn, true, true);
-        spawnEntityAt(newDurationBar, spawnDurationBar, true, true);
         return newMiner;
     }
 
