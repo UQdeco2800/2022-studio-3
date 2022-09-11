@@ -50,8 +50,6 @@ class BuildingFactoryTest {
 
     // Mocked as Graphics is needed for input component
     @Mock MouseInputComponent inputComponent;
-    // Mocked as it is not tested here
-    @Mock CombatStatsComponent combatStatsComponent;
 
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
@@ -115,7 +113,6 @@ class BuildingFactoryTest {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/base.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(combatStatsComponent)
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent());
 
@@ -147,7 +144,6 @@ class BuildingFactoryTest {
         assertInstanceOf(ColliderComponent.class, townHall.getComponent(ColliderComponent.class));
         assertInstanceOf(TextureRenderComponent.class, townHall.getComponent(TextureRenderComponent.class));
         assertInstanceOf(BuildingActions.class, townHall.getComponent(BuildingActions.class));
-        assertInstanceOf(CombatStatsComponent.class, townHall.getComponent(CombatStatsComponent.class));
         assertInstanceOf(ResourceStatsComponent.class, townHall.getComponent(ResourceStatsComponent.class));
         assertInstanceOf(BaseComponent.class, townHall.getComponent(BaseComponent.class));
 
@@ -168,8 +164,7 @@ class BuildingFactoryTest {
         barracks
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
-                .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(combatStatsComponent);
+                .addComponent(new BuildingActions(config.type, config.level));
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
@@ -200,7 +195,6 @@ class BuildingFactoryTest {
         assertInstanceOf(ColliderComponent.class, barracks.getComponent(ColliderComponent.class));
         assertInstanceOf(TextureRenderComponent.class, barracks.getComponent(TextureRenderComponent.class));
         assertInstanceOf(BuildingActions.class, barracks.getComponent(BuildingActions.class));
-        assertInstanceOf(CombatStatsComponent.class, barracks.getComponent(CombatStatsComponent.class));
 
         assertEquals(6, boundingBox.getVertexCount());
     }
@@ -218,8 +212,7 @@ class BuildingFactoryTest {
         wall
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/wooden_wall.png"))
-                .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(combatStatsComponent);
+                .addComponent(new BuildingActions(config.type, config.level));
 
         wall.scaleWidth(2.2f);
 
@@ -233,7 +226,6 @@ class BuildingFactoryTest {
         assertInstanceOf(ColliderComponent.class, wall.getComponent(ColliderComponent.class));
         assertInstanceOf(TextureRenderComponent.class, wall.getComponent(TextureRenderComponent.class));
         assertInstanceOf(BuildingActions.class, wall.getComponent(BuildingActions.class));
-        assertInstanceOf(CombatStatsComponent.class, wall.getComponent(CombatStatsComponent.class));
 
         assertEquals(4, boundingBox.getVertexCount());
     }
