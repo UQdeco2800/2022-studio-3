@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 import java.security.Provider;
@@ -46,6 +48,13 @@ public class SelectableComponent extends Component {
      */
     public void isIn(int xCoordinate, int yCoordinate) {
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
+
+        // If entity is a building, test if the clicked point is in building collider
+        if (entity.getComponent(BuildingActions.class) != null) {
+            selected = entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
+            return;
+        }
+
         Vector2 startPosition = entity.getPosition();
         Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
         if (contains(pointInWorld.x, startPosition.x, endPosition.x)

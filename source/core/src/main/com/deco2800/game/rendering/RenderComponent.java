@@ -40,7 +40,7 @@ public abstract class RenderComponent extends Component implements Renderable, D
   @Override
   public float getZIndex() {
     // The smaller the Y value, the higher the Z index, so that closer entities are drawn in front
-    return -entity.getPosition().y;
+    return -entity.getCenterPosition().y;
   }
 
   /**
