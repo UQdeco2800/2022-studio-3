@@ -17,12 +17,15 @@ public class MouseInputComponent extends InputComponent {
     //used for touchDown
     int touchDownY;
 
+    boolean leftPressed;
+
     /**
      * Controls the input of the mouse, whether it be clicked or clicked and dragged so that when the player does so,
      * a trigger is sent to the Selectable component with the location and type of click movement
      */
     public MouseInputComponent() {
         super(5);
+        leftPressed = false;
     }
 
     /**
@@ -37,8 +40,17 @@ public class MouseInputComponent extends InputComponent {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
+            this.leftPressed = true;
             this.touchDownX = screenX;
             this.touchDownY = screenY;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        if (!this.leftPressed) {
+            entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
         }
         return false;
     }
@@ -56,7 +68,9 @@ public class MouseInputComponent extends InputComponent {
      */
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+        if (this.leftPressed) {
+            entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+        }
         return false;
     }
 
@@ -84,6 +98,7 @@ public class MouseInputComponent extends InputComponent {
             }
             entity.getEvents().trigger("stopBox");
         }
+        this.leftPressed = false;
         return false;
     }
 }

@@ -18,6 +18,8 @@ public class SelectableComponent extends Component {
     //trigger to see whether unit is selected
     private boolean selected;
 
+    private boolean hovered;
+
     /**
      * initializes component with unit not being selected
      */
@@ -49,11 +51,11 @@ public class SelectableComponent extends Component {
     public void isIn(int xCoordinate, int yCoordinate) {
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
 
-        // If entity is a building, test if the clicked point is in building collider
-        if (entity.getComponent(BuildingActions.class) != null) {
-            selected = entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
-            return;
-        }
+//        // If entity is a building, test if the clicked point is in building collider
+//        if (entity.getComponent(BuildingActions.class) != null) {
+//            selected = entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
+//            return;
+//        }
 
         Vector2 startPosition = entity.getPosition();
         Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
