@@ -50,14 +50,14 @@ public class BuildingActions extends Component {
      * @return If the building is a wall -> true; else -> false
      */
     public static boolean isWall(Building type) {
-        return type == Building.WALL || type == Building.WALL_NE || type == Building.WALL_SE;
+        return (type == Building.WALL || type == Building.WALL_NE || type == Building.WALL_SE);
     }
 
     /**
      * Sets wall type and texture to default (facing in no particular direction)
      */
     public void setWallDefault() {
-        if (!isWall(type)) {
+        if (!isWall(type) || entity.getComponent(TextureRenderComponent.class) == null) {
             return;
         }
         type = Building.WALL;
@@ -78,7 +78,7 @@ public class BuildingActions extends Component {
      * Sets wall type and texture to north-east facing wall
      */
     public void setWallNE() {
-        if (!isWall(type)) {
+        if (!isWall(type) || entity.getComponent(TextureRenderComponent.class) == null) {
             return;
         }
         type = Building.WALL_NE;
@@ -99,7 +99,7 @@ public class BuildingActions extends Component {
      * Sets wall type and texture to south-east facing wall
      */
     public void setWallSE() {
-        if (!isWall(type)) {
+        if (!isWall(type) || entity.getComponent(TextureRenderComponent.class) == null) {
             return;
         }
         type = Building.WALL_SE;
