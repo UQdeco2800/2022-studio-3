@@ -37,7 +37,6 @@ public class EnemyDetectionComponent extends Component {
         CombatStatsComponent hasCombatStatsComponent_ = isEnemy.getComponent(CombatStatsComponent.class);
         if(hasAttackComponent_ != null || hasCombatStatsComponent_ != null){
             returnToBase();
-            return;
         }
     }
 
@@ -56,7 +55,7 @@ public class EnemyDetectionComponent extends Component {
     }
 
     /**
-     * Directs the worker to the base after resource collection
+     * Directs the worker to the base after enemy detection
      */
     public void returnToBase() {
         Entity base = this.getBase();

@@ -1,18 +1,13 @@
 package com.deco2800.game.worker.components;
 
-import com.badlogic.gdx.math.Octree.Collider;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.worker.components.movement.WorkerIdleTask;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
