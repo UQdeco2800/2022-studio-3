@@ -124,8 +124,6 @@ public class ResourceCollectComponent extends Component {
         if (targetStats.isDead()) {
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
-            //target.getComponent(MapComponent.class).dispose();
-            //ServiceLocator.getMapService().unregister(target.getComponent(MapComponent.class));
             target.dispose();
 
             ServiceLocator.getEntityService().unregister(target);
