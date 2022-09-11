@@ -127,7 +127,7 @@ public class EnemyFactory {
     BaseUnitConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+            new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/newwolf.atlas", TextureAtlas.class));
     animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);

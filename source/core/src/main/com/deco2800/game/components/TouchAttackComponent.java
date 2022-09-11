@@ -68,6 +68,7 @@ public class TouchAttackComponent extends Component {
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
 
     if (targetStats != null) {
+      targetStats.hit(combatStats);
       if (targetStats.getHealth() > 0) {
         if (!isAttacking) {
           isAttacking = true;
@@ -88,7 +89,6 @@ public class TouchAttackComponent extends Component {
               break;
           }
         }
-        targetStats.hit(combatStats);
       } else {
         isAttacking = false;
 //        target.dispose();
