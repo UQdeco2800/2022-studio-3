@@ -127,13 +127,13 @@ public class AtlantisGameArea extends GameArea {
         //playMusic();
 
         // Spawn Buildings in the city
-        // spawnTownHall();
-        // spawnBarracks();
+        spawnTownHall();
+        spawnBarracks();
         spawnWalls();
 
         spawnForager();
         spawnForager();
-        spawnWorkerBase();
+        //spawnWorkerBase();
         spawnResources();
         spawnMiner();
         // spawnWorkerBase();
