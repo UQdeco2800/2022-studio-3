@@ -12,8 +12,6 @@ import static java.lang.Math.abs;
 
 public class MouseInputComponent extends InputComponent {
 
-    //used for touch drag
-    ShapeRenderer shapeRenderer;
     //used for touchDown
     int touchDownX;
     //used for touchDown
@@ -25,7 +23,6 @@ public class MouseInputComponent extends InputComponent {
      */
     public MouseInputComponent() {
         super(5);
-        shapeRenderer = new ShapeRenderer();
     }
 
     /**
@@ -59,16 +56,8 @@ public class MouseInputComponent extends InputComponent {
      */
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//
-//
-//
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        shapeRenderer.setColor(Color.RED);
-//        shapeRenderer.rect(300,300,20,20); //assuming you have created those x, y, width and height variables
-//        shapeRenderer.end();
-        return true;
+        entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+        return false;
     }
 
     /**
@@ -93,6 +82,7 @@ public class MouseInputComponent extends InputComponent {
             } else {
                 entity.getEvents().trigger("dragAndClick", touchDownX, touchDownY, touchUpX, touchUpY);
             }
+            entity.getEvents().trigger("stopBox");
         }
         return false;
     }
