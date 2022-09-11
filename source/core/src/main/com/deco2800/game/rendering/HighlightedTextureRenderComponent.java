@@ -13,7 +13,6 @@ import com.deco2800.game.services.ServiceLocator;
 public class HighlightedTextureRenderComponent extends RenderComponent {
     private Texture texture;
 
-    Array<Entity> selectedEntities2 = new Array<>();
     /**
      * @param texturePath Internal path of static texture to render.
      *                    Will be scaled to the entity's scale.
@@ -32,26 +31,17 @@ public class HighlightedTextureRenderComponent extends RenderComponent {
     @Override
     protected void draw(SpriteBatch batch) {
 
-        Array<Entity> selectedEntities = new Array<>();
         //Check for selected units
         for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
-            SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
-            if (selectedComponent != null && selectedComponent.isSelected()) {
-                selectedEntities.add(entity);
-            }
-        }
-
-        if (!selectedEntities.isEmpty()) {
-            selectedEntities2 = selectedEntities;
-            for (Entity entity: selectedEntities) {
-                TextureRenderComponent TRC = entity.getComponent(TextureRenderComponent.class);
-                TRC.setTexture(texture);
-            }
-        }
-        else {
-            for (Entity entity: selectedEntities2) {
-                TextureRenderComponent TRC = entity.getComponent(TextureRenderComponent.class);
-                TRC.setTexture(TRC.getTextureOG());
+            TextureRenderComponent TRC = entity.getComponent(TextureRenderComponent.class);
+            if (TRC != null){
+                SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
+                if (selectedComponent != null && selectedComponent.isSelected()) {
+                    TRC.setTexture(texture);
+                }
+                else {
+                    TRC.setTexture(TRC.getTextureOG());
+                }
             }
         }
     }
