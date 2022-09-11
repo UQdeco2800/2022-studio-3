@@ -77,12 +77,10 @@ public class AtlantisGameArea extends GameArea {
             "images/stone.png"
     };
 
-    /* TODO: remove unused textures wasting precious resources */
     private static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
-            "images/exit-button.PNG",
-            "images/dialogue_box_background_Deep_Sea.png"
+            "images/exit-button.PNG"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -95,13 +93,14 @@ public class AtlantisGameArea extends GameArea {
 
     private final AtlantisTerrainFactory terrainFactory;
 
-    private DialogueBoxDisplay dialogueBoxDisplay;
+    private final DialogueBoxDisplay dialogueBoxDisplay;
 
     private Entity player;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
+        dialogueBoxDisplay = new DialogueBoxDisplay();
     }
 
     /**
@@ -141,8 +140,6 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(infoUi);
 
         Entity dialogueBox = new Entity();
-        /* FIXME: temporary infobox width value */
-        this.dialogueBoxDisplay = new DialogueBoxDisplay(537f);
         dialogueBoxDisplay.setDialogue("This is example dialogue text");
         dialogueBoxDisplay.setTitle("example title");
         dialogueBox.addComponent(dialogueBoxDisplay);
@@ -160,8 +157,6 @@ public class AtlantisGameArea extends GameArea {
         ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
         //Add minimap component
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
-        // allow access to minimap via UI for dynamic resizing/positioning
-        this.dialogueBoxDisplay.setMinimap(minimapComponent);
         spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
