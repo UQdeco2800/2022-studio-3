@@ -54,4 +54,9 @@ public class WeatherIconTest {
         int new_index = this.weatherIcon.getCurrentIndex();
         assertTrue(initial_index != new_index);
     }
+
+    @Test
+    void createIcon() {
+        assertNotNull(weatherIcon);
+    }
 }
