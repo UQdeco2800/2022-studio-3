@@ -90,8 +90,8 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
+//        spawnWolf();
+//        spawnTitan();
 //        spawnSnakes();
 //        playMusic();
         //spawnForager();
