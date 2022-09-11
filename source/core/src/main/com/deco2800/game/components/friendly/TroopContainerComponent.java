@@ -117,7 +117,7 @@ public class TroopContainerComponent extends Component {
         // want to update the center of the bounding radius to be the mean
         // position of the troops
         Vector2 troopMean = troops.stream().map(Entity::getCenterPosition)
-                .reduce(Vector2.Zero, (a, b) -> a.mulAdd(b,
+                .reduce(Vector2.Zero.cpy(), (a, b) -> a.mulAdd(b,
                         1.0f/troops.size()));
         // remember that position is set as the top left corner
         this.entity.setPosition(troopMean.sub(boundingRadius, boundingRadius));
