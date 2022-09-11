@@ -92,21 +92,18 @@ public class InfoBoxDisplay extends UIComponent {
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
-                        Util.report("level up");
                         entity.getEvents().trigger("levelUp");
                     }
         });
         bubbleBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Util.report("Create bubble");
                 entity.getEvents().trigger("bubble");
             }
         });
         troopBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Util.report("Spawn troop");
                 entity.getEvents().trigger("spawnTroop");
             }
         });
@@ -129,9 +126,12 @@ public class InfoBoxDisplay extends UIComponent {
         }
 
         //clear old tables
+        if (selectedEntities.isEmpty()){
+            buildingTable.clear();
+        }
         pictureTable.clear();
         infoTable.clear();
-        buildingTable.clear();
+
         String entityName = "";
         boolean buildingSelected = false;
         //If there are entities selected
@@ -161,6 +161,8 @@ public class InfoBoxDisplay extends UIComponent {
                             break;
 
                     }
+                } else {
+                    buildingTable.clear();
                 }
 
 
