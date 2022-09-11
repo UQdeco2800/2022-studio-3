@@ -41,13 +41,13 @@ public class MainGameExitDisplay extends UIComponent {
       });
 
     pauseMenuBtn.addListener(
-            new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                logger.debug("Pause button clicked");
-                entity.getEvents().trigger("togglepm");
-              }
-            });
+      new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent changeEvent, Actor actor) {
+          logger.debug("Pause button clicked");
+          entity.getEvents().trigger("togglepm");
+        }
+      });
 
 
     table.add(mainMenuBtn).padTop(10f).padRight(10f);
