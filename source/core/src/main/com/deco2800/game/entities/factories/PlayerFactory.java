@@ -51,6 +51,7 @@ public class PlayerFactory {
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new SelectableComponent())
+                    .addComponent(new HighlightedTextureRenderComponent("images/box_boy_highlight.png"))
                     .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit());
 
 
