@@ -9,7 +9,9 @@ public class ResourceSpecification {
     private final String name;
     private final int width;
     private final int height;
-    private final int amount;
+    private final int minAmount;
+    private final int maxAmount;
+    private int amount;
     private final int preferredDistance;
     private List<Coordinate> placements;
     private List<Coordinate> potentialPlacements;
@@ -31,8 +33,17 @@ public class ResourceSpecification {
         this.width = width;
         this.height = height;
         this.preferredDistance = preferredDistance;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
+
         //Choose how many to add to game
-        amount = new Random().nextInt(maxAmount - minAmount) + minAmount + 1;
+        setNewAmount();
+
+        //Ensure data is correct for creating a ResourceSpecification
+        if (width <= 0 || height <= 0 || minAmount < 0 || maxAmount < minAmount
+                || amount > maxAmount || amount < minAmount) {
+            throw new IllegalArgumentException("Invalid resource data entered");
+        }
 
         placements = new ArrayList<>();
         potentialPlacements = new ArrayList<>();
@@ -76,6 +87,29 @@ public class ResourceSpecification {
      */
     public int getAmount() {
         return this.amount;
+    }
+
+    /**
+     * Returns the maximum amount of this resource that can be added to the game
+     * @return maximum amount of resource that may be added
+     */
+    public int getMaxAmount() {
+        return this.maxAmount;
+    }
+
+    /**
+     * Returns the minimum amount of this resource that can be added to the game
+     * @return minimum amount of the resource that may be added
+     */
+    public int getMinAmount() {
+        return this.minAmount;
+    }
+
+    /**
+     * Randomly sets a number of resources to add to the game based on maxAmount and minAmount
+     */
+    public void setNewAmount() {
+        amount = new Random().nextInt(maxAmount - minAmount) + minAmount + 1;
     }
 
     /**

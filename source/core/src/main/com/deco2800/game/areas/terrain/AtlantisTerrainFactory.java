@@ -147,6 +147,15 @@ public class AtlantisTerrainFactory {
     }
 
     /**
+     * Returns a new MapGenerator with identical parameters as the one created for the game -
+     * used in testing the consistency of the MapGenerator
+     * @return new MapGenerator with correct parameters
+     */
+    public static MapGenerator makeMapGenerator() {
+        return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
+    }
+
+    /**
      * Getter for the CameraComponent of this class
      * @return MapGenerator object
      */

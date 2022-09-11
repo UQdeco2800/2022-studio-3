@@ -51,6 +51,7 @@ public class ResourceGenerator {
             ResourceSpecification resource = new ResourceSpecification(r.getString("name"),
                     r.getInt("width"), r.getInt("height"), r.getInt("minAmount"),
                     r.getInt("maxAmount"), r.getInt("preferredDistance"));
+
             //Add object to list
             resources.add(resource);
         }
@@ -71,7 +72,11 @@ public class ResourceGenerator {
         //Empty all existing placements of resources if there are any
         for (ResourceSpecification r : resources) {
             r.resetPlacements();
+            if (generationAttempts > 0) {
+                r.setNewAmount();
+            }
         }
+
     }
 
 
@@ -81,7 +86,6 @@ public class ResourceGenerator {
     private void writeCurrentResources(String path) {
         char[][] writeMap = mg.getOutlineMap();
         for (ResourceSpecification r : resources) {
-            //Remove island fill to see edges easier
             //For each resource, go through all placements and modify its value on the map
             char identifier = r.getName().charAt(0);    //First letter of name will be value on map
             for (Coordinate c : r.getPlacements()) {
