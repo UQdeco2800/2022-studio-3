@@ -35,6 +35,7 @@ public class BuildingFactory {
             FileLoader.readClass(ResourceConfig.class, "configs/Base.json");
 
     /**
+     * Use this as a base entity for creating buildings
      * @return a new Entity with universal building components
      */
     public static Entity createBaseBuilding() {
@@ -133,7 +134,7 @@ public class BuildingFactory {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
 
-        wall.addComponent(new TextureRenderComponent("images/stone_wall.png"))
+        wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 

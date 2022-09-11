@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -61,15 +62,25 @@ public class AtlantisGameArea extends GameArea {
             "images/Information_Box_Deepsea.png",
             "images/TransBox.png",
             "images/white.png",
+            "images/stone.png",
+            /* Building assets */
+            // TownHall
+            "images/base.png",
+            // Barracks
             "images/barracks_level_1.0.png",
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
+            // Mine
+            "mining_levelone_sketch.png",
+            "mining_leveltwo_sketch.png",
+            // Walls
+            "images/wooden_wall.png",
+            "images/wooden_wall_2.png",
+            "images/wooden_wall_3.png",
             "images/stone_wall.png",
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
-            "images/base.png",
-            "images/stone.png"
     };
 
     private static final String[] uiTextures = {
@@ -288,13 +299,15 @@ public class AtlantisGameArea extends GameArea {
 
             // Absolute corner walls will have default wall texture (doesn't point in any direction)
             Entity wall = BuildingFactory.createWall();
+            wall.getComponent(BuildingActions.class).addLevel();
+            wall.getComponent(BuildingActions.class).setWallDefault();
             spawnEntityAt(wall, position, true, true);
 
             for (int i = 0; i < xLength; i++) {
                 wall = BuildingFactory.createWall();
                 // Sets wall texture which points in positive x direction
-                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService()
-                        .getAsset("images/stone_wall_2_.png", Texture.class));
+                wall.getComponent(BuildingActions.class).addLevel();
+                wall.getComponent(BuildingActions.class).setWallNE();
                 spawnEntityAt(wall, position.add(direction, 0), true, true);
             }
             direction *= -1;
@@ -307,10 +320,10 @@ public class AtlantisGameArea extends GameArea {
 
             for (int i = 0; i < yLength; i++) {
                 Entity wall = BuildingFactory.createWall();
-                spawnEntityAt(wall, position.add(0, direction), true, true);
                 // Sets wall texture which points in negative y direction
-                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService()
-                        .getAsset("images/stone_wall_3.png", Texture.class));
+                wall.getComponent(BuildingActions.class).addLevel();
+                wall.getComponent(BuildingActions.class).setWallSE();
+                spawnEntityAt(wall, position.add(0, direction), true, true);
             }
 
         }
