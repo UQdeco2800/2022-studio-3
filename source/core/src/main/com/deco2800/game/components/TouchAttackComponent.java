@@ -23,6 +23,8 @@ public class TouchAttackComponent extends Component {
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
 
+  private boolean isAttacking = false;
+
   /**
    * Create a component which attacks entities on collision, without knockback.
    * @param targetLayer The physics layer of the target's collider.

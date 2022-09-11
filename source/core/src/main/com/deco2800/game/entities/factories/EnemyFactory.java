@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.EntityDirectionComponent;
 import com.deco2800.game.components.npc.EnemyAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
@@ -73,7 +74,7 @@ public class EnemyFactory {
 
     blueJoker
               .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
-                                                     config.baseDefence, config.landSpeed))
+                                                     config.baseDefence, config.landSpeed, config.range))
               .addComponent(animator)
               .addComponent(new EnemyAnimationController());
 
@@ -93,7 +94,7 @@ public class EnemyFactory {
 
     AnimationRenderComponent animator =
         new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/snake.atlas", TextureAtlas.class));
+            ServiceLocator.getResourceService().getAsset("images/snake2.0.atlas", TextureAtlas.class));
 
     animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
@@ -107,7 +108,7 @@ public class EnemyFactory {
     animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
     snake
         .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
-                                               config.baseDefence, config.landSpeed))
+                                               config.baseDefence, config.landSpeed, config.range))
         .addComponent(animator)
         .addComponent(new EnemyAnimationController());
 
@@ -139,7 +140,7 @@ public class EnemyFactory {
     animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
     wolf
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
-                                                   config.baseDefence, config.landSpeed))
+                                                   config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
             .addComponent(new EnemyAnimationController());
 
@@ -159,12 +160,12 @@ public class EnemyFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
-    animator.addAnimation(MOVE_EAST, 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_WEST, 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_SOUTH, 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation(MOVE_NORTH, 0.2f, Animation.PlayMode.LOOP);
-    animator.addAnimation("default", 0.2f, Animation.PlayMode.NORMAL);
+                    ServiceLocator.getResourceService().getAsset("images/titan.atlas", TextureAtlas.class));
+    animator.addAnimation(MOVE_EAST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_WEST, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_SOUTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation(MOVE_NORTH, 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
     animator.addAnimation(ATTACK_NORTH, 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation(ATTACK_SOUTH, 0.1f, Animation.PlayMode.LOOP);
@@ -172,7 +173,7 @@ public class EnemyFactory {
     animator.addAnimation(ATTACK_WEST, 0.1f, Animation.PlayMode.LOOP);
     titan
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
-                                                   config.baseDefence, config.landSpeed))
+                                                   config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
 
@@ -199,7 +200,8 @@ public class EnemyFactory {
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
+            .addComponent(aiComponent)
+            .addComponent(new EntityDirectionComponent());
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     System.out.println(npc.getClass());

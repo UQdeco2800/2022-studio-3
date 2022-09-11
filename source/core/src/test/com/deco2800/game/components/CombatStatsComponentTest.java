@@ -65,5 +65,41 @@ class CombatStatsComponentTest {
     assertEquals(20, combat.getBaseDefence());
   }
 
+  @Test
+  void shouldGetNumberOfTroops() {
+    CombatStatsComponent combat = new CombatStatsComponent(10, 100, 20, 5, 20);
+    assertEquals(10, combat.getTroops());
+
+    combat.setTroops(150);
+    assertEquals(150, combat.getTroops());
+
+    combat.setTroops(-50);
+    assertEquals(150, combat.getTroops());
+  }
+
+  @Test
+  void shouldGetAttackRange() {
+    CombatStatsComponent combat = new CombatStatsComponent(10, 100, 20, 5, 20, 30);
+    assertEquals(30, combat.getRange());
+
+    combat.setRange(150);
+    assertEquals(150, combat.getRange());
+
+    combat.setRange(-50);
+    assertEquals(150, combat.getRange());
+  }
+
+  @Test
+  void shouldGetLandSpeed() {
+    CombatStatsComponent combat = new CombatStatsComponent(10, 100, 20, 5, 20f, 30);
+    assertEquals(20f, combat.getLandSpeed());
+
+    combat.setLandSpeed(150f);
+    assertEquals(150f, combat.getLandSpeed());
+
+    combat.setLandSpeed(-50f);
+    assertEquals(150f, combat.getLandSpeed());
+  }
+
   //TODO: add test for one combatant hitting another
 }

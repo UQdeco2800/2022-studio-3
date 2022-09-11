@@ -1,236 +1,237 @@
-titan_sprite_sheet.png
-size: 2048, 1024
+
+titan.png
+size: 2048, 2048
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest, Nearest
 repeat: none
 default
   rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 238, 34
+  size: 58, 59
+  orig: 58, 59
   offset: 0, 0
   index: 0
-attack-west
-  rotate: false
-  xy: 0, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-attack-west
-  rotate: false
-  xy: 256, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-west
-  rotate: false
-  xy: 512, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-move-west
-  rotate: false
-  xy: 768, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-west
-  rotate: false
-  xy: 1024, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 2
-move-west
-  rotate: false
-  xy: 1280, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 3
-move-west
-  rotate: false
-  xy: 1536, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 4
-move-west
-  rotate: false
-  xy: 1792, 0
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 5
-attack-north
-  rotate: false
-  xy: 0, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-attack-north
-  rotate: false
-  xy: 256, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-north
-  rotate: false
-  xy: 512, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-move-north
-  rotate: false
-  xy: 768, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-north
-  rotate: false
-  xy: 1024, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 2
-move-north
-  rotate: false
-  xy: 1280, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 3
-move-north
-  rotate: false
-  xy: 1536, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 4
-move-north
-  rotate: false
-  xy: 1792, 256
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 5
-move-south
-  rotate: false
-  xy: 0, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-move-south
-  rotate: false
-  xy: 256, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-south
-  rotate: false
-  xy: 512, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 2
-move-south
-  rotate: false
-  xy: 768, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 3
-move-south
-  rotate: false
-  xy: 1024, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 4
-move-south
-  rotate: false
-  xy: 1280, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 5
-attack-south
-  rotate: false
-  xy: 1536, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 0
-attack-south
-  rotate: false
-  xy: 1792, 512
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
 attack-east
   rotate: false
-  xy: 0, 768
+  xy: 2, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: 0
 attack-east
   rotate: false
-  xy: 256, 768
+  xy: 1034, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: 1
-move-east
+attack-north
   rotate: false
-  xy: 512, 768
+  xy: 260, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+attack-north
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+attack-south
+  rotate: false
+  xy: 776, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+attack-south
+  rotate: false
+  xy: 518, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+attack-west
+  rotate: false
+  xy: 260, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+attack-west
+  rotate: false
+  xy: 2, 260
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: 0
 move-east
   rotate: false
-  xy: 768, 768
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 1
-move-east
-  rotate: false
-  xy: 1024, 768
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: 2
-move-east
-  rotate: false
-  xy: 1280, 768
+  xy: 260, 1550
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: 3
 move-east
   rotate: false
-  xy: 1536, 768
+  xy: 2, 776
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 4
+  index: 0
 move-east
   rotate: false
-  xy: 1792, 768
+  xy: 518, 1292
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: 5
+move-east
+  rotate: false
+  xy: 518, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+move-east
+  rotate: false
+  xy: 1034, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+move-east
+  rotate: false
+  xy: 1034, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+move-north
+  rotate: false
+  xy: 2, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+move-north
+  rotate: false
+  xy: 2, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+move-north
+  rotate: false
+  xy: 776, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+move-north
+  rotate: false
+  xy: 776, 1292
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 5
+move-north
+  rotate: false
+  xy: 1292, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+move-north
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+move-south
+  rotate: false
+  xy: 2, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+move-south
+  rotate: false
+  xy: 2, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 5
+move-south
+  rotate: false
+  xy: 260, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+move-south
+  rotate: false
+  xy: 518, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+move-south
+  rotate: false
+  xy: 776, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+move-south
+  rotate: false
+  xy: 776, 1034
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+move-west
+  rotate: false
+  xy: 518, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+move-west
+  rotate: false
+  xy: 518, 1550
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+move-west
+  rotate: false
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+move-west
+  rotate: false
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 5
+move-west
+  rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+move-west
+  rotate: false
+  xy: 518, 776
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
