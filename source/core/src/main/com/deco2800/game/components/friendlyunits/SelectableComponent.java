@@ -10,6 +10,7 @@ import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.helpers.Util;
 
 import java.security.Provider;
 
@@ -47,6 +48,11 @@ public class SelectableComponent extends Component {
      * @param yCoordinate The y coordinate of the mouse
      */
     public void isIn(int xCoordinate, int yCoordinate) {
+        if (xCoordinate < 600 && yCoordinate > 500) {
+
+            return;
+        }
+
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
 
         // If entity is a building, test if the clicked point is in building collider
@@ -54,6 +60,7 @@ public class SelectableComponent extends Component {
             selected = entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
             return;
         }
+
 
         Vector2 startPosition = entity.getPosition();
         Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
