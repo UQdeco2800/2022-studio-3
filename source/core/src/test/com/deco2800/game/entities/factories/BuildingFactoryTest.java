@@ -8,11 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.Component;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
-import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BarracksConfig;
 import com.deco2800.game.entities.configs.BuildingConfigs;
@@ -20,8 +18,6 @@ import com.deco2800.game.entities.configs.TownHallConfig;
 import com.deco2800.game.entities.configs.WallConfig;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.files.FileLoader;
-import com.deco2800.game.input.InputComponent;
-import com.deco2800.game.input.InputFactory;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsService;
@@ -33,15 +29,12 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.resources.ResourceConfig;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-import org.junit.Before;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -57,6 +50,8 @@ class BuildingFactoryTest {
 
     // Mocked as Graphics is needed for input component
     @Mock MouseInputComponent inputComponent;
+    // Mocked as it is not tested here
+    @Mock CombatStatsComponent combatStatsComponent;
 
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
@@ -120,7 +115,7 @@ class BuildingFactoryTest {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/base.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(combatStatsComponent)
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent());
 
@@ -174,7 +169,7 @@ class BuildingFactoryTest {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(combatStatsComponent);
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
@@ -224,7 +219,7 @@ class BuildingFactoryTest {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new TextureRenderComponent("images/wooden_wall.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(combatStatsComponent);
 
         wall.scaleWidth(2.2f);
 
