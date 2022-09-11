@@ -153,6 +153,10 @@ public class InfoBoxDisplay extends UIComponent {
             int sideLength = (int) Math.ceil(Math.sqrt(length));
             int column = 0;
             int row = 1;
+
+
+            backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
+            backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
             for (Entity entity: selectedEntities) {
@@ -213,8 +217,7 @@ public class InfoBoxDisplay extends UIComponent {
             }
 
 
-        }
-        else {
+        } else {
             pictureTable.remove();
             infoTable.remove();
             backgroundBoxImage.remove();

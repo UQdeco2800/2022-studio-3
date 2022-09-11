@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.friendlyunits.GestureDisplay;
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -134,6 +136,11 @@ public class AtlantisGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
         spawnEntity(infoUi);
+
+        Entity gestureDisplay = new Entity();
+        gestureDisplay.addComponent(new MouseInputComponent());
+        gestureDisplay.addComponent(new GestureDisplay());
+        spawnEntity(gestureDisplay);
 
         Entity dialogueBox = new Entity();
         dialogueBoxDisplay.setDialogue("This is example dialogue text");
