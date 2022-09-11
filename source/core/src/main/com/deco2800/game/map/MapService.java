@@ -139,7 +139,7 @@ public class MapService {
 	 * Finds a path between two points using BFS search.
 	 * 
 	 * @param start the starting position
-	 * @param end the end position
+	 * @param goal the end position
 	 * @return a list of positions indicating the shortest path
 	 */
 	public List<GridPoint2> getPath(GridPoint2 start, GridPoint2 goal) {

@@ -1,31 +1,30 @@
 package com.deco2800.game.worker.components.duration;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.deco2800.game.rendering.RenderComponent;
+import com.deco2800.game.components.Component;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 
-public class DurationBarComponent extends RenderComponent{
-    private SpriteBatch durationBarBatch;
-    private Batch originalBatch;
-    private ProgressBar durationBar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public DurationBarComponent(int width, int height){
-        durationBar = new DurationBar(width, height);
-    }
+public class DurationBarComponent extends Component{
+
+    private static final Logger logger = LoggerFactory.getLogger(DurationBarComponent.class);
+    AnimationRenderComponent animator;
 
     @Override
-    public void create(){
+    public void create() {
         super.create();
-        var entity_position = entity.getPosition();
-        durationBar.setPosition(entity_position.x + 10, entity_position.y + 10);
+        animator = this.entity.getComponent(AnimationRenderComponent.class);
+        entity.getEvents().addListener("durationBarIdleAnimate", this::animateIdleDurationBar);
+        entity.getEvents().addListener("durationBarAnimate", this::animateDurationBar);
     }
 
-    @Override
-    public void draw(SpriteBatch batch){
-        var entity_position = this.entity.getPosition();
-        durationBar.setPosition(entity_position.x + 10, entity_position.y + 10);
-        durationBar.draw(batch, 1);
+    void animateIdleDurationBar(){
+        animator.startAnimation("durationBarIdle");
+    }
+
+    void animateDurationBar() {
+        animator.startAnimation("durationBar");
     }
 
 }

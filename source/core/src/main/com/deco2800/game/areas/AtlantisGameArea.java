@@ -28,6 +28,9 @@ import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
+import com.deco2800.game.worker.components.duration.DurationBarFactory;
+import com.deco2800.game.worker.components.type.ForagerComponent;
+import com.deco2800.game.worker.components.type.MinerComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +84,8 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
+            "images/duration_bar/duration-bar.atlas",
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -141,7 +145,7 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(dialogueBoxDisplay);
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
 
-        // spawnEntity(dialogueBox);
+        spawnEntity(dialogueBox);
     }
 
     private void spawnTerrain() {
@@ -253,7 +257,7 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = mg.getCityDetails().get("Centre");
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        Entity townHall = BuildingFactory.createTownHall();
+        Entity townHall = BuildingFactory.createTownHall().addComponent(new MapComponent());
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
