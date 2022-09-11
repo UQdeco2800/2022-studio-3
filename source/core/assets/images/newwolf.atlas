@@ -1,0 +1,173 @@
+newwolf.png
+size: 256, 1536
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+attack-west
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
+attack-west
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+move-west
+  rotate: false
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+move-west
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+move-west
+  rotate: false
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+move-west
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 5
+attack-north
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 6
+attack-north
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 7
+move-north
+  rotate: false
+  xy: 0, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 8
+move-north
+  rotate: false
+  xy: 128, 512
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 9
+move-north
+  rotate: false
+  xy: 0, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 10
+move-north
+  rotate: false
+  xy: 128, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 11
+attack-south
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 12
+attack-south
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 13
+move-south
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 14
+move-south
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 15
+move-south
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 16
+move-south
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 17
+attack-east
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 18
+attack-east
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 19
+move-east
+  rotate: false
+  xy: 0, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 20
+move-east
+  rotate: false
+  xy: 128, 1280
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 21
+move-east
+  rotate: false
+  xy: 0, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 22
+move-east
+  rotate: false
+  xy: 128, 1408
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 23
