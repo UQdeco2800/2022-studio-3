@@ -1,5 +1,5 @@
 miner.png
-size: 640, 640
+size: 512, 1408
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -33,127 +33,274 @@ miner_forward_left_move
   index: 3
 miner_forward_right_move
   rotate: false
-  xy: 512, 0
+  xy: 0, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 miner_forward_right_move
   rotate: false
-  xy: 0, 128
+  xy: 128, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 5
 miner_forward_right_move
   rotate: false
-  xy: 128, 128
+  xy: 256, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 6
 miner_forward_right_move
   rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 7
-miner_backward_left_move
-  rotate: false
   xy: 384, 128
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 8
-miner_backward_left_move
-  rotate: false
-  xy: 512, 128
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 9
-miner_backward_left_move
+  index: 7
+miner_back_left_move
   rotate: false
   xy: 0, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 10
-miner_backward_left_move
+  index: 8
+miner_back_left_move
   rotate: false
   xy: 128, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 11
-miner_backward_right_move
+  index: 9
+miner_back_left_move
   rotate: false
   xy: 256, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 12
-miner_backward_right_move
+  index: 10
+miner_back_left_move
   rotate: false
   xy: 384, 256
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 13
-miner_backward_right_move
+  index: 11
+miner_back_right_move
   rotate: false
-  xy: 512, 256
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 12
+miner_back_right_move
+  rotate: false
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 13
+miner_back_right_move
+  rotate: false
+  xy: 256, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 14
-miner_backward_right_move
+miner_back_right_move
   rotate: false
-  xy: 0, 384
+  xy: 384, 384
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 15
 miner_forward_left_action
   rotate: false
-  xy: 128, 384
+  xy: 0, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 16
 miner_forward_left_action
   rotate: false
-  xy: 256, 384
+  xy: 128, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 17
 miner_forward_left_action
   rotate: false
-  xy: 384, 384
+  xy: 256, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 18
 miner_forward_right_action
   rotate: false
-  xy: 512, 384
+  xy: 384, 512
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 19
 miner_forward_right_action
   rotate: false
-  xy: 0, 512
+  xy: 0, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 20
 miner_forward_right_action
   rotate: false
-  xy: 128, 512
+  xy: 128, 640
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 21
+miner_forward_left_move_highlighted
+  rotate: false
+  xy: 256, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 22
+miner_forward_left_move_highlighted
+  rotate: false
+  xy: 384, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 23
+miner_forward_left_move_highlighted
+  rotate: false
+  xy: 0, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 24
+miner_forward_left_move_highlighted
+  rotate: false
+  xy: 128, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 25
+miner_forward_right_move_highlighted
+  rotate: false
+  xy: 256, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 26
+miner_forward_right_move_highlighted
+  rotate: false
+  xy: 384, 768
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 27
+miner_forward_right_move_highlighted
+  rotate: false
+  xy: 0, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 28
+miner_forward_right_move_highlighted
+  rotate: false
+  xy: 128, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 29
+miner_back_left_move_highlighted
+  rotate: false
+  xy: 256, 896
+  size: 127, 128
+  orig: 127, 128
+  offset: 0, 0
+  index: 30
+miner_back_left_move_highlighted
+  rotate: false
+  xy: 383, 896
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 31
+miner_back_left_move_highlighted
+  rotate: false
+  xy: 0, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 32
+miner_back_left_move_highlighted
+  rotate: false
+  xy: 128, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 33
+miner_back_right_move_highlighted
+  rotate: false
+  xy: 256, 1024
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 34
+miner_back_right_move_highlighted
+  rotate: false
+  xy: 384, 1024
+  size: 127, 128
+  orig: 127, 128
+  offset: 0, 0
+  index: 35
+miner_back_right_move_highlighted
+  rotate: false
+  xy: 0, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 36
+miner_forward_left_action_highlighted
+  rotate: false
+  xy: 128, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 37
+miner_forward_left_action_highlighted
+  rotate: false
+  xy: 256, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 38
+miner_forward_left_action_highlighted
+  rotate: false
+  xy: 384, 1152
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 39
+miner_forward_right_action_highlighted
+  rotate: false
+  xy: 0, 1280
+  size: 127, 128
+  orig: 127, 128
+  offset: 0, 0
+  index: 40
+miner_forward_right_action_highlighted
+  rotate: false
+  xy: 127, 1280
+  size: 128, 127
+  orig: 128, 127
+  offset: 0, 0
+  index: 41
+miner_forward_right_action_highlighted
+  rotate: false
+  xy: 255, 1280
+  size: 128, 127
+  orig: 128, 127
+  offset: 0, 0
+  index: 42
