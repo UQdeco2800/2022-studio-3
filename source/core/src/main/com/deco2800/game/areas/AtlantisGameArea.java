@@ -77,7 +77,8 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
-            "images/exit-button.PNG"
+            "images/exit-button.PNG",
+            "images/dialogue_box_background_Deep_Sea.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",

@@ -77,7 +77,7 @@ public class DialogueBoxDisplay extends UIComponent {
         this.backgroundTexture = new Image(
                 ServiceLocator
                         .getResourceService()
-                        .getAsset("images/dialogue_box_pattern2_background.png", Texture.class)
+                        .getAsset("images/dialogue_box_background_Deep_Sea.png", Texture.class)
         );
 
         this.title = new Label("EXAMPLE TITLE", skin);
@@ -192,14 +192,14 @@ public class DialogueBoxDisplay extends UIComponent {
         float availableSpace = screenWidth - (infoWidth + mapWidth);
         float[] backgroundPosition = {infoWidth + ((availableSpace - backgroundSize[0]) / 2f), 0f};
 
-        float[] titlePosition = {backgroundPosition[0] + 25f, backgroundSize[1] - 50f};
+        float[] titlePosition = {backgroundPosition[0] + 50f, backgroundSize[1] - 50f};
 
         float[] imageSize = {128f, 128f};
         float[] imagePosition = {backgroundSize[0] + backgroundPosition[0] - this.image.getWidth() - 30f,
-                (backgroundSize[1] - this.image.getHeight()) / 2f};
+                ((backgroundSize[1] - this.image.getHeight()) / 2f) + 20f};
 
         float[] dialogueSize = {backgroundSize[0] - 60f - imageSize[0], backgroundSize[1] - 50f};
-        float[] dialoguePosition = {backgroundPosition[0] + 25f, 0f};
+        float[] dialoguePosition = {backgroundPosition[0] + 50f, 20f};
 
         float[] dismissButtonSize = {45f, 25f};
         float[] dismissButtonPosition = {backgroundSize[0] + backgroundPosition[0] - this.dismissBtn.getWidth(),
