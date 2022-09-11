@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -97,17 +98,12 @@ public class MinimapComponent extends RenderComponent {
                 TiledMapTileLayer.Cell cell = terrainLayer.getCell(i, j);
                 //Take the tile and get its id to determine colour
                 //0 = Grass, 1 = Sand, 2 = Ocean
-                TerrainTile tile = (TerrainTile) cell.getTile();
-                if (tile.getId() == 0) {
-                    //City tile
-                    currentTexture = dummyTile;
-                } else if (tile.getId() == 1){
-                    //Island tile
+                if (cell.getTile() instanceof  TerrainTile) {
                     currentTexture = dummyTile;
                 } else {
-                    //Must be ocean tile
                     currentTexture = dummyOcean;
                 }
+
                 //Draw each tile texture at the appropriate position, with the appropriate dimensions
                 //Determine scaling for the tile image based on current zoom
                 float tileXScale = tileSize.x / (currentTexture.getWidth() * scaleConstant);

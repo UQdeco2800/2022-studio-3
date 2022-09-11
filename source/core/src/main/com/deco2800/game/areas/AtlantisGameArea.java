@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -61,6 +62,10 @@ public class AtlantisGameArea extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
+            "images/sea_1.png",
+            "images/sea_2.png",
+            "images/sea_3.png",
+            "images/sea_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
