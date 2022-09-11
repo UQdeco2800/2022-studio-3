@@ -28,6 +28,9 @@ import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
+import com.deco2800.game.worker.components.duration.DurationBarFactory;
+import com.deco2800.game.worker.components.type.ForagerComponent;
+import com.deco2800.game.worker.components.type.MinerComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,14 +77,17 @@ public class AtlantisGameArea extends GameArea {
             "images/stone.png"
     };
 
+    /* TODO: remove unused textures wasting precious resources */
     private static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
-            "images/exit-button.PNG"
+            "images/exit-button.PNG",
+            "images/dialogue_box_background_Deep_Sea.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas"
+            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
+            "images/duration_bar/duration-bar.atlas",
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -89,14 +95,13 @@ public class AtlantisGameArea extends GameArea {
 
     private final AtlantisTerrainFactory terrainFactory;
 
-    private final DialogueBoxDisplay dialogueBoxDisplay;
+    private DialogueBoxDisplay dialogueBoxDisplay;
 
     private Entity player;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        dialogueBoxDisplay = new DialogueBoxDisplay();
     }
 
     /**
@@ -136,6 +141,8 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(infoUi);
 
         Entity dialogueBox = new Entity();
+        /* FIXME: temporary infobox width value */
+        this.dialogueBoxDisplay = new DialogueBoxDisplay(537f);
         dialogueBoxDisplay.setDialogue("This is example dialogue text");
         dialogueBoxDisplay.setTitle("example title");
         dialogueBox.addComponent(dialogueBoxDisplay);
@@ -153,6 +160,8 @@ public class AtlantisGameArea extends GameArea {
         ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
         //Add minimap component
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
+        // allow access to minimap via UI for dynamic resizing/positioning
+        this.dialogueBoxDisplay.setMinimap(minimapComponent);
         spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)

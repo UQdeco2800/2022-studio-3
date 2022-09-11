@@ -14,6 +14,7 @@ import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BuildingConfigs;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -45,7 +46,7 @@ public class InfoBoxDisplay extends UIComponent {
     //Button to create the magic bubble to save Atlantis
     private TextButton bubbleBtn = new TextButton("Create bubble", skin);
 
-
+    UserSettings.Settings settings = UserSettings.get();
 
 
     @Override
@@ -72,12 +73,22 @@ public class InfoBoxDisplay extends UIComponent {
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
         pictureTable.setHeight(135);
-        pictureTable.setPosition(38, Gdx.graphics.getHeight() - 745);
+        if(settings.fullscreen) {
+            pictureTable.setPosition(38, Gdx.graphics.getHeight() - 1020);
+        }
+        else {
+            pictureTable.setPosition(38, Gdx.graphics.getHeight() - 745);
+        }
 
         this.infoTable = new Table();
         infoTable.setWidth(305);
         infoTable.setHeight(135);
-        infoTable.setPosition(200, Gdx.graphics.getHeight() - 745);
+        if(settings.fullscreen) {
+            infoTable.setPosition(200, Gdx.graphics.getHeight() - 1020);
+        }
+        else {
+            infoTable.setPosition(200, Gdx.graphics.getHeight() - 745);
+        }
 
 
         this.buildingTable = new Table();

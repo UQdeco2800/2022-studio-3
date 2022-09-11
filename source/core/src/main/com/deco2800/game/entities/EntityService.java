@@ -77,6 +77,7 @@ public class EntityService {
     return null;
   }
 
+
   public Array<Entity> getEntities() {
     return this.entities;
   }
