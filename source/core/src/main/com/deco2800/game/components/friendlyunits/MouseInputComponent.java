@@ -50,7 +50,7 @@ public class MouseInputComponent extends InputComponent {
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         if (!this.leftPressed) {
-            entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+            entity.getEvents().trigger("singleHover", screenX, screenY);
         }
         return false;
     }
@@ -69,7 +69,9 @@ public class MouseInputComponent extends InputComponent {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (this.leftPressed) {
-            entity.getEvents().trigger("updateBox", touchDownX, Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+            entity.getEvents().trigger("multipleHover", touchDownX, touchDownY, screenX, screenY);
+            entity.getEvents().trigger("updateBox", touchDownX,
+                    Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
         }
         return false;
     }
@@ -92,9 +94,9 @@ public class MouseInputComponent extends InputComponent {
 
         if (button == Input.Buttons.LEFT) {
             if (touchDownX == touchUpX && touchDownY == touchUpY) {
-                entity.getEvents().trigger("click", touchUpX, touchUpY);
+                entity.getEvents().trigger("singleSelect", touchUpX, touchUpY);
             } else {
-                entity.getEvents().trigger("dragAndClick", touchDownX, touchDownY, touchUpX, touchUpY);
+                entity.getEvents().trigger("multipleSelect", touchDownX, touchDownY, touchUpX, touchUpY);
             }
             entity.getEvents().trigger("stopBox");
         }

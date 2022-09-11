@@ -32,16 +32,15 @@ public class HighlightedTextureRenderComponent extends RenderComponent {
     protected void draw(SpriteBatch batch) {
 
         //Check for selected units
-        for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
-            TextureRenderComponent TRC = entity.getComponent(TextureRenderComponent.class);
-            if (TRC != null){
-                SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
-                if (selectedComponent != null && selectedComponent.isSelected()) {
-                    TRC.setTexture(texture);
-                }
-                else {
-                    TRC.setTexture(TRC.getTextureOG());
-                }
+
+        TextureRenderComponent TRC = entity.getComponent(TextureRenderComponent.class);
+        if (TRC != null){
+            SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
+            if (selectedComponent != null && (selectedComponent.isSelected() || selectedComponent.isHovered())) {
+                TRC.setTexture(texture);
+            }
+            else {
+                TRC.setTexture(TRC.getTextureOG());
             }
         }
     }
