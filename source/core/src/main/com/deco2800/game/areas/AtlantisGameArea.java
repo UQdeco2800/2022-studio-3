@@ -91,6 +91,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
+        centreCameraOnCity();
         //playMusic();
         spawnForager();
         spawnForager();
@@ -206,12 +207,24 @@ public class AtlantisGameArea extends GameArea {
 
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, spawn, true, true);
-
-        //Move camera to player
-        Vector2 centreWorld = terrain.tileToWorldPosition(spawn.x, spawn.y);
-        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
-
         return newPlayer;
+    }
+
+    /**
+     * Moves the camera to the centre of the city on game startup
+     */
+    private void centreCameraOnCity() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        //Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        //Store location as GridPoint2
+        GridPoint2 centrePoint = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+        //Convert to world coordinates
+        Vector2 centreWorld = terrain.tileToWorldPosition(centrePoint.x, centrePoint.y);
+        //Move  camera
+        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
     }
 
     /**

@@ -141,4 +141,60 @@ public class ResourceSpecification {
         return output.toString();
     }
 
+    /**
+     * Determines whether two resource specifications have the same placements, important for equality
+     * @param r1 ResourceSpecification to compare
+     * @param r2 ResourceSpecification to compare
+     * @return true if they have identical list contents, false otherwise
+     */
+    private boolean samePlacements(ResourceSpecification r1, ResourceSpecification r2) {
+        //If they have different sized placement lists, they cannot be equal
+        if (r1.getPlacements().size() != r2.getPlacements().size()) {
+            return false;
+        }
+        for (int i = 0; i < r1.getPlacements().size(); i++) {
+            //If any of their placements differ, they are not the same
+            if (r1.getPlacements().get(i) != r2.getPlacements().get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if this ResourceSpecification is equal to the passed object
+     * For two ResourceSpecifications to be equal they must have the same:
+     *  - Name
+     *  - Width
+     *  - Height
+     *  - Amount
+     *  - Preferred distance
+     *  - Placements
+     * @param other the reference object with which to compare
+     * @return true if this scenario is the same as the other argument; false otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            //The compared "other" object references the same object as this object - equal
+            return true;
+        }
+        if (!(other instanceof ResourceSpecification)) {
+            //The compared "other" object is not of type ResourceSpecification, therefore it cannot be equal
+            return false;
+        }
+        //Cast other as ResourceSpecification for comparison
+        ResourceSpecification otherResourceSpec = (ResourceSpecification) other;
+
+        //Invokes helper method to determine if the contents of both placement lists
+        boolean samePlacement = samePlacements(this, otherResourceSpec);
+
+        return (samePlacement
+                && this.name.equals(otherResourceSpec.getName())
+                && this.width == otherResourceSpec.getWidth()
+                && this.height == otherResourceSpec.getHeight()
+                && this.amount == otherResourceSpec.getAmount()
+                && this.preferredDistance == otherResourceSpec.getPreferredDistance());
+    }
+
 }
