@@ -72,21 +72,23 @@ public class TouchAttackComponent extends Component {
       if (targetStats.getHealth() > 0) {
         if (!isAttacking) {
           isAttacking = true;
-          switch (entityDirectionComponent.getEntityDirection()) {
-            case DEFAULT:
-              break;
-            case WEST:
-              entity.getEvents().trigger("attackWest");
-              break;
-            case EAST:
-              entity.getEvents().trigger("attackEast");
-              break;
-            case NORTH:
-              entity.getEvents().trigger("attackNorth");
-              break;
-            case SOUTH:
-              entity.getEvents().trigger("attackSouth");
-              break;
+          if (entityDirectionComponent != null) {
+            switch (entityDirectionComponent.getEntityDirection()) {
+              case DEFAULT:
+                break;
+              case WEST:
+                entity.getEvents().trigger("attackWest");
+                break;
+              case EAST:
+                entity.getEvents().trigger("attackEast");
+                break;
+              case NORTH:
+                entity.getEvents().trigger("attackNorth");
+                break;
+              case SOUTH:
+                entity.getEvents().trigger("attackSouth");
+                break;
+            }
           }
         }
       } else {

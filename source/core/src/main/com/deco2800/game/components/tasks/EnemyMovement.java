@@ -29,23 +29,19 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * AI task to handle enemy movement
+ */
 public class EnemyMovement extends DefaultTask implements PriorityTask {
 
   private Vector2 destinationPoint;
   private Vector2 startPos;
-
   private MovementTask movementTask;
-
   private Task currentTask;
-
-  private GridPoint2 target;
-
+  private final GridPoint2 target;
   AtlantisTerrainFactory terrainFactory;
-  private boolean inMotion = true;
+  private final TerrainComponent terrain;
 
-  private TerrainComponent terrain;
-
-  private HitboxComponent hitboxComponent;
 
   public EnemyMovement(AtlantisTerrainFactory terrainFactory) {
     this.target = RandomPointGenerator.getCityCenter(terrainFactory);
@@ -54,6 +50,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   }
 
   /**
+   * Returns priority of task
    * @return 
    */
   @Override
@@ -61,19 +58,15 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     return 1;
   }
 
-  private boolean foundPath = false;
-
   /**
    * Start running this task. This will usually be called by an AI controller.
    */
   @Override
   public void start() {
-//    System.out.println("Movement Task Started");
     super.start();
     setStartPos(owner.getEntity().getPosition());
     startPos = this.owner.getEntity().getCenterPosition();
-    destinationPoint = terrain.tileToWorldPosition(RandomPointGenerator.getCityCenter(terrainFactory));
-//    System.out.println(destinationPoint);
+    destinationPoint = terrain.tileToWorldPosition(this.target);
     setMovementTask(new MovementTask(destinationPoint));
     movementTask.create(owner);
     movementTask.start();
@@ -88,16 +81,25 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     currentTask = newTask;
     currentTask.start();
   }
-  private final GameTime gameTime = ServiceLocator.getTimeSource();
-  private long lastTIme = gameTime.getTime();
+
   /**
    * Run one frame of the task. Similar to the update() in Components.
    */
   @Override
   public void update() {
 
-    Vector2 position = (destinationPoint.cpy()).sub(this.owner.getEntity().getCenterPosition());
+    float destination = this.owner.getEntity().getCenterPosition().dst2(destinationPoint);
     MapGenerator mg = terrainFactory.getMapGenerator();
+
+//    if (destination <= 2f) {
+//      System.out.println(destination);
+//      if (currentTask == movementTask) {
+//        this.owner.getEntity().getEvents().trigger("default");
+//        currentTask.stop();
+//      }
+//
+//    }
+
 //    if (position.x >= 0 && position.y >= 0) {
 //      System.out.println("North: " + position);
 //      this.owner.getEntity().getEvents().trigger("goNorth");
@@ -126,6 +128,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
 //    System.out.println(destinationPoint.toString() + "::" + position);
 ////    System.out.println("Map Width: " + mg.getWidth() + ":: Map Height: "+ mg.getHeight());
 ////    System.out.println("<" + position.x + ", " + position.y + ">");
+
   }
 
   /**
@@ -136,26 +139,56 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     super.stop();
   }
 
+  /**
+   * Returns the destination point of entity
+   *
+   * @return destination point of entity
+   */
   public Vector2 getDestinationPoint() {
     return destinationPoint;
   }
 
+  /**
+   * Sets the destination point of entity
+   *
+   * @param destinationPoint Destination point of entity
+   */
   public void setDestinationPoint(Vector2 destinationPoint) {
     this.destinationPoint = destinationPoint;
   }
 
+  /**
+   * Returns the starting position upon spawning of entity
+   *
+   * @return spawn point of entity
+   */
   public Vector2 getStartPos() {
     return startPos;
   }
 
+  /**
+   * Sets the starting position of entity
+   *
+   * @param startPos spawn point of entity
+   */
   public void setStartPos(Vector2 startPos) {
     this.startPos = startPos;
   }
 
+  /**
+   * Sets the movement task
+   *
+   * @param movementTask movement task to be set
+   */
   public void setMovementTask(MovementTask movementTask) {
     this.movementTask = movementTask;
   }
 
+  /**
+   * Sets the current task
+   *
+   * @param currentTask cureent task to be set
+   */
   public void setCurrentTask(Task currentTask) {
     this.currentTask = currentTask;
   }

@@ -31,13 +31,17 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   }
 
   /**
-   * Creat a entity that have a base speed.
+   * Creates an entity that have a base speed.
    * @param speed the moving speed
    */
   public PhysicsMovementComponent(Vector2 speed) {
     maxSpeed = speed;
   }
 
+  /**
+   * Changes the direction to face west and trigger that respective animation
+   * on the condition that the previous recorded direction is not west.
+   */
   public void faceWest() {
     EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
 
@@ -52,6 +56,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     }
   }
 
+  /**
+   * Changes the direction to face east and trigger that respective animation
+   * on the condition that the previous recorded direction is not east.
+   */
   public void faceEast() {
     EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
     switch (previousDirection) {
@@ -65,6 +73,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     }
   }
 
+  /**
+   * Changes the direction to face north and trigger that respective animation
+   * on the condition that the previous recorded direction is not north.
+   */
   public void faceNorth() {
     EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
     switch (previousDirection) {
@@ -78,6 +90,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     }
   }
 
+  /**
+   * Changes the direction to face south and trigger that respective animation
+   * on the condition that the previous recorded direction is not south.
+   */
   public void faceSouth() {
     EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
     switch (previousDirection) {
@@ -91,6 +107,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     }
   }
 
+  /**
+   * Checks the direction of the entity and changes to appropriate animation
+   * and direction
+   */
   public void changeAnimation() {
     if (Boolean.FALSE.equals(this.getEntity().getComponent(CombatStatsComponent.class).isDead())) {
       if (Math.abs(this.getDirection().x) > Math.abs(this.getDirection().y)) {
@@ -169,7 +189,9 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private void updateDirection(Body body) {
     Vector2 desiredVelocity = getDirection().scl(maxSpeed);
     setToVelocity(body, desiredVelocity);
-    changeAnimation();
+    if (entityDirectionComponent != null) {
+      changeAnimation();
+    }
   }
 
   private void setToVelocity(Body body, Vector2 desiredVelocity) {

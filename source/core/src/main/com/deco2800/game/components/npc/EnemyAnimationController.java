@@ -31,24 +31,57 @@ public class EnemyAnimationController extends Component {
         entity.getEvents().addListener("attackEast", this::attackEast);
     }
 
+    /**
+     * Play animation when enemy moves west
+     */
     public void animateWest(){ animator.startAnimation("move-west"); }
+
+    /**
+     * Play animation when enemy moves east
+     */
     public void animateEast(){ animator.startAnimation("move-east"); }
+
+    /**
+     * Play animation when enemy moves north
+     */
     public void animateNorth(){ animator.startAnimation("move-north"); }
+
+    /**
+     * Play animation when enemy moves south
+     */
     public void animateSouth(){ animator.startAnimation("move-south"); }
 
+    /**
+     * Display default state enemy sprite
+     */
     public void defaultAnimation() {
-        animator.startAnimation("default");
+        animator.stopAnimation();
     }
 
+    /**
+     * Play animation when enemy attacks in north direction
+     */
     public void attackNorth() {
         animator.startAnimation("attack-north");
     }
+
+    /**
+     * Play animation when enemy attacks in south direction
+     */
     public void attackSouth() {
         animator.startAnimation("attack-south");
     }
+
+    /**
+     * Play animation when enemy attacks in west direction
+     */
     public void attackWest() {
         animator.startAnimation("attack-west");
     }
+
+    /**
+     * Play animation when enemy attacks in east direction
+     */
     public void attackEast() {
         animator.startAnimation("attack-east");
     }

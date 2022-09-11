@@ -140,6 +140,10 @@ public class AtlantisGameArea extends GameArea {
         //spawnStone();
         //spawnMiner();
     }
+
+    /**
+     * Spawns Blue Joker enemy entities
+     */
     private void spawnBlueJokers() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
@@ -147,6 +151,10 @@ public class AtlantisGameArea extends GameArea {
             spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
     }
+
+    /**
+     * Spawns Snake enemy entities
+     */
     private void spawnSnakes() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
@@ -155,6 +163,9 @@ public class AtlantisGameArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns Titan enemy entities
+     */
     private void spawnTitan() {
         for (int i = 0; i < 5; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
@@ -162,6 +173,10 @@ public class AtlantisGameArea extends GameArea {
             spawnEntityAt(titan, spawnPoint, true, true);
         }
     }
+
+    /**
+     * Spawns Wolf enemy entities
+     */
     private void spawnWolf() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
