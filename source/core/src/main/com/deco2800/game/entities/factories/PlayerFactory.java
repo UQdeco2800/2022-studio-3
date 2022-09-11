@@ -53,7 +53,7 @@ public class PlayerFactory {
                     .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit());
 
 
-    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
+    PhysicsUtils.setScaledColliderCentered(player, 0.6f, 0.6f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(TextureRenderComponent.class).scaleEntity();
     return player;

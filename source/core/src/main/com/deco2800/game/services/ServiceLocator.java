@@ -3,9 +3,9 @@ package com.deco2800.game.services;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
-import com.deco2800.game.map.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class ServiceLocator {
   public static EntityService getEntityService() {
     return entityService;
   }
-
+  
   public static RenderService getRenderService() {
     return renderService;
   }
@@ -61,6 +61,7 @@ public class ServiceLocator {
   public static ForestGameArea getGameArea(){
     return gameArea;
   }
+
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);

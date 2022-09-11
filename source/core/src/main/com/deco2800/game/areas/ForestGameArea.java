@@ -92,7 +92,6 @@ public class ForestGameArea extends GameArea {
     // spawnWalls();
     spawnTownHall(new GridPoint2(9, 7));
     spawnBarracks(new GridPoint2(3, 6));
-    spawnBarracksMedieval(new GridPoint2(13, 6));
     spawnWalls(0,3);
     player = spawnPlayer();
     ServiceLocator.registerGameArea(this);
@@ -216,14 +215,6 @@ public class ForestGameArea extends GameArea {
     barracks.setScale(mediumScale, mediumScale);
     spawnEntityAt(barracks, position, true, true);
   }
-
-  private void spawnBarracksMedieval(GridPoint2 position) {
-    Entity barracks = BuildingFactory.createBarracksMedieval();
-    barracks.setScale(mediumScale, mediumScale);
-    spawnEntityAt(barracks, position, true, true);
-  }
-
-
 
   private Entity spawnPlayer() {
 
