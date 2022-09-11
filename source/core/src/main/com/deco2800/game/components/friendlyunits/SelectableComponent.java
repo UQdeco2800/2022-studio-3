@@ -42,10 +42,12 @@ public class SelectableComponent extends Component {
 
     public void singleSelect(int xCoordinate, int yCoordinate) {
         this.selected = isIn(xCoordinate, yCoordinate);
+        this.hovered = false;
     }
 
     public void multipleSelect(int startX, int startY, int endX, int endY) {
         this.selected = containsUs(startX, startY, endX, endY);
+        this.hovered = false;
     }
 
     /**
