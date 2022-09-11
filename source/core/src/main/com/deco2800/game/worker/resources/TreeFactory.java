@@ -7,6 +7,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
+import com.deco2800.game.worker.components.type.TreeComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 
@@ -20,7 +21,8 @@ public class TreeFactory {
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
-            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal));
+            .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
+            .addComponent(new TreeComponent());
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         tree.getComponent(TextureRenderComponent.class).scaleEntity();
         return tree;

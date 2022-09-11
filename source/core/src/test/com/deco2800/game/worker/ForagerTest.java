@@ -59,7 +59,7 @@ public class ForagerTest {
 
     @Test
     void shouldCollectAndUnloadResources(){
-        
+
         Entity forager1 = new Entity();
         forager1.addComponent(new ForagerComponent());
         forager1.addComponent(new CollectStatsComponent(2));
@@ -69,7 +69,6 @@ public class ForagerTest {
         forager1.addComponent(hitbox);
         ResourceCollectComponent resourceCollectComponent = forager1.getComponent(ResourceCollectComponent.class);
         resourceCollectComponent.create();
-        //CollectStatsComponent collectStatsComponent = forager1.getComponent(CollectStatsComponent.class);
         Entity tree = new Entity();
         ResourceStatsComponent treeStats = new ResourceStatsComponent(4, 0, 0);
         tree.addComponent(treeStats);
