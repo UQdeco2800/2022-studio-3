@@ -13,6 +13,10 @@ public class MinerAnimationController extends Component {
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
         entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
+        entity.getEvents().addListener("workerMiningAnimateRight", this::animateMiningRight);
+        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
+        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
+        entity.getEvents().addListener("workerMiningAnimateLeft", this::animateMiningLeft);
     }
 
     void animateIdle() {
@@ -21,6 +25,22 @@ public class MinerAnimationController extends Component {
 
     void animateMove() {
         animator.startAnimation("miner_forward_move");
+    }
+
+    void animateMiningRight(){
+        animator.startAnimation("minerActionRight");
+    }
+    
+    void animateMiningLeft() {
+        animator.startAnimation("minerActionLeft");
+    }
+
+    void animateRightMove() {
+        animator.startAnimation("minerRight");
+    }
+
+    void animateLeftMove() {
+        animator.startAnimation("minerLeft");
     }
 }
 

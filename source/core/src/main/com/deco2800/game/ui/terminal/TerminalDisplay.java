@@ -23,7 +23,7 @@ public class TerminalDisplay extends UIComponent {
   private void addActors() {
     String message = "";
     label = new Label("> " + message, skin);
-    label.setPosition(5f, 0);
+    label.setPosition(5f, 220f);
     stage.addActor(label);
   }
 

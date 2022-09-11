@@ -137,6 +137,8 @@ public class AtlantisTerrainFactory {
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     cell.setTile(sandTile);
+                    // register position with MapService (TODO: move somewhere nicer)
+                    ServiceLocator.getMapService().addIslandTile(x, y);
                 } else {
                     cell.setTile(grassTile);
                 }

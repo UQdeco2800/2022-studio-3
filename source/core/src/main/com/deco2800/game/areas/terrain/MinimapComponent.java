@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.Renderable;
 import com.deco2800.game.services.ResourceService;
@@ -124,6 +125,7 @@ public class MinimapComponent extends RenderComponent {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         batch.end();
+        
         //Get edges of screen
         Vector3 worldSW = camera.unproject(new Vector3(0, screenHeight, 0));
         Vector3 worldSE = camera.unproject(new Vector3(screenWidth, screenHeight, 0));
@@ -172,12 +174,30 @@ public class MinimapComponent extends RenderComponent {
                 world.y + (tileHeight * minY),
                 (maxX - minX) * tileWidth,
                 (maxY - minY) * tileHeight);
+
+        drawEntities(shapeRenderer, world, tileHeight, tileWidth, mapWidth);
+
         //End shape rendering, restart batch
         shapeRenderer.end();
         batch.begin();
     }
 
     /**
+     * Helper function that draws an entity on the minimap.
+     */
+    private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
+        Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
+
+        shapeRenderer.setColor(Color.RED);
+
+        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
+            GridPoint2 position = item.getKey();
+
+            shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+        }
+    }
+
+    /*
      * Takes a pair of floats in the form of a Vector2, which correspond to the width and height of a rectangle
      * drawn on the screen. Returns the pixel size of the width and height of this rectangle.
      * @param worldSize (x,y) side lengths of a rectangle in world coordinates

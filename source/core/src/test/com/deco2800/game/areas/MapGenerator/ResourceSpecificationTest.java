@@ -1,17 +1,8 @@
 package com.deco2800.game.areas.MapGenerator;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.SerializationException;
-import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.extensions.GameExtension;
-import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
