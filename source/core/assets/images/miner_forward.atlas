@@ -38,3 +38,154 @@ default
   orig: 1024, 1024
   offset: 0, 0
   index: 0
+
+miner_action_right.png
+size: 6144, 2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerActionRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+minerActionRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+minerActionRight
+  rotate: false
+  xy: 4608, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 1
+minerActionRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+minerActionRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+
+miner_action_left.png
+size: 6144, 2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerActionLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerActionLeft
+  rotate: false
+  xy: 4608, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+
+miner_right.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerRight
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+
+
+miner_left.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+minerLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+minerLeft
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
