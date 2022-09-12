@@ -97,7 +97,7 @@ public class MinimapComponent extends RenderComponent {
                 Texture currentTexture;
                 TiledMapTileLayer.Cell cell = terrainLayer.getCell(i, j);
                 //Take the tile and get its id to determine colour
-                //0 = Grass, 1 = Sand, 2 = Ocean
+                //If the cell is a TerrainTile, it is an island tile, else animated ocean tile
                 if (cell.getTile() instanceof  TerrainTile) {
                     currentTexture = dummyTile;
                 } else {

@@ -122,6 +122,7 @@ public class ResourceGeneratorTest {
         int testIterations = 50;
         try {
             for (int i = 0; i < testIterations; i++) {
+                //Get MapGenerator
                 MapGenerator mg = createMapGenerator();
                 //Creating a ResourceGenerator will automatically allocate space for resources,
                 //An IllegalArgumentException will be thrown if it is unable to find space
