@@ -22,7 +22,7 @@ public class MapService {
 	/* Stores all register entities */
 	private final List<MapComponent> interactables = new ArrayList<>();
 	/* Stores all island tile positions */
-	public final List<GridPoint2> islandTiles = new ArrayList<>();
+	private final List<GridPoint2> islandTiles = new ArrayList<>();
 	/* Stores the entity occupying a position */
 	private final Map<GridPoint2, MapComponent> positionToEntity = new HashMap<>();
 	/* Stores all positions entities occupy */
@@ -44,12 +44,24 @@ public class MapService {
 	}
 
 	/**
+	 * Returns all registered entities.
+	 * 
+	 * @return all registered entities
+	 */
+	public List<MapComponent> getMapComponents() {
+		return this.interactables;
+	}
+
+	/**
 	 * Updates the MapService's understanding of an entity's current position.
 	 * 
 	 * @param comp the entity whose position is to be updated.
 	 */
 	public void update(MapComponent comp) {
 		List<GridPoint2> oldPositions = entityToPositions.get(comp);
+		if (oldPositions == null) {
+			return;
+		}
 		List<GridPoint2> newPositions = getAllOccupiedPositions(comp);
 		for (GridPoint2 pos : oldPositions) {
 			positionToEntity.remove(pos);
@@ -85,7 +97,6 @@ public class MapService {
 		Vector2 vecScale = comp.getEntity().getScale();
 		GridPoint2 bottomRightCorner = worldToTile(vecPos);
 		GridPoint2 topLeftCorner = worldToTile(vecPos.x + vecScale.x, vecPos.y + vecScale.y);
-		// GridPoint2 topLeftCorner = worldToTile(comp.getEntity().getCenterPosition());
 
 		List<GridPoint2> occupied = new ArrayList<>();
 		for (int i = topLeftCorner.x; i <= bottomRightCorner.x; i++) {
@@ -124,7 +135,7 @@ public class MapService {
 	 * @throws OutOfBoundsException if the tile is not a land tile
 	 * @throws OccupiedTileException if the goal position is occupied by another entity
 	 */
-	public List<GridPoint2> findPathForEntity(MapComponent comp, GridPoint2 goal) throws OutOfBoundsException, OccupiedTileException {
+	public List<GridPoint2> getPath(MapComponent comp, GridPoint2 goal) throws OutOfBoundsException, OccupiedTileException {
 		if (isOccupied(goal)) {
 			throw new OccupiedTileException();
 		}
@@ -241,6 +252,15 @@ public class MapService {
 	 */
 	public void addIslandTile(int x, int y) {
 		islandTiles.add(new GridPoint2(x, y));
+	}
+
+	/**
+	 * Returns a list of island tile positions.
+	 * 
+	 * @return list of island tile positions
+	 */
+	public List<GridPoint2> getIslandTiles() {
+		return this.islandTiles;
 	}
 
 	/**
