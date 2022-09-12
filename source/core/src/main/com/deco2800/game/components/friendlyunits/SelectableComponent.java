@@ -66,6 +66,7 @@ public class SelectableComponent extends Component {
             return entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
         }
 
+
         Vector2 startPosition = entity.getPosition();
         Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
         return (contains(pointInWorld.x, startPosition.x, endPosition.x)
