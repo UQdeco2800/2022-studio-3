@@ -106,6 +106,19 @@ loadScripts(document, 'script');</script>
  int&nbsp;baseAttack,
  int&nbsp;baseDefence)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,float)" class="member-name-link">CombatStatsComponent</a><wbr>(int&nbsp;troops,
+ int&nbsp;health,
+ int&nbsp;baseAttack,
+ int&nbsp;baseDefence,
+ float&nbsp;landSpeed)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,float,int)" class="member-name-link">CombatStatsComponent</a><wbr>(int&nbsp;troops,
+ int&nbsp;health,
+ int&nbsp;baseAttack,
+ int&nbsp;baseDefence,
+ float&nbsp;landSpeed,
+ int&nbsp;range)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -140,30 +153,60 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the entity's health.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hit(com.deco2800.game.components.CombatStatsComponent)" class="member-name-link">hit</a><wbr>(<a href="CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a>&nbsp;attacker)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLandSpeed()" class="member-name-link">getLandSpeed</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Manages the entity being hit by an attacking enemy.</div>
+<div class="block">Returns the land movement speed of the unit</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDead()" class="member-name-link">isDead</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRange()" class="member-name-link">getRange</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns true if the entity's has 0 health, otherwise false.</div>
+<div class="block">Returns the attack range for unit</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBaseAttack(int)" class="member-name-link">setBaseAttack</a><wbr>(int&nbsp;attack)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTroops()" class="member-name-link">getTroops</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the entity's attack damage.</div>
+<div class="block">Returns number of troops the unit has</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBaseDefence(int)" class="member-name-link">setBaseDefence</a><wbr>(int&nbsp;defence)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hit(com.deco2800.game.components.CombatStatsComponent)" class="member-name-link">hit</a><wbr>(<a href="CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a>&nbsp;attacker)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the entity's defence from attacks.</div>
+<div class="block">Manages the entity being hit by an attacking enemy.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDead()" class="member-name-link">isDead</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if the entity's has 0 health, otherwise false.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBaseAttack(int)" class="member-name-link">setBaseAttack</a><wbr>(int&nbsp;attack)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entity's attack damage.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHealth(int)" class="member-name-link">setHealth</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBaseDefence(int)" class="member-name-link">setBaseDefence</a><wbr>(int&nbsp;defence)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entity's defence from attacks.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHealth(int)" class="member-name-link">setHealth</a><wbr>(int&nbsp;health)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the entity's health.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLandSpeed(float)" class="member-name-link">setLandSpeed</a><wbr>(float&nbsp;landSpeed)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the land movement speed of unit</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRange(int)" class="member-name-link">setRange</a><wbr>(int&nbsp;range)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the attack range for a unit</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTroops(int)" class="member-name-link">setTroops</a><wbr>(int&nbsp;troops)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the number of troops the unit has</div>
 </div>
 </div>
 </div>
@@ -193,6 +236,27 @@ loadScripts(document, 'script');</script>
  int&nbsp;baseDefence)</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,int,int,float)">
+<h3>CombatStatsComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CombatStatsComponent</span><wbr><span class="parameters">(int&nbsp;troops,
+ int&nbsp;health,
+ int&nbsp;baseAttack,
+ int&nbsp;baseDefence,
+ float&nbsp;landSpeed)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,int,int,float,int)">
+<h3>CombatStatsComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CombatStatsComponent</span><wbr><span class="parameters">(int&nbsp;troops,
+ int&nbsp;health,
+ int&nbsp;baseAttack,
+ int&nbsp;baseDefence,
+ float&nbsp;landSpeed,
+ int&nbsp;range)</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -201,6 +265,72 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getRange()">
+<h3>getRange</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRange</span>()</div>
+<div class="block">Returns the attack range for unit</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>entity's attack range</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setRange(int)">
+<h3>setRange</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRange</span><wbr><span class="parameters">(int&nbsp;range)</span></div>
+<div class="block">Sets the attack range for a unit</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>range</code> - attack for unit</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTroops()">
+<h3>getTroops</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTroops</span>()</div>
+<div class="block">Returns number of troops the unit has</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>entity's troop count</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTroops(int)">
+<h3>setTroops</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTroops</span><wbr><span class="parameters">(int&nbsp;troops)</span></div>
+<div class="block">Sets the number of troops the unit has</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>troops</code> - number of troops to set.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLandSpeed()">
+<h3>getLandSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">getLandSpeed</span>()</div>
+<div class="block">Returns the land movement speed of the unit</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>land movement speed of unit</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setLandSpeed(float)">
+<h3>setLandSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLandSpeed</span><wbr><span class="parameters">(float&nbsp;landSpeed)</span></div>
+<div class="block">Sets the land movement speed of unit</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>landSpeed</code> - land movement speed to set</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="isDead()">
 <h3>isDead</h3>

@@ -106,7 +106,13 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">PhysicsMovementComponent</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Initialising the PhysicsMovementComponent by default.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2)" class="member-name-link">PhysicsMovementComponent</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;speed)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an entity that have a base speed.</div>
+</div>
 </div>
 </section>
 </li>
@@ -122,29 +128,59 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeAnimation()" class="member-name-link">changeAnimation</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks the direction of the entity and changes to appropriate animation
+ and direction</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the entity is created and registered.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMoving()" class="member-name-link">getMoving</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTarget()" class="member-name-link">getTarget</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#faceEast()" class="member-name-link">faceEast</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes the direction to face east and trigger that respective animation
+ on the condition that the previous recorded direction is not east.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMoving(boolean)" class="member-name-link">setMoving</a><wbr>(boolean&nbsp;movementEnabled)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#faceNorth()" class="member-name-link">faceNorth</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Enable/disable movement for the controller.</div>
+<div class="block">Changes the direction to face north and trigger that respective animation
+ on the condition that the previous recorded direction is not north.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTarget(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTarget</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#faceSouth()" class="member-name-link">faceSouth</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set a target to move towards.</div>
+<div class="block">Changes the direction to face south and trigger that respective animation
+ on the condition that the previous recorded direction is not south.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#faceWest()" class="member-name-link">faceWest</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes the direction to face west and trigger that respective animation
+ on the condition that the previous recorded direction is not west.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMoving()" class="member-name-link">getMoving</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTarget()" class="member-name-link">getTarget</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMoving(boolean)" class="member-name-link">setMoving</a><wbr>(boolean&nbsp;movementEnabled)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Enable/disable movement for the controller.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTarget(com.badlogic.gdx.math.Vector2)" class="member-name-link">setTarget</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;target)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set a target to move towards.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
 </div>
 </div>
@@ -171,6 +207,18 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <section class="detail" id="&lt;init&gt;()">
 <h3>PhysicsMovementComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PhysicsMovementComponent</span>()</div>
+<div class="block">Initialising the PhysicsMovementComponent by default.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2)">
+<h3>PhysicsMovementComponent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PhysicsMovementComponent</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;speed)</span></div>
+<div class="block">Creates an entity that have a base speed.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>speed</code> - the moving speed</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -181,6 +229,46 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="faceWest()">
+<h3>faceWest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">faceWest</span>()</div>
+<div class="block">Changes the direction to face west and trigger that respective animation
+ on the condition that the previous recorded direction is not west.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="faceEast()">
+<h3>faceEast</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">faceEast</span>()</div>
+<div class="block">Changes the direction to face east and trigger that respective animation
+ on the condition that the previous recorded direction is not east.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="faceNorth()">
+<h3>faceNorth</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">faceNorth</span>()</div>
+<div class="block">Changes the direction to face north and trigger that respective animation
+ on the condition that the previous recorded direction is not north.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="faceSouth()">
+<h3>faceSouth</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">faceSouth</span>()</div>
+<div class="block">Changes the direction to face south and trigger that respective animation
+ on the condition that the previous recorded direction is not south.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="changeAnimation()">
+<h3>changeAnimation</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changeAnimation</span>()</div>
+<div class="block">Checks the direction of the entity and changes to appropriate animation
+ and direction</div>
+</section>
+</li>
 <li>
 <section class="detail" id="create()">
 <h3>create</h3>

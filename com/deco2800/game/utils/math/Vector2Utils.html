@@ -136,6 +136,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Calculate the angle in degrees of a vector.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#angleToVector(com.badlogic.gdx.math.Vector2,float)" class="member-name-link">angleToVector</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;outVector,
+ float&nbsp;angle)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Find the vector relative to origin pointing in given angle</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#vectorToAngle(com.badlogic.gdx.math.Vector2)" class="member-name-link">vectorToAngle</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;vector)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Calculate the angle in radians of a vector</div>
+</div>
 </div>
 </div>
 </div>
@@ -228,6 +239,34 @@ loadScripts(document, 'script');</script>
 <dd><code>to</code> - The vector to which angle is measured</dd>
 <dt>Returns:</dt>
 <dd>Angle in degrees from -180 to 180</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="vectorToAngle(com.badlogic.gdx.math.Vector2)">
+<h3>vectorToAngle</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">vectorToAngle</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;vector)</span></div>
+<div class="block">Calculate the angle in radians of a vector</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>vector</code> - The vector relative to origin</dd>
+<dt>Returns:</dt>
+<dd>Angle in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="angleToVector(com.badlogic.gdx.math.Vector2,float)">
+<h3>angleToVector</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">angleToVector</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;outVector,
+ float&nbsp;angle)</span></div>
+<div class="block">Find the vector relative to origin pointing in given angle</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>outVector</code> - Output vector relative to origin</dd>
+<dd><code>angle</code> - Angle in radians</dd>
+<dt>Returns:</dt>
+<dd>Vector pointing in given angle</dd>
 </dl>
 </section>
 </li>

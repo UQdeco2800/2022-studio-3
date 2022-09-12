@@ -179,15 +179,42 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/worker/components/duration/DurationBarFactory.html" title="class in com.deco2800.game.worker.components.duration">DurationBarFactory</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/components/npc/EnemyAnimationController.html" title="class in com.deco2800.game.components.npc">EnemyAnimationController</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">This class listens to events relevant to enemy entity's state and plays the animation when one
+ of the events is triggered.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/configs/EnemyConfigs.html" title="class in com.deco2800.game.entities.configs">EnemyConfigs</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Defines all NPC configs to be loaded by the NPC Factory.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/worker/components/EnemyDetectionComponent.html" title="class in com.deco2800.game.worker.components">EnemyDetectionComponent</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/components/tasks/EnemyMovementTask.html" title="class in com.deco2800.game.components.tasks">EnemyMovementTask</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/EnemyEntity.html" title="class in com.deco2800.game.entities">EnemyEntity</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/factories/EnemyFactory.html" title="class in com.deco2800.game.entities.factories">EnemyFactory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Factory to create non-playable character (NPC) entities with predefined components.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/components/tasks/EnemyMovement.html" title="class in com.deco2800.game.components.tasks">EnemyMovement</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">enemy move toward a target in constant speed</div>
+<div class="block">AI task to handle enemy movement</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Core entity class.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="com/deco2800/game/components/EntityDirection.html" title="enum class in com.deco2800.game.components">EntityDirection</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Enumeration used to represent compass direction of
+ enemy entities.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/components/EntityDirectionComponent.html" title="class in com.deco2800.game.components">EntityDirectionComponent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Used to keep record of the position that moving units such as enemies, friendlies
+ and workers, it uses an EnemyDirection enumeration class for each compass direction
+ and EnemyDirection.DEFAULT which is only set upon initialising the class, this to stop
+ avoid using null for direction when component is first initialised.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/EntityService.html" title="class in com.deco2800.game.entities">EntityService</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
@@ -383,14 +410,6 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="com/deco2800/game/map/util/NoEntityException.html" title="class in com.deco2800.game.map.util">NoEntityException</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/configs/NPCConfigs.html" title="class in com.deco2800.game.entities.configs">NPCConfigs</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Defines all NPC configs to be loaded by the NPC Factory.</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Factory to create non-playable character (NPC) entities with predefined components.</div>
-</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Factory to create obstacle entities.</div>
