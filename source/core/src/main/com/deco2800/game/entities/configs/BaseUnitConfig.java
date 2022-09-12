@@ -7,4 +7,5 @@ public class BaseUnitConfig {
     public int baseDefence = 0;
     public float landSpeed = 1.0f; // potentially unused
     public float movementRadius = 1f;
+    public int range = 0;
 }

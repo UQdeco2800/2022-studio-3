@@ -16,10 +16,12 @@ import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.entities.factories.EnemyFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.UnitFactory;
@@ -112,9 +114,10 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
-            "images/duration_bar/duration-bar.atlas",
-            "images/archer.atlas", "images/swordsman.atlas",
-            "images/hoplite.atlas", "images/spearman.atlas"
+            "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
+            "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
+            "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
+            "images/newwolf.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -158,10 +161,62 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
+        spawnBlueJokers();
+        spawnWolf();
+        spawnTitan();
+        spawnSnakes();
+
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
         spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
         spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+        // spawnTrees();
+        //spawnStone();
+        //spawnMiner();
+    }
+
+    /**
+     * Spawns Blue Joker enemy entities
+     */
+    private void spawnBlueJokers() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(blueJoker, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Snake enemy entities
+     */
+    private void spawnSnakes() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(snake, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Titan enemy entities
+     */
+    private void spawnTitan() {
+        for (int i = 0; i < 5; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(titan, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Wolf enemy entities
+     */
+    private void spawnWolf() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(wolf, spawnPoint, true, true);
+        }
     }
 
     private void displayUI() {

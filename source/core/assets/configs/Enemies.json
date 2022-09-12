@@ -1,0 +1,37 @@
+{
+  "blueJoker": {
+    "troops": 1,
+    "health": 100,
+    "baseAttack": 15,
+    "baseDefence": 0,
+    "landSpeed": 1.0,
+    "range": 0
+  },
+  "snake": {
+    "troops": 1,
+    "health": 100,
+    "baseAttack": 60,
+    "baseDefence": 5,
+    "landSpeed": 20.0,
+    "range": 10
+  },
+
+  "wolf": {
+    "troops": 1,
+    "health": 100,
+    "baseAttack": 60,
+    "baseDefence": 25,
+    "landSpeed": 15.0,
+    "range": 0
+  },
+
+  "titan": {
+    "troops": 1,
+    "health": 100,
+    "baseAttack": 80,
+    "baseDefence": 50,
+    "landSpeed": 10.0,
+    "range": 0
+  }
+}
+
