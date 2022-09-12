@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Gdx;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
@@ -15,10 +16,12 @@ import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.entities.factories.EnemyFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.UnitFactory;
@@ -111,13 +114,14 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
-            "images/duration_bar/duration-bar.atlas",
-            "images/archer.atlas", "images/swordsman.atlas",
-            "images/hoplite.atlas", "images/spearman.atlas"
+            "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
+            "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
+            "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
+            "images/newwolf.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/menu.wav";
-    private static final String[] atlantisMusic = {backgroundMusic};
+
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
     private final AtlantisTerrainFactory terrainFactory;
 
@@ -141,7 +145,7 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        //playMusic();
+        playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
@@ -157,10 +161,62 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
+        spawnBlueJokers();
+        spawnWolf();
+        spawnTitan();
+        spawnSnakes();
+
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
         spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
         spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+        // spawnTrees();
+        //spawnStone();
+        //spawnMiner();
+    }
+
+    /**
+     * Spawns Blue Joker enemy entities
+     */
+    private void spawnBlueJokers() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(blueJoker, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Snake enemy entities
+     */
+    private void spawnSnakes() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(snake, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Titan enemy entities
+     */
+    private void spawnTitan() {
+        for (int i = 0; i < 5; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(titan, spawnPoint, true, true);
+        }
+    }
+
+    /**
+     * Spawns Wolf enemy entities
+     */
+    private void spawnWolf() {
+        for (int i = 0; i < 10; i++) {
+            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+            spawnEntityAt(wolf, spawnPoint, true, true);
+        }
     }
 
     private void displayUI() {
@@ -482,8 +538,9 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void playMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-        music.setLooping(true);
+        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+
+        music.setLooping(false);
         music.setVolume(0.5f);
         music.play();
     }
@@ -506,7 +563,6 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
-        resourceService.loadMusic(atlantisMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -520,13 +576,12 @@ public class AtlantisGameArea extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(atlantisSounds);
-        resourceService.unloadAssets(atlantisMusic);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+        music.stop();
         this.unloadAssets();
     }
 }

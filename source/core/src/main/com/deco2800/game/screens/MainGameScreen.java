@@ -63,6 +63,11 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerMapService(new MapService());
+
+    ServiceLocator.registerMapService(new MapService());
+
+    ServiceLocator.registerMapService(new MapService());
 
     ServiceLocator.registerMapService(new MapService());
 
@@ -140,6 +145,7 @@ public class MainGameScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
+    DialogueBoxDisplay dialogueBoxDisplay = new DialogueBoxDisplay(537f);
 
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))

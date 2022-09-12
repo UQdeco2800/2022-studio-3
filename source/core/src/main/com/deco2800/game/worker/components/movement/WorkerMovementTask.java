@@ -1,10 +1,15 @@
 package com.deco2800.game.worker.components.movement;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +26,7 @@ public class WorkerMovementTask extends DefaultTask {
     private long lastTimeMoved;
     private Vector2 lastPos;
     private PhysicsMovementComponent movementComponent;
+    private List<GridPoint2> path;
 
     public WorkerMovementTask(Vector2 target) {
         this.target = target;
@@ -31,6 +37,11 @@ public class WorkerMovementTask extends DefaultTask {
     public void start() {
         super.start();
         this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
+        // MapService ms = ServiceLocator.getMapService();
+        // path = ms.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
+        // movementComponent.setTarget(ms.tileToWorldPosition(path.get(1)));
+        // path.remove(0);
+        // path.remove(1);
         movementComponent.setTarget(target);
         movementComponent.setMoving(true);
         logger.debug("Starting movement towards {}", target);
@@ -49,6 +60,14 @@ public class WorkerMovementTask extends DefaultTask {
             movementComponent.setMoving(false);
             status = Status.FINISHED;
             logger.debug("Finished moving to {}", target);
+        // if (path.size() == 0) {
+        //     movementComponent.setMoving(false);
+        //     status = Status.FINISHED;
+        //     logger.debug("Finished moving to {}", target);
+        // } else if (isAtTarget()) {
+        //     MapService ms = ServiceLocator.getMapService();
+        //     movementComponent.setTarget(ms.tileToWorldPosition(path.get(0)));
+        //     path.remove(0);
         } else {
             checkIfStuck();
         }
