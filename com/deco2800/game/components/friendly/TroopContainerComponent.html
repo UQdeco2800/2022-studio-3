@@ -122,7 +122,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -143,9 +143,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Early update called once per frame of the game, before update().</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.Vector2&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFormation(com.badlogic.gdx.math.Vector2,float,int)" class="member-name-link">getFormation</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;centrePos,
+ float&nbsp;boundingRadius,
+ int&nbsp;n)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Finds the formation of the troops around a point</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">updates the components of troops, and pulls them back in line if they
  have managed to move too far from the center of the unit</div>
 </div>
@@ -233,6 +240,22 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../Component.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFormation(com.badlogic.gdx.math.Vector2,float,int)">
+<h3>getFormation</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.badlogic.gdx.math.Vector2&gt;</span>&nbsp;<span class="element-name">getFormation</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;centrePos,
+ float&nbsp;boundingRadius,
+ int&nbsp;n)</span></div>
+<div class="block">Finds the formation of the troops around a point</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>centrePos</code> - the position the unit is/will be centred on</dd>
+<dd><code>n</code> - the number of troops to form in the unit</dd>
+<dt>Returns:</dt>
+<dd>the positions of the resultant troops</dd>
 </dl>
 </section>
 </li>
