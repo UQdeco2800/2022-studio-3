@@ -16,6 +16,7 @@ public class WeatherIconTest {
     Skin countdownSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     Timer timer = new Timer(5000, 10001);
     Label timerCountdown = new Label(String.valueOf(timer.timeLeft()), countdownSkin);
+    Label timerCountdown2 = new Label(String.valueOf(timer.timeLeft() + 2), countdownSkin);
     WeatherIcon weatherIcon = new WeatherIcon(timerCountdown);
 
     @Test
@@ -58,5 +59,17 @@ public class WeatherIconTest {
     @Test
     void createIcon() {
         assertNotNull(weatherIcon);
+    }
+
+    @Test
+    void checkGetTimerLabel() {
+        assertTrue(weatherIcon.getTimerLabel() == timerCountdown);
+    }
+
+    @Test
+    void checkSetTimerLabel() {
+        Label init = weatherIcon.getTimerLabel();
+        weatherIcon.setTimerLabel(timerCountdown2);
+        assertTrue(init != weatherIcon.getTimerLabel());
     }
 }
