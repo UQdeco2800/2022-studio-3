@@ -1,0 +1,20 @@
+{
+resources: [
+	{ 
+		"name": "Tree",
+		"width": 1,
+		"height": 1,
+		"minAmount": 25,
+		"maxAmount": 60,
+		"preferredDistance": 30
+	},
+	{
+		"name": "Stone",
+		"width": 2,
+		"height": 2,
+		"minAmount": 5,
+		"maxAmount": 10,
+		"preferredDistance": 999
+	}
+]
+}

@@ -69,6 +69,22 @@ public class MapGenerator {
      */
     private final char cityChar = 'c';
 
+    /**
+     * List of resourceSpecification objects that contain the placements of each resource
+     */
+    private List<ResourceSpecification> resourcePlacements;
+
+    /**
+     * Map containing only the vertices around the island - used for testing purposes
+     */
+    private char[][] outlineMap;
+
+    /**
+     * Map containing the two edges of the island - used by ResourceGenerator
+     * @return list containing the two edge points of the island (x co-ords wise)
+     */
+    private Map<String, Coordinate> islandEdges;
+
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -92,8 +108,13 @@ public class MapGenerator {
         this.islandSize = islandSize;
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
+        this.islandEdges = new HashMap<>();
         //Generate map
         generateMap();
+
+        //Add resources
+        ResourceGenerator rg = new ResourceGenerator(this);
+        resourcePlacements = rg.getResources();
     }
 
     /**
@@ -117,7 +138,15 @@ public class MapGenerator {
      * @return map containing characters denoting island/city/ocean tiles
      */
     public char[][] getMap() {
-        return Arrays.copyOf(map, this.mapWidth * this.mapHeight);
+        return copyMap(map, mapWidth, mapHeight);
+    }
+
+    /**
+     * Returns a copy of this MapGenerator's outline map
+     * @return map containing all the edges of the island
+     */
+    public char[][] getOutlineMap() {
+        return copyMap(outlineMap, mapWidth, mapHeight);
     }
 
     /**
@@ -134,6 +163,22 @@ public class MapGenerator {
      */
     public int getHeight() {
         return this.mapHeight;
+    }
+
+    /**
+     * Returns the island size associated with the current map
+     * @return the island size within the map
+     */
+    public int getIslandSize() {
+        return this.islandSize;
+    }
+
+    /**
+     * Returns a map containing the coordinates of each island edge
+     * @return the coordinates of the island edges of the map
+     */
+    public Map<String, Coordinate> getIslandEdges() {
+        return this.islandEdges;
     }
 
     /**
@@ -166,6 +211,14 @@ public class MapGenerator {
      */
     public Map<String, Coordinate> getCityDetails() {
         return this.cityDetails;
+    }
+
+    /**
+     * Returns the list of resourceSpecification, holding the placements of each placed resource
+     * @return list of resourceSpecification
+     */
+    public List<ResourceSpecification> getResourcePlacements() {
+        return this.resourcePlacements;
     }
 
     /**
@@ -261,13 +314,44 @@ public class MapGenerator {
     }
 
     /**
+     * Writes the contents of the map to the text file specified
+     * @param map 2d char array to write
+     * @param path the path of the text file to be written to
+     */
+    public static void writeMap(char[][] map, String path, int mapWidth, int mapHeight) {
+        File outFile = new File(path);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+            for (int i = 0; i < mapHeight; i++) {
+                for (int j = 0; j < mapWidth; j++) {
+                    bw.write(map[i][j]);
+                }
+                bw.write("| " + i); //Write array numbers of rows for debugging
+                bw.write('\n');
+            }
+            //Write array numbers of columns at bottom for debugging
+            for (int i = 0; i < mapWidth; i++) {
+                if (i % 10 == 0 || i == mapWidth - 1) {
+                    bw.write(String.valueOf(i));
+                    //Write empty spaces between characters, unless it had multiple digits...
+                } else if (!(i % 10 == 1 && i >= 10) && !(i % 10 == 2 && i >= 100)) {
+                    bw.write(' ');
+                }
+            }
+            bw.close();
+        } catch (IOException squashed) {
+            //Squashed
+        }
+    }
+
+    /**
      * Adds the island tiles to the map array through procedural generation
      */
     private void makeIsland() {
         //Define and store edges of island
-        Coordinate[] edges = defineIslandEdges();
-        Coordinate leftEdge = edges[0];
-        Coordinate rightEdge = edges[1];
+        defineIslandEdges();
+        Coordinate leftEdge = islandEdges.get("Left");
+        Coordinate rightEdge = islandEdges.get("Right");
         addPoint(leftEdge);
         addPoint(rightEdge);
 
@@ -290,7 +374,8 @@ public class MapGenerator {
             addPoint(chosenMove);
             reference = chosenMove;
         }
-
+        //Store a copy of the outline map
+        this.outlineMap = copyMap(map, mapWidth, mapHeight);
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);
     }
@@ -311,15 +396,12 @@ public class MapGenerator {
         //Fill in between points - for whole island function
         for (int i = rightEdge.getX(); i >= leftEdge.getX(); i--) {
             boolean filling = false;
-            //System.out.println("Filling at x = " +i);
             for (int j = mapHeight - 1; j >= 0; j--) {
                 //If the coordinate at this point has a tile at this point, invert filling
                 Coordinate currentTile = new Coordinate(i, j);
-                //System.out.println("Examining: "+ currentTile.toString());
                 if (map[j][i] == islandChar
                         && (!(currentTile.equals(leftEdge)))
                         && (!(currentTile.equals(rightEdge)))) {
-                    //System.out.println("Fill switched at: " + currentTile);
                     filling = !filling;
                 } else if (filling && !(coordInCity(currentTile))) {
                     addPoint(currentTile);
@@ -333,11 +415,10 @@ public class MapGenerator {
      * of the city, if map space permits
      * @return 2D array of coordinate with entry [0] holding the left edge and [1] holding the right
      */
-    private Coordinate[] defineIslandEdges() throws IllegalArgumentException {
+    private void defineIslandEdges() throws IllegalArgumentException {
         if (mapWidth < islandSize + cityWidth + 2 * islandBuffer) {
             throw new IllegalArgumentException("Map too small for island of size " + islandSize);
         }
-        Coordinate[] edges = new Coordinate[2];
         Coordinate centre = cityDetails.get("Centre");
 
         int leftPivot = centre.getX() - cityWidth / 2 - 1;
@@ -350,9 +431,8 @@ public class MapGenerator {
                 rightPivot++;
             }
         }
-        edges[0] = new Coordinate(leftPivot, centre.getY());
-        edges[1] = new Coordinate(rightPivot, centre.getY());
-        return edges;
+        islandEdges.put("Left", new Coordinate(leftPivot, centre.getY()));
+        islandEdges.put("Right", new Coordinate(rightPivot, centre.getY()));
     }
 
 
@@ -493,6 +573,21 @@ public class MapGenerator {
         }
         //20 tiles at most may be adjacent within these conditions -> weighting of 1
         return 21 - adjacentTileCount;
+    }
+
+    /**
+     * Copies the 2D map array into a new char[][] array
+     * @param map the map to be copied
+     * @return a new reference to an identical map array of char
+     */
+    public static char[][] copyMap (char[][] map, int mapWidth, int mapHeight) {
+        char [][] newMap = new char[mapHeight][mapWidth];
+        for (int i = 0; i < mapWidth; i++) {
+            for (int j = 0; j < mapHeight; j++) {
+                newMap[j][i] = map[j][i];
+            }
+        }
+        return newMap;
     }
 }
 

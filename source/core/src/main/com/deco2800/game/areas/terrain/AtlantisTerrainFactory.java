@@ -9,7 +9,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
@@ -66,8 +69,10 @@ public class AtlantisTerrainFactory {
         ResourceService resourceService = ServiceLocator.getResourceService();
         textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
         textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
-        textures.put("Ocean", new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class)));
-        textures.put("Ocean", new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class)));
+        textures.put("Sea1", new TextureRegion(resourceService.getAsset("images/sea_1.png", Texture.class)));
+        textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
+        textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/sea_3.png", Texture.class)));
+        textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/sea_4.png", Texture.class)));
     }
 
     public TerrainComponent createAtlantisTerrainComponent() {
@@ -119,11 +124,18 @@ public class AtlantisTerrainFactory {
         //Set terrainTiles based on textures stored in textures
         TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
-        TerrainTile oceanTile = new TerrainTile(textures.get("Ocean"));
+
+        //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
+        Array<StaticTiledMapTile> oceanFrames = new Array<>();
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea1")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+
         //Set id for each tile - used for visualising minimap
         grassTile.setId(0);
         sandTile.setId(1);
-        oceanTile.setId(2);
 
         //Load the map from the map generator
         char[][] map = mapGenerator.getMap();
@@ -132,20 +144,31 @@ public class AtlantisTerrainFactory {
             for (int y = 0; y < mapHeight; y++) {
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
-                    //Set ocean tiles to ocean textures
-                    cell.setTile(oceanTile);
+                    //Set ocean tiles to animated ocean textures
+                    cell.setTile(animatedOceanTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     cell.setTile(sandTile);
                     // register position with MapService (TODO: move somewhere nicer)
-                    ServiceLocator.getMapService().addIslandTile(x, y);
+                    ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 } else {
                     cell.setTile(grassTile);
+                    // register position with MapService (TODO: move somewhere nicer)
+                    ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely
                 layer.setCell(x, mapHeight - 1 - y, cell);
             }
         }
+    }
+
+    /**
+     * Returns a new MapGenerator with identical parameters as the one created for the game -
+     * used in testing the consistency of the MapGenerator
+     * @return new MapGenerator with correct parameters
+     */
+    public static MapGenerator makeMapGenerator() {
+        return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
     }
 
     /**
