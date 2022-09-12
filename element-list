@@ -48,3 +48,4 @@ com.deco2800.game.worker.components.movement
 com.deco2800.game.worker.components.type
 com.deco2800.game.worker.resources
 com.deco2800.game.worker.type
+main.com.deco2800.game.components.weather
