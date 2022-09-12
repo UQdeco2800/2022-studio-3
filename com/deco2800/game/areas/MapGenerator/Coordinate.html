@@ -129,13 +129,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Getter function to return the y value of this coordinate</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inBounds(com.deco2800.game.areas.MapGenerator.MapGenerator)" class="member-name-link">inBounds</a><wbr>(<a href="MapGenerator.html" title="class in com.deco2800.game.areas.MapGenerator">MapGenerator</a>&nbsp;mg)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inBounds(int,int)" class="member-name-link">inBounds</a><wbr>(int&nbsp;mapWidth,
+ int&nbsp;mapHeight)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether a coord is in map bounds</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inBounds(com.deco2800.game.areas.MapGenerator.MapGenerator)" class="member-name-link">inBounds</a><wbr>(<a href="MapGenerator.html" title="class in com.deco2800.game.areas.MapGenerator">MapGenerator</a>&nbsp;mg)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns whether a coord is in map bounds of the specified MapGenerator</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Coordinates can be more easily visualised in typical cartesian form of "(x, y)"
  The toString() function is overridden to allow debugging of errors</div>
 </div>
@@ -214,6 +220,21 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>mg</code> - MapGenerator with which this coordinate is referencing</dd>
+<dt>Returns:</dt>
+<dd>true if in bounds, false otherwise</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="inBounds(int,int)">
+<h3>inBounds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">inBounds</span><wbr><span class="parameters">(int&nbsp;mapWidth,
+ int&nbsp;mapHeight)</span></div>
+<div class="block">Returns whether a coord is in map bounds</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>mapWidth</code> - width of the map</dd>
+<dd><code>mapHeight</code> - height of the map</dd>
 <dt>Returns:</dt>
 <dd>true if in bounds, false otherwise</dd>
 </dl>
