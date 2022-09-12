@@ -2,9 +2,7 @@ package com.deco2800.game.areas.MapGenerator;
 import com.deco2800.game.extensions.GameExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import java.util.Map;
-
 import static org.junit.Assert.*;
 
 @ExtendWith(GameExtension.class)

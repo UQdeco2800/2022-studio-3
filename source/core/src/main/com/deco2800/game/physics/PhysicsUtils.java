@@ -16,6 +16,15 @@ public class PhysicsUtils {
             boundingBox, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
   }
 
+  public static void setScaledRadius(Entity entity, float scale) {
+
+  }
+
+  public static void setRadiusCollider(Entity entity, float radius) {
+    entity.getComponent(ColliderComponent.class)
+            .setAsRadius(radius);
+  }
+
   public static void setScaledColliderCentered(Entity entity, float scaleX, float scaleY) {
     Vector2 boundingBox = entity.getScale().cpy().scl(scaleX, scaleY);
     entity

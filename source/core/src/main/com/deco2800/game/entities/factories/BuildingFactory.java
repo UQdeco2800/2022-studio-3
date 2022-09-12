@@ -15,6 +15,7 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -32,7 +33,7 @@ public class BuildingFactory {
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
     private static final ResourceConfig stats =
-            FileLoader.readClass(ResourceConfig.class, "configs/Base.json");
+            FileLoader.readClass(ResourceConfig.class, "configs/base.json");
 
     /**
      * Use this as a base entity for creating buildings
@@ -59,7 +60,8 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
-                .addComponent(new BaseComponent());
+                .addComponent(new BaseComponent())
+                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"));
 
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
@@ -98,6 +100,7 @@ public class BuildingFactory {
 
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 
         barracks.scaleWidth(BARRACKS_SCALE);

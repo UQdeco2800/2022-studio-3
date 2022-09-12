@@ -15,6 +15,7 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -50,6 +51,7 @@ public class PlayerFactory {
                     .addComponent(inputComponent)
                     .addComponent(new PlayerStatsDisplay())
                     .addComponent(new SelectableComponent())
+                    .addComponent(new HighlightedTextureRenderComponent("images/box_boy_highlight.png"))
                     .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit());
 
 

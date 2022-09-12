@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.Renderable;
 import com.deco2800.game.services.ResourceService;
@@ -95,18 +97,13 @@ public class MinimapComponent extends RenderComponent {
                 Texture currentTexture;
                 TiledMapTileLayer.Cell cell = terrainLayer.getCell(i, j);
                 //Take the tile and get its id to determine colour
-                //0 = Grass, 1 = Sand, 2 = Ocean
-                TerrainTile tile = (TerrainTile) cell.getTile();
-                if (tile.getId() == 0) {
-                    //City tile
-                    currentTexture = dummyTile;
-                } else if (tile.getId() == 1){
-                    //Island tile
+                //If the cell is a TerrainTile, it is an island tile, else animated ocean tile
+                if (cell.getTile() instanceof  TerrainTile) {
                     currentTexture = dummyTile;
                 } else {
-                    //Must be ocean tile
                     currentTexture = dummyOcean;
                 }
+
                 //Draw each tile texture at the appropriate position, with the appropriate dimensions
                 //Determine scaling for the tile image based on current zoom
                 float tileXScale = tileSize.x / (currentTexture.getWidth() * scaleConstant);
@@ -124,6 +121,7 @@ public class MinimapComponent extends RenderComponent {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         batch.end();
+        
         //Get edges of screen
         Vector3 worldSW = camera.unproject(new Vector3(0, screenHeight, 0));
         Vector3 worldSE = camera.unproject(new Vector3(screenWidth, screenHeight, 0));
@@ -172,12 +170,32 @@ public class MinimapComponent extends RenderComponent {
                 world.y + (tileHeight * minY),
                 (maxX - minX) * tileWidth,
                 (maxY - minY) * tileHeight);
-        //End shape rendering, restart batch
         shapeRenderer.end();
+        drawEntities(shapeRenderer, world, tileHeight, tileWidth, mapWidth);
+
         batch.begin();
     }
 
     /**
+     * Helper function that draws an entity on the minimap.
+     */
+    private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
+        Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+
+
+        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
+            if (item.getValue().isDisplay()) {
+                GridPoint2 position = item.getKey();
+                shapeRenderer.setColor(item.getValue().getColour());
+                shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            }
+        }
+        shapeRenderer.end();
+    }
+
+    /*
      * Takes a pair of floats in the form of a Vector2, which correspond to the width and height of a rectangle
      * drawn on the screen. Returns the pixel size of the width and height of this rectangle.
      * @param worldSize (x,y) side lengths of a rectangle in world coordinates
