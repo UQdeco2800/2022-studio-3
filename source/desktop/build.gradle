@@ -18,6 +18,7 @@ task run(dependsOn: classes, type: JavaExec) {
             ["-Djava.util.logging.config.file=../../logging.properties"]
 }
 
+
 task debug(dependsOn: classes, type: JavaExec) {
     mainClass.set(project.mainClassName)
     classpath = sourceSets.main.runtimeClasspath

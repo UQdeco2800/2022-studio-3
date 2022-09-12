@@ -8,6 +8,7 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import com.badlogic.gdx.InputProcessor;
+import org.slf4j.helpers.Util;
 
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
@@ -88,10 +89,7 @@ public class TouchPlayerInputComponent extends InputComponent {
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     entity.getEvents().trigger("attack");
-    if (button == Input.Buttons.LEFT) {
-      entity.getEvents().trigger("place", screenX, screenY);
-    }
-    return true;
+    return false;
   }
 
   private void triggerWalkEvent() {
@@ -104,7 +102,6 @@ public class TouchPlayerInputComponent extends InputComponent {
 
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
-    entity.getEvents().trigger("placing", screenX, screenY);
     return true;
   }
 }

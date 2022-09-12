@@ -70,7 +70,7 @@ public class CameraInputComponent extends InputComponent {
     public boolean mouseMoved(int screenX, int screenY) {
         //Mouse moved, check if it is at a screen extremity
         updateDirection();
-        return true;
+        return false;
     }
 
     /**
