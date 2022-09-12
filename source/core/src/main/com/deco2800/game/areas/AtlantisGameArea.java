@@ -15,9 +15,11 @@ import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
@@ -39,8 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Atlantis game area for creating the map the game is played in
@@ -83,7 +85,12 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
-            "images/stone.png"
+            "images/stone.png",
+            "images/archer.png",
+            "images/swordsman.png",
+            "images/hoplite.png",
+            "images/spearman.png",
+            "images/simpleman.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -97,6 +104,8 @@ public class AtlantisGameArea extends GameArea {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
             "images/duration_bar/duration-bar.atlas",
+            "images/archer.atlas", "images/swordsman.atlas",
+            "images/hoplite.atlas", "images/spearman.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -138,6 +147,12 @@ public class AtlantisGameArea extends GameArea {
         spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
+         spawnMiner();
+        // spawnExampleUnit();
+        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
     }
 
     private void displayUI() {
@@ -386,6 +401,36 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
+     * Creates an example unit for testing formations and actions
+     *
+     * Places the unit relative to the city centre for convenience
+     */
+    private void spawnExampleUnit() {
+        Entity exampleUnit = UnitFactory.createExampleUnit();
+        GridPoint2 location =
+                RandomPointGenerator.getRandomPointInRange(terrainFactory,
+                        0.75);
+        spawnEntityAt(exampleUnit, location, true, true);
+    }
+
+    /**
+     * Creates units for demonstration purposes
+     *
+     * Spawns them relative to city centre for convenience
+     * @param type Which unit are we spawning? (see unit wiki)
+     * @param location offset from centre of city
+     */
+    private void spawnUnit(UnitType type, GridPoint2 location) {
+        Entity unit = UnitFactory.createUnit(type);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate cityCentre = mg.getCityDetails().get("Centre");
+        spawnEntityAt(unit, new GridPoint2(cityCentre.getX(),
+                mg.getHeight() - cityCentre.getY()).add(location.x, location.y)
+                , true, false);
+    }
+
+
+    /**
      * Randomly spawns a worker base on the map
      */
     private void spawnWorkerBase() {
@@ -428,6 +473,17 @@ public class AtlantisGameArea extends GameArea {
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
+    }
+
+    /**
+     * Gets the entity(ies) in the area which match the given id.
+     *
+     * Used primarily for debugging purposes
+     * @param id the id to search for
+     * @return the entities matching the given ID
+     */
+    public List<Entity> getEntityByID(int id) {
+        return areaEntities.stream().filter(x -> x.getId() == id).collect(Collectors.toList());
     }
 
     private void loadAssets() {
