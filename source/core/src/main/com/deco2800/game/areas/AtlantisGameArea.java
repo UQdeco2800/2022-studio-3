@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.friendly.SoldierFactory;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -23,6 +24,7 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -74,7 +76,11 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
-            "images/stone.png"
+            "images/stone.png",
+            "images/archer_sprite_sheet.png",
+            "images/Hoplite.png",
+            "images/spearman.png",
+            "images/swordsman_sprite_sheet.png"
     };
 
     private static final String[] uiTextures = {
@@ -128,6 +134,8 @@ public class AtlantisGameArea extends GameArea {
         spawnTrees();
         spawnStone();
         // spawnMiner();
+
+        spawnArcher();
     }
 
     private void displayUI() {
@@ -144,7 +152,6 @@ public class AtlantisGameArea extends GameArea {
         dialogueBoxDisplay.setTitle("example title");
         dialogueBox.addComponent(dialogueBoxDisplay);
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
-
         spawnEntity(dialogueBox);
     }
 
@@ -346,6 +353,15 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
     }
+
+    private void spawnArcher() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate centre = mg.getCityDetails().get("Centre");
+        Entity newArcher = SoldierFactory.createArcher(this).addComponent(new MapComponent());
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+        spawnEntityAt(newArcher, spawn, true, true);
+        }
+
 
     /**
      * Randomly spawns a worker base on the map
