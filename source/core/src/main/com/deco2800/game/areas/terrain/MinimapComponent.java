@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -96,18 +97,13 @@ public class MinimapComponent extends RenderComponent {
                 Texture currentTexture;
                 TiledMapTileLayer.Cell cell = terrainLayer.getCell(i, j);
                 //Take the tile and get its id to determine colour
-                //0 = Grass, 1 = Sand, 2 = Ocean
-                TerrainTile tile = (TerrainTile) cell.getTile();
-                if (tile.getId() == 0) {
-                    //City tile
-                    currentTexture = dummyTile;
-                } else if (tile.getId() == 1){
-                    //Island tile
+                //If the cell is a TerrainTile, it is an island tile, else animated ocean tile
+                if (cell.getTile() instanceof  TerrainTile) {
                     currentTexture = dummyTile;
                 } else {
-                    //Must be ocean tile
                     currentTexture = dummyOcean;
                 }
+
                 //Draw each tile texture at the appropriate position, with the appropriate dimensions
                 //Determine scaling for the tile image based on current zoom
                 float tileXScale = tileSize.x / (currentTexture.getWidth() * scaleConstant);
@@ -174,11 +170,9 @@ public class MinimapComponent extends RenderComponent {
                 world.y + (tileHeight * minY),
                 (maxX - minX) * tileWidth,
                 (maxY - minY) * tileHeight);
-
+        shapeRenderer.end();
         drawEntities(shapeRenderer, world, tileHeight, tileWidth, mapWidth);
 
-        //End shape rendering, restart batch
-        shapeRenderer.end();
         batch.begin();
     }
 
@@ -187,14 +181,18 @@ public class MinimapComponent extends RenderComponent {
      */
     private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
         Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
-
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
 
-        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
-            GridPoint2 position = item.getKey();
 
-            shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
+            if (item.getValue().isDisplay()) {
+                GridPoint2 position = item.getKey();
+                shapeRenderer.setColor(item.getValue().getColour());
+                shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            }
         }
+        shapeRenderer.end();
     }
 
     /*

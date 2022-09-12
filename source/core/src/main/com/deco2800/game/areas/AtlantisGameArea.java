@@ -1,27 +1,32 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
+import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
@@ -35,7 +40,9 @@ import com.deco2800.game.worker.components.type.MinerComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Atlantis game area for creating the map the game is played in
@@ -57,6 +64,10 @@ public class AtlantisGameArea extends GameArea {
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
+            "images/sea_1.png",
+            "images/sea_2.png",
+            "images/sea_3.png",
+            "images/sea_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -74,7 +85,12 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
-            "images/stone.png"
+            "images/stone.png",
+            "images/archer.png",
+            "images/swordsman.png",
+            "images/hoplite.png",
+            "images/spearman.png",
+            "images/simpleman.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -88,6 +104,8 @@ public class AtlantisGameArea extends GameArea {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
             "images/duration_bar/duration-bar.atlas",
+            "images/archer.atlas", "images/swordsman.atlas",
+            "images/hoplite.atlas", "images/spearman.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/menu.wav";
@@ -104,9 +122,7 @@ public class AtlantisGameArea extends GameArea {
         this.terrainFactory = terrainFactory;
     }
 
-    /**
-     * Create the game area, including terrain, static entities (trees), dynamic entities (player)
-     */
+    /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
         loadAssets();
@@ -116,6 +132,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
+        centreCameraOnCity();
         //playMusic();
 
         // Spawn Buildings in the city
@@ -125,10 +142,17 @@ public class AtlantisGameArea extends GameArea {
 
         spawnForager();
         spawnForager();
+        //spawnWorkerBase();
+        spawnResources();
+        spawnMiner();
         // spawnWorkerBase();
-        spawnTrees();
-        spawnStone();
         // spawnMiner();
+         spawnMiner();
+        // spawnExampleUnit();
+        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
     }
 
     private void displayUI() {
@@ -244,14 +268,29 @@ public class AtlantisGameArea extends GameArea {
         //Spawn player at centre of city
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
-        Entity newPlayer = PlayerFactory.createPlayer().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLACK);
+        Entity newPlayer = PlayerFactory.createPlayer().addComponent(mapComponent);
         spawnEntityAt(newPlayer, spawn, true, true);
-
-        //Move camera to player
-        Vector2 centreWorld = terrain.tileToWorldPosition(spawn.x, spawn.y);
-        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
-
         return newPlayer;
+    }
+
+    /**
+     * Moves the camera to the centre of the city on game startup
+     */
+    private void centreCameraOnCity() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        //Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        //Store location as GridPoint2
+        GridPoint2 centrePoint = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+        //Convert to world coordinates
+        Vector2 centreWorld = terrain.tileToWorldPosition(centrePoint.x, centrePoint.y);
+        //Move  camera
+        terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
     }
 
     /**
@@ -262,7 +301,10 @@ public class AtlantisGameArea extends GameArea {
         Coordinate centre = mg.getCityDetails().get("Centre");
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        Entity townHall = BuildingFactory.createTownHall().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BROWN);
+        Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
@@ -337,7 +379,10 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnForager() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newForager = ForagerFactory.createForager().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.GREEN);
+        Entity newForager = ForagerFactory.createForager().addComponent(mapComponent);
         spawnEntityAt(newForager, spawn, true, true);
         return newForager;
     }
@@ -347,38 +392,79 @@ public class AtlantisGameArea extends GameArea {
      */
     private Entity spawnMiner() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity newMiner = MinerFactory.createMiner().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.YELLOW);
+        Entity newMiner = MinerFactory.createMiner().addComponent(mapComponent);
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
     }
+
+    /**
+     * Creates an example unit for testing formations and actions
+     *
+     * Places the unit relative to the city centre for convenience
+     */
+    private void spawnExampleUnit() {
+        Entity exampleUnit = UnitFactory.createExampleUnit();
+        GridPoint2 location =
+                RandomPointGenerator.getRandomPointInRange(terrainFactory,
+                        0.75);
+        spawnEntityAt(exampleUnit, location, true, true);
+    }
+
+    /**
+     * Creates units for demonstration purposes
+     *
+     * Spawns them relative to city centre for convenience
+     * @param type Which unit are we spawning? (see unit wiki)
+     * @param location offset from centre of city
+     */
+    private void spawnUnit(UnitType type, GridPoint2 location) {
+        Entity unit = UnitFactory.createUnit(type);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate cityCentre = mg.getCityDetails().get("Centre");
+        spawnEntityAt(unit, new GridPoint2(cityCentre.getX(),
+                mg.getHeight() - cityCentre.getY()).add(location.x, location.y)
+                , true, false);
+    }
+
 
     /**
      * Randomly spawns a worker base on the map
      */
     private void spawnWorkerBase() {
         GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        Entity workerBase = WorkerBaseFactory.createWorkerBase().addComponent(new MapComponent());
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLUE);
+        Entity workerBase = WorkerBaseFactory.createWorkerBase().addComponent(mapComponent);
         spawnEntityAt(workerBase, randomPos, false, false);
     }
 
     /**
-     * Spawns random tree within the city which is used by a forager to collect wood.
+     * Spawns all resources procedurally placed by ResourceGenerator
      */
-    private void spawnTrees() {
-        for (int i = 0; i < NUM_TREES; i++) {
-            GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
-            Entity tree = TreeFactory.createTree();
-            spawnEntityAt(tree, randomPos, false, false);
-        }
-    }
-
-    /**
-     * Spawns random stones within the city which is used by a miner to collect stone.
-     */
-    private void spawnStone() {
-        for (int i = 0; i < NUM_STONE; i++) {
-            GridPoint2 randomPos = RandomPointGenerator.getRandomPointInRange(terrainFactory, 1);
-            spawnEntityAt(StoneFactory.createStone(), randomPos, false, false);
+    private void spawnResources() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        List<ResourceSpecification> resources = mg.getResourcePlacements();
+        //Place each resource in the list
+        for (ResourceSpecification rs : resources) {
+            //Add a Minimap tracking component
+            MapComponent mapComponent = new MapComponent();
+            mapComponent.display();
+            for (Coordinate placement : rs.getPlacements()) {
+                GridPoint2 spawn = new GridPoint2(placement.getX(), mg.getHeight() - 1 - placement.getY());
+                if (rs.getName().equals("Tree")) {
+                    //Spawn a Tree entity
+                    mapComponent.setDisplayColour(Color.FOREST);
+                    spawnEntityAt(TreeFactory.createTree().addComponent(mapComponent), spawn, false, false);
+                } else if (rs.getName().equals("Stone")) {
+                    //Spawn a Stone entity
+                    mapComponent.setDisplayColour(Color.DARK_GRAY);
+                    spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                }
+            }
         }
     }
 
@@ -387,6 +473,17 @@ public class AtlantisGameArea extends GameArea {
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
+    }
+
+    /**
+     * Gets the entity(ies) in the area which match the given id.
+     *
+     * Used primarily for debugging purposes
+     * @param id the id to search for
+     * @return the entities matching the given ID
+     */
+    public List<Entity> getEntityByID(int id) {
+        return areaEntities.stream().filter(x -> x.getId() == id).collect(Collectors.toList());
     }
 
     private void loadAssets() {
