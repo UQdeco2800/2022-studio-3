@@ -12,12 +12,12 @@ import static java.lang.Math.abs;
 
 public class MouseInputComponent extends InputComponent {
 
-    //used for touch drag
-    ShapeRenderer shapeRenderer;
     //used for touchDown
     int touchDownX;
     //used for touchDown
     int touchDownY;
+
+    boolean leftPressed;
 
     /**
      * Controls the input of the mouse, whether it be clicked or clicked and dragged so that when the player does so,
@@ -25,7 +25,7 @@ public class MouseInputComponent extends InputComponent {
      */
     public MouseInputComponent() {
         super(5);
-        shapeRenderer = new ShapeRenderer();
+        leftPressed = false;
     }
 
     /**
@@ -40,8 +40,17 @@ public class MouseInputComponent extends InputComponent {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
+            this.leftPressed = true;
             this.touchDownX = screenX;
             this.touchDownY = screenY;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        if (!this.leftPressed) {
+            entity.getEvents().trigger("singleHover", screenX, screenY);
         }
         return false;
     }
@@ -59,16 +68,12 @@ public class MouseInputComponent extends InputComponent {
      */
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//
-//
-//
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        shapeRenderer.setColor(Color.RED);
-//        shapeRenderer.rect(300,300,20,20); //assuming you have created those x, y, width and height variables
-//        shapeRenderer.end();
-        return true;
+        if (this.leftPressed) {
+            entity.getEvents().trigger("multipleHover", touchDownX, touchDownY, screenX, screenY);
+            entity.getEvents().trigger("updateBox", touchDownX,
+                    Gdx.graphics.getHeight() - touchDownY, screenX, Gdx.graphics.getHeight() - screenY);
+        }
+        return false;
     }
 
     /**
@@ -89,11 +94,13 @@ public class MouseInputComponent extends InputComponent {
 
         if (button == Input.Buttons.LEFT) {
             if (touchDownX == touchUpX && touchDownY == touchUpY) {
-                entity.getEvents().trigger("click", touchUpX, touchUpY);
+                entity.getEvents().trigger("singleSelect", touchUpX, touchUpY);
             } else {
-                entity.getEvents().trigger("dragAndClick", touchDownX, touchDownY, touchUpX, touchUpY);
+                entity.getEvents().trigger("multipleSelect", touchDownX, touchDownY, touchUpX, touchUpY);
             }
+            entity.getEvents().trigger("stopBox");
         }
+        this.leftPressed = false;
         return false;
     }
 }

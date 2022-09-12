@@ -10,6 +10,8 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.friendlyunits.GestureDisplay;
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -58,6 +60,9 @@ public class AtlantisGameArea extends GameArea {
             "images/Sand.png",
             "images/Grass.png",
             "images/box_boy_leaf.png",
+            "images/box_boy.png",
+            "images/Base_Highlight.png",
+            "images/box_boy_highlight.png",
             "images/tree.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
@@ -78,6 +83,7 @@ public class AtlantisGameArea extends GameArea {
             "images/TransBox.png",
             "images/white.png",
             "images/barracks_level_1.0.png",
+            "images/barracks_level_1.0_Highlight.png",
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
@@ -85,12 +91,14 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/base.png",
+            "images/Base_Highlight",
             "images/stone.png",
             "images/archer.png",
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png"
+
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -163,6 +171,11 @@ public class AtlantisGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
         spawnEntity(infoUi);
+
+        Entity gestureDisplay = new Entity();
+        gestureDisplay.addComponent(new MouseInputComponent());
+        gestureDisplay.addComponent(new GestureDisplay());
+        spawnEntity(gestureDisplay);
 
         Entity dialogueBox = new Entity();
         /* FIXME: temporary infobox width value */
