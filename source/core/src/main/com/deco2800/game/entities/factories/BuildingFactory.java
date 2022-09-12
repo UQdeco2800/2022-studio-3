@@ -1,17 +1,27 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
-import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.worker.components.ResourceStatsComponent;
+import com.deco2800.game.worker.components.type.BaseComponent;
+import com.deco2800.game.worker.resources.ResourceConfig;
 
 /**
  * Factory to create a building entity with predefined components.
@@ -20,19 +30,21 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * the properties stored in 'BuildingConfigs'.
  */
 public class BuildingFactory {
-    // Default physical collider of buildings made through building factory
-    private static final float COLLIDER_SCALE = 0.9f;
     private static final BuildingConfigs configs =
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
+    private static final ResourceConfig stats =
+            FileLoader.readClass(ResourceConfig.class, "configs/base.json");
 
     /**
+     * Use this as a base entity for creating buildings
      * @return a new Entity with universal building components
      */
     public static Entity createBaseBuilding() {
         return new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TouchPlayerInputComponent());
+                .addComponent(new SelectableComponent())
+                .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
     /**
@@ -40,16 +52,40 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
+        final float TH_SCALE = 7f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
         townHall.addComponent(new TextureRenderComponent("images/base.png"))
-                .addComponent(new BuildingActions(config.level));
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
+                .addComponent(new BaseComponent())
+                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"));
 
-        townHall.scaleWidth(5f);
-        PhysicsUtils.setScaledColliderCentered(townHall, 0.5f, 0.5f);
+        townHall.scaleWidth(TH_SCALE);
+        // Setting Isometric Collider
 
-        townHall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[] {      // Four vertices
+                31f, 607f,      // Vertex 0       3--2
+                499f, 835f,     // Vertex 1      /  /
+                958f, 515f,     // Vertex 2     /  /
+                486f, 289f      // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/base.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TH_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        boundingBox.set(vertices);
+        townHall.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
         return townHall;
     }
 
@@ -58,34 +94,38 @@ public class BuildingFactory {
      * @return Barracks Entity
      */
     public static Entity createBarracks() {
+        final float BARRACKS_SCALE = 5f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
-        barracks.addComponent(new TextureRenderComponent("images/isometric barracks current.png"))
-                .addComponent(new BuildingActions(config.level));
+        barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 
-        barracks.scaleWidth(2f);
-        PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
+        barracks.scaleWidth(BARRACKS_SCALE);
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1036f,    // Vertex 0        3
+                982f, 889f,     // Vertex 1    4 /   \ 2
+                982f, 761f,     // Vertex 2     |     |
+                605f, 581f,     // Vertex 3    5 \   / 1
+                222f, 736f,     // Vertex 4        0
+                222f, 874f      // Vertex 5
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(BARRACKS_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        barracks.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
-        return barracks;
-    }
-
-    /**
-     * Creates entity, adds and configures MedievalBarracks components
-     * @return MedievalBarracks Entity
-     */
-    public static Entity createBarracksMedieval() {
-        Entity barracks = createBaseBuilding();
-        BarracksConfig config = configs.barracks;
-
-        barracks.addComponent(new TextureRenderComponent("images/barracks medieval.png"))
-                .addComponent(new BuildingActions(config.level));
-
-        barracks.scaleWidth(2f);
-        PhysicsUtils.setScaledCollider(barracks, COLLIDER_SCALE, COLLIDER_SCALE);
-
-        barracks.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return barracks;
     }
 
@@ -97,13 +137,17 @@ public class BuildingFactory {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
 
-        wall.addComponent(new TextureRenderComponent("images/stone_wall.png"))
-            .addComponent(new BuildingActions(config.level));
+        wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
+            .addComponent(new BuildingActions(config.type, config.level))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
 
-        wall.scaleWidth(2f);
-        PhysicsUtils.setScaledColliderCentered(wall, .2f, .2f);
+        wall.scaleWidth(2.2f);
+        // Setting Isometric Collider (Normal collider rotated 60 degrees)
+        PolygonShape boundingBox = new PolygonShape();
+        Vector2 center = wall.getCenterPosition(); // Collider to be set around center of entity
+        boundingBox.setAsBox(center.x * 0.25f, center.y * 0.25f, center, (float) (60 * Math.PI / 180));
+        wall.getComponent(ColliderComponent.class).setShape(boundingBox);
 
-        wall.addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
         return wall;
     }
 

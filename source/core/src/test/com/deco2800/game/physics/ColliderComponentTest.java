@@ -117,6 +117,25 @@ class ColliderComponentTest {
   }
 
   @Test
+  void shouldSetCircle() {
+    Entity entity = new Entity();
+    entity.addComponent(new PhysicsComponent());
+    ColliderComponent component = new ColliderComponent();
+    entity.addComponent(component);
+    entity.setScale(4f, 4f);
+    component.setAsRadius(2f);
+    entity.create();
+
+    // roughly equivalent to PhysicsTestUtils.checkPolygonCollider()
+    Shape colliderShape = component.getFixture().getShape();
+    assertTrue(colliderShape instanceof CircleShape);
+    assertEquals(2f, colliderShape.getRadius());
+    // make sure we correctly assigned to the center of the entity
+    assertEquals(new Vector2(2f, 2f),
+            ((CircleShape) colliderShape).getPosition());
+  }
+
+  @Test
   void shouldSetAligned() {
     testAlignedBox(AlignX.LEFT, AlignY.BOTTOM, Vector2.Zero);
     testAlignedBox(AlignX.RIGHT, AlignY.TOP, new Vector2(2f, 2f));

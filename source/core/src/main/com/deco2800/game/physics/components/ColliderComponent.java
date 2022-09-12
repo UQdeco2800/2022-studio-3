@@ -1,5 +1,6 @@
 package com.deco2800.game.physics.components;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.components.Component;
@@ -96,6 +97,17 @@ public class ColliderComponent extends Component {
     return this;
   }
 
+  public ColliderComponent setAsRadius(float radius) {
+    return setAsRadius(radius, entity.getCenterPosition());
+  }
+
+  public ColliderComponent setAsRadius(float radius, Vector2 position) {
+    CircleShape brad = new CircleShape();
+    brad.setRadius(radius);
+    brad.setPosition(position);
+    setShape(brad);
+    return this;
+  }
   /**
    * Set friction. This affects the object when touching other objects, but does not affect friction
    * with the ground.
