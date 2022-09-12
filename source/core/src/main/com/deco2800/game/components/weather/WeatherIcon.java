@@ -171,6 +171,14 @@ public class WeatherIcon extends Actor {
     }
 
     /**
+     * Getter method to obtain WeatherIconProperties.
+     * @return WeatherIconProperties
+     */
+    public WeatherIconProperties getWeatherIconProperties() {
+        return this.weatherIconProperties;
+    }
+
+    /**
      * Setter method to set the timer label.
      *
      * @param countdownTimer A new Label to set the timer label to.
