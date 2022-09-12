@@ -68,7 +68,7 @@ public class InfoBoxDisplay extends UIComponent {
         backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
         backgroundBoxImage.setPosition(0f, 0f);
 
-        stage.addActor(backgroundBoxImage);
+
 
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
@@ -96,9 +96,7 @@ public class InfoBoxDisplay extends UIComponent {
         buildingTable.setHeight(100);
         buildingTable.setPosition(400, Gdx.graphics.getHeight()-680);
 
-        stage.addActor(pictureTable);
-        stage.addActor(infoTable);
-        stage.addActor(buildingTable);
+
         levelUpBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -147,10 +145,18 @@ public class InfoBoxDisplay extends UIComponent {
         boolean buildingSelected = false;
         //If there are entities selected
         if (!selectedEntities.isEmpty()) {
+            stage.addActor(backgroundBoxImage);
+            stage.addActor(pictureTable);
+            stage.addActor(infoTable);
+            stage.addActor(buildingTable);
             int length = selectedEntities.size;
             int sideLength = (int) Math.ceil(Math.sqrt(length));
             int column = 0;
             int row = 1;
+
+
+            backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
+            backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
             for (Entity entity: selectedEntities) {
@@ -211,6 +217,10 @@ public class InfoBoxDisplay extends UIComponent {
             }
 
 
+        } else {
+            pictureTable.remove();
+            infoTable.remove();
+            backgroundBoxImage.remove();
         }
     }
 
