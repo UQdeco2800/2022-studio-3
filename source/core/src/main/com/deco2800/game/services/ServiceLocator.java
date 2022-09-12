@@ -37,7 +37,7 @@ public class ServiceLocator {
   public static MapService getMapService() {
     return mapService;
   }
-
+  
   public static RenderService getRenderService() {
     return renderService;
   }

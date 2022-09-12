@@ -4,13 +4,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.story.StoryActions;
+import com.deco2800.game.components.story.StoryDisplay;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
+import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
-import com.deco2800.game.components.pausemenu.PauseMenuActions;
-import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.maingame.MainGameExitDisplay;
+import com.deco2800.game.components.weather.WeatherIconDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -27,10 +28,6 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
-import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.maingame.MainGameExitDisplay;
-import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,56 +36,35 @@ import org.slf4j.LoggerFactory;
  *
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
-public class MainGameScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png","images/bigblack.png", "images/resource_display.png", "images/gainstone.png", "images/gain10wood.png", "images/gainmetal.png"};
-  private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
-
+public class StoryScreen extends ScreenAdapter {
+  private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
+  private static final String[] storyTextures = {"images/cutscene-3.png"};
 
-  public MainGameScreen(GdxGame game) {
+
+  public StoryScreen(GdxGame game) {
     this.game = game;
 
-    logger.debug("Initialising main game screen services");
-    ServiceLocator.registerTimeSource(new GameTime());
-
-    PhysicsService physicsService = new PhysicsService();
-    ServiceLocator.registerPhysicsService(physicsService);
-    physicsEngine = physicsService.getPhysics();
-
+    logger.debug("Initialising story screen services");
     ServiceLocator.registerInputService(new InputService());
     ServiceLocator.registerResourceService(new ResourceService());
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerMapService(new MapService());
+    //ServiceLocator.registerRenderService(new RenderService());
 
-    ServiceLocator.registerMapService(new MapService());
 
-    ServiceLocator.registerMapService(new MapService());
-
-    ServiceLocator.registerMapService(new MapService());
 
     renderer = RenderFactory.createRenderer();
-    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
-    renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
     loadAssets();
     createUI();
 
-    logger.debug("Initialising main game screen entities");
-
-    // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
-    AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
-    AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
-    atlantisGameArea.create();
   }
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
     ServiceLocator.getEntityService().update();
     renderer.render();
   }
@@ -97,16 +73,6 @@ public class MainGameScreen extends ScreenAdapter {
   public void resize(int width, int height) {
     renderer.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
-  }
-
-  @Override
-  public void pause() {
-    logger.info("Game paused");
-  }
-
-  @Override
-  public void resume() {
-    logger.info("Game resumed");
   }
 
   @Override
@@ -126,14 +92,14 @@ public class MainGameScreen extends ScreenAdapter {
   private void loadAssets() {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(mainGameTextures);
+    resourceService.loadTextures(storyTextures);
     ServiceLocator.getResourceService().loadAll();
   }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(mainGameTextures);
+    resourceService.unloadAssets(storyTextures);
   }
 
   /**
@@ -145,20 +111,12 @@ public class MainGameScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
-    DialogueBoxDisplay dialogueBoxDisplay = new DialogueBoxDisplay(537f);
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new WeatherIconDisplay())
-        .addComponent(new PauseMenuDisplay(this.game))
-        .addComponent(new PauseMenuActions(this.game))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
-        .addComponent(new Terminal())
-        .addComponent(inputComponent)
-        .addComponent(new ResourceCountDisplay())
-        .addComponent(new TerminalDisplay());
+    ui.addComponent(new StoryDisplay())
+       .addComponent(new InputDecorator(stage, 10))
+            .addComponent(new StoryActions(game));;
+
 
     ServiceLocator.getEntityService().register(ui);
   }
