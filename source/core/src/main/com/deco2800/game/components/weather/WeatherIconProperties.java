@@ -2,19 +2,19 @@ package main.com.deco2800.game.components.weather;
 
 public enum WeatherIconProperties{
     // Does not affect movement, affect lighting of the environment
-    CLOUDY ("images/cloudy.png", "images/weather-filter/cloudy-filter.png", 1.5f),
+    CLOUDY ("images/cloudy.png", "images/weather-filter/cloudy-filter.png", 1.1f),
 
     // Affecting movement, affect lighting of the environment
     // "images/rainy.gif"
-    RAINY ("images/rainy.png","images/weather-filter/rainy-filter.png", 0.5f),
+    RAINY ("images/rainy.png","images/weather-filter/rainy-filter.png", 0.7f),
 
     // Affect movement a lot, affect terrain and lighting of the environment, must not appear adjacently with sunny
     // "images/snowy.gif"
-    SNOWY ("images/snowy.png", "images/weather-filter/snowy-filter.png", 0.4f),
+    SNOWY ("images/snowy.png", "images/weather-filter/snowy-filter.png", 0.6f),
 
     // Does not affect movement, does not affect terrain and lighting of the environment,
     // must not appear adjacently with snowy
-    SUNNY ("images/sunny.png", "images/weather-filter/sunny-filter.png", 2f),
+    SUNNY ("images/sunny.png", "images/weather-filter/sunny-filter.png", 1.3f),
 
     // Affecting movement a bit, affect lighting of the environment
     //"images/thunderstorm.gif"
