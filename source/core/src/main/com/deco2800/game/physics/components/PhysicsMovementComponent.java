@@ -18,7 +18,7 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   private final float speed = 1f;
   private Vector2 vel = new Vector2(this.speed, this.speed); // Metres per second
 
-  //private Vector2 maxSpeed = Vector2Utils.ONE;
+  private Vector2 maxSpeed = Vector2Utils.ONE;
 
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
