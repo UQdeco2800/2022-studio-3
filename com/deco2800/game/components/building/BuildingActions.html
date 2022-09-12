@@ -114,7 +114,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -136,6 +136,26 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isWall(com.deco2800.game.components.building.Building)" class="member-name-link">isWall</a><wbr>(<a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Used for determining if an entity is a wall</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWallDefault()" class="member-name-link">setWallDefault</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets wall type and texture to default (facing in no particular direction)</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWallNE()" class="member-name-link">setWallNE</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets wall type and texture to north-east facing wall</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWallSE()" class="member-name-link">setWallSE</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets wall type and texture to south-east facing wall</div>
+</div>
 </div>
 </div>
 </div>
@@ -165,6 +185,7 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>level</code> - initial building level when created</dd>
+<dd><code>type</code> - type of Building</dd>
 </dl>
 </section>
 </li>
@@ -182,7 +203,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getLevel</span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>level</dd>
+<dd>Building level</dd>
 </dl>
 </section>
 </li>
@@ -190,6 +211,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getType()">
 <h3>getType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Building type</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -197,6 +222,40 @@ loadScripts(document, 'script');</script>
 <h3>addLevel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addLevel</span>()</div>
 <div class="block">Increments level by 1</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isWall(com.deco2800.game.components.building.Building)">
+<h3>isWall</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isWall</span><wbr><span class="parameters">(<a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a>&nbsp;type)</span></div>
+<div class="block">Used for determining if an entity is a wall</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - Building type</dd>
+<dt>Returns:</dt>
+<dd>If the building is a wall -> true; else -> false</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setWallDefault()">
+<h3>setWallDefault</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWallDefault</span>()</div>
+<div class="block">Sets wall type and texture to default (facing in no particular direction)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setWallNE()">
+<h3>setWallNE</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWallNE</span>()</div>
+<div class="block">Sets wall type and texture to north-east facing wall</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setWallSE()">
+<h3>setWallSE</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWallSE</span>()</div>
+<div class="block">Sets wall type and texture to south-east facing wall</div>
 </section>
 </li>
 <li>

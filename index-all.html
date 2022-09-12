@@ -679,7 +679,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates entity, adds and configures Barracks components</div>
 </dd>
 <dt><a href="com/deco2800/game/entities/factories/BuildingFactory.html#createBaseBuilding()" class="member-name-link">createBaseBuilding()</a> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/BuildingFactory.html" title="class in com.deco2800.game.entities.factories">BuildingFactory</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Use this as a base entity for creating buildings</div>
+</dd>
 <dt><a href="com/deco2800/game/entities/factories/EnemyFactory.html#createBlueJoker(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createBlueJoker(AtlantisTerrainFactory)</a> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/EnemyFactory.html" title="class in com.deco2800.game.entities.factories">EnemyFactory</a></dt>
 <dd>
 <div class="block">Creates a Blue Joker enemy entity</div>
@@ -1997,6 +1999,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checking whether if the timer is already expired or not.</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#isWall(com.deco2800.game.components.building.Building)" class="member-name-link">isWall(Building)</a> - Static method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dd>
+<div class="block">Used for determining if an entity is a wall</div>
+</dd>
 <dt><a href="com/deco2800/game/utils/SortedIntMap.html#iterator()" class="member-name-link">iterator()</a> - Method in class com.deco2800.game.utils.<a href="com/deco2800/game/utils/SortedIntMap.html" title="class in com.deco2800.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -3114,6 +3120,18 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the number of troops the unit has</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#setWallDefault()" class="member-name-link">setWallDefault()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dd>
+<div class="block">Sets wall type and texture to default (facing in no particular direction)</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#setWallNE()" class="member-name-link">setWallNE()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dd>
+<div class="block">Sets wall type and texture to north-east facing wall</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/BuildingActions.html#setWallSE()" class="member-name-link">setWallSE()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></dt>
+<dd>
+<div class="block">Sets wall type and texture to south-east facing wall</div>
+</dd>
 <dt><a href="com/deco2800/game/worker/components/WorkerInventoryComponent.html#setWood(int)" class="member-name-link">setWood(int)</a> - Method in class com.deco2800.game.worker.components.<a href="com/deco2800/game/worker/components/WorkerInventoryComponent.html" title="class in com.deco2800.game.worker.components">WorkerInventoryComponent</a></dt>
 <dd>
 <div class="block">Sets the player's wood.</div>
@@ -3844,6 +3862,10 @@ the order they are declared.</div>
 <dt><a href="com/deco2800/game/entities/configs/BuildingConfigs.html#wall" class="member-name-link">wall</a> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/BuildingConfigs.html" title="class in com.deco2800.game.entities.configs">BuildingConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/building/Building.html#WALL" class="member-name-link">WALL</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#WALL_NE" class="member-name-link">WALL_NE</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#WALL_SE" class="member-name-link">WALL_SE</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/configs/WallConfig.html" class="type-name-link" title="class in com.deco2800.game.entities.configs">WallConfig</a> - Class in <a href="com/deco2800/game/entities/configs/package-summary.html">com.deco2800.game.entities.configs</a></dt>
 <dd>
