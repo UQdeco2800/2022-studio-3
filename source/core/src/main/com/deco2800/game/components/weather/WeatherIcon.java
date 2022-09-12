@@ -138,14 +138,14 @@ public class WeatherIcon extends Actor {
         weatherFilter.setPosition(0,0);
 
         //  Layout for weatherImage
-        weatherImage.setSize(100f, 100f);
-        weatherImage.setPosition(Gdx.graphics.getWidth()/2f-weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-120f);
+        weatherImage.setSize(75f, 75f);
+        weatherImage.setPosition(Gdx.graphics.getWidth()/2f-weatherImage.getWidth()/2f, Gdx.graphics.getHeight()-85f);
 
         //  Layout for timer
         this.timerLabel.setAlignment(Align.left);
         this.timerLabel.setWrap(true);
         this.timerLabel.setSize(3f,3f);
-        this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 10f, Gdx.graphics.getHeight()-75f);
+        this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 15f, Gdx.graphics.getHeight()-50f);
     }
 
     /**
