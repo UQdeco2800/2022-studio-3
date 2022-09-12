@@ -12,10 +12,25 @@ import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.weather.WeatherIcon;
 
 public class WeatherIconDisplay extends UIComponent {
+    /**
+     * To create logging information.
+     */
     private static final Logger logger = LoggerFactory.getLogger(WeatherIconDisplay.class);
+
+    /**
+     * Timer for the object.
+     */
     private Timer timer;
-    private WeatherIcon weatherIcon;
-    private Label timerCountdown;
+
+    /**
+     * WeatherIcon object for the display.
+     */
+    private final WeatherIcon weatherIcon;
+
+    /**
+     * Countdown Label to display properties to the screen.
+     */
+    private final Label timerCountdown;
 
     public WeatherIconDisplay() {
         Skin countdownSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));

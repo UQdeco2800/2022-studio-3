@@ -6,12 +6,19 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import main.com.deco2800.game.components.weather.WeatherIconProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
-import com.deco2800.game.utils.random.Timer;
 import com.badlogic.gdx.utils.Align;
 
 
 public class WeatherIcon extends Actor {
+    /**
+     * To create logging information.
+     */
+    private static final Logger logger = LoggerFactory.getLogger(WeatherIconDisplay.class);
+
     /**
      * To display the Timer
      */
@@ -35,45 +42,22 @@ public class WeatherIcon extends Actor {
     /**
      * Initiate the speed factor
      */
-    private float speedFactor = 1f;
+    private float speedFactor;
 
     /**
-     * Access image files, ordered relative to index.
+     * Holds information for the current weather type.
      */
-    private final String[] weatherFile = {
-            // Does not affect movement, affect lighting of the environment
-            "images/cloudy.png",
-            // Affecting movement, affect lighting of the environment
-            "images/rainy.png", // "images/rainy.gif"
-            // Affect movement a lot, affect terrain and lighting of the environment, must not appear adjacently with sunny
-            "images/snowy.png", // "images/snowy.gif"
-            // Does not affect movement, does not affect terrain and lighting of the environment,
-            // must not appear adjacently with snowy
-            "images/sunny.png",
-            // Affecting movement a bit, affect lighting of the environment
-            "images/thunderstorm.png" //"images/thunderstorm.gif"
-    };
+    private WeatherIconProperties weatherIconProperties;
 
     /**
-     * Access image filter files, ordered relative to index.
+     * Stores possible weather types.
      */
-    private final String[] weatherFilterFile = {
-            "images/weather-filter/cloudy-filter.png",
-            "images/weather-filter/rainy-filter.png",
-            "images/weather-filter/snowy-filter.png",
-            "images/weather-filter/sunny-filter.png",
-            "images/weather-filter/thunderstorm-filter.png"
-    };
-
-    /**
-     * Access weather movement speed factor, ordered relative to index.
-     */
-    private final float[] movementSpeedFactor = {
-            1.5f,
-            0.5f,
-            0.4f,
-            2f,
-            0.6f
+    private final WeatherIconProperties[] weatherTypes = {
+            WeatherIconProperties.CLOUDY,
+            WeatherIconProperties.RAINY,
+            WeatherIconProperties.SNOWY,
+            WeatherIconProperties.SUNNY,
+            WeatherIconProperties.STORMY
     };
 
     /**
@@ -88,16 +72,19 @@ public class WeatherIcon extends Actor {
         this.timerLabel = countdownTimer;
 
         // Randomly select first index
-        this.currentIndex = PseudoRandom.seedRandomInt(0, weatherFile.length);
+        this.currentIndex = PseudoRandom.seedRandomInt(0, weatherTypes.length);
+
+        // Stores weather properties
+        this.weatherIconProperties = this.weatherTypes[currentIndex];
 
         // Initiate weatherImage
-        this.weatherImage = new Image(new Texture(weatherFile[this.currentIndex]));
+        this.weatherImage = new Image(new Texture(this.weatherIconProperties.getImageLocation()));
 
         // Initiate weatherFilter
-        this.weatherFilter = new Image(new Texture(weatherFilterFile[this.currentIndex]));
+        this.weatherFilter = new Image(new Texture(this.weatherIconProperties.getFilterLocation()));
 
         // Initiate speedFactor
-        this.speedFactor = movementSpeedFactor[this.currentIndex];
+        this.speedFactor = this.weatherIconProperties.getSpeedFactor();
         layout();
     }
 
@@ -120,14 +107,15 @@ public class WeatherIcon extends Actor {
         // Obtain a new index
         int index;
         do {
-            index = PseudoRandom.seedRandomInt(0, weatherFile.length);
+            index = PseudoRandom.seedRandomInt(0, weatherTypes.length);
         } while (index == this.currentIndex);
         this.currentIndex = index;
+        this.weatherIconProperties = this.weatherTypes[currentIndex];
 
         // Update display from new index
-        this.weatherImage = new Image(new Texture(weatherFile[this.currentIndex]));
-        this.weatherFilter = new Image(new Texture(weatherFilterFile[this.currentIndex]));
-        this.speedFactor = this.movementSpeedFactor[this.currentIndex];
+        this.weatherImage = new Image(new Texture(this.weatherIconProperties.getImageLocation()));
+        this.weatherFilter = new Image(new Texture(this.weatherIconProperties.getFilterLocation()));
+        this.speedFactor = this.weatherIconProperties.getSpeedFactor();
         layout();
     }
 
