@@ -90,6 +90,7 @@ public class TroopContainerComponent extends Component {
                     "{} was created twice. Its sub-entities should only be " +
                             "registered with the entity service once.",
                     this);
+            return;
         }
         ArrayList<Vector2> startPositions =
                 getFormation(this.entity.getCenterPosition(),

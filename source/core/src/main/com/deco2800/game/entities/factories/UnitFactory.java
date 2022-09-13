@@ -39,7 +39,7 @@ public class UnitFactory {
                             "images/simpleman.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
+                    .addComponent(new HitboxComponent().setMask(PhysicsLayer.NPC))
                     .addComponent(new CombatStatsComponent(stats.example.health,
                             stats.example.baseAttack,
                             stats.example.baseDefence))
@@ -56,7 +56,7 @@ public class UnitFactory {
                         stats.example.movementRadius))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+                        .addComponent(new HitboxComponent().setMask(PhysicsLayer.UNIT_MASK));
         PhysicsUtils.setRadiusCollider(unit, stats.example.movementRadius);
         return unit;
     }

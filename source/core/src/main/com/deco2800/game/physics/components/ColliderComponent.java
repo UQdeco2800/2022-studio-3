@@ -193,15 +193,26 @@ public class ColliderComponent extends Component {
 
   /**
    * Set the collider layer, used in collision logic
-   * @param layerMask Bitmask of {@link PhysicsLayer} this collider belongs to
+   * @param categoryMask Bitmask of {@link PhysicsLayer} this collider belongs to
    * @return self
    */
-  public ColliderComponent setLayer(short layerMask) {
+  public ColliderComponent setLayer(short categoryMask) {
     if (fixture == null) {
-      fixtureDef.filter.categoryBits = layerMask;
+      fixtureDef.filter.categoryBits = categoryMask;
     } else {
       Filter filter = fixture.getFilterData();
-      filter.categoryBits = layerMask;
+      filter.categoryBits = categoryMask;
+      fixture.setFilterData(filter);
+    }
+    return this;
+  }
+
+  public ColliderComponent setMask(short layerMask) {
+    if (fixture == null) {
+      fixtureDef.filter.maskBits = layerMask;
+    } else {
+      Filter filter = fixture.getFilterData();
+      filter.maskBits = layerMask;
       fixture.setFilterData(filter);
     }
     return this;
