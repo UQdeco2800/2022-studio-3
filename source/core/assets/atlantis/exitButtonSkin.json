@@ -1,0 +1,38 @@
+{
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "button": {
+      "file": "fonts/pixel_18.fnt"
+    }
+  },
+  "com.badlogic.gdx.graphics.Color": {
+    "BLACK": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "default": {
+      "font": "button",
+      "fontColor": "BLACK",
+      "downFontColor": "BLACK",
+      "overFontColor": "BLACK",
+      "focusedFontColor": "BLACK",
+      "disabledFontColor": "BLACK",
+      "checkedFontColor": "BLACK",
+      "checkedDownFontColor": "BLACK",
+      "checkedOverFontColor": "BLACK",
+      "checkedFocusedFontColor": "BLACK",
+      "up": "exit-button",
+      "down": "exit-button",
+      "over": "exit-button",
+      "focused": "exit-button",
+      "disabled": "exit-button",
+      "checked": "exit-button",
+      "checkedOver": "exit-button",
+      "checkedDown": "exit-button",
+      "checkedFocused": "exit-button"
+    }
+  }
+}

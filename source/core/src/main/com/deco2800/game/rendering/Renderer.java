@@ -103,6 +103,7 @@ public class Renderer implements Disposable {
     batch.begin();
     renderService.render(batch);
     batch.end();
+    debugRenderer.render(projMatrix);
     stage.act();
     stage.draw();
   }

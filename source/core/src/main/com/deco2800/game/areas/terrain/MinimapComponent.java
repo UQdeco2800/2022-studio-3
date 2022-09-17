@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.input.CameraInputComponent;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.rendering.Renderable;
 import com.deco2800.game.services.ResourceService;
@@ -56,8 +58,9 @@ public class MinimapComponent extends RenderComponent {
         this.camera = camera;
     }
 
+
     @Override
-    protected void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         //Get layer of cells from TiledMap
         TiledMapTileLayer terrainLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
         //Determine map width and height
@@ -71,39 +74,54 @@ public class MinimapComponent extends RenderComponent {
         //Determine the scaled width of each tile in the minimap based on minimap size and map size
         float tileWidth = minimapLength / mapWidth;
         float tileHeight = minimapHeight / mapHeight;
+
         //Get size of screen in pixels
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
+
         //Convert screen size to world coordinates
         Vector3 world = camera.unproject(new Vector3(screenWidth, screenHeight, 0));
 
-        //Initiate a shapeRenderer to draw map rectangles
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        batch.end();
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        //Iterate over each map tile, and draw a rectangle of the correct colour
+        //Define constant for scaling images to a desired pixel size
+        float scaleConstant = 6/25f;
+
+        //Define textures for drawing the map
+        Texture dummyTile = ServiceLocator.getResourceService().getAsset("test/files/dummyTexture.png", Texture.class);
+        Texture dummyOcean = ServiceLocator.getResourceService().getAsset("test/files/dummyOcean.png", Texture.class);
+
+        //Determine width and height in pixels of each rendered tile
+        GridPoint2 tileSize = worldToPixelLength(new Vector2(tileWidth, tileHeight));
+
         for (int i = 0; i < mapWidth; i++) {
             for (int j = 0; j < mapHeight; j++) {
+                Texture currentTexture;
                 TiledMapTileLayer.Cell cell = terrainLayer.getCell(i, j);
                 //Take the tile and get its id to determine colour
-                //0 = Grass, 1 = Sand, 2 = Ocean
-                TerrainTile tile = (TerrainTile) cell.getTile();
-                if (tile.getId() == 0) {
-                    //City tile - green
-                    shapeRenderer.setColor(Color.GREEN);
-                } else if (tile.getId() == 1){
-                    //Island tile - yellow
-                    shapeRenderer.setColor(Color.YELLOW);
+                //If the cell is a TerrainTile, it is an island tile, else animated ocean tile
+                if (cell.getTile() instanceof  TerrainTile) {
+                    currentTexture = dummyTile;
                 } else {
-                    //Must be ocean tile - blue
-                    shapeRenderer.setColor(Color.BLUE);
+                    currentTexture = dummyOcean;
                 }
-                //Draw each tile at the appropriate position, with the appropriate dimensions
-                shapeRenderer.rect(world.x - ((mapWidth - i - 1) * tileWidth), world.y + (tileHeight * j), tileWidth, tileHeight);
+
+                //Draw each tile texture at the appropriate position, with the appropriate dimensions
+                //Determine scaling for the tile image based on current zoom
+                float tileXScale = tileSize.x / (currentTexture.getWidth() * scaleConstant);
+                float tileYScale = tileSize.y / (currentTexture.getHeight() * scaleConstant);
+                Vector2 tileScale = new Vector2(tileXScale * camera.zoom, tileYScale * camera.zoom);
+                //Set the draw position of the tile
+                Vector2 drawPosition = new Vector2(world.x - ((mapWidth - i - 1) * tileWidth), world.y + (tileHeight * j));
+                batch.draw(currentTexture, drawPosition.x, drawPosition.y, tileScale.x, tileScale.y);
             }
         }
+
         //Display field of view
+
+        //Initiate a shapeRenderer to draw map field of view
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        batch.end();
+        
         //Get edges of screen
         Vector3 worldSW = camera.unproject(new Vector3(0, screenHeight, 0));
         Vector3 worldSE = camera.unproject(new Vector3(screenWidth, screenHeight, 0));
@@ -136,8 +154,7 @@ public class MinimapComponent extends RenderComponent {
         int minX = tileExtremities.get("NW").x;
         int maxY = tileExtremities.get("NE").y;
         int minY = tileExtremities.get("SW").y;
-        //End filled shape rendering
-        shapeRenderer.end();
+
         //Set hollow fill for field of view rectangle
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BLACK);
@@ -153,9 +170,41 @@ public class MinimapComponent extends RenderComponent {
                 world.y + (tileHeight * minY),
                 (maxX - minX) * tileWidth,
                 (maxY - minY) * tileHeight);
-        //End shape rendering, restart batch
         shapeRenderer.end();
+        drawEntities(shapeRenderer, world, tileHeight, tileWidth, mapWidth);
+
         batch.begin();
+    }
+
+    /**
+     * Helper function that draws an entity on the minimap.
+     */
+    private void drawEntities(ShapeRenderer shapeRenderer, Vector3 world, float tileHeight, float tileWidth, int mapWidth) {
+        Map<GridPoint2, MapComponent> positionToEntity = ServiceLocator.getMapService().getEntityOccupiedPositions();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+
+
+        for (Map.Entry<GridPoint2, MapComponent> item : positionToEntity.entrySet()) {
+            if (item.getValue().isDisplay()) {
+                GridPoint2 position = item.getKey();
+                shapeRenderer.setColor(item.getValue().getColour());
+                shapeRenderer.rect(world.x - ((mapWidth - position.x - 1) * tileWidth), world.y + (tileHeight * position.y), tileWidth, tileHeight);
+            }
+        }
+        shapeRenderer.end();
+    }
+
+    /*
+     * Takes a pair of floats in the form of a Vector2, which correspond to the width and height of a rectangle
+     * drawn on the screen. Returns the pixel size of the width and height of this rectangle.
+     * @param worldSize (x,y) side lengths of a rectangle in world coordinates
+     * @return the pixel side lengths of the desired rectangle
+     */
+    private GridPoint2 worldToPixelLength(Vector2 worldSize) {
+        float pixelWidth = camera.project(new Vector3(worldSize.x, 0, 0)).x - camera.project(new Vector3(0,0,0)).x;
+        float pixelHeight = camera.project(new Vector3(0, worldSize.y, 0)).y - camera.project(new Vector3(0,0,0)).y;
+        return new GridPoint2((int)Math.ceil(pixelWidth), (int)Math.ceil(pixelHeight));
     }
 
     /**

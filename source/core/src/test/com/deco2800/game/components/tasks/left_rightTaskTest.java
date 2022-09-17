@@ -37,7 +37,7 @@ class left_rightTaskTest {
      */
     @Test
     void testPlatform_position() {
-        AITaskComponent ai = new AITaskComponent().addTask(new left_rightTask(2f,1));
+        AITaskComponent ai = new AITaskComponent().addTask(new AIHorizontalMovement(2f,1));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.create();
         entity.setPosition(1f, 0f);

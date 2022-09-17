@@ -42,7 +42,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     loadAssets();
     createUI();
-    playMusic();
+    //playMusic();
   }
 
   @Override

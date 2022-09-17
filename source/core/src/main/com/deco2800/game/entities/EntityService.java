@@ -23,6 +23,7 @@ public class EntityService {
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
+   *
    * @param entity new entity.
    */
   public void register(Entity entity) {
@@ -33,6 +34,7 @@ public class EntityService {
 
   /**
    * Unregister an entity with the entity service. The entity will be removed and stop updating.
+   *
    * @param entity entity to be removed.
    */
   public void unregister(Entity entity) {
@@ -75,7 +77,16 @@ public class EntityService {
     return null;
   }
 
+
   public Array<Entity> getEntities() {
     return this.entities;
   }
+
+
+  public void trigger(String event, float factor) {
+    for (int i = 0; i < entities.size; i++) {
+      entities.get(i).getEvents().trigger(event, factor);
+    }
+  }
 }
+

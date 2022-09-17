@@ -37,7 +37,7 @@ class up_downTaskTest {
      */
     @Test
     void testPlatform_position() {
-        AITaskComponent ai = new AITaskComponent().addTask(new up_downTask(2f,1));
+        AITaskComponent ai = new AITaskComponent().addTask(new AIVerticalMovementTask(2f,1));
         Entity entity = makePhysicsEntity().addComponent(ai);
         entity.create();
         entity.setPosition(0f, 1f);

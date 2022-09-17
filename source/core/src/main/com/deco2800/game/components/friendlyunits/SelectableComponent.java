@@ -1,40 +1,53 @@
 package com.deco2800.game.components.friendlyunits;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ServiceLocator;
-
-import java.security.Provider;
 
 public class SelectableComponent extends Component {
 
     //trigger to see whether unit is selected
     private boolean selected;
 
+    private boolean hovered;
+
     /**
      * initializes component with unit not being selected
      */
     public SelectableComponent() {
         selected = false;
+        hovered = false;
     }
 
 
     @Override
     public void create() {
-        entity.getEvents().addListener("click", this::isIn);
-        entity.getEvents().addListener("dragAndClick", this::containsUs);
-        entity.getEvents().addListener("dragSelect", this::containsUs);
+        entity.getEvents().addListener("singleSelect", this::singleSelect);
+        entity.getEvents().addListener("multipleSelect", this::multipleSelect);
+        entity.getEvents().addListener("singleHover", this::singleHover);
+        entity.getEvents().addListener("multipleHover", this::multipleHover);
     }
 
 
-    @Override
-    public void update() {
+    public void singleHover(int xCoordinate, int yCoordinate) {
+        this.hovered = isIn(xCoordinate, yCoordinate);
+    }
 
+    public void multipleHover(int startX, int startY, int endX, int endY) {
+        this.hovered = containsUs(startX, startY, endX, endY);
+    }
+
+    public void singleSelect(int xCoordinate, int yCoordinate) {
+        this.selected = isIn(xCoordinate, yCoordinate);
+        this.hovered = false;
+    }
+
+    public void multipleSelect(int startX, int startY, int endX, int endY) {
+        this.selected = containsUs(startX, startY, endX, endY);
+        this.hovered = false;
     }
 
     /**
@@ -43,17 +56,21 @@ public class SelectableComponent extends Component {
      *
      * @param xCoordinate The x coordinate of the mouse
      * @param yCoordinate The y coordinate of the mouse
+     * @return
      */
-    public void isIn(int xCoordinate, int yCoordinate) {
+    public boolean isIn(int xCoordinate, int yCoordinate) {
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
+
+        // If entity is a building, test if the clicked point is in building collider
+        if (entity.getComponent(BuildingActions.class) != null) {
+            return entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
+        }
+
+
         Vector2 startPosition = entity.getPosition();
         Vector2 endPosition = entity.getPosition().mulAdd(entity.getScale(), 1f);
-        if (contains(pointInWorld.x, startPosition.x, endPosition.x)
-                && contains(pointInWorld.y, startPosition.y, endPosition.y)) {
-            selected = true;
-        } else {
-            selected = false;
-        }
+        return (contains(pointInWorld.x, startPosition.x, endPosition.x)
+                && contains(pointInWorld.y, startPosition.y, endPosition.y));
     }
 
     /**
@@ -64,16 +81,12 @@ public class SelectableComponent extends Component {
      * @param endX end of x coordinate of box
      * @param endY end of y coordinate of box
      */
-    public void containsUs(int startX, int startY, int endX, int endY) {
+    public boolean containsUs(int startX, int startY, int endX, int endY) {
         Vector2 centrePosition = entity.getCenterPosition();
         Vector2 pointStartWorld = screenToWorldPosition(startX, startY);
         Vector2 pointEndWorld = screenToWorldPosition(endX, endY);
-        if (contains(centrePosition.x, pointStartWorld.x, pointEndWorld.x)
-                && contains(centrePosition.y, pointStartWorld.y, pointEndWorld.y)) {
-            selected = true;
-        } else {
-            selected = false;
-        }
+        return (contains(centrePosition.x, pointStartWorld.x, pointEndWorld.x)
+                && contains(centrePosition.y, pointStartWorld.y, pointEndWorld.y));
     }
 
     /**
@@ -105,5 +118,9 @@ public class SelectableComponent extends Component {
      */
     public boolean isSelected() {
         return this.selected;
+    }
+
+    public boolean isHovered() {
+        return this.hovered;
     }
 }

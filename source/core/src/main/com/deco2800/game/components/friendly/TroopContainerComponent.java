@@ -91,6 +91,13 @@ public class TroopContainerComponent extends Component {
                             "registered with the entity service once.",
                     this);
         }
+        ArrayList<Vector2> startPositions =
+                getFormation(this.entity.getCenterPosition(),
+                        this.boundingRadius, troops.size());
+        // start in formation
+        for (int i = 0; i < troops.size(); i++) {
+            troops.get(i).setPosition(startPositions.get(i));
+        }
         troops.forEach(Entity::create);
         created = true;
     }
@@ -110,28 +117,28 @@ public class TroopContainerComponent extends Component {
         // want to update the center of the bounding radius to be the mean
         // position of the troops
         Vector2 troopMean = troops.stream().map(Entity::getCenterPosition)
-                .reduce(Vector2.Zero, (a, b) -> a.mulAdd(b,
+                .reduce(Vector2.Zero.cpy(), (a, b) -> a.mulAdd(b,
                         1.0f/troops.size()));
         // remember that position is set as the top left corner
         this.entity.setPosition(troopMean.sub(boundingRadius, boundingRadius));
         for (Entity troop: troops) {
             troop.update();
-            Vector2 troopCenterRelative =
-                    troop.getCenterPosition().sub(entity.getCenterPosition());
-            float centerDist =
-                    troop.getCenterPosition().dst(entity.getCenterPosition());
-            // we want to keep the edge of the troop within the bounds
-            // there are smarter ways to do this, but it's the simplest
-            // guarantee
-            float realRange = boundingRadius - Math.max(troop.getScale().x,
-                    troop.getScale().y);
-            // bound location to edge of permissible region
-            if ( centerDist > realRange) {
-                // scale vector from center by factor of realRange/currentDist,
-                // then move to top left of troop from that point
-                troop.setPosition(troopMean.mulAdd(troopCenterRelative,
-                        realRange/centerDist).mulAdd(troop.getScale(), -0.5f));
-            }
+//            Vector2 troopCenterRelative =
+//                    troop.getCenterPosition().sub(entity.getCenterPosition());
+//            float centerDist =
+//                    troop.getCenterPosition().dst(entity.getCenterPosition());
+//            // we want to keep the edge of the troop within the bounds
+//            // there are smarter ways to do this, but it's the simplest
+//            // guarantee
+//            float realRange = boundingRadius - Math.max(troop.getScale().x,
+//                    troop.getScale().y);
+//            // bound location to edge of permissible region
+//            if ( centerDist > realRange) {
+//                // scale vector from center by factor of realRange/currentDist,
+//                // then move to top left of troop from that point
+//                troop.setPosition(troopMean.mulAdd(troopCenterRelative,
+//                        realRange/centerDist).mulAdd(troop.getScale(), -0.5f));
+//            }
         }
     }
 
@@ -141,5 +148,31 @@ public class TroopContainerComponent extends Component {
         for (Entity entity:troops) {
             entity.dispose();
         }
+    }
+
+    /**
+     * Finds the formation of the troops around a point
+     *
+     * @param centrePos the position the unit is/will be centred on
+     * @param n the number of troops to form in the unit
+     * @return the positions of the resultant troops
+     */
+    public static ArrayList<Vector2> getFormation(Vector2 centrePos,
+                                                  float boundingRadius,
+                                                  int n) {
+        ArrayList<Vector2> out = new ArrayList<>();
+        //TODO: decide whether to log on failure
+        if (n == 1) {
+            out.add(centrePos);
+        } else if (n > 1) {
+            Vector2 cur =
+                    Vector2.Y.cpy().scl(boundingRadius*7f/12f)
+                             .rotateDeg(225).add(centrePos);
+            for (int i = 0; i < n; i++) {
+                out.add(cur.cpy());
+                cur.rotateAroundDeg(centrePos, 360f/n);
+            }
+        }
+        return out;
     }
 }

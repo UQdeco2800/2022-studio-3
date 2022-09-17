@@ -12,14 +12,94 @@ import static java.lang.Math.max;
 public class CombatStatsComponent extends Component {
 
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
+  private int troops;
   private int health;
   private int baseAttack;
   private int baseDefence;
+  private float landSpeed;
+  private int range;
 
   public CombatStatsComponent(int health, int baseAttack, int baseDefence) {
+    this(0, health, baseAttack, baseDefence, 0f);
+  }
+
+  public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed) {
+    this(troops, health, baseAttack, baseDefence, landSpeed, 0);
+  }
+
+  public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed, int range) {
+    setTroops(troops);
     setHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
+    setLandSpeed(landSpeed);
+    setRange(range);
+  }
+
+  /**
+   * Returns the attack range for unit
+   *
+   * @return entity's attack range
+   */
+  public int getRange() {
+    return range;
+  }
+
+  /**
+   * Sets the attack range for a unit
+   *
+   * @param range attack for unit
+   */
+  public void setRange(int range) {
+    if (range >= 0) {
+      this.range = range;
+    } else {
+      logger.error("Can not set attack range to a negative range value");
+    }
+  }
+
+  /**
+   * Returns number of troops the unit has
+   *
+   * @return entity's troop count
+   */
+  public int getTroops() {
+    return troops;
+  }
+
+  /**
+   * Sets the number of troops the unit has
+   *
+   * @param troops number of troops to set.
+   */
+  public void setTroops(int troops) {
+    if (troops >= 0) {
+      this.troops = troops;
+    } else {
+      logger.error("Can not set no. of troops to a negative value");
+    }
+  }
+
+  /**
+   * Returns the land movement speed of the unit
+   *
+   * @return land movement speed of unit
+   */
+  public float getLandSpeed() {
+    return landSpeed;
+  }
+
+  /**
+   * Sets the land movement speed of unit
+   *
+   * @param landSpeed land movement speed to set
+   */
+  public void setLandSpeed(float landSpeed) {
+    if (landSpeed >= 0f) {
+      this.landSpeed = landSpeed;
+    } else {
+      logger.error("Can not set land speed of troops to a negative value");
+    }
   }
 
   /**

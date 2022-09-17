@@ -45,6 +45,7 @@ public class MovementTask extends DefaultTask {
 
   @Override
   public void update() {
+
     if (isAtTarget()) {
       movementComponent.setMoving(false);
       status = Status.FINISHED;

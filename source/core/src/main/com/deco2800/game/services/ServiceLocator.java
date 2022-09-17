@@ -3,6 +3,7 @@ package com.deco2800.game.services;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class ServiceLocator {
   private static GameTime timeSource;
   private static InputService inputService;
   private static ResourceService resourceService;
+  private static MapService mapService;
 
   public static ForestGameArea gameArea;
 
@@ -32,6 +34,10 @@ public class ServiceLocator {
     return entityService;
   }
 
+  public static MapService getMapService() {
+    return mapService;
+  }
+  
   public static RenderService getRenderService() {
     return renderService;
   }
@@ -54,6 +60,11 @@ public class ServiceLocator {
 
   public static ForestGameArea getGameArea(){
     return gameArea;
+  }
+
+  public static void registerMapService(MapService service) {
+    logger.debug("Registering map service {}", service);
+    mapService = service;
   }
 
   public static void registerEntityService(EntityService service) {
