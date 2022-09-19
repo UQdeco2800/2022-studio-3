@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
+import static java.lang.Math.min;
+
 /**
  * MapGenerator builds a procedurally generated map of desired mapWidth, mapHeight, including
  * an island of islandSize width containing a city of citySize square length. Access map through
@@ -588,6 +590,17 @@ public class MapGenerator {
             }
         }
         return newMap;
+    }
+
+    public boolean isLandAdjacent(int x, int y ) {
+        for (int i = Math.max(x - 1, 0); i < min(x + 2, mapWidth); i++) {
+            for (int j = Math.max(y - 1, 0); j < min(y + 2, mapHeight); j++) {
+                if (map[j][i] != oceanChar) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

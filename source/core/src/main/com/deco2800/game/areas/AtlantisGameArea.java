@@ -280,7 +280,8 @@ public class AtlantisGameArea extends GameArea {
 
         for (int i = 0; i < mg.getWidth(); i++) {
             for (int j = 0; j < mg.getHeight(); j++) {
-                if (mg.getMap()[j][i] == mg.getOceanChar()) {
+                if (mg.getMap()[j][i] == mg.getOceanChar()
+                        && mg.isLandAdjacent(i, j)) {
                     //Spawn collider entities at each ocean tile - scaled down by 0.7f arbitrarily
                     spawnEntityAt(
                             ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
