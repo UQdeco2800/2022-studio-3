@@ -3,7 +3,7 @@ package com.deco2800.game.input;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.ui.terminal.TouchTerminalInputComponent;
-import com.deco2800.game.worker.components.movement.WorkerInputComponent;
+import com.deco2800.game.components.worker.movement.WorkerInputComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

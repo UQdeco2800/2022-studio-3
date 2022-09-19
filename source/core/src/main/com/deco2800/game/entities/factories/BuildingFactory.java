@@ -2,7 +2,6 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,9 +18,9 @@ import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.worker.components.ResourceStatsComponent;
-import com.deco2800.game.worker.components.type.BaseComponent;
-import com.deco2800.game.worker.resources.ResourceConfig;
+import com.deco2800.game.components.worker.ResourceStatsComponent;
+import com.deco2800.game.components.worker.type.BaseComponent;
+import com.deco2800.game.entities.configs.ResourceConfig;
 
 /**
  * Factory to create a building entity with predefined components.

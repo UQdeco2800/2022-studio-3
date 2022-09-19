@@ -1,13 +1,13 @@
 package com.deco2800.game.worker;
 
-import com.deco2800.game.worker.components.CollectStatsComponent;
-import com.deco2800.game.worker.components.MinerAnimationController;
-import com.deco2800.game.worker.components.ResourceCollectComponent;
-import com.deco2800.game.worker.components.ResourceStatsComponent;
-import com.deco2800.game.worker.components.WorkerInventoryComponent;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
-import com.deco2800.game.worker.resources.ResourceConfig;
+import com.deco2800.game.components.worker.CollectStatsComponent;
+import com.deco2800.game.components.worker.MinerAnimationController;
+import com.deco2800.game.components.worker.ResourceCollectComponent;
+import com.deco2800.game.components.worker.ResourceStatsComponent;
+import com.deco2800.game.components.worker.WorkerInventoryComponent;
+import com.deco2800.game.components.worker.type.ForagerComponent;
+import com.deco2800.game.components.worker.type.MinerComponent;
+import com.deco2800.game.entities.configs.ResourceConfig;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.files.FileLoader;

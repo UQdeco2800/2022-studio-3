@@ -13,10 +13,10 @@ import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.worker.WorkerFactory;
-import com.deco2800.game.worker.resources.StoneFactory;
-import com.deco2800.game.worker.resources.TreeFactory;
-import com.deco2800.game.worker.type.MinerFactory;
+import com.deco2800.game.entities.factories.WorkerFactory;
+import com.deco2800.game.entities.factories.resources.StoneFactory;
+import com.deco2800.game.entities.factories.resources.TreeFactory;
+import com.deco2800.game.entities.factories.workerTypes.MinerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

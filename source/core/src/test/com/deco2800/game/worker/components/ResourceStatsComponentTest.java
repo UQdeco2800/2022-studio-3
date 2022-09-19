@@ -1,5 +1,7 @@
 package com.deco2800.game.worker.components;
 
+import com.deco2800.game.components.worker.CollectStatsComponent;
+import com.deco2800.game.components.worker.ResourceStatsComponent;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

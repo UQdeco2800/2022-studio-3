@@ -26,9 +26,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.worker.components.ResourceStatsComponent;
-import com.deco2800.game.worker.components.type.BaseComponent;
-import com.deco2800.game.worker.resources.ResourceConfig;
+import com.deco2800.game.entities.configs.ResourceConfig;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
