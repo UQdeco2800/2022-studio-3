@@ -1,5 +1,7 @@
 package com.deco2800.game.areas.MapGenerator;
 
+import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -115,6 +117,9 @@ public class MapGenerator {
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
+
+        //Add buildings to city
+        BuildingGenerator bg = new BuildingGenerator(this);
     }
 
     /**

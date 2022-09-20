@@ -20,6 +20,9 @@ public class ResourceGenerator {
 
     private int generationAttempts = 0;
     private final int MAX_GENERATION_ATTEMPTS = 5;
+    /**
+     * Space between each resource in tiles (all around it)
+     */
     private final int RESOURCE_BUFFER = 1;
 
     /**
