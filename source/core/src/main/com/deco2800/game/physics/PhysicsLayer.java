@@ -4,8 +4,10 @@ public class PhysicsLayer {
   public static final short NONE = 0;
   public static final short DEFAULT = (1 << 0);
   public static final short PLAYER = (1 << 1);
+  public static final short WORKER = PLAYER;
   // Terrain obstacle, e.g. trees
   public static final short OBSTACLE = (1 << 2);
+  public static final short RESOURCE_NODE = OBSTACLE;
   // NPC (Non-Playable Character) colliders
   public static final short NPC = (1 << 3);
   public static final short ALL = ~0;

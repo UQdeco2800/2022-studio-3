@@ -3,7 +3,10 @@ package com.deco2800.game.physics.components;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.ai.movement.MovementController;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.EntityDirection;
+import com.deco2800.game.components.EntityDirectionComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +14,130 @@ import org.slf4j.LoggerFactory;
 /** Movement controller for a physics-based entity. */
 public class PhysicsMovementComponent extends Component implements MovementController {
   private static final Logger logger = LoggerFactory.getLogger(PhysicsMovementComponent.class);
-  private static final Vector2 maxSpeed = Vector2Utils.ONE;
+
+  private final float speed = 1f;
+  private Vector2 vel = new Vector2(this.speed, this.speed); // Metres per second
+
+  private Vector2 maxSpeed = Vector2Utils.ONE;
 
   private PhysicsComponent physicsComponent;
   private Vector2 targetPosition;
   private boolean movementEnabled = true;
+  private boolean stop = false;
+  private String previousDirection = null;
+
+  private EntityDirectionComponent entityDirectionComponent;
+
+
+  /**
+   * Initialising the PhysicsMovementComponent by default.
+   */
+  public PhysicsMovementComponent() {
+  }
+
+  /**
+   * Creates an entity that have a base speed.
+   * @param speed the moving speed
+   */
+  public PhysicsMovementComponent(Vector2 speed) {
+    maxSpeed = speed;
+  }
+
+  /**
+   * Changes the direction to face west and trigger that respective animation
+   * on the condition that the previous recorded direction is not west.
+   */
+  public void faceWest() {
+    EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
+
+    switch (previousDirection) {
+      case EAST:
+      case SOUTH:
+      case NORTH:
+      case DEFAULT:
+        entityDirectionComponent.setDirectionWest();
+        this.getEntity().getEvents().trigger("goWest");
+        break;
+    }
+  }
+
+  /**
+   * Changes the direction to face east and trigger that respective animation
+   * on the condition that the previous recorded direction is not east.
+   */
+  public void faceEast() {
+    EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
+    switch (previousDirection) {
+      case WEST:
+      case SOUTH:
+      case NORTH:
+      case DEFAULT:
+        entityDirectionComponent.setDirectionEast();
+        this.getEntity().getEvents().trigger("goEast");
+        break;
+    }
+  }
+
+  /**
+   * Changes the direction to face north and trigger that respective animation
+   * on the condition that the previous recorded direction is not north.
+   */
+  public void faceNorth() {
+    EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
+    switch (previousDirection) {
+      case WEST:
+      case EAST:
+      case SOUTH:
+      case DEFAULT:
+        entityDirectionComponent.setDirectionNorth();
+        this.getEntity().getEvents().trigger("goNorth");
+        break;
+    }
+  }
+
+  /**
+   * Changes the direction to face south and trigger that respective animation
+   * on the condition that the previous recorded direction is not south.
+   */
+  public void faceSouth() {
+    EntityDirection previousDirection = entityDirectionComponent.getEntityDirection();
+    switch (previousDirection) {
+      case WEST:
+      case EAST:
+      case NORTH:
+      case DEFAULT:
+        entityDirectionComponent.setDirectionSouth();
+        this.getEntity().getEvents().trigger("goSouth");
+        break;
+    }
+  }
+
+  /**
+   * Checks the direction of the entity and changes to appropriate animation
+   * and direction
+   */
+  public void changeAnimation() {
+    if (Boolean.FALSE.equals(this.getEntity().getComponent(CombatStatsComponent.class).isDead())) {
+      if (Math.abs(this.getDirection().x) > Math.abs(this.getDirection().y)) {
+        if (this.getDirection().x < 0) {
+          faceWest();
+        } else if (this.getDirection().x > 0) {
+          faceEast();
+        }
+      } else {
+        if (this.getDirection().y > 0) {
+          faceNorth();
+        } else if (this.getDirection().y < 0) {
+          faceSouth();
+        }
+      }
+    }
+  }
 
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    entityDirectionComponent = entity.getComponent(EntityDirectionComponent.class);
   }
 
   @Override
@@ -41,7 +159,18 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     if (!movementEnabled) {
       Body body = physicsComponent.getBody();
       setToVelocity(body, Vector2.Zero);
+      if (previousDirection != null && !stop) {
+        this.getEntity().getEvents().trigger("default");
+        stop = true;
+      } else {
+        stop = false;
+      }
     }
+  }
+
+  public void changeSpeed(float factor) {
+    float newSpeed = this.speed * factor;
+    this.vel = new Vector2(newSpeed, newSpeed);
   }
 
   @Override
@@ -68,8 +197,11 @@ public class PhysicsMovementComponent extends Component implements MovementContr
   }
 
   private void updateDirection(Body body) {
-    Vector2 desiredVelocity = getDirection().scl(maxSpeed);
+    Vector2 desiredVelocity = getDirection().scl(this.vel);
     setToVelocity(body, desiredVelocity);
+    if (entityDirectionComponent != null) {
+      changeAnimation();
+    }
   }
 
   private void setToVelocity(Body body, Vector2 desiredVelocity) {

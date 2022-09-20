@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,9 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 walkDirection = Vector2.Zero.cpy();
+
+  int touchDownX = -1;
+  int touchDownY = -1;
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -29,22 +33,19 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        return true;
-      case Keys.SPACE:
-        entity.getEvents().trigger("attack");
-        return true;
+        return false;
       default:
         return false;
     }
@@ -62,23 +63,24 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
         triggerWalkEvent();
-        return true;
+        return false;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
         triggerWalkEvent();
-        return true;
+        return false;
       default:
         return false;
     }
   }
+
 
   private void triggerWalkEvent() {
     if (walkDirection.epsilonEquals(Vector2.Zero)) {

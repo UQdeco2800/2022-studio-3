@@ -1,0 +1,43 @@
+{
+  "example": {
+  "troops": 3,
+  "health": 5,
+  "baseAttack": 2,
+  "baseDefence": 1,
+  "landSpeed": 1.0,
+  "movementRadius":0.75
+  },
+  "swordsman": {
+    "troops": 2,
+    "health": 100,
+    "baseAttack": 55,
+    "baseDefence": 35,
+    "landSpeed": 20,
+    "movementRadius":0.75
+  },
+  "archer": {
+    "troops": 4,
+    "health": 100,
+    "baseAttack": 35,
+    "baseDefence": 15,
+    "landSpeed": 30,
+    "movementRadius":1.25,
+    "range": 5
+  },
+  "hoplite": {
+    "troops": 3,
+    "health": 100,
+    "baseAttack": 40,
+    "baseDefence": 55,
+    "landSpeed": 15,
+    "movementRadius":0.75
+  },
+  "spearmen": {
+    "troops": 4,
+    "health": 100,
+    "baseAttack": 30,
+    "baseDefence": 25,
+    "landSpeed": 25,
+    "movementRadius":1
+  }
+}

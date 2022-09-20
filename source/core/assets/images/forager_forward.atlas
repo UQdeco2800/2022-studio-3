@@ -1,0 +1,204 @@
+forager_forward.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+forager_forward_idle
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+forager_forward_move
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+forager_forward_move
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+forager_forward_move
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+
+forager_action_right.png
+size: 6144, 2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+foragerActionRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+foragerActionRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+foragerActionRight
+  rotate: false
+  xy: 4608, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 1
+foragerActionRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+foragerActionRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+
+forager_action_left.png
+size: 6144, 2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+foragerActionLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerActionLeft
+  rotate: false
+  xy: 4608, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+foragerActionLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: -1
+
+forager_right.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+foragerRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+foragerRight
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 1
+foragerRight
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 3
+foragerRight
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+foragerRight
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+
+forager_left.png
+size: 4096, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+foragerLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0
+foragerLeft
+  rotate: false
+  xy: 2560, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 1
+foragerLeft
+  rotate: false
+  xy: 512, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 3
+foragerLeft
+  rotate: false
+  xy: 2560, 2560
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 2
+foragerLeft
+  rotate: false
+  xy: 512, 512
+  size: 1024, 1024
+  orig: 1024, 1024
+  offset: 0, 0
+  index: 0

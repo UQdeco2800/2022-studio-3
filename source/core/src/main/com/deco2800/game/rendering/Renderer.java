@@ -3,6 +3,7 @@ package com.deco2800.game.rendering;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
@@ -27,6 +28,7 @@ public class Renderer implements Disposable {
   private RenderService renderService;
   private DebugRenderer debugRenderer;
 
+
   /**
    * Create a new renderer with default settings
    * @param camera camera to render to
@@ -44,6 +46,7 @@ public class Renderer implements Disposable {
         ServiceLocator.getRenderService(),
         debugRenderer);
   }
+
 
   /**
    * Create a renderer
@@ -90,6 +93,7 @@ public class Renderer implements Disposable {
     return camera;
   }
 
+
   /** Render everything to the render service. */
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
@@ -100,10 +104,10 @@ public class Renderer implements Disposable {
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);
-
     stage.act();
     stage.draw();
   }
+
 
   /**
    * Resize the renderer to a new screen size.

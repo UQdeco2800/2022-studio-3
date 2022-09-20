@@ -23,6 +23,9 @@ public class TouchAttackComponent extends Component {
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
 
+  private EntityDirectionComponent entityDirectionComponent;
+  private boolean isAttacking = false;
+
   /**
    * Create a component which attacks entities on collision, without knockback.
    * @param targetLayer The physics layer of the target's collider.
@@ -46,6 +49,7 @@ public class TouchAttackComponent extends Component {
     entity.getEvents().addListener("collisionStart", this::onCollisionStart);
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
+    entityDirectionComponent = entity.getComponent(EntityDirectionComponent.class);
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {
@@ -62,12 +66,40 @@ public class TouchAttackComponent extends Component {
     // Try to attack target.
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
+
     if (targetStats != null) {
       targetStats.hit(combatStats);
+      if (targetStats.getHealth() > 0) {
+        if (!isAttacking) {
+          isAttacking = true;
+          if (entityDirectionComponent != null) {
+            switch (entityDirectionComponent.getEntityDirection()) {
+              case DEFAULT:
+                break;
+              case WEST:
+                entity.getEvents().trigger("attackWest");
+                break;
+              case EAST:
+                entity.getEvents().trigger("attackEast");
+                break;
+              case NORTH:
+                entity.getEvents().trigger("attackNorth");
+                break;
+              case SOUTH:
+                entity.getEvents().trigger("attackSouth");
+                break;
+            }
+          }
+        }
+      } else {
+        isAttacking = false;
+//        target.dispose();
+      }
     }
 
-    // Apply knockback
+//     Apply knockback
     PhysicsComponent physicsComponent = target.getComponent(PhysicsComponent.class);
+
     if (physicsComponent != null && knockbackForce > 0f) {
       Body targetBody = physicsComponent.getBody();
       Vector2 direction = target.getCenterPosition().sub(entity.getCenterPosition());

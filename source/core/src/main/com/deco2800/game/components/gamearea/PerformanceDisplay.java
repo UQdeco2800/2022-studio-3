@@ -32,7 +32,7 @@ public class PerformanceDisplay extends UIComponent {
 
       int screenHeight = stage.getViewport().getScreenHeight();
       float offsetX = 5f;
-      float offsetY = 180f;
+      float offsetY = 250f;
       profileLabel.setPosition(offsetX, screenHeight - offsetY);
     } else {
       profileLabel.setVisible(false);
@@ -44,7 +44,11 @@ public class PerformanceDisplay extends UIComponent {
     message =
         message
             .concat(String.format("FPS: %d fps%n", Gdx.graphics.getFramesPerSecond()))
-            .concat(String.format("RAM: %d MB%n", Gdx.app.getJavaHeap() / 1000000));
+            .concat(String.format("RAM: %d MB%n", Gdx.app.getJavaHeap() / 1000000))
+            .concat(String.format("Width: %d px%n", Gdx.graphics.getWidth()))
+            .concat(String.format("Height: %d px%n", Gdx.graphics.getHeight()))
+            .concat(String.format("Mouse X: %d%n", Gdx.input.getX()))
+            .concat(String.format("Mouse Y: %d%n", Gdx.input.getY()));
     return message;
   }
 

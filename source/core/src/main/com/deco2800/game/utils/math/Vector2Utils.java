@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Contains additional utility constants and functions for common Vector2 operations.
  */
-public class Vector2Utils {
+public class  Vector2Utils {
   public static final Vector2 LEFT = new Vector2(-1f, 0f);
   public static final Vector2 RIGHT = new Vector2(1f, 0f);
   public static final Vector2 UP = new Vector2(0f, 1f);
@@ -34,6 +34,27 @@ public class Vector2Utils {
    */
   public static double angleFromTo(Vector2 from, Vector2 to) {
     return Math.toDegrees(Math.atan2(to.y - from.y, to.x - from.x));
+  }
+
+  /**
+   * Calculate the angle in radians of a vector
+   * @param vector The vector relative to origin
+   * @return Angle in radians
+   */
+  public static float vectorToAngle(Vector2 vector) {
+    return (float)Math.atan2(vector.y, vector.x);
+  }
+
+  /**
+   * Find the vector relative to origin pointing in given angle
+   * @param outVector Output vector relative to origin
+   * @param angle Angle in radians
+   * @return Vector pointing in given angle
+   */
+  public static Vector2 angleToVector(Vector2 outVector, float angle) {
+    outVector.x = -(float)Math.sin(angle);
+    outVector.y = (float)Math.cos(angle);
+    return outVector;
   }
 
   private Vector2Utils() {
