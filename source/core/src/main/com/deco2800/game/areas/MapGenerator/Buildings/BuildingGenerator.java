@@ -176,7 +176,8 @@ public class BuildingGenerator {
                 //No placement could be found for this building within any of the city rows - fail
                 if (generationAttempts++ >= MAX_GENERATION_ATTEMPTS) {
                     //A number of attempts have failed to fit the buildings in the city - throw exception
-                    throw new IllegalArgumentException("Cannot fit buildings within City Size");
+                    break;
+                    //throw new IllegalArgumentException("Cannot fit buildings within City Size");
                 } else {
                     //Attempt to try again
                     resetBuildings();
