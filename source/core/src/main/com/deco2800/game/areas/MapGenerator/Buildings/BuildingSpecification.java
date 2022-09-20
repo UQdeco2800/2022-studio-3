@@ -93,4 +93,8 @@ public class BuildingSpecification {
     public String getName() {
         return name;
     }
+
+    public void resetPlacements() {
+        this.placements = new ArrayList<>();
+    }
 }
