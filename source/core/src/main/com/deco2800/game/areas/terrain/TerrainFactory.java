@@ -184,6 +184,27 @@ public class TerrainFactory {
       }
     }
   }
+  private static void floodingEdges(TiledMapTileLayer layer) {
+    ResourceService resourceService = ServiceLocator.getResourceService();
+    TextureRegion isoOcean =
+            new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class));
+    TerrainTile oceanTile = new TerrainTile(isoOcean);
+    char[][] map = mapGenerator.getMap();
+    char[][] mapOutline = new char[mapWidth][mapHeight];
+    for (int x = 1; x < mapWidth-1; x++) {
+      for (int y = 1; y < mapHeight-1; y++) {
+        Cell cell = new Cell();
+        if (map[y][x] == mapGenerator.getIslandChar()) {
+          if (map[y-1][x] == mapGenerator.getOceanChar() ||
+                  map[y+1][x] == mapGenerator.getOceanChar() ||
+                  map[y][x-1] == mapGenerator.getOceanChar() ||
+                  map[y][x+1] == mapGenerator.getOceanChar())
+            cell.setTile(oceanTile);
+        }
+        layer.setCell(x, mapHeight - y, cell);
+      }
+    }
+  }
 
   public CameraComponent getCameraComponent() {
     return this.cameraComponent;
