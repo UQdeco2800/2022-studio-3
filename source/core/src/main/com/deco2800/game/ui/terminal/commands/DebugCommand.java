@@ -1,5 +1,6 @@
 package com.deco2800.game.ui.terminal.commands;
 
+import com.deco2800.game.rendering.DebugRenderer;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +22,23 @@ public class DebugCommand implements Command {
       logger.debug("Invalid arguments received for 'debug' command: {}", args);
       return false;
     }
+    DebugRenderer debug = ServiceLocator.getRenderService().getDebug();
+    if (args.size() == 0) {
+      debug.setActive(!debug.getActive());
+      return debug.getActive();
+    }
 
     String arg = args.get(0);
     switch (arg) {
       case "on":
-        ServiceLocator.getRenderService().getDebug().setActive(true);
+        debug.setActive(true);
         return true;
       case "off":
-        ServiceLocator.getRenderService().getDebug().setActive(false);
+        debug.setActive(false);
         return true;
+      case "toggle":
+        debug.setActive(!debug.getActive());
+        return debug.getActive();
       default:
         logger.debug("Unrecognised argument received for 'debug' command: {}", args);
         return false;
@@ -42,6 +51,6 @@ public class DebugCommand implements Command {
    * @return is valid
    */
   boolean isValid(ArrayList<String> args) {
-    return args.size() == 1;
+    return args.size() <= 1;
   }
 }
