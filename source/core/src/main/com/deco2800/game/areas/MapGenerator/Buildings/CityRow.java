@@ -49,6 +49,11 @@ public class CityRow {
      */
     private int rightSpaceTaken = 0;
 
+    /**
+     * Index of the row -> 0 = top
+     */
+    private final int index;
+
 
     /**
      * Creates a new row of the city to allocate buildings to, given the width of the city in tiles,
@@ -57,10 +62,11 @@ public class CityRow {
      * @param CITY_BUFFER Space to leave (in tiles) between each building
      * @param WALL_BUFFER Space to leave (in tiles) between the edge of the city and the first and last buildings
      */
-    public CityRow(int cityWidth, int CITY_BUFFER, int WALL_BUFFER) {
+    public CityRow(int cityWidth, int CITY_BUFFER, int WALL_BUFFER, int index) {
         this.CITY_BUFFER = CITY_BUFFER;
         this.WALL_BUFFER = WALL_BUFFER;
         this.rowWidth = cityWidth;
+        this.index = index;
         spaceRemaining = cityWidth - (2 * WALL_BUFFER);
     }
 
@@ -84,6 +90,10 @@ public class CityRow {
         return this.spaceRemaining;
     }
 
+    public int getIndex() {
+        return this.index;
+    }
+
     /**
      * Attempts to add a building to this City row
      * @param width width in tiles of building to be added
@@ -91,7 +101,7 @@ public class CityRow {
      * @return the x position of the building within the row, or -1 if it cannot be fit
      */
     public int addBuilding(int width, int height) {
-        //If no space in row return null
+        //If no space in row return -1
         if (width + CITY_BUFFER > spaceRemaining) {
             return -1;
         }
@@ -110,15 +120,15 @@ public class CityRow {
             leftSpaceTaken += width + CITY_BUFFER;
         } else {
             //Determine where the coordinate will be placed in the row from the right
-            xPlacement = rowWidth - WALL_BUFFER - rightSpaceTaken - width - CITY_BUFFER;
+            xPlacement = rowWidth - WALL_BUFFER - rightSpaceTaken - width;
             rightSpaceTaken += width + CITY_BUFFER;
         }
 
         //Update space remaining in the row
-        spaceRemaining -= width + CITY_BUFFER;
+        spaceRemaining -= (width + CITY_BUFFER);
 
         //Invert placement side
-        placementSide ^= placementSide;
+        placementSide = !placementSide;
 
         //Update total placements
         totalPlacements++;
@@ -143,5 +153,10 @@ public class CityRow {
                 && this.totalPlacements == otherRow.getTotalPlacements()
                 && this.height == otherRow.getHeight()
                 && this.rowWidth == otherRow.getRowWidth());
+    }
+
+    @Override
+    public String toString() {
+        return "Index: " + index + ", Height: " + height +", Placements: " +totalPlacements;
     }
 }

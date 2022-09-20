@@ -14,7 +14,7 @@ public class BuildingGenerator {
     private final MapGenerator mg;
     private final Map<String, Coordinate> cityDetails;
     private final char BUILDING_CHAR = 'b';
-    private final int CITY_BUFFER = 2;
+    private final int CITY_BUFFER = 3;
     private final int WALL_BUFFER = 1;
     private final int numRows;
     /**
@@ -22,7 +22,7 @@ public class BuildingGenerator {
      */
     private int maxHeight = 0;
     private final List<BuildingSpecification> buildings;
-    private final CityRow[] cityRows;
+    private final List<CityRow> cityRows;
     /**
      * Total number of buildings that have been placed at the corners
      */
@@ -60,22 +60,26 @@ public class BuildingGenerator {
         }
 
         //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY();
+        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
         //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getY();
+        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
 
         //Determine number of rows to place buildings in
         numRows = (cityHeight - WALL_BUFFER) / (maxHeight + CITY_BUFFER);
 
         //Allocate an array of rows based on numRows
-        cityRows = new CityRow[numRows];
+        cityRows = new LinkedList<>();
         for (int i = 0; i < numRows; i++) {
-            cityRows[i] = new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER);
+            cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, i));
         }
 
         //Place buildings in their rows
         placeBuildings();
 
+        writeCity(cityHeight, cityWidth);
+    }
+
+    public void writeCity(int cityHeight, int cityWidth) {
         //Test - write to output file
         char[][] city = new char[cityHeight][cityWidth];
         for (int i = 0; i < cityHeight; i++) {
@@ -83,10 +87,21 @@ public class BuildingGenerator {
                 city[i][j] = '*';
             }
         }
+        int cityMinX = cityDetails.get("NW").getX();
+        int cityMinY = cityDetails.get("NW").getY();
+
         for (BuildingSpecification b : buildings) {
+            System.out.println(b.getName()+b.getPlacements());
             for (Coordinate p : b.getPlacements()) {
+                char buildingChar = b.getName().charAt(0);
                 //Write each coordinate
-                
+                for (int i = 0; i < b.getWidth(); i++) {
+                    for (int j = 0; j < b.getHeight(); j++) {
+                        int translatedX = p.getX() - cityMinX + i;
+                        int translatedY = (p.getY() - cityMinY) + j;
+                        city[translatedY][translatedX] = buildingChar;
+                    }
+                }
             }
         }
         MapGenerator.writeMap(city, "E:\\Sprint 3\\city.txt", cityWidth, cityHeight);
@@ -99,6 +114,7 @@ public class BuildingGenerator {
     public List<BuildingSpecification> getBuildings() {
         return new ArrayList<>(buildings);
     }
+
     public void placeBuildings() {
         //Add all buildings remaining to a list of BuildingSpecification to randomly select from
         List<BuildingSpecification> remainingBuildings = new ArrayList<>();
@@ -126,19 +142,19 @@ public class BuildingGenerator {
                 //Place the building
                 //Find minX of city
                 int cityMinX = cityDetails.get("NW").getX();
-                //Find index of row
-                int index = 0;
-                for (int i = 0; i < numRows; i++) {
-                    if (cityRows[i].equals(currentRow)) {
-                        index = i;
-                    }
-                }
-                currentBuilding.addPlacement(new Coordinate(xPlacement + cityMinX, ((maxHeight + CITY_BUFFER) * index) + WALL_BUFFER));
-                //If it was a corner building, update the corner p[lacements
-                if (index == 0 || index == numRows - 1) {
+                int cityMinY = cityDetails.get("NW").getY();
+
+                //Store index of the row
+                int index = currentRow.getIndex();
+
+                //Add coordinate to place this building
+                currentBuilding.addPlacement(new Coordinate(xPlacement + cityMinX, ((maxHeight + CITY_BUFFER) * index) + WALL_BUFFER + cityMinY));
+                //If it was a corner building, update the corner placements
+                if ((cornerBuildings < 4) && (index == 0 || index == numRows - 1)) {
                     cornerBuildings++;
                 }
-                //If no buildings remain, remove from list
+
+                //If no buildings remain to be placed, remove from list
                 if (currentBuilding.numRemaining() == 0) {
                     remainingBuildings.remove(currentBuilding);
                 }
@@ -148,22 +164,16 @@ public class BuildingGenerator {
     }
 
     public CityRow chooseRow(int seed) {
-        //Initialise LinkedList of cityRows
-        LinkedList<CityRow> rows = new LinkedList<>();
-        //First and last elements are first considered
-        rows.add(cityRows[0]);
-        rows.add(cityRows[numRows - 1]);
-        for (int i = 1; i < numRows - 1; i++) {
-            rows.add(cityRows[i]);
-        }
+        //Initialise new LinkedList of cityRows
+        LinkedList<CityRow> cityRowsCopy = new LinkedList<>(cityRows);
 
         //Special case - place buildings in row 0 or numRows - 1
         if (cornerBuildings < 4 && seed < 4) {
-            return seed < 2 ? cityRows[0] : cityRows[numRows - 1];
+            return cornerBuildings < 2 ? cityRowsCopy.get(0) : cityRowsCopy.get(numRows - 1);
         } else {
             //Sort rows by number of placed buildings
-            rows.sort((r1, r2) -> (r1.getTotalPlacements() - r2.getTotalPlacements()));
-            return rows.get(seed);
+            cityRowsCopy.sort((r1, r2) -> (r1.getTotalPlacements() - r2.getTotalPlacements()));
+            return cityRowsCopy.get(seed);
         }
     }
 }
