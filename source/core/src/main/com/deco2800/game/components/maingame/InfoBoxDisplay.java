@@ -184,7 +184,7 @@ public class InfoBoxDisplay extends UIComponent {
 
 
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+                        .getAsset("images/heart.png", Texture.class));
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
