@@ -138,6 +138,7 @@ public class BuildingGenerator {
             }
             if (xPlacement < 0) {
                 //No placement could be found for this building within any of the city rows - fail
+                break;
             } else {
                 //Place the building
                 //Find minX of city
