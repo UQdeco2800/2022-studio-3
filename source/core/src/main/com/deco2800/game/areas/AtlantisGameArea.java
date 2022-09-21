@@ -43,6 +43,7 @@ import com.deco2800.game.worker.components.duration.DurationBarFactory;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 
+import main.com.deco2800.game.components.flooding.FloodingComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -238,6 +239,9 @@ public class AtlantisGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
         spawnEntity(infoUi);
+
+        //TODO - ADD FLOODING COMPONENT
+        //ui.addComponent(new FloodingComponent());
 
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());

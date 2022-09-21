@@ -90,6 +90,11 @@ public class AtlantisTerrainFactory {
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
+    public void floodTiles(Map<Integer, Integer> tilesToBeFlooded) {
+        //TODO - Update map generator
+        //TODO - re-Draw to the screen
+    }
+
     /**
      * Create a new isometric renderer for the map
      * @param tiledMap the map of cells denoting the game area
