@@ -1,11 +1,14 @@
-package main.com.deco2800.game.areas.MapGenerator;
+package com.deco2800.game.areas.MapGenerator;
 
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.map.MapService;
 
 import java.util.Map;
 
 public class FloodingGenerator {
     private final AtlantisTerrainFactory atlantisTerrainFactory;
+    private MapService mapService;
+    private MapGenerator mapGenerator;
 
     public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
@@ -15,14 +18,16 @@ public class FloodingGenerator {
      * ??TODO
      */
     public void triggerFloodEvent() {
-        Map<Integer, Integer> tilesToBeFlooded = pickTilesToFlood();
-        drawMap(tilesToBeFlooded);
+        // MapGenerator mapGenerator = updateFloodTiles();
+        // drawMap(tilesToBeFlooded);
     }
 
     /**
      * Algorithm that determines which tiles to be flooded on the next flooding event.
      */
-    public Map<Integer, Integer> pickTilesToFlood() {
+    public MapGenerator updateFloodTiles() {
+//        char[][] outlineMap = mapGenerator.getOutlineMap();
+//        for char
         // PICK TILES TO FLOOD AND UPDATE MAP STRUCTURE
         return null;
     }

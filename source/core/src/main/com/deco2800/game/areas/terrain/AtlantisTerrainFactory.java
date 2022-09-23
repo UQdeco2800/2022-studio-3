@@ -168,6 +168,33 @@ public class AtlantisTerrainFactory {
     }
 
     /**
+     * Change the outline of the map island into sea
+     * @param layer The layer before the change from island to sea
+     */
+    private void floodOutlineMap(TiledMapTileLayer layer) {
+        //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
+        Array<StaticTiledMapTile> oceanFrames = new Array<>();
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea1")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+
+        char[][] map = mapGenerator.getOutlineMap();
+        for (int x = 0; x < mapWidth; x++) {
+            for (int y = 0; y < mapHeight; y++) {
+                Cell cell = new Cell();
+                if (map[y][x] == mapGenerator.getIslandChar()) {
+                    ServiceLocator.getMapService().removeIslandTile(x, mapHeight - 1 - y);
+                    cell.setTile(animatedOceanTile);
+                    ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
+                }
+                layer.setCell(x, mapHeight - 1 - y, cell);
+            }
+        }
+    }
+
+    /**
      * Returns a new MapGenerator with identical parameters as the one created for the game -
      * used in testing the consistency of the MapGenerator
      * @return new MapGenerator with correct parameters
