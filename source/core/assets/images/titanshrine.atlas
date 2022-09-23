@@ -1,0 +1,159 @@
+titanshrine.png
+size: 4000, 1500
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+titanshrine-50-default
+  rotate: false
+  xy: 0, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-50
+  rotate: false
+  xy: 500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-50
+  rotate: false
+  xy: 1000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+titanshrine-50
+  rotate: false
+  xy: 1500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+titanshrine-50
+  rotate: false
+  xy: 2000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+titanshrine-attacked
+  rotate: false
+  xy: 2500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-attacked
+  rotate: false
+  xy: 3000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+titanshrine-attacked
+  rotate: false
+  xy: 3500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+titanshrine-attacked
+  rotate: false
+  xy: 0, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+titanshrine-collapse
+  rotate: false
+  xy: 500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-collapse
+  rotate: false
+  xy: 1000, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+titanshrine-collapse
+  rotate: false
+  xy: 1500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+titanshrine-collapse
+  rotate: false
+  xy: 2000, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+titanshrine-default
+  rotate: false
+  xy: 2500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-reconstruction
+  rotate: false
+  xy: 3000, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+titanshrine-reconstruction
+  rotate: false
+  xy: 3500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+titanshrine-reconstruction
+  rotate: false
+  xy: 0, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+titanshrine-reconstruction
+  rotate: false
+  xy: 500, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+titanshrine-reconstruction
+  rotate: false
+  xy: 1000, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 4
+titanshrine-reconstruction
+  rotate: false
+  xy: 1500, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 5
+titanshrine-reconstruction
+  rotate: false
+  xy: 2000, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 6
+titanshrine-reconstruction
+  rotate: false
+  xy: 2500, 1000
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 7
