@@ -42,6 +42,7 @@ import com.deco2800.game.worker.type.MinerFactory;
 import com.deco2800.game.worker.components.duration.DurationBarFactory;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
+import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 
 import main.com.deco2800.game.components.flooding.FloodingComponent;
 import org.slf4j.Logger;
@@ -142,9 +143,12 @@ public class AtlantisGameArea extends GameArea {
 
     private Entity player;
 
+    private FloodingGenerator floodingGenerator;
+
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
+        this.floodingGenerator = new FloodingGenerator(this.terrainFactory);
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */

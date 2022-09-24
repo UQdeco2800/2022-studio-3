@@ -410,6 +410,8 @@ public class MapGenerator {
         }
     }
 
+
+
     /**
      * Chooses the two edge tiles for the island by spreading the length evenly across each side
      * of the city, if map space permits
@@ -589,5 +591,30 @@ public class MapGenerator {
         }
         return newMap;
     }
-}
 
+    /**
+     * Given a coordinate (x, y), update the internal representation of the map
+     * to flood that tile.
+     * @param x
+     * @param y
+     */
+    public void floodTile(int x, int y) throws IllegalArgumentException {
+        //Check that the square to be flooded is a flood-able square
+        //Return without crashing game if an error has been made
+        char tileToBeFlooded = this.map[x][y];
+        try {
+            if (tileToBeFlooded == this.getIslandChar() ||
+                    tileToBeFlooded == this.getCityChar()) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+
+        //Update internal structure, flooding tile
+        this.map[x][y] = this.getOceanChar();
+        //TODO - Anything else that needs to be updated to do with the
+        //TODO - map. Perhaps the outline of the map if it is intended
+        //TODO - to be reused.
+    }
+}

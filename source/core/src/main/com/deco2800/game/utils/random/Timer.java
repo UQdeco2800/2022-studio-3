@@ -25,7 +25,7 @@ public class Timer {
     public Timer(int lowerIntervalMiliSeconds, int upperIntervalMiliSeconds) {
         int randomIntervalInt = PseudoRandom.seedRandomInt(lowerIntervalMiliSeconds, upperIntervalMiliSeconds);
         if (lowerIntervalMiliSeconds == upperIntervalMiliSeconds) {
-            this.delay = lowerIntervalMiliSeconds;
+            this.delay = (long)lowerIntervalMiliSeconds;
         } else {
             this.delay = Long.valueOf(randomIntervalInt);
         }

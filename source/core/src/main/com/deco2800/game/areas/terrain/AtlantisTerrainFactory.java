@@ -48,7 +48,7 @@ public class AtlantisTerrainFactory {
     /**
      * Instantiate a new MapGenerator for this terrain factory
      */
-    private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
+    private static MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
     /**
      * Create a terrain factory with Isometric orientation
@@ -61,7 +61,6 @@ public class AtlantisTerrainFactory {
         this.textures = new HashMap<>();
     }
 
-
     /**
      * Create all textures needed to generate the AtlantisMap
      */
@@ -73,6 +72,10 @@ public class AtlantisTerrainFactory {
         textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
         textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/sea_3.png", Texture.class)));
         textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/sea_4.png", Texture.class)));
+    }
+
+    private void setMapGenerator (MapGenerator newMapGenerator) {
+        mapGenerator = newMapGenerator;
     }
 
     public TerrainComponent createAtlantisTerrainComponent() {
@@ -90,9 +93,12 @@ public class AtlantisTerrainFactory {
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
-    public void floodTiles(Map<Integer, Integer> tilesToBeFlooded) {
-        //TODO - Update map generator
-        //TODO - re-Draw to the screen
+    public MapGenerator floodTiles(int height, int width) {
+        mapGenerator.floodTile(height, width);
+        //TODO - re-Draw to the screen - (Jordan/Dito)
+
+        //Return new mapGenerator
+        return mapGenerator;
     }
 
     /**
@@ -217,5 +223,9 @@ public class AtlantisTerrainFactory {
      */
     public MapGenerator getMapGenerator() {
         return this.mapGenerator;
+    }
+
+    public void floodTiles() {
+
     }
 }
