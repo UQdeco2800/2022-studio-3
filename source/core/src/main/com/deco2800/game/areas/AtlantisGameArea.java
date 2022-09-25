@@ -235,9 +235,9 @@ public class AtlantisGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Atlantis' Legacy"));
         spawnEntity(ui);
 
-        Entity infoUi = new Entity();
-        infoUi.addComponent(new InfoBoxDisplay());
-        spawnEntity(infoUi);
+//        Entity infoUi = new Entity();
+//        infoUi.addComponent(new InfoBoxDisplay());
+//        spawnEntity(infoUi);
 
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());

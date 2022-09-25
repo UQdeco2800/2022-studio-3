@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.tasks.EnemyMovement;
@@ -70,7 +71,8 @@ public class BuildingFactory {
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
-                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"));
+                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"))
+                .addComponent(new BuildingUIDataComponent());
 
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
@@ -110,7 +112,8 @@ public class BuildingFactory {
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingUIDataComponent());
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
