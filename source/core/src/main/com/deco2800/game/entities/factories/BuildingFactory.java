@@ -1,20 +1,22 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -34,6 +36,13 @@ public class BuildingFactory {
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
     private static final ResourceConfig stats =
             FileLoader.readClass(ResourceConfig.class, "configs/base.json");
+
+    private static final String HALF_HEALTH = "50-idle";
+    private static final String HALF_HEALTH_TRANSITION = "50";
+    private static final String FULL_HEALTH = "100";
+    private static final String FULL_ATTACKED = "attacked";
+    private static final String COLLAPSE = "collapse";
+    private static final String REBUILD = "reconstruction";
 
     /**
      * Use this as a base entity for creating buildings
@@ -130,7 +139,117 @@ public class BuildingFactory {
     }
 
     /**
-     * Creates entity, adds and configures Wall components
+     * Creates a titan shrine entity, a titan shrine is an enemy building
+     * that spawns titan's.
+     * @return Titan Shrine Building Entity
+     */
+    public static Entity createTitanShrine() {
+        final float TITANSHRINE_SCALE = 5f;
+        Entity titanShrine = createBaseBuilding();
+        TitanShrineConfig config = configs.titanShrine;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                                                           .getAsset("images/titanshrine.atlas",
+                                                                        TextureAtlas.class));
+
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+
+        titanShrine
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+
+        // TODO: Make component to spawn titan.
+
+        titanShrine.scaleWidth(TITANSHRINE_SCALE);
+
+        // TODO: Set isometric colliders
+
+        return titanShrine;
+    }
+
+    /**
+     * Creates a ship entity, a ship shrine is an enemy building that transports
+     * enemy entities from sea to the shores of the island.
+     * that spawns titan's.
+     * @return Ship Building Entity
+     */
+    public static Entity createShip() {
+        final float SHIP_SCALE = 5f;
+        Entity ship = createBaseBuilding();
+        ShipConfig config = configs.ship;
+
+        // TODO: Change sprite to ship when its done.
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/titanshrine.atlas",
+                                TextureAtlas.class));
+
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+
+        ship
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new PhysicsMovementComponent());
+
+        // TODO: Make component to spawn enemy units.
+
+        ship.scaleWidth(SHIP_SCALE);
+
+        // TODO: Set isometric colliders
+
+        return ship;
+    }
+
+    /**
+     * Creates a trebuchet entity, a trebuchet is a friendly building
+     * that defends the shores of atlantis, it primarily attacks enemy
+     * transport ships.
+     * that spawns titan's.
+     * @return Trebuchet building entity.
+     */
+    public static Entity createTrebuchet() {
+        final float SHIP_SCALE = 5f;
+        Entity trebuchet = createBaseBuilding();
+        ShipConfig config = configs.ship;
+
+        // TODO: Change sprite to ship when its done.
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/titanshrine.atlas",
+                                    TextureAtlas.class));
+
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+
+        trebuchet
+            .addComponent(new BuildingActions(config.type, config.level))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+
+        // TODO: Make component to spawn enemy units.
+
+        trebuchet.scaleWidth(SHIP_SCALE);
+
+        // TODO: Set isometric colliders
+
+        return trebuchet;
+    }
+
+    /**
+     * Creates a wall entity, adds and configures Wall components
      * @return Barracks Entity
      */
     public static Entity createWall() {
