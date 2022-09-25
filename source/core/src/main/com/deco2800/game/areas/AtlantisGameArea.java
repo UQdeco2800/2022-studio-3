@@ -153,9 +153,11 @@ public class AtlantisGameArea extends GameArea {
         displayUI();
         spawnTerrain();
         player = spawnPlayer();
+        /*
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
         }
+        */
         centreCameraOnCity();
         playMusic();
 

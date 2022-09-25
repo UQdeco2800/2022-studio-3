@@ -1,8 +1,12 @@
 package com.deco2800.game.worker.components.movement;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import java.util.List;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.services.ServiceLocator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +18,7 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     private boolean idling = false;
     private WorkerMovementTask movementTask;
     private Vector2 startPos;
+    private List<GridPoint2> path;
 
     public WorkerIdleTask() {}
 
@@ -51,8 +56,13 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     public void startMoving(Vector2 target) {
         logger.debug("Starting moving to {}", target);
         movementTask.stop();
+        GridPoint2 dest = ServiceLocator.getMapService().worldToTile(target);
+        GridPoint2 start = ServiceLocator.getMapService().worldToTile(owner.getEntity().getCenterPosition());
+        List<GridPoint2> newPath = ServiceLocator.getMapService().getPath(start, dest);
+        logger.info(String.format("Path from %s to %s: %s", start, dest, newPath));
         movementTask.setTarget(target);
         movementTask.start();
+        //movementTask.setPath(path);
         // Trigger movement animation
         //owner.getEntity().getEvents().trigger("workerWalkAnimate");
 
