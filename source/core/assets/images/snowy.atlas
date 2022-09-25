@@ -1,0 +1,13 @@
+
+thunderstorm.png
+size: 256, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+snowy
+  rotate: false
+  xy: 2, 2
+  size: 160, 32
+  orig: 160, 32
+  offset: 0, 0
+  index: -1

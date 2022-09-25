@@ -3,6 +3,13 @@ size: 2048, 1536
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+default
+  rotate: false
+  xy: 0, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
 attack-north
   rotate: false
   xy: 0, 0

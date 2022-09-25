@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Gdx;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.friendlyunits.GestureDisplay;
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -60,6 +64,9 @@ public class AtlantisGameArea extends GameArea {
             "images/Sand.png",
             "images/Grass.png",
             "images/box_boy_leaf.png",
+            "images/box_boy.png",
+            "images/Base_Highlight.png",
+            "images/box_boy_highlight.png",
             "images/tree.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
@@ -79,20 +86,34 @@ public class AtlantisGameArea extends GameArea {
             "images/Information_Box_Deepsea.png",
             "images/TransBox.png",
             "images/white.png",
+            "images/stone.png",
+            /* Building assets */
+            // TownHall
+            "images/base.png",
+            // Barracks
             "images/barracks_level_1.0.png",
+            "images/barracks_level_1.0_Highlight.png",
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
+            // Mine
+            "mining_levelone_sketch.png",
+            "mining_leveltwo_sketch.png",
+            // Walls
+            "images/wooden_wall.png",
+            "images/wooden_wall_2.png",
+            "images/wooden_wall_3.png",
             "images/stone_wall.png",
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
-            "images/base.png",
+            "images/Base_Highlight",
             "images/stone.png",
             "images/archer.png",
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png"
+
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -111,8 +132,8 @@ public class AtlantisGameArea extends GameArea {
             "images/newwolf.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/menu.wav";
-    private static final String[] atlantisMusic = {backgroundMusic};
+
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
     private final AtlantisTerrainFactory terrainFactory;
 
@@ -136,7 +157,7 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        //playMusic();
+        playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
@@ -145,7 +166,6 @@ public class AtlantisGameArea extends GameArea {
 
         spawnForager();
         spawnForager();
-        //spawnWorkerBase();
         spawnResources();
         spawnMiner();
         // spawnWorkerBase();
@@ -218,6 +238,11 @@ public class AtlantisGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
         spawnEntity(infoUi);
+
+        Entity gestureDisplay = new Entity();
+        gestureDisplay.addComponent(new MouseInputComponent());
+        gestureDisplay.addComponent(new GestureDisplay());
+        spawnEntity(gestureDisplay);
 
         Entity dialogueBox = new Entity();
         /* FIXME: temporary infobox width value */
@@ -399,13 +424,15 @@ public class AtlantisGameArea extends GameArea {
 
             // Absolute corner walls will have default wall texture (doesn't point in any direction)
             Entity wall = BuildingFactory.createWall();
+            wall.getComponent(BuildingActions.class).addLevel();
+            wall.getComponent(BuildingActions.class).setWallDefault();
             spawnEntityAt(wall, position, true, true);
 
             for (int i = 0; i < xLength; i++) {
                 wall = BuildingFactory.createWall();
                 // Sets wall texture which points in positive x direction
-                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService()
-                        .getAsset("images/stone_wall_2_.png", Texture.class));
+                wall.getComponent(BuildingActions.class).addLevel();
+                wall.getComponent(BuildingActions.class).setWallNE();
                 spawnEntityAt(wall, position.add(direction, 0), true, true);
             }
             direction *= -1;
@@ -418,10 +445,10 @@ public class AtlantisGameArea extends GameArea {
 
             for (int i = 0; i < yLength; i++) {
                 Entity wall = BuildingFactory.createWall();
-                spawnEntityAt(wall, position.add(0, direction), true, true);
                 // Sets wall texture which points in negative y direction
-                wall.getComponent(TextureRenderComponent.class).setTexture(ServiceLocator.getResourceService()
-                        .getAsset("images/stone_wall_3.png", Texture.class));
+                wall.getComponent(BuildingActions.class).addLevel();
+                wall.getComponent(BuildingActions.class).setWallSE();
+                spawnEntityAt(wall, position.add(0, direction), true, true);
             }
 
         }
@@ -524,8 +551,9 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void playMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-        music.setLooping(true);
+        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+
+        music.setLooping(false);
         music.setVolume(0.5f);
         music.play();
     }
@@ -548,7 +576,6 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
-        resourceService.loadMusic(atlantisMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -562,13 +589,12 @@ public class AtlantisGameArea extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(atlantisSounds);
-        resourceService.unloadAssets(atlantisMusic);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+        music.stop();
         this.unloadAssets();
     }
 }

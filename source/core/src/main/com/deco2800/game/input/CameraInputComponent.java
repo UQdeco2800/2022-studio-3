@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.deco2800.game.services.GameTime;
+
+import static com.deco2800.game.services.GameTime.ifPaused;
 
 public class CameraInputComponent extends InputComponent {
     /**
@@ -62,6 +65,10 @@ public class CameraInputComponent extends InputComponent {
      */
     private final float maxZoom = 10;
 
+    public boolean ifPaused() {
+        return GameTime.ifPaused();
+    }
+
     public CameraInputComponent() {
         super(5);
     }
@@ -70,7 +77,7 @@ public class CameraInputComponent extends InputComponent {
     public boolean mouseMoved(int screenX, int screenY) {
         //Mouse moved, check if it is at a screen extremity
         updateDirection();
-        return true;
+        return false;
     }
 
     /**
@@ -80,6 +87,11 @@ public class CameraInputComponent extends InputComponent {
     public void update() {
         float cameraX = super.entity.getPosition().x;
         float cameraY = super.entity.getPosition().y;
+
+        //If game is paused, disable this function
+        if (ifPaused()){
+            return;
+        }
 
         //If tileSize has been set, check to see where the camera is relative to the tiled map
         if (!(tileSize == -1)) {
