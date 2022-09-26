@@ -16,6 +16,7 @@ import java.util.List;
  * getMap() function.
  */
 public class MapGenerator {
+    private final Random random;
     /**
      * The width of the game map in which to generate an island (in tiles)
      */
@@ -112,6 +113,7 @@ public class MapGenerator {
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
         this.islandEdges = new HashMap<>();
+        this.random = new Random();
         //Generate map
         generateMap();
 
@@ -236,10 +238,9 @@ public class MapGenerator {
         }
 
         Coordinate cityPlacement;
-        Random rand = new Random();
         do {
             //Pick random coordinates for city until it is a passable location
-            cityPlacement = new Coordinate(rand.nextInt(mapWidth), rand.nextInt(mapHeight));
+            cityPlacement = new Coordinate(this.random.nextInt(mapWidth), this.random.nextInt(mapHeight));
         } while (!(isValidCityPlacement(cityPlacement)));
 
         //Define short hands for city (x,y)
@@ -292,8 +293,7 @@ public class MapGenerator {
      */
     public void writeMap(String path) {
         File outFile = new File(path);
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));) {
             for (int i = 0; i < mapHeight; i++) {
                 for (int j = 0; j < mapWidth; j++) {
                     bw.write(map[i][j]);
@@ -310,7 +310,6 @@ public class MapGenerator {
                     bw.write(' ');
                 }
             }
-            bw.close();
         } catch (IOException squashed) {
             //Squashed
         }
@@ -323,8 +322,7 @@ public class MapGenerator {
      */
     public static void writeMap(char[][] map, String path, int mapWidth, int mapHeight) {
         File outFile = new File(path);
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));) {
             for (int i = 0; i < mapHeight; i++) {
                 for (int j = 0; j < mapWidth; j++) {
                     bw.write(map[i][j]);
@@ -341,7 +339,6 @@ public class MapGenerator {
                     bw.write(' ');
                 }
             }
-            bw.close();
         } catch (IOException squashed) {
             //Squashed
         }
@@ -582,10 +579,9 @@ public class MapGenerator {
             weightMap.put(totalCount, c);
             totalCount += weightPoint(c);
         }
-        Random rand = new Random();
         //Return the object correlating to the weight returned - in this case the lowest key
         //closest to the random number rolled correlates to the move chosen
-        return weightMap.get(weightMap.floorKey(rand.nextInt(totalCount)));
+        return weightMap.get(weightMap.floorKey(this.random.nextInt(totalCount)));
     }
 
     /**
