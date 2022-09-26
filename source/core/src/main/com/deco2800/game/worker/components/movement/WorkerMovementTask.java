@@ -27,6 +27,7 @@ public class WorkerMovementTask extends DefaultTask {
     private Vector2 lastPos;
     private PhysicsMovementComponent movementComponent;
     private List<GridPoint2> path;
+    private MapService mapService;
 
     public WorkerMovementTask(Vector2 target) {
         this.target = target;
@@ -37,12 +38,10 @@ public class WorkerMovementTask extends DefaultTask {
     public void start() {
         super.start();
         this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
-        // MapService ms = ServiceLocator.getMapService();
-        // path = ms.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
-        // movementComponent.setTarget(ms.tileToWorldPosition(path.get(1)));
-        // path.remove(0);
-        // path.remove(1);
-        movementComponent.setTarget(target);
+        mapService = ServiceLocator.getMapService();
+        path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
+        movementComponent.setTarget(MapService.tileToWorldPosition(path.get(0)));
+        path.remove(0);
         movementComponent.setMoving(true);
         logger.debug("Starting movement towards {}", target);
         lastTimeMoved = gameTime.getTime();
@@ -60,14 +59,14 @@ public class WorkerMovementTask extends DefaultTask {
             movementComponent.setMoving(false);
             status = Status.FINISHED;
             logger.debug("Finished moving to {}", target);
-        // if (path.size() == 0) {
-        //     movementComponent.setMoving(false);
-        //     status = Status.FINISHED;
-        //     logger.debug("Finished moving to {}", target);
-        // } else if (isAtTarget()) {
-        //     MapService ms = ServiceLocator.getMapService();
-        //     movementComponent.setTarget(ms.tileToWorldPosition(path.get(0)));
-        //     path.remove(0);
+            if (path.size() == 0) {
+               movementComponent.setMoving(false);
+               status = Status.FINISHED;
+               logger.debug("Finished moving to {}", target);
+            } else {
+               movementComponent.setTarget(mapService.tileToWorldPosition(path.get(0)));
+               path.remove(0);
+            }
         } else {
             checkIfStuck();
         }
@@ -76,6 +75,10 @@ public class WorkerMovementTask extends DefaultTask {
     public void setTarget(Vector2 target) {
         this.target = target;
         movementComponent.setTarget(target);
+    }
+    
+    public void setPath(List<GridPoint2> path) {
+        this.path = path;
     }
 
     @Override
