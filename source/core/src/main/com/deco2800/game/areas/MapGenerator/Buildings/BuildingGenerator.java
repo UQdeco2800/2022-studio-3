@@ -22,10 +22,6 @@ public class BuildingGenerator {
      */
     private final int CITY_BUFFER = 3;
     /**
-     * Distance (in tiles) to have between each row
-     */
-    private final int ROW_BUFFER = 3;
-    /**
      * Distance (in tiles) to allow for the walls around the city
      */
     private final int WALL_BUFFER = 1;
@@ -68,7 +64,7 @@ public class BuildingGenerator {
         //Find buildings from config file
         //Read in BuildingSpecification data from configs/BuildingSpecifications.json
         /* For each BuildingSpecification object defined under the "buildings" header in
-           BuildingSpecifications.json, add a building object to the buildings list.
+           BuildingSpecifications.json, add a building object to the buildingslist.
          */
         JsonReader json = new JsonReader();
         JsonValue buildingsJson = json.parse(Gdx.files.internal("configs/buildingSpecifications.json")).get("buildings");
@@ -95,9 +91,9 @@ public class BuildingGenerator {
         int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
 
         //Determine number of rows to place buildings in
-        numRows = (cityHeight - (2 * WALL_BUFFER)) / (maxHeight + ROW_BUFFER);
+        numRows = (cityHeight - WALL_BUFFER) / (maxHeight + CITY_BUFFER);
 
-        //Allocate a list of CityRow based on numRows
+        //Allocate an array of rows based on numRows
         cityRows = new LinkedList<>();
         for (int i = 0; i < numRows; i++) {
             cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, i));
@@ -107,7 +103,7 @@ public class BuildingGenerator {
         placeBuildings();
 
         //Test output
-        //writeCity(cityHeight, cityWidth);
+        writeCity(cityHeight, cityWidth);
     }
 
     /**
@@ -117,55 +113,40 @@ public class BuildingGenerator {
      */
     public void writeCity(int cityHeight, int cityWidth) {
         //Test - write to output file
-        char[][] city = getCharMap();
-        //Change or comment path as needed to test
-        MapGenerator.writeMap(city, "E:\\Sprint 3\\city.txt", cityWidth, cityHeight);
-    }
 
-    /**
-     * Returns char char array of the current city contents in the CityRows
-     * @return 2d char array denoting the current position of each building
-     */
-    public char[][] getCharMap() {
-        //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
-        //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
-        //Find min and max X values of city
-        int cityMinX = cityDetails.get("NW").getX();
-        int cityMinY = cityDetails.get("NW").getY();
-
-        //Initiate city array with empty tiles -> '*' character
         char[][] city = new char[cityHeight][cityWidth];
         for (int i = 0; i < cityHeight; i++) {
             for (int j = 0; j < cityWidth; j++) {
                 city[i][j] = '*';
             }
         }
-        //For each building stored in each city row, write a Width * Height representation on the map
-        for (CityRow cr : cityRows) {
-            List<Building> buildings = cr.getBuildings();
-            for (Building b : buildings) {
-                Coordinate placement = b.getPlacement();
+        int cityMinX = cityDetails.get("NW").getX();
+        int cityMinY = cityDetails.get("NW").getY();
+
+        for (BuildingSpecification b : buildings) {
+            System.out.println(b.getName()+b.getPlacements());
+            for (Coordinate p : b.getPlacements()) {
                 char buildingChar = b.getName().charAt(0);
+                //Write each coordinate
                 for (int i = 0; i < b.getWidth(); i++) {
                     for (int j = 0; j < b.getHeight(); j++) {
-                        int translatedX = placement.getX() - cityMinX + i;
-                        int translatedY = placement.getY() - cityMinY + j;
+                        int translatedX = p.getX() - cityMinX + i;
+                        int translatedY = (p.getY() - cityMinY) + j;
                         city[translatedY][translatedX] = buildingChar;
                     }
                 }
             }
         }
-        return city;
+        //Change or comment path as needed to test
+        MapGenerator.writeMap(city, "E:\\Sprint 3\\city.txt", cityWidth, cityHeight);
     }
 
     /**
-     * Returns a copy of this BuildingGenerators CityRow list - used to find building placements
-     * @return List of CityRows, each containing buildings with appropriate placements
+     * Returns a copy of this BuildingGenerator's buildingspec list
+     * @return List of BuildingSpecifications
      */
-    public List<CityRow> getCityRows() {
-        return new LinkedList<CityRow>(cityRows);
+    public List<BuildingSpecification> getBuildings() {
+        return new ArrayList<>(buildings);
     }
 
     /**
@@ -184,25 +165,21 @@ public class BuildingGenerator {
             //Select a building to place
             BuildingSpecification currentBuilding = remainingBuildings.get(new Random().nextInt(remainingBuildings.size()));
 
-            //Make a building object to mirror this
-            Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName());
-
             //While a row can't be found or until the max rows have been exhausted
             int seed = 0;
-            boolean placed = false;
+            int xPlacement = -1;
             CityRow currentRow = null;
-
-            while (seed < numRows && !placed) {
+            while (seed < numRows && xPlacement < 0) {
                 currentRow = chooseRow(seed);
-                placed = currentRow.addBuilding(building,currentRow.getBuildings().size() == 1);
+                xPlacement = currentRow.addBuilding(currentBuilding.getWidth(), currentBuilding.getHeight());
                 seed++; //Choose the next best spot for the building
             }
-
-            if (!placed) {
+            if (xPlacement < 0) {
                 //No placement could be found for this building within any of the city rows - fail
                 if (generationAttempts++ >= MAX_GENERATION_ATTEMPTS) {
                     //A number of attempts have failed to fit the buildings in the city - throw exception
-                    throw new IllegalArgumentException("Cannot fit buildings within City Size");
+                    break;
+                    //throw new IllegalArgumentException("Cannot fit buildings within City Size");
                 } else {
                     //Attempt to try again
                     resetBuildings();
@@ -210,59 +187,33 @@ public class BuildingGenerator {
                 }
                 return;
             } else {
-                //Place the building
+                //Find minX of city
+                int cityMinX = cityDetails.get("NW").getX();
+                int cityMinY = cityDetails.get("NW").getY();
+
+                //Store index of the row
                 int index = currentRow.getIndex();
 
+                //Add coordinate to place this building
+                currentBuilding.addPlacement(new Coordinate(xPlacement + cityMinX, ((maxHeight + CITY_BUFFER) * index) + WALL_BUFFER + cityMinY));
                 //If it was a corner building, update the corner placements
                 if ((cornerBuildings < 4) && (index == 0 || index == numRows - 1)) {
                     cornerBuildings++;
                 }
 
                 //If no buildings remain to be placed, remove from list
-                //Increase the count of buildings that have been placed
-                currentBuilding.incNumPlaced();
                 if (currentBuilding.numRemaining() == 0) {
                     remainingBuildings.remove(currentBuilding);
                 }
             }
 
         }
-        //Set height of each city row and the buildings within
-        //Find minX of city to determine map offsets
-        int cityMinX = cityDetails.get("NW").getX();
-        int cityMinY = cityDetails.get("NW").getY();
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
 
-        int spaceRemaining = (cityHeight - (2 * WALL_BUFFER)) - ((maxHeight + ROW_BUFFER) * numRows);
-        int baseOffset = spaceRemaining / (numRows - 1);
-        int conditionalOffset = spaceRemaining % (numRows - 1);
-        int usedOffsets = 0;
-        int offset = 0;
-        for (CityRow c : cityRows) {
-            int index = c.getIndex();
-            //Determine centred height of city
-            if (numRows > 2 && index != 0) {
-                offset += baseOffset;
-                if (usedOffsets < conditionalOffset) {
-                    offset++;
-                    usedOffsets++;
-                }
-            }
-            int rowYPosition = ((maxHeight + ROW_BUFFER) * index) + WALL_BUFFER + cityMinY + offset;
-
-            c.setBuildingCoordinates(cityMinX, rowYPosition);
-            c.centreRow();
-        }
     }
 
     public void resetBuildings() {
-        //Empty out list of buildings
         for (BuildingSpecification b : buildings) {
             b.resetPlacements();
-        }
-        //Empty out city rows
-        for (CityRow c : cityRows) {
-            c.resetRow();
         }
     }
 
@@ -270,7 +221,7 @@ public class BuildingGenerator {
         //Initialise new LinkedList of cityRows
         LinkedList<CityRow> cityRowsCopy = new LinkedList<>(cityRows);
 
-        //Special case - place buildings in row 0 or last row (numRows - 1)
+        //Special case - place buildings in row 0 or numRows - 1
         if (cornerBuildings < 4 && seed < 4) {
             return cornerBuildings < 2 ? cityRowsCopy.get(0) : cityRowsCopy.get(numRows - 1);
         } else {
