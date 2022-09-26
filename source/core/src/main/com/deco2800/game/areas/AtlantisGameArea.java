@@ -171,7 +171,12 @@ public class AtlantisGameArea extends GameArea {
 
         spawnForager();
         spawnForager();
+
         spawnResources();
+        spawnMiner();
+
+        // spawnWorkerBase();
+        // spawnResources();
         spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
@@ -262,6 +267,7 @@ public class AtlantisGameArea extends GameArea {
 
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
+        // mg.writeMap("/home/r0m4n/Documents/deco2800/map.txt");
 
         //Create map
         terrain = terrainFactory.createAtlantisTerrainComponent();
