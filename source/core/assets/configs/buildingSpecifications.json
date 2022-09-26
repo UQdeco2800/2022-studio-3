@@ -1,40 +1,16 @@
 {
 buildings: [
-	{ 
-		"name": "Town Hall",
-		"width": 7,
-		"height": 7,
-		"num": 1,
-	},
-	{
-		"name": "Barracks",
-		"width": 3,
-		"height": 3,
-		"num": 2,
-	},
-	{
-		"name": "Farm",
-		"width": 8,
-		"height": 3,
-		"num": 1,
-	},
-	{
-		"name": "Blacksmith",
-		"width": 4,
-		"height": 4,
-		"num": 1,
-	},
-	{
-		"name": "Library",
-		"width": 4,
-		"height": 4,
-		"num": 1,
-	},
-	{
-		"name": "House",
-		"width": 3,
-		"height": 3,
-		"num": 10,
-	}
+    { 
+        "name": "Town Hall",
+        "width": 5,
+        "height": 5,
+        "num": 1,
+    },
+    {
+        "name": "Barracks",
+        "width": 3,
+        "height": 3,
+        "num": 2,
+    }
 ]
 }

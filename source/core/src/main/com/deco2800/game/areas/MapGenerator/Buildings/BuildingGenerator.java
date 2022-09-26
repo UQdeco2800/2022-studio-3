@@ -138,7 +138,7 @@ public class BuildingGenerator {
             }
         }
         //Change or comment path as needed to test
-        MapGenerator.writeMap(city, "E:\\Sprint 3\\city.txt", cityWidth, cityHeight);
+        MapGenerator.writeMap(city, "/home/r0m4n/Documents/deco2800/map.txt", cityWidth, cityHeight);
     }
 
     /**
