@@ -95,6 +95,7 @@ public class DialogueBoxDisplay extends UIComponent {
      * Add all necessary dialogue box components
      */
     public void addActors() {
+        Stage stage = new Stage();
 
         logger.debug("Creating DialogueBox Actors");
         this.backgroundTexture = new Image(

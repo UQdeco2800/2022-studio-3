@@ -71,7 +71,6 @@ public class TutorialScreen extends ScreenAdapter {
 
     public TutorialScreen(GdxGame game) {
         this.game = game;
-        this.dialogueBoxDisplay = new DialogueBoxDisplay();
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
@@ -82,6 +81,8 @@ public class TutorialScreen extends ScreenAdapter {
 
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerResourceService(new ResourceService());
+
+
 
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
@@ -98,6 +99,7 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
         loadAssets();
+        this.dialogueBoxDisplay = new DialogueBoxDisplay(517f);
         createUI();
 
         logger.debug("Initialising main game screen entities");
