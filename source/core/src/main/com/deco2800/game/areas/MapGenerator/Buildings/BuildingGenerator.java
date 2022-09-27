@@ -53,6 +53,14 @@ public class BuildingGenerator {
      * Total number of buildings that have been placed at the corners
      */
     private int cornerBuildings = 0;
+    /**
+     * The height of the city in tiles.
+     */
+    private int cityHeight;
+    /**
+     * The width of the city in tiles.
+     */
+    private int cityWidth;
 
     public BuildingGenerator(MapGenerator mg) {
         //Get MapGenerator details
@@ -86,9 +94,9 @@ public class BuildingGenerator {
         }
 
         //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        this.cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
         //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+        this.cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
 
         //Determine number of rows to place buildings in
         numRows = (cityHeight - WALL_BUFFER) / (maxHeight + CITY_BUFFER);
@@ -104,6 +112,53 @@ public class BuildingGenerator {
 
         //Test output
         writeCity(cityHeight, cityWidth);
+    }
+
+    public char[][] getCity() {
+        //Test - write to output file
+        char[][] city = new char[cityHeight][cityWidth];
+        for (int i = 0; i < cityHeight; i++) {
+            for (int j = 0; j < cityWidth; j++) {
+                city[i][j] = '*';
+            }
+        }
+        int cityMinX = cityDetails.get("NW").getX();
+        int cityMinY = cityDetails.get("NW").getY();
+
+        for (BuildingSpecification b : buildings) {
+            System.out.println(b.getName()+b.getPlacements());
+            for (Coordinate p : b.getPlacements()) {
+                char buildingChar = b.getName().charAt(0);
+                //Write each coordinate
+                for (int i = 0; i < b.getWidth(); i++) {
+                    for (int j = 0; j < b.getHeight(); j++) {
+                        int translatedX = p.getX() - cityMinX + i;
+                        int translatedY = (p.getY() - cityMinY) + j;
+                        city[translatedY][translatedX] = buildingChar;
+                    }
+                }
+            }
+        }
+
+        return city.clone();
+    }
+
+    /**
+     * Gets the city height.
+     * 
+     * @return city height
+     */
+    public int getCityHeight() {
+        return this.cityHeight;
+    }
+
+    /**
+     * Gets the city width.
+     * 
+     * @return city width
+     */
+    public int getCityWidth() {
+        return this.cityWidth;
     }
 
     /**
@@ -138,7 +193,7 @@ public class BuildingGenerator {
             }
         }
         //Change or comment path as needed to test
-        MapGenerator.writeMap(city, "/home/r0m4n/Documents/deco2800/map.txt", cityWidth, cityHeight);
+        // MapGenerator.writeMap(city, "", cityWidth, cityHeight);
     }
 
     /**
