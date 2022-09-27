@@ -1,6 +1,9 @@
 package com.deco2800.game.worker;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.EntityType;
+import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
@@ -36,6 +39,9 @@ public class WorkerFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.metal))
                         .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
+                        .addComponent(new CombatStatsComponent(stats.health, 0, 0))
+                        .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
+
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 

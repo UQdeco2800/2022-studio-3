@@ -2,22 +2,26 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.EntityType;
+import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.*;
+import com.deco2800.game.entities.configs.BarracksConfig;
+import com.deco2800.game.entities.configs.BuildingConfigs;
+import com.deco2800.game.entities.configs.TownHallConfig;
+import com.deco2800.game.entities.configs.WallConfig;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
 import com.deco2800.game.worker.components.type.BaseComponent;
@@ -44,6 +48,7 @@ public class BuildingFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new SelectableComponent())
                 .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
+                .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
@@ -56,12 +61,12 @@ public class BuildingFactory {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
-        townHall.addComponent(new TextureRenderComponent("images/base.png"))
+        townHall.addComponent(new TextureRenderComponent("images/level 1 town hall.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
-                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"));
+                .addComponent(new HighlightedTextureRenderComponent("images/level_1_town_hall_Highlight.png"));
 
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider

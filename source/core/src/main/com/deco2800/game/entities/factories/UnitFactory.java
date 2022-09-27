@@ -3,13 +3,14 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.EntityType;
+import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
 import com.deco2800.game.entities.configs.UnitConfigs;
-import com.deco2800.game.events.listeners.EventListener0;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -21,7 +22,6 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +89,7 @@ public class UnitFactory {
                         new CombatStatsComponent(stats.health,
                                 stats.baseAttack,
                                 stats.baseDefence))
+                        .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.NPC));
     }
 
