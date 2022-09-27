@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.areas.terrain.MinimapComponent;
@@ -72,14 +73,6 @@ public class DialogueBoxDisplay extends UIComponent {
         this.infoWidth = infoWidth;
         addActors();
     }
-
-    public DialogueBoxDisplay() {
-
-        logger.debug("Creating DialogueBoxDisplay");
-        this.infoWidth = 537f;
-        addActors();
-    }
-
 
     /**
      * Set current minimap for reference
@@ -209,7 +202,7 @@ public class DialogueBoxDisplay extends UIComponent {
         if (!this.isHidden())
             return;
 
-        this.hidden = true;
+        this.hidden = false;
     }
 
     /**
