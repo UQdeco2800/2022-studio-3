@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
@@ -47,18 +48,30 @@ import org.slf4j.LoggerFactory;
  */
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
-    private static final String[] mainGameTextures = {"images/dialogue_box_pattern2_background.png",
+    private static final String[] mainGameTextures = {
+            "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
             "images/exit-button.PNG",
-            "images/dialogue_box_background_Deep_Sea.png", "images/heart.png","images/bigblack.png", "images/resource_display.png", "images/gainstone.png", "images/gain10wood.png", "images/gainmetal.png"};
+            "images/dialogue_box_background_Deep_Sea.png",
+            "images/heart.png",
+            "images/bigblack.png",
+            "images/resource_display.png",
+            "images/gainstone.png",
+            "images/gain10wood.png",
+            "images/gainmetal.png"
+    };
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
 
+    /** tutorial dialogue box */
+    private DialogueBoxDisplay dialogueBoxDisplay;
+
     public TutorialScreen(GdxGame game) {
         this.game = game;
+        this.dialogueBoxDisplay = new DialogueBoxDisplay();
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
@@ -175,8 +188,10 @@ public class TutorialScreen extends ScreenAdapter {
         // tutorial components
         ui.addComponent(new TutorialDisplay())
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new TutorialActions(game));;
+                .addComponent(new TutorialActions(game));
 
+        ui.addComponent(this.dialogueBoxDisplay)
+                .addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
         ServiceLocator.getEntityService().register(ui);
     }
