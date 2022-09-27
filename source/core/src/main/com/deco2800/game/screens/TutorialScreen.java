@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
+import com.deco2800.game.areas.TutorialGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
@@ -56,6 +57,7 @@ public class TutorialScreen extends ScreenAdapter {
             "images/gain10wood.png",
             "images/gainmetal.png"
     };
+
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
     private final GdxGame game;
@@ -96,12 +98,8 @@ public class TutorialScreen extends ScreenAdapter {
 
         logger.debug("Initialising main game screen entities");
 
-        // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
-        AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
-        AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
-
-        // to do - create new game area
-        //atlantisGameArea.create();
+        TutorialGameArea tutorialGameArea = new TutorialGameArea();
+        tutorialGameArea.create();
     }
 
     @Override
