@@ -60,19 +60,12 @@ public class DialogueBoxDisplay extends UIComponent {
     /**
      * current width of infoBox being displayed
      */
-    private float infoWidth;
+    private float infoWidth = 537f;
 
     /**
      * reference to current minimap being displayed
      */
     private MinimapComponent minimap;
-
-    public DialogueBoxDisplay(float infoWidth) {
-
-        logger.debug("Creating DialogueBoxDisplay");
-        this.infoWidth = infoWidth;
-        addActors();
-    }
 
     /**
      * Set current minimap for reference
@@ -95,7 +88,6 @@ public class DialogueBoxDisplay extends UIComponent {
      * Add all necessary dialogue box components
      */
     public void addActors() {
-        Stage stage = new Stage();
 
         logger.debug("Creating DialogueBox Actors");
         this.backgroundTexture = new Image(

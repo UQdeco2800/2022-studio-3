@@ -64,7 +64,6 @@ public class TutorialDisplay extends UIComponent {
 
 
         TextButton skipBtn = new TextButton("Skip Tutorial", skin);
-        this.dialogueBox = new DialogueBoxDisplay(517f);
 
         skipBtn.addListener(
                 new ChangeListener() {

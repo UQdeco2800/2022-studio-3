@@ -49,10 +49,6 @@ import org.slf4j.LoggerFactory;
 public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
     private static final String[] mainGameTextures = {
-            "images/dialogue_box_pattern2_background.png",
-            "images/dialogue_box_image_default.png",
-            "images/exit-button.PNG",
-            "images/dialogue_box_background_Deep_Sea.png",
             "images/heart.png",
             "images/bigblack.png",
             "images/resource_display.png",
@@ -65,9 +61,6 @@ public class TutorialScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
-
-    /** tutorial dialogue box */
-    private DialogueBoxDisplay dialogueBoxDisplay;
 
     public TutorialScreen(GdxGame game) {
         this.game = game;
@@ -99,7 +92,6 @@ public class TutorialScreen extends ScreenAdapter {
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
         loadAssets();
-        this.dialogueBoxDisplay = new DialogueBoxDisplay(517f);
         createUI();
 
         logger.debug("Initialising main game screen entities");
@@ -191,9 +183,6 @@ public class TutorialScreen extends ScreenAdapter {
         ui.addComponent(new TutorialDisplay())
                 .addComponent(new InputDecorator(stage, 10))
                 .addComponent(new TutorialActions(game));
-
-        ui.addComponent(this.dialogueBoxDisplay)
-                .addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
         ServiceLocator.getEntityService().register(ui);
     }
