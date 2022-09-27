@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
+import com.deco2800.game.areas.MapGenerator.Buildings.Building;
+import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
@@ -160,9 +162,11 @@ public class AtlantisGameArea extends GameArea {
         //playMusic();
 
         // Spawn Buildings in the city
-        spawnTownHall();
-        spawnBarracks();
+        //spawnTownHall();
+        //spawnBarracks();
         spawnWalls();
+
+        spawnBuildings();
 
         spawnForager();
         spawnForager();
@@ -386,6 +390,29 @@ public class AtlantisGameArea extends GameArea {
         mapComponent.setDisplayColour(Color.BROWN);
         Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
+    }
+
+    /**
+     * Spawns all buildings in game
+     */
+    private void spawnBuildings() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        List<CityRow> cityRows = mg.getCityRows();
+        for (CityRow cr : cityRows) {
+            List<Building> buildings = cr.getBuildings();
+            for (Building building : buildings) {
+                Coordinate placement = building.getPlacement();
+                GridPoint2 spawn = new GridPoint2(placement.getX() + building.getWidth() - 2, mg.getHeight() - placement.getY() - building.getHeight() - 6);
+                if (building.getName().equals("Town Hall")) {
+                    MapComponent mapComponent = new MapComponent();
+                    mapComponent.display();
+                    mapComponent.setDisplayColour(Color.BROWN);
+                    Entity buildingEntity = BuildingFactory.createTownHall().addComponent(mapComponent);
+                    spawnEntityAt(buildingEntity, spawn, false, false);
+                }
+
+            }
+        }
     }
 
     /**
