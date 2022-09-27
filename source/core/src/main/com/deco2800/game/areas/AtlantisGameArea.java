@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
 import com.deco2800.game.areas.MapGenerator.Buildings.Building;
+import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
@@ -159,14 +160,14 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        //playMusic();
+        playMusic();
 
         // Spawn Buildings in the city
-        //spawnTownHall();
-        //spawnBarracks();
+        spawnTownHall();
+        spawnBarracks();
         spawnWalls();
 
-        spawnBuildings();
+        //spawnBuildings();
 
         spawnForager();
         spawnForager();
@@ -397,7 +398,8 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnBuildings() {
         MapGenerator mg = terrainFactory.getMapGenerator();
-        List<CityRow> cityRows = mg.getCityRows();
+        BuildingGenerator bg = new BuildingGenerator(mg);
+        List<CityRow> cityRows = bg.getCityRows();
         for (CityRow cr : cityRows) {
             List<Building> buildings = cr.getBuildings();
             for (Building building : buildings) {

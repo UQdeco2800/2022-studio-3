@@ -78,11 +78,6 @@ public class MapGenerator {
     private List<ResourceSpecification> resourcePlacements;
 
     /**
-     * List of cityRows holding buildings
-     */
-    private List<CityRow> cityRows;
-
-    /**
      * Map containing only the vertices around the island - used for testing purposes
      */
     private char[][] outlineMap;
@@ -123,10 +118,6 @@ public class MapGenerator {
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
-
-        //Add buildings to city
-        BuildingGenerator bg = new BuildingGenerator(this);
-        this.cityRows = bg.getCityRows();
     }
 
     /**
@@ -231,14 +222,6 @@ public class MapGenerator {
      */
     public List<ResourceSpecification> getResourcePlacements() {
         return this.resourcePlacements;
-    }
-
-    /**
-     * Returns the list of cityRows, containing the placements of each building
-     * @return list of cityRows
-     */
-    public List<CityRow> getCityRows() {
-        return this.cityRows;
     }
 
     /**
