@@ -37,6 +37,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
+import com.deco2800.game.worker.type.BuilderFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
 import com.deco2800.game.worker.components.duration.DurationBarFactory;
@@ -164,18 +165,19 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
-        spawnForager();
-        spawnForager();
+        //spawnForager();
+        //spawnForager();
+        spawnBuilder();
         spawnResources();
         spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
-         spawnMiner();
+        spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        //spawnBlueJokers();
+        //spawnWolf();
+        //spawnTitan();
+        // spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -480,6 +482,16 @@ public class AtlantisGameArea extends GameArea {
         Entity newMiner = MinerFactory.createMiner().addComponent(mapComponent);
         spawnEntityAt(newMiner, spawn, true, true);
         return newMiner;
+    }
+
+    private Entity spawnBuilder() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLUE);
+        Entity newBuilder = BuilderFactory.createBuilder().addComponent(mapComponent);
+        spawnEntityAt(newBuilder, spawn, true, true);
+        return newBuilder;
     }
 
     /**

@@ -5,10 +5,12 @@ import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.EnemyDetectionComponent;
 import com.deco2800.game.worker.components.MinerAnimationController;
+import com.deco2800.game.worker.components.ResourceCollectComponent;
 import com.deco2800.game.worker.components.duration.DurationBarComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -35,6 +37,7 @@ public class MinerFactory {
         Entity newMiner = WorkerFactory.createWorker()
             .addComponent(new MinerComponent())
             .addComponent(new CollectStatsComponent(2))
+            .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
             .addComponent(animator)
             .addComponent(new MinerAnimationController())
             .addComponent(new EnemyDetectionComponent());

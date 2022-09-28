@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.worker.components.BuilderAnimationController;
-import com.deco2800.game.worker.components.CollectStatsComponent;
-import com.deco2800.game.worker.components.type.ForagerComponent;
+import com.deco2800.game.worker.components.type.BuilderComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerConfig;
@@ -29,8 +28,7 @@ public class BuilderFactory {
         animator.addAnimation("foragerLeft", 0.1f, Animation.PlayMode.LOOP);
 
         Entity builder = WorkerFactory.createWorker()
-                .addComponent(new ForagerComponent())
-                .addComponent(new CollectStatsComponent(2))
+                .addComponent(new BuilderComponent())
                 .addComponent(animator)
                 .addComponent(new BuilderAnimationController());
         builder.getComponent(AnimationRenderComponent.class).scaleEntity();
