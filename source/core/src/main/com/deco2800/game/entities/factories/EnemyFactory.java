@@ -10,6 +10,7 @@ import com.deco2800.game.components.EntityDirectionComponent;
 import com.deco2800.game.components.npc.EnemyAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.enemy.EnemySignal;
 //import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.EnemyEntity;
@@ -76,7 +77,8 @@ public class EnemyFactory {
               .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                      config.baseDefence, config.landSpeed, config.range))
               .addComponent(animator)
-              .addComponent(new EnemyAnimationController());
+              .addComponent(new EnemyAnimationController())
+              .addComponent(new EnemySignal());
 
     blueJoker .getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -110,7 +112,8 @@ public class EnemyFactory {
         .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                config.baseDefence, config.landSpeed, config.range))
         .addComponent(animator)
-        .addComponent(new EnemyAnimationController());
+        .addComponent(new EnemyAnimationController())
+        .addComponent(new EnemySignal());
 
     snake.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -142,7 +145,8 @@ public class EnemyFactory {
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
-            .addComponent(new EnemyAnimationController());
+            .addComponent(new EnemyAnimationController())
+            .addComponent(new EnemySignal());
 
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -175,7 +179,8 @@ public class EnemyFactory {
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
-            .addComponent(new EnemyAnimationController());
+            .addComponent(new EnemyAnimationController())
+            .addComponent(new EnemySignal());
 
     titan.getComponent(AnimationRenderComponent.class).scaleEntity();
 

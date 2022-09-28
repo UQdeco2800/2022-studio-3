@@ -6,6 +6,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
 
 import com.deco2800.game.worker.components.CollectStatsComponent;
+import com.deco2800.game.worker.components.EnemyDetectionComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -34,7 +35,8 @@ public class ForagerFactory {
                 .addComponent(new ForagerComponent())
                 .addComponent(new CollectStatsComponent(2))
                 .addComponent(animator)
-                .addComponent(new ForagerAnimationController());
+                .addComponent(new ForagerAnimationController())
+                .addComponent(new EnemyDetectionComponent());
         /*forager.getComponent(AnimationRenderComponent.class).scaleEntity();
         forager.scaleHeight(1.5f);
         forager.scaleWidth(1.5f);*/
