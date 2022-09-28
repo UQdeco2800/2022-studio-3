@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 public class BuildingFixComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(BuildingFixComponent.class);
     private short targetLayer;
-    public static final long FIX_TIME = 2500;
     private HitboxComponent hitboxComponent;
     public static final int FIX_AMOUNT = 10;
     public static final int WOOD_REQUIRED = 5;
