@@ -13,7 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerConfig;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.components.ForagerAnimationController;
-
+ 
 public class ForagerFactory {
     private static final WorkerConfig stats = FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
 
