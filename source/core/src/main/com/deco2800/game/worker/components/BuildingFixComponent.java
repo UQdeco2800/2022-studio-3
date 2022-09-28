@@ -68,12 +68,12 @@ public class BuildingFixComponent extends Component {
         WorkerInventoryComponent inventoryComponent = collector.getComponent(WorkerInventoryComponent.class);
 
         // fix the building if the worker is a builder and the target is a building
-        if (buildingActions == null || combatStatsComponent == null || resourceStatsComponent == null || inventoryComponent == null || builderComponent == null) {
+        if (buildingActions == null || combatStatsComponent == null || inventoryComponent == null || builderComponent == null) {
             return;
         }
+
         if (baseComponent == null) {
             // fix the building if the builder has the required resources
-            logger.info("Fixing building");
             if (!combatStatsComponent.isMaxHealth() && (inventoryComponent.getStone() >= STONE_REQUIRED 
             && inventoryComponent.getWood() >= WOOD_REQUIRED && inventoryComponent.getMetal() >= METAL_REQUIRED)) {
                 inventoryComponent.addWood(-WOOD_REQUIRED);
