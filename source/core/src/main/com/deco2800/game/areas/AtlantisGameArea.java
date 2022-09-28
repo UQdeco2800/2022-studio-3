@@ -230,12 +230,9 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(gestureDisplay);
 
         Entity dialogueBox = new Entity();
-        /* FIXME: temporary infobox width value */
-        this.dialogueBoxDisplay = new DialogueBoxDisplay(537f);
-        dialogueBoxDisplay.setDialogue("This is example dialogue text");
-        dialogueBoxDisplay.setTitle("example title");
-        dialogueBox.addComponent(dialogueBoxDisplay);
-        dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
+        this.dialogueBoxDisplay = new DialogueBoxDisplay();
+        dialogueBox.addComponent(this.dialogueBoxDisplay);
+        dialogueBox.addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
         spawnEntity(dialogueBox);
     }
