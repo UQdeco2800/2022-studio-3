@@ -1,5 +1,5 @@
 builder.png
-size: 512, 128
+size: 1024, 128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -27,6 +27,34 @@ builder_forward_left_move
 builder_forward_left_move
   rotate: false
   xy: 384, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+builder_forward_right_move
+  rotate: false
+  xy: 512, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
+builder_forward_right_move
+  rotate: false
+  xy: 640, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+builder_forward_right_move
+  rotate: false
+  xy: 768, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+builder_forward_right_move
+  rotate: false
+  xy: 896, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
