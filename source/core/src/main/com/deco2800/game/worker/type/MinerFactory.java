@@ -23,14 +23,15 @@ public class MinerFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/miner_forward.atlas", TextureAtlas.class));
+                                .getAsset("images/miner.atlas", TextureAtlas.class));
 
-        animator.addAnimation("miner_forward_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("miner_forward_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("minerActionLeft", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("minerActionRight", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("minerRight", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("minerLeft", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_idle", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_back_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_back_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_left_action", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_right_action", 0.1f, Animation.PlayMode.LOOP);
 
         Entity newMiner = WorkerFactory.createWorker()
             .addComponent(new MinerComponent())
@@ -38,9 +39,9 @@ public class MinerFactory {
             .addComponent(animator)
             .addComponent(new MinerAnimationController())
             .addComponent(new EnemyDetectionComponent());
-        newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
+        /*newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
         newMiner.scaleHeight(1.5f);
-        newMiner.scaleWidth(1.5f);
+        newMiner.scaleWidth(1.5f);*/
         return newMiner;
     }
     

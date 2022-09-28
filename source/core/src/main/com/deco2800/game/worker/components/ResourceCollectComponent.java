@@ -99,9 +99,9 @@ public class ResourceCollectComponent extends Component {
             collectStone(targetStats);
             collectMetal(targetStats);
             if (target.getCenterPosition().x < collector.getCenterPosition().x) {
-                collector.getEvents().trigger("workerMiningAnimateLeft");
+                collector.getEvents().trigger("workerForwardLeftAction");
             } else {
-                collector.getEvents().trigger("workerMiningAnimateRight");
+                collector.getEvents().trigger("workerForwardRightAction");
             }
             //Entity durationBar = collectorIsMiner.getDurationBarEntity();
             //durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);

@@ -3,6 +3,13 @@ size: 512, 1408
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+miner_idle
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
 miner_forward_left_move
   rotate: false
   xy: 0, 0
@@ -157,6 +164,13 @@ miner_forward_right_action
   orig: 128, 128
   offset: 0, 0
   index: 21
+miner_idle_highlighted
+  rotate: false
+  xy: 256, 640
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 22
 miner_forward_left_move_highlighted
   rotate: false
   xy: 256, 640
