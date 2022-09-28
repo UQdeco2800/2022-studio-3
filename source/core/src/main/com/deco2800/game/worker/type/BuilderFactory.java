@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.worker.components.BuilderAnimationController;
+import com.deco2800.game.worker.components.BuildingFixComponent;
 import com.deco2800.game.worker.components.type.BuilderComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -29,6 +31,7 @@ public class BuilderFactory {
 
         Entity builder = WorkerFactory.createWorker()
                 .addComponent(new BuilderComponent())
+                .addComponent(new BuildingFixComponent(PhysicsLayer.BUILDING_NODE))
                 .addComponent(animator)
                 .addComponent(new BuilderAnimationController());
         builder.getComponent(AnimationRenderComponent.class).scaleEntity();

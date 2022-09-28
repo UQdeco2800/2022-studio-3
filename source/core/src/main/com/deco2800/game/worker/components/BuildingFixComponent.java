@@ -21,6 +21,9 @@ public class BuildingFixComponent extends Component {
     public static final long FIX_TIME = 2500;
     private HitboxComponent hitboxComponent;
     public static final int FIX_AMOUNT = 10;
+    public static final int WOOD_REQUIRED = 5;
+    public static final int STONE_REQUIRED = 5;
+    public static final int METAL_REQUIRED = 5;
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -38,8 +41,8 @@ public class BuildingFixComponent extends Component {
 
 
     /**
-     * Called when the entity starts colliding with another entity.
-     * Collects the resource if the target is a resource.
+     * Fix building when the entity starts colliding with another entity.
+     * Fixes building if the target is a building.
      * @param me The entity's fixture
      * @param other The collided entity's fixture
      */
@@ -53,32 +56,42 @@ public class BuildingFixComponent extends Component {
             // Doesn't match our target layer, ignore
             return;
         }
+        // target components
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
         BuildingActions buildingActions = target.getComponent(BuildingActions.class);
         CombatStatsComponent combatStatsComponent = target.getComponent(CombatStatsComponent.class);
+        ResourceStatsComponent resourceStatsComponent = target.getComponent(ResourceStatsComponent.class);
         BaseComponent baseComponent = target.getComponent(BaseComponent.class);
-        // Does not fix the worker base
-        if (baseComponent != null || buildingActions == null || combatStatsComponent == null) {
-            return;
-        }
+
+        // worker components
         Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
         BuilderComponent builderComponent = collector.getComponent(BuilderComponent.class);
         WorkerInventoryComponent inventoryComponent = collector.getComponent(WorkerInventoryComponent.class);
+
         // fix the building if the worker is a builder and the target is a building
-        if (builderComponent != null && buildingActions != null) {
+        if (buildingActions == null || combatStatsComponent == null || resourceStatsComponent == null || inventoryComponent == null || builderComponent == null) {
+            return;
+        }
+        if (baseComponent == null) {
             // fix the building if the builder has the required resources
-            if (!combatStatsComponent.isMaxHealth() && (inventoryComponent.getStone() >= 5 && inventoryComponent.getWood() >= 5 && inventoryComponent.getMetal() >= 5)) {
-                inventoryComponent.addWood(-5);
-                inventoryComponent.addStone(-5);
-                inventoryComponent.addMetal(-5);
+            logger.info("Fixing building");
+            if (!combatStatsComponent.isMaxHealth() && (inventoryComponent.getStone() >= STONE_REQUIRED 
+            && inventoryComponent.getWood() >= WOOD_REQUIRED && inventoryComponent.getMetal() >= METAL_REQUIRED)) {
+                inventoryComponent.addWood(-WOOD_REQUIRED);
+                inventoryComponent.addStone(-STONE_REQUIRED);
+                inventoryComponent.addMetal(-METAL_REQUIRED);
                 combatStatsComponent.addHealth(FIX_AMOUNT);
                 if (combatStatsComponent.getMaxHealth() < combatStatsComponent.getHealth()) {
                     combatStatsComponent.setHealth(combatStatsComponent.getMaxHealth());
                 }
                 target.getEvents().trigger("levelUp");
                 logger.info("Building fixed");
-            }  
+            }
+            // does not have the required resources to fix another building so return to base
             returnToBase();       
+        } else {
+            // collided with a base and should load resource for next fix
+            getResourcesFromBase(resourceStatsComponent);    
         }
     }
         
@@ -112,10 +125,15 @@ public class BuildingFixComponent extends Component {
      */
     public void getResourcesFromBase(ResourceStatsComponent baseStats) {
         WorkerInventoryComponent inventory = entity.getComponent(WorkerInventoryComponent.class);
-        baseStats.addMetal(inventory.unloadMetal());
-        baseStats.addStone(inventory.unloadStone());
-        baseStats.addWood(inventory.unloadWood());
-        logger.info("[+] The worker now has " + Integer.toString(inventory.getWood()) + " wood and " + Integer.toString(inventory.getStone()) + " stone");
+        if (baseStats.hasWood(WOOD_REQUIRED) && baseStats.hasStone(STONE_REQUIRED) && baseStats.hasMetal(METAL_REQUIRED)) {
+            baseStats.addWood(-WOOD_REQUIRED);
+            baseStats.addStone(-STONE_REQUIRED);
+            baseStats.addMetal(-METAL_REQUIRED);
+            inventory.addWood(WOOD_REQUIRED);
+            inventory.addStone(STONE_REQUIRED);
+            inventory.addMetal(METAL_REQUIRED);
+        }
+        logger.info("[+] The builder now has " + Integer.toString(inventory.getWood()) + " wood and " + Integer.toString(inventory.getStone()) + " stone");
         logger.info("[+] The base now has " + Integer.toString(baseStats.getWood()) + " wood and " + Integer.toString(baseStats.getStone()) + " stone");
     }
 }

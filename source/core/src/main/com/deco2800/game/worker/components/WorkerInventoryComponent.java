@@ -119,25 +119,31 @@ public class WorkerInventoryComponent extends Component {
   /**
    * Adds to the player's stone. The amount added can be negative.
    * @param stone stone to add
+   * @return the new amount of stone
    */
-  public void addStone(int stone) {
+  public int addStone(int stone) {
     setStone(this.stone + stone);
+    return this.stone;
   }
 
   /**
    * Adds to the player's metal. The amount added can be negative.
    * @param metal metal to add
+   * @return the new amount of metal
    */
-  public void addMetal(int metal) {
+  public int addMetal(int metal) {
     setMetal(this.metal + metal);
+    return this.metal;
   }    
 
   /**
    * Adds to the player's wood. The amount added can be negative.
    * @param wood wood to add
+   * @return the new amount of wood
    */
-  public void addWood(int wood) {
+  public int addWood(int wood) {
     setWood(this.wood + wood);
+    return this.wood;
   }    
 
   public int unloadStone() {
