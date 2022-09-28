@@ -14,7 +14,7 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int troops;
   private int health;
-  private int MAX_HEALTH; // For health bar
+  private int maxHealth; // For health bar
   private int baseAttack;
   private int baseDefence;
   private float landSpeed;
@@ -30,12 +30,12 @@ public class CombatStatsComponent extends Component {
 
   public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed, int range) {
     setTroops(troops);
+    setMaxHealth(health);
     setHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
     setLandSpeed(landSpeed);
     setRange(range);
-    MAX_HEALTH = health;
   }
 
   /**
@@ -123,7 +123,7 @@ public class CombatStatsComponent extends Component {
   }
 
   public int getMaxHealth() {
-    return MAX_HEALTH;
+    return maxHealth;
   }
 
   /**
@@ -134,14 +134,25 @@ public class CombatStatsComponent extends Component {
   public void setHealth(int health) {
     if (health >= 0) {
       this.health = health;
-      if (health > MAX_HEALTH) {
-        MAX_HEALTH = health;
+      if (health > maxHealth) {
+        this.health = maxHealth;
       }
     } else {
       this.health = 0;
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+    }
+  }
+
+  /**
+   * Sets the entity's maximum health. Maximum Health must be greater than 0.
+   * @param maxHealth Maximum health an entity can have
+   */
+  public void setMaxHealth(int maxHealth) {
+    this.maxHealth = maxHealth;
+    if (this.maxHealth <= 0) {
+      this.maxHealth = 1;
     }
   }
 

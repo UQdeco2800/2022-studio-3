@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import main.com.deco2800.game.components.weather.WeatherIconProperties;
+import com.deco2800.game.components.weather.WeatherIconProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
@@ -143,7 +143,7 @@ public class WeatherIcon extends Actor {
 
         //  Layout for timer
         this.timerLabel.setAlignment(Align.left);
-        this.timerLabel.setWrap(true);
+        this.timerLabel.setWrap(false);
         this.timerLabel.setSize(3f,3f);
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 15f, Gdx.graphics.getHeight()-50f);
     }
