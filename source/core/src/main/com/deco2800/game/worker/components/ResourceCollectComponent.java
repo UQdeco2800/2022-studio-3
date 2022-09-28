@@ -127,7 +127,7 @@ public class ResourceCollectComponent extends Component {
             target.dispose();
 
             ServiceLocator.getEntityService().unregister(target);
-            returnToBase();
+            returnToBase(collector);
             
             // Idle the duration bar
             /*
@@ -180,12 +180,16 @@ public class ResourceCollectComponent extends Component {
     }
 
     /**
-     * Directs the worker to the base after resource collection
+     * Directs the worker to the base after resource collection and update the base resource stats
      */
-    public void returnToBase() {
+    public void returnToBase(Entity collector) {
+        WorkerInventoryComponent collectorInventory = collector.getComponent(WorkerInventoryComponent.class);
         Entity base = this.getBase();
         if (base != null) {
             entity.getEvents().trigger("workerWalk", this.getBase().getCenterPosition());
+            BaseComponent baseComponent = base.getComponent(BaseComponent.class);
+            baseComponent.updateBaseStats(collectorInventory.getWood(), collectorInventory.getMetal(), collectorInventory.getStone());
+            baseComponent.updateDisplay();
         }   
     }
         

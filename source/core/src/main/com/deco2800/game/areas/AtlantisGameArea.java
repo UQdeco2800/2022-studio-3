@@ -172,7 +172,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
+        /*spawnBlueJokers();
         spawnWolf();
         spawnTitan();
         spawnSnakes();
@@ -180,7 +180,7 @@ public class AtlantisGameArea extends GameArea {
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
         spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));*/
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
