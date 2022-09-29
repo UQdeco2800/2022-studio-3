@@ -35,6 +35,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
@@ -99,6 +100,7 @@ public class AtlantisGameArea extends GameArea {
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
+            "images/mining_camp_level_one.png",
             // Walls
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
@@ -544,7 +546,8 @@ public class AtlantisGameArea extends GameArea {
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     mapComponent.setDisplayColour(Color.DARK_GRAY);
-                    spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    spawnEntityAt(MiningCampFactory.createMiningCamp().addComponent(mapComponent), spawn, false, false);
                 }
             }
         }
