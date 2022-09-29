@@ -66,10 +66,7 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         logger.info(String.format("Path from %s to %s: %s", start, dest, newPath));
         movementTask.setTarget(target);
         movementTask.start();
-        //movementTask.setPath(path);
-        // Trigger movement animation
-        //owner.getEntity().getEvents().trigger("workerWalkAnimate");
-
+        
         // Get the vector of the target and the worker
         // If target's X & Y point is bigger than the worker's X point, call the back right animation
         // If target's X point is smaller than the worker's X point but target's Y > worker's Y point, call the left animation

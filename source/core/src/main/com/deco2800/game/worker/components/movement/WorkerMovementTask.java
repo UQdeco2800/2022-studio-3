@@ -39,6 +39,7 @@ public class WorkerMovementTask extends DefaultTask {
         super.start();
         this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
         this.mapService = ServiceLocator.getMapService();
+        //this.mapService.unregister(this.mapService.get);
         this.path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
         if (path.size() > 0) {
             movementComponent.setTarget(MapService.tileToWorldPosition(path.get(0)));
