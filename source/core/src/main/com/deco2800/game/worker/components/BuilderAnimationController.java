@@ -11,34 +11,29 @@ public class BuilderAnimationController extends Component {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
-        entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
-        entity.getEvents().addListener("workerForagingAnimateRight", this::animateForagingRight);
-        entity.getEvents().addListener("workerForagingAnimateLeft", this::animateForagingLeft);
-        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
-        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
+        entity.getEvents().addListener("workerForwardLeftMove", this::animateForwardLeftMove);
+        entity.getEvents().addListener("workerForwardRightMove", this::animateForwardRightMove);
+        entity.getEvents().addListener("workerBackLeftMove", this::animateBackLeftMove);
+        entity.getEvents().addListener("workerBackRightMove", this::animateBackRightMove);
     }
 
     void animateIdle() {
-        animator.startAnimation("forager_forward_idle");
+        animator.startAnimation("builder_idle");
     }
 
-    void animateMove() {
-        animator.startAnimation("forager_forward_move");
+    void animateForwardLeftMove() {
+        animator.startAnimation("builder_forward_left_move");
     }
 
-    void animateForagingRight(){
-        animator.startAnimation("foragerActionRight");
+    void animateForwardRightMove() {
+        animator.startAnimation("builder_forward_right_move");
     }
 
-    void animateForagingLeft() {
-        animator.startAnimation("foragerActionLeft");
+    void animateBackLeftMove() {
+        animator.startAnimation("builder_back_left_move");
     }
 
-    void animateRightMove() {
-        animator.startAnimation("foragerRight");
-    }
-
-    void animateLeftMove() {
-        animator.startAnimation("foragerLeft");
+    void animateBackRightMove() {
+        animator.startAnimation("builder_back_right_move");
     }
 }

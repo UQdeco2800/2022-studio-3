@@ -3,6 +3,13 @@ size: 2048, 128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+builder_idle
+  rotate: false
+  xy: 1024, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
 builder_back_left_move
   rotate: false
   xy: 0, 0
@@ -115,3 +122,10 @@ builder_forward_right_move
   orig: 128, 128
   offset: 0, 0
   index: 3
+default
+  rotate: false
+  xy: 1024, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
