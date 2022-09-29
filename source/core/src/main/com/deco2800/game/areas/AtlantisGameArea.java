@@ -11,6 +11,7 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
@@ -142,16 +143,19 @@ public class AtlantisGameArea extends GameArea {
 
     private Entity player;
 
+    private EventHandler gameAreaEventHandle;
+
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        ServiceLocator.registerGameAreaEventService(new GameAreaEventService());
+        gameAreaEventHandle = new EventHandler();
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
-        ServiceLocator.getGameAreaEventService().getEventHandler().addListener("spawnSnake", this::spawnSnakes);
+        gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
+
         loadAssets();
         displayUI();
         spawnTerrain();
@@ -203,9 +207,9 @@ public class AtlantisGameArea extends GameArea {
     /**
      * Spawns Snake enemy entities
      */
-    private void spawnSnakes(Vector2 spawnPoint) {
+    public void spawnSnakes(Vector2 spawnPoint) {
         Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
-
+        System.out.println("Snake spawned at: " + spawnPoint.toString());
         spawnEntityAt(snake, spawnPoint, true, true);
     }
 
@@ -401,8 +405,12 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(terrainFactory), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(terrainFactory), spawn2, true, true);
+        spawnEntityAt((BuildingFactory.createBarracks())
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2,
+                        true, true);
+        spawnEntityAt((BuildingFactory.createBarracks())
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1,
+                        true, true);
     }
 
     /**
@@ -512,6 +520,35 @@ public class AtlantisGameArea extends GameArea {
                 , true, false);
     }
 
+    /**
+     * Creates units for demonstration purposes
+     *
+     * Spawns them relative to city centre for convenience
+     * @param type Which unit are we spawning? (see unit wiki)
+     * @param location offset from centre of city
+     */
+    private void spawnUnit(UnitType type, Vector2 location) {
+        Entity unit = UnitFactory.createUnit(type);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate cityCentre = mg.getCityDetails().get("Centre");
+        spawnEntityAt(unit, location, true, false);
+    }
+
+    private void spawnArcher(Vector2 location) {
+        spawnUnit(UnitType.ARCHER, location);
+    }
+
+    private void spawnSwordsman(Vector2 location) {
+        spawnUnit(UnitType.SWORDSMAN, location);
+    }
+
+    private void spawnSpearman(Vector2 location) {
+        spawnUnit(UnitType.SPEARMAN, location);
+    }
+
+    private void spawnHoplite(Vector2 location) {
+        spawnUnit(UnitType.HOPLITE, location);
+    }
 
     /**
      * Randomly spawns a worker base on the map

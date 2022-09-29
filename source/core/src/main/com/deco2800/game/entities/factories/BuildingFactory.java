@@ -108,7 +108,7 @@ public class BuildingFactory {
      * Creates entity, adds and configures Barracks components
      * @return Barracks Entity
      */
-    public static Entity createBarracks(AtlantisTerrainFactory atlantisTerrainFactory) {
+    public static Entity createBarracks() {
         final float BARRACKS_SCALE = 5f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
@@ -118,8 +118,7 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingUIDataComponent())
-                .addComponent(new UnitSpawningComponent());
+                .addComponent(new BuildingUIDataComponent());
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
