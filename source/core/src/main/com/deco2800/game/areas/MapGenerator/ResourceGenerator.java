@@ -62,7 +62,7 @@ public class ResourceGenerator {
         //Place each resource the desired number of times based on preferred distance
         placeResources();
         //Test output
-        writeCurrentResources("/home/r0m4n/Documents/deco2800/map.txt");
+        // writeCurrentResources("/");
     }
 
     /**
