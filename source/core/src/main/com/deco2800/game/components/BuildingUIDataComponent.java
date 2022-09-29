@@ -56,9 +56,22 @@ public class BuildingUIDataComponent extends UIComponent {
         if(isSelected) {
             // draw UI
             stage.addActor(infoTable);
+
+            Label buildingType = new Label("Building: ", skin, "large");
+            switch (buildingInfo.getType()) {
+                case BARRACKS:
+                    buildingType.setText("Building: Barracks");
+                    break;
+                case TOWNHALL:
+                    buildingType.setText("Building: Town Hall");
+                    break;
+            }
             Label attackText = new Label("Attack:"+combatStats.getBaseAttack(), skin, "large");
             Label defenceText = new Label("Defence:"+combatStats.getBaseDefence(), skin, "large");
 
+
+            infoTable.add(buildingType);
+            infoTable.row();
             infoTable.add(attackText);
             infoTable.row();
             infoTable.add(defenceText);

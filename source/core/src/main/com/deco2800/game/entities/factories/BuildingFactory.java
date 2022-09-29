@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.entities.Entity;
@@ -62,6 +63,7 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
+        // TODO: Replace town hall with new design.
         final float TH_SCALE = 7f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
@@ -108,12 +110,14 @@ public class BuildingFactory {
         final float BARRACKS_SCALE = 5f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
-
+        // TODO: Change barracks from static texture to animation.
+        // TODO: Add spawning component
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new UnitSpawningComponent());
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
@@ -187,7 +191,6 @@ public class BuildingFactory {
         ShipConfig config = configs.ship;
 
         // TODO: Change sprite to ship when its done.
-
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(ServiceLocator.getResourceService()
                         .getAsset("images/titanshrine.atlas",
