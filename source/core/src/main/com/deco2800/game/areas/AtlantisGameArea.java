@@ -406,8 +406,11 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
+        MapComponent mapComponent1 = new MapComponent();
+        MapComponent mapComponent2 = new MapComponent();
+
+        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mapComponent1), spawn1, true, true);
+        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mapComponent2), spawn2, true, true);
     }
 
     /**

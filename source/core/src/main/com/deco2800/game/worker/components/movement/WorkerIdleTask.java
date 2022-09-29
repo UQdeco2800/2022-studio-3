@@ -60,10 +60,6 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     public void startMoving(Vector2 target) {
         logger.debug("Starting moving to {}", target);
         movementTask.stop();
-        GridPoint2 dest = ServiceLocator.getMapService().worldToTile(target);
-        GridPoint2 start = ServiceLocator.getMapService().worldToTile(owner.getEntity().getCenterPosition());
-        List<GridPoint2> newPath = ServiceLocator.getMapService().getPath(start, dest);
-        logger.info(String.format("Path from %s to %s: %s", start, dest, newPath));
         movementTask.setTarget(target);
         movementTask.start();
         

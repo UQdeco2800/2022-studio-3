@@ -164,11 +164,6 @@ public class MapService {
 		// could potentially frame this as a stochastic environment and/or not flat
 		// Another option to reduce space + time complexity without the hassle is 
 		// bidirectional IDDFS
-		for (GridPoint2 pos : islandTiles) {
-			if (isOccupied(pos)) {
-				logger.info("Occupied tile: " + pos);
-			}
-		}
 		List<Node> fringe = new ArrayList<>();
 		List<Node> visited = new ArrayList<>();
 		if (goal.equals(start)) {
@@ -177,7 +172,6 @@ public class MapService {
 		fringe.add(new Node(start, null));
 
 		while (fringe.size() > 0) {
-			logger.info("Fringe size: " + fringe.size());
 			Node node = fringe.get(0);
 			fringe.remove(0);
 			if (goal.equals(node.position)) {
@@ -185,16 +179,18 @@ public class MapService {
 			}
 			List<Node> children = node.getChildren();
 			for (Node child : children) {
-				logger.info("Child: " + child.position);
-				if (!visited.contains(child) && !isOccupied(child.position)) {
-					logger.info("got children");
-					fringe.add(child);
-					visited.add(child);
+				if (!visited.contains(child)) {
+					if (!isOccupied(child.position)) {
+						fringe.add(child);
+						visited.add(child);
+					} else {
+						logger.info("Occupied tile: " + child.position);
+					}
+					
 				}
 			}
 		}
 		// no solution
-		logger.info("No path found");
 		return new ArrayList<>();
 	}
 

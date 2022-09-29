@@ -3,6 +3,7 @@ package com.deco2800.game.worker.components.movement;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
@@ -22,6 +23,7 @@ public class WorkerMovementTask extends DefaultTask {
 
     private final GameTime gameTime;
     private Vector2 target;
+    private GridPoint2 gridTarget;
     private float stopDistance = 0.01f;
     private long lastTimeMoved;
     private Vector2 lastPos;
@@ -39,13 +41,14 @@ public class WorkerMovementTask extends DefaultTask {
         super.start();
         this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
         this.mapService = ServiceLocator.getMapService();
-        //this.mapService.unregister(this.mapService.get);
+        this.mapService.unregister(owner.getEntity().getComponent(MapComponent.class));
         this.path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
-        if (path.size() > 0) {
-            movementComponent.setTarget(MapService.tileToWorldPosition(path.get(0)));
+        logger.info("Path from {} to {}: {}", MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target), path);
+        if (!path.isEmpty()) {
+            this.setTarget(MapService.tileToWorldPosition(path.get(0)));
             path.remove(0);
             movementComponent.setMoving(true);
-            logger.debug("Starting movement towards {}", target);
+            logger.info("Starting movement towards {}", MapService.worldToTile(target));
             lastTimeMoved = gameTime.getTime();
             lastPos = owner.getEntity().getPosition();
             owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
@@ -59,23 +62,22 @@ public class WorkerMovementTask extends DefaultTask {
     @Override
     public void update() {
         if (isAtTarget()) {
-            movementComponent.setMoving(false);
-            status = Status.FINISHED;
-            logger.debug("Finished moving to {}", target);
             if (path.size() == 0) {
-               movementComponent.setMoving(false);
-               status = Status.FINISHED;
-               logger.debug("Finished moving to {}", target);
+                movementComponent.setMoving(false);
+                status = Status.FINISHED;
+                logger.info("Finished path");
             } else {
-               movementComponent.setTarget(mapService.tileToWorldPosition(path.get(0)));
-               path.remove(0);
+                setTarget(MapService.tileToWorldPosition(path.get(0)));
+                path.remove(0);
             }
         } else {
+            //logger.info("Failed to move to {}", MapService.worldToTile(target));
             checkIfStuck();
         }
     }
 
     public void setTarget(Vector2 target) {
+        this.gridTarget = MapService.worldToTile(target);
         this.target = target;
         movementComponent.setTarget(target);
     }
@@ -102,7 +104,7 @@ public class WorkerMovementTask extends DefaultTask {
         } else if (gameTime.getTimeSince(lastTimeMoved) > 500L) {
             movementComponent.setMoving(false);
             status = Status.FAILED;
-            logger.debug("Got stuck! Failing movement task");
+            logger.info("Got stuck! Failing movement task");
         }
     }
 
