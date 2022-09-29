@@ -155,6 +155,11 @@ public class AtlantisGameArea extends GameArea {
     @Override
     public void create() {
         gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
+        gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
+        gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
+        gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
+        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
+        gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
         loadAssets();
         displayUI();
@@ -196,12 +201,9 @@ public class AtlantisGameArea extends GameArea {
     /**
      * Spawns Blue Joker enemy entities
      */
-    private void spawnBlueJokers() {
-        for (int i = 0; i < 10; i++) {
-            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
-            spawnEntityAt(blueJoker, spawnPoint, true, true);
-        }
+    private void spawnBlueJokers(Vector2 spawnPoint) {
+        Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+        spawnEntityAt(blueJoker, spawnPoint, true, true);
     }
 
     /**
@@ -216,12 +218,9 @@ public class AtlantisGameArea extends GameArea {
     /**
      * Spawns Titan enemy entities
      */
-    private void spawnTitan() {
-        for (int i = 0; i < 5; i++) {
-            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
-            spawnEntityAt(titan, spawnPoint, true, true);
-        }
+    private void spawnTitan(Vector2 spawnPoint) {;
+        Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+        spawnEntityAt(titan, spawnPoint, true, true);
     }
 
     /**

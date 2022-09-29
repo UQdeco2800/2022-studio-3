@@ -53,9 +53,21 @@ public class UnitSpawningComponent extends Component {
     private void spawnUnit() {
         Building buildingType = buildingActions.getType();
         PolygonShape shape = (PolygonShape) colliderComponent.getFixture().getShape();
-
         Vector2 spawnPoint = getEntity().getCenterPosition();
 
-        eventHandler.trigger("spawnSnake", spawnPoint);
+        switch(buildingType) {
+            case BARRACKS:
+                eventHandler.trigger("spawnHoplite", spawnPoint);
+                eventHandler.trigger("spawnArcher", spawnPoint);
+                eventHandler.trigger("spawnSpearmint", spawnPoint);
+                 break;
+            case TITANSHRINE:
+                eventHandler.trigger("spawnTitan", spawnPoint);
+                break;
+            case SHIP:
+                eventHandler.trigger("spawnBlueJoker", spawnPoint);
+                eventHandler.trigger("spawnSnake", spawnPoint);
+                break;
+        }
     }
 }
