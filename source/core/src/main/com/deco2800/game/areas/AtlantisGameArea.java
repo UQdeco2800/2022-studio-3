@@ -157,30 +157,30 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        playMusic();
+//        playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
         spawnBarracks();
         spawnWalls();
 
-        spawnForager();
-        spawnForager();
-        spawnResources();
-        spawnMiner();
+//        spawnForager();
+//        spawnForager();
+//        spawnResources();
+//        spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
-         spawnMiner();
+//         spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+//        spawnBlueJokers();
+//        spawnWolf();
+//        spawnTitan();
+//        spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
