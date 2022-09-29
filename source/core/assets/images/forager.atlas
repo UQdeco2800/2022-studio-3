@@ -3,6 +3,13 @@ size: 512, 1408
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+default
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
 forager_idle
   rotate: false
   xy: 0, 0

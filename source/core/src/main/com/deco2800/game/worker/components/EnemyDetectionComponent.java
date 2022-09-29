@@ -1,9 +1,7 @@
 package com.deco2800.game.worker.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.enemy.EnemySignal;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;

@@ -1,22 +1,17 @@
 package com.deco2800.game.worker.type;
 
-import com.deco2800.game.worker.WorkerConfig;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.EnemyDetectionComponent;
 import com.deco2800.game.worker.components.MinerAnimationController;
-import com.deco2800.game.worker.components.duration.DurationBarComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class MinerFactory {
-    
-    private static final WorkerConfig stats = FileLoader.readClass(WorkerConfig.class, "configs/worker.json");
 
     public static Entity createMiner() {
 
@@ -39,9 +34,9 @@ public class MinerFactory {
             .addComponent(animator)
             .addComponent(new MinerAnimationController())
             .addComponent(new EnemyDetectionComponent());
-        /*newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
-        newMiner.scaleHeight(1.5f);
-        newMiner.scaleWidth(1.5f);*/
+        newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
+        newMiner.scaleHeight(2.0f);
+        newMiner.scaleWidth(2.0f);
         return newMiner;
     }
     
