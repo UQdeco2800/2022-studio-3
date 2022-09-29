@@ -91,7 +91,7 @@ public class ForestGameArea extends GameArea {
     //spawnTrees();
     // spawnWalls();
     spawnTownHall(new GridPoint2(9, 7));
-    spawnBarracks(new GridPoint2(3, 6));
+//    spawnBarracks(new GridPoint2(3, 6));
     spawnWalls(0,3);
     player = spawnPlayer();
     ServiceLocator.registerGameArea(this);
@@ -210,11 +210,11 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(townHall, position, true, true);
   }
 
-  private void spawnBarracks(GridPoint2 position) {
-    Entity barracks = BuildingFactory.createBarracks();
-    barracks.setScale(mediumScale, mediumScale);
-    spawnEntityAt(barracks, position, true, true);
-  }
+//  private void spawnBarracks(GridPoint2 position) {
+//    Entity barracks = BuildingFactory.createBarracks(terrainFactory);
+//    barracks.setScale(mediumScale, mediumScale);
+//    spawnEntityAt(barracks, position, true, true);
+//  }
 
   private Entity spawnPlayer() {
 

@@ -1,6 +1,9 @@
 package com.deco2800.game.services;
 
+import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.GameAreaEventService;
+import com.deco2800.game.components.AtlantisGameAreaEventHandler;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.map.MapService;
@@ -26,9 +29,8 @@ public class ServiceLocator {
   private static InputService inputService;
   private static ResourceService resourceService;
   private static MapService mapService;
-
+  private static GameAreaEventService gameAreaEventService;
   public static ForestGameArea gameArea;
-
 
   public static EntityService getEntityService() {
     return entityService;
@@ -62,11 +64,19 @@ public class ServiceLocator {
     return gameArea;
   }
 
+  public static GameAreaEventService getGameAreaEventService() {
+    return gameAreaEventService;
+  }
+
   public static void registerMapService(MapService service) {
     logger.debug("Registering map service {}", service);
     mapService = service;
   }
 
+  public static void registerGameAreaEventService(GameAreaEventService service) {
+    logger.debug("Registering game area event service {}", service);
+    gameAreaEventService = service;
+  }
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
     entityService = service;
@@ -108,6 +118,7 @@ public class ServiceLocator {
     timeSource = null;
     inputService = null;
     resourceService = null;
+    gameAreaEventService = null;
   }
 
   private ServiceLocator() {

@@ -8,5 +8,5 @@ public enum Building {
     TREBUCHET,
     WALL,
     WALL_NE,
-    WALL_SE,
+    WALL_SE
 }

@@ -26,6 +26,7 @@ import com.deco2800.game.entities.factories.EnemyFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.UnitFactory;
+import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
@@ -144,18 +145,20 @@ public class AtlantisGameArea extends GameArea {
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
+        ServiceLocator.registerGameAreaEventService(new GameAreaEventService());
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
+        ServiceLocator.getGameAreaEventService().getEventHandler().addListener("spawnSnake", this::spawnSnakes);
         loadAssets();
         displayUI();
         spawnTerrain();
-        player = spawnPlayer();
-        for (int i = 0; i < 5; i++) {
-            spawnPlayer();
-        }
+//        player = spawnPlayer();
+//        for (int i = 0; i < 5; i++) {
+//            spawnPlayer();
+//        }
         centreCameraOnCity();
         playMusic();
 
@@ -164,23 +167,23 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
-        spawnForager();
-        spawnForager();
-        spawnResources();
-        spawnMiner();
+//        spawnForager();
+//        spawnForager();
+//        spawnResources();
+//        spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
-         spawnMiner();
+//         spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+//        spawnBlueJokers();
+//        spawnWolf();
+//        spawnTitan();
+//        spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
@@ -200,12 +203,10 @@ public class AtlantisGameArea extends GameArea {
     /**
      * Spawns Snake enemy entities
      */
-    private void spawnSnakes() {
-        for (int i = 0; i < 10; i++) {
-            GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
-            spawnEntityAt(snake, spawnPoint, true, true);
-        }
+    private void spawnSnakes(Vector2 spawnPoint) {
+        Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+
+        spawnEntityAt(snake, spawnPoint, true, true);
     }
 
     /**
@@ -400,8 +401,8 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
+        spawnEntityAt(BuildingFactory.createBarracks(terrainFactory), spawn1, true, true);
+        spawnEntityAt(BuildingFactory.createBarracks(terrainFactory), spawn2, true, true);
     }
 
     /**

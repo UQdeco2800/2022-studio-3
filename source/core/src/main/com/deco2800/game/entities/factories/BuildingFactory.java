@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
@@ -19,6 +20,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -106,7 +108,7 @@ public class BuildingFactory {
      * Creates entity, adds and configures Barracks components
      * @return Barracks Entity
      */
-    public static Entity createBarracks() {
+    public static Entity createBarracks(AtlantisTerrainFactory atlantisTerrainFactory) {
         final float BARRACKS_SCALE = 5f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
