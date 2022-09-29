@@ -35,7 +35,6 @@ public class WorkerFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.metal))
-                        .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 

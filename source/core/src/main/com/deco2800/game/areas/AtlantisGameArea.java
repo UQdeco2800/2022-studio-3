@@ -35,8 +35,10 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
+import com.deco2800.game.worker.type.BuilderFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
 import com.deco2800.game.worker.components.duration.DurationBarFactory;
@@ -99,6 +101,7 @@ public class AtlantisGameArea extends GameArea {
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
+            "images/mining_camp_level_one.png",
             // Walls
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
@@ -125,7 +128,7 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
+            "images/forager.atlas", "images/miner.atlas", "images/builder.atlas",
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
@@ -166,13 +169,14 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
-        spawnForager();
-        spawnForager();
+        //spawnForager();
+        //spawnForager();
+        spawnBuilder();
         spawnResources();
         spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
-         spawnMiner();
+        spawnMiner();
         // spawnExampleUnit();
         /*spawnBlueJokers();
         spawnWolf();
@@ -484,6 +488,16 @@ public class AtlantisGameArea extends GameArea {
         return newMiner;
     }
 
+    private Entity spawnBuilder() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLUE);
+        Entity newBuilder = BuilderFactory.createBuilder().addComponent(mapComponent);
+        spawnEntityAt(newBuilder, spawn, true, true);
+        return newBuilder;
+    }
+
     /**
      * Creates an example unit for testing formations and actions
      *
@@ -546,7 +560,8 @@ public class AtlantisGameArea extends GameArea {
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     mapComponent.setDisplayColour(Color.DARK_GRAY);
-                    spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    spawnEntityAt(MiningCampFactory.createMiningCamp().addComponent(mapComponent), spawn, false, false);
                 }
             }
         }

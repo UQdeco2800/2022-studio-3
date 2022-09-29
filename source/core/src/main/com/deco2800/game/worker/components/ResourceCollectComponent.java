@@ -99,9 +99,9 @@ public class ResourceCollectComponent extends Component {
             collectStone(targetStats);
             collectMetal(targetStats);
             if (target.getCenterPosition().x < collector.getCenterPosition().x) {
-                collector.getEvents().trigger("workerMiningAnimateLeft");
+                collector.getEvents().trigger("workerForwardLeftAction");
             } else {
-                collector.getEvents().trigger("workerMiningAnimateRight");
+                collector.getEvents().trigger("workerForwardRightAction");
             }
             //Entity durationBar = collectorIsMiner.getDurationBarEntity();
             //durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);
@@ -110,9 +110,9 @@ public class ResourceCollectComponent extends Component {
             // If the worker type is Forager
             collectWood(targetStats);
             if (target.getCenterPosition().x < collector.getCenterPosition().x) {
-                collector.getEvents().trigger("workerForagingAnimateLeft");
+                collector.getEvents().trigger("workerForwardLeftAction");
             } else {
-                collector.getEvents().trigger("workerForagingAnimateRight");
+                collector.getEvents().trigger("workerForwardRightAction");
             }
             //Entity durationBar = collectorIsForager.getDurationBarEntity();
             //durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);

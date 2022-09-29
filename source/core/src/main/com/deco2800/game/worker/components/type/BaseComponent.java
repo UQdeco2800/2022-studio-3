@@ -5,7 +5,6 @@ import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.services.ServiceLocator;
 
 public class BaseComponent extends Component {
-    
     private int isBase;
     private int wood;
     private int metal;

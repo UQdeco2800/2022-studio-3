@@ -71,14 +71,18 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         //owner.getEntity().getEvents().trigger("workerWalkAnimate");
 
         // Get the vector of the target and the worker
-        // If target's X point is bigger than the worker's X point, call the right animation
-        // If target's X point is smaller than the worker's X point, call the left animation
-        if (target.x > owner.getEntity().getPosition().x){
-            owner.getEntity().getEvents().trigger("workerWalkRightAnimate");
+        // If target's X & Y point is bigger than the worker's X point, call the back right animation
+        // If target's X point is smaller than the worker's X point but target's Y > worker's Y point, call the left animation
+        if (target.x > owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y){
+            owner.getEntity().getEvents().trigger("workerBackRightMove");
         } else if (target.x < owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("workerWalkLeftAnimate");
+            owner.getEntity().getEvents().trigger("workerBackLeftMove");
+        } else if (target.x < owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
+            owner.getEntity().getEvents().trigger("workerForwardLeftMove");
+        } else if (target.x > owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
+            owner.getEntity().getEvents().trigger("workerForwardRightMove");
         } else {
-            owner.getEntity().getEvents().trigger("workerWalkAnimate");
+            owner.getEntity().getEvents().trigger("workerIdleAnimate");
         }
         idling = false;
     }
