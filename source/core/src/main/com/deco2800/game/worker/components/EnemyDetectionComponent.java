@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.enemy.EnemySignal;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -33,9 +34,8 @@ public class EnemyDetectionComponent extends Component {
          * If 'other' doesn't have components related to 'attack', 'other' will be assumed as enemy
          */
         Entity isEnemy = ((BodyUserData) other.getBody().getUserData()).entity;
-        TouchAttackComponent hasAttackComponent_ = isEnemy.getComponent(TouchAttackComponent.class);
-        CombatStatsComponent hasCombatStatsComponent_ = isEnemy.getComponent(CombatStatsComponent.class);
-        if(hasAttackComponent_ != null || hasCombatStatsComponent_ != null){
+        EnemySignal hasEnemySignalComponent = isEnemy.getComponent(EnemySignal.class);
+        if(hasEnemySignalComponent != null && hasEnemySignalComponent.getIsEnemy() == 1){
             returnToBase();
         }
     }

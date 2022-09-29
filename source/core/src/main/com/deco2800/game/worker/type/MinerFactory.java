@@ -42,9 +42,9 @@ public class MinerFactory {
             .addComponent(animator)
             .addComponent(new MinerAnimationController())
             .addComponent(new EnemyDetectionComponent());
-        /*newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
-        newMiner.scaleHeight(1.5f);
-        newMiner.scaleWidth(1.5f);*/
+        newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
+        newMiner.scaleHeight(2.0f);
+        newMiner.scaleWidth(2.0f);
         return newMiner;
     }
     

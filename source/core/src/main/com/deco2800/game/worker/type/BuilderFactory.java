@@ -34,8 +34,8 @@ public class BuilderFactory {
                 .addComponent(animator)
                 .addComponent(new BuilderAnimationController());
         builder.getComponent(AnimationRenderComponent.class).scaleEntity();
-        builder.scaleHeight(1.5f);
-        builder.scaleWidth(1.5f);
+        builder.scaleHeight(2.0f);
+        builder.scaleWidth(2.0f);
         return builder;
     }
 }
