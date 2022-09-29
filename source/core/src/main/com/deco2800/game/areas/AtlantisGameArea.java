@@ -160,14 +160,14 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        playMusic();
+        //playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
         spawnBarracks();
         spawnWalls();
 
-        //spawnBuildings();
+        spawnBuildings();
 
         spawnForager();
         spawnForager();
