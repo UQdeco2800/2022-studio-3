@@ -21,14 +21,15 @@ public class ForagerFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/forager_forward.atlas", TextureAtlas.class));
+                                .getAsset("images/forager.atlas", TextureAtlas.class));
 
-        animator.addAnimation("forager_forward_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("forager_forward_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("foragerActionRight", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("foragerActionLeft", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("foragerRight", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("foragerLeft", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_idle", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_back_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_back_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_left_action", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_right_action", 0.1f, Animation.PlayMode.LOOP);
 
         Entity forager = WorkerFactory.createWorker()
                 .addComponent(new ForagerComponent())
@@ -36,9 +37,9 @@ public class ForagerFactory {
                 .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
                 .addComponent(animator)
                 .addComponent(new ForagerAnimationController());
-        forager.getComponent(AnimationRenderComponent.class).scaleEntity();
+        /*forager.getComponent(AnimationRenderComponent.class).scaleEntity();
         forager.scaleHeight(1.5f);
-        forager.scaleWidth(1.5f);
+        forager.scaleWidth(1.5f);*/
         return forager;
     }
 }
