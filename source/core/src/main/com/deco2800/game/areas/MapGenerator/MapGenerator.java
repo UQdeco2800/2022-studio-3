@@ -118,11 +118,6 @@ public class MapGenerator {
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
-
-        //Add buildings to city
-        BuildingGenerator bg = new BuildingGenerator(this);
-        // Add paths to city
-        PathGenerator pg = new PathGenerator(bg);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
+import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 
 import java.util.*;
 
@@ -113,6 +114,9 @@ public class BuildingGenerator {
 
         //Place buildings in their rows
         placeBuildings();
+
+        //Add Paths
+        PathGenerator pg = new PathGenerator(this);
 
         //Test output
         //writeCity(cityHeight, cityWidth);
