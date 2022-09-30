@@ -213,4 +213,7 @@ public class CombatStatsComponent extends Component {
     }
   }
 
+  public void decreaseHealth(int damage) {
+    setHealth(this.health - damage);
+  }
 }

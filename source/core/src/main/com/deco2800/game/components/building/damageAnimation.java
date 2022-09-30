@@ -19,6 +19,6 @@ public class damageAnimation extends Component {
     }
 
     public void Damaged() {
-        Animation.startAnimation("Damaged");
+        Animation.startAnimation("attacked");
     }
 }

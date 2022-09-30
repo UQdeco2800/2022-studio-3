@@ -98,7 +98,11 @@ public class PhysicsComponent extends Component {
     body.setActive(enabled);
   }
 
-  public enum AlignX {
+    public PhysicsEngine getPhysics() {
+      return this.physics;
+    }
+
+    public enum AlignX {
     LEFT,
     CENTER,
     RIGHT
