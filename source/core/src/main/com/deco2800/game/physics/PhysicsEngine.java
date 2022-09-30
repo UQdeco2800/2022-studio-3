@@ -58,12 +58,6 @@ public class PhysicsEngine implements Disposable {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
-
-    /* Destroy the queued entities */
-    for (Entity buff : this.toDestroy) {
-      buff.dispose();
-    }
-    this.toDestroy.clear();
   }
 
   public void addToDestroy(Entity entity) {
