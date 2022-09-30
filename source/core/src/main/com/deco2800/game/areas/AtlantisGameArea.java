@@ -250,6 +250,7 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
         spawnEntity(dialogueBox);
+
     }
 
     private void spawnTerrain() {

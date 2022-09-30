@@ -7,9 +7,7 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.TutorialGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.maingame.DialogueBoxActions;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
-import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
@@ -35,7 +33,6 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.maingame.MainGameExitDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +52,8 @@ public class TutorialScreen extends ScreenAdapter {
             "images/resource_display.png",
             "images/gainstone.png",
             "images/gain10wood.png",
-            "images/gainmetal.png"
+            "images/gainmetal.png",
+            "images/Information_Box_Deepsea.png"
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
@@ -98,7 +96,9 @@ public class TutorialScreen extends ScreenAdapter {
 
         logger.debug("Initialising main game screen entities");
 
-        TutorialGameArea tutorialGameArea = new TutorialGameArea();
+        // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
+        AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
+        TutorialGameArea tutorialGameArea = new TutorialGameArea(terrainFactory);
         tutorialGameArea.create();
     }
 
