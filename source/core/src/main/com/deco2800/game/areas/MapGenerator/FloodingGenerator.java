@@ -71,6 +71,12 @@ public class FloodingGenerator {
         //TODO - Pick Tiles to be flooded (Dito/Jordan)
         return mapGenerator.getOutlineMap();
 
+        // Approach:
+        // 1. pickTileToFlood()
+        // 2. floodTile()
+        // 3. Wait for timer ends using Timer class
+        // 4. Repeat
+
         //Dummy code for now
 //        int[] coords = new int[2];
 //        coords[0] = 20;
