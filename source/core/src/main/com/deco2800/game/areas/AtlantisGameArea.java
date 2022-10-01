@@ -43,6 +43,10 @@ import com.deco2800.game.worker.components.duration.DurationBarFactory;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 
+<<<<<<< Updated upstream
+=======
+import com.deco2800.game.components.flooding.FloodingComponent;
+>>>>>>> Stashed changes
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
