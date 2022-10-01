@@ -21,6 +21,6 @@ public class AttackListener extends Component {
     }
 
     void attack() {
-        EnemyFactory.createBullet(this.entity, target, gameArea);
+        gameArea.spawnEntity(EnemyFactory.createBullet(this.entity, target, gameArea));
     }
 }
