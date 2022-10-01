@@ -1,11 +1,15 @@
 package com.deco2800.game.components.building;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +63,10 @@ public class GateCollider extends Component {
                     gateCollider.setSensor(true);
                     //Play opening animation
                     //Update image asset to open
+                    //Update asset image to closed
+                    ResourceService resourceService = ServiceLocator.getResourceService();
+                    Texture openTexture = resourceService.getAsset("images/gate_ns_open.png", Texture.class);
+                    gateEntity.getComponent(TextureRenderComponent.class).setTexture(openTexture);
                 }
             }
 
@@ -98,6 +106,9 @@ public class GateCollider extends Component {
                     gateCollider.setSensor(false);
                     //Play closing animation
                     //Update asset image to closed
+                    ResourceService resourceService = ServiceLocator.getResourceService();
+                    Texture closedTexture = resourceService.getAsset("images/gate_ns_closed.png", Texture.class);
+                    gateEntity.getComponent(TextureRenderComponent.class).setTexture(closedTexture);
                 }
             }
         }

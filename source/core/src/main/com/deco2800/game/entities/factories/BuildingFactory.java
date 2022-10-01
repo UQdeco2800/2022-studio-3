@@ -158,14 +158,14 @@ public class BuildingFactory {
      */
     public static Entity createGate() {
         Entity gate = createBaseBuilding();
-        gate.addComponent(new TextureRenderComponent("images/base.png"))
+        gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider());
 
-        gate.scaleWidth(2.2f);
+        gate.scaleHeight(5f);
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
         PolygonShape boundingBox = new PolygonShape();
         Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
-        boundingBox.setAsBox(center.x * 0.25f, center.y * 0.25f, center, (float) (60 * Math.PI / 180));
+        boundingBox.setAsBox(center.x * 0.5f, center.y * 0.5f, center, (float) (60 * Math.PI / 180));
         gate.getComponent(ColliderComponent.class).setShape(boundingBox);
 
         return gate;

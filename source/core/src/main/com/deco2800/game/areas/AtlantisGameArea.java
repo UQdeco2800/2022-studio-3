@@ -99,6 +99,11 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
+            //Gate
+            "images/gate_ew_closed.png",
+            "images/gate_ew_open.png",
+            "images/gate_ns_closed.png",
+            "images/gate_ns_open.png",
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
@@ -498,8 +503,13 @@ public class AtlantisGameArea extends GameArea {
             if (direction == 1) {
                 //Spawn gate in the middle of the city - North/South orientation
                 Entity gate = BuildingFactory.createGate();
-                System.out.print("Making gate");
-                spawnEntityAt(gate, position.add(direction, 0), true, true);
+                spawnEntityAt(gate, position.add(direction, 0), false, false);
+                System.out.println("Spawning gate: " + n / 2 + " at: " + position);
+                System.out.println("Gate width: ");
+                Vector2 gatePos = gate.getPosition();
+                Vector2 gateCentre = gate.getCenterPosition();
+                gatePos.add(gatePos.x - gateCentre.x, gatePos.y - gateCentre.y);
+                gate.setPosition(gatePos);
             }
             direction *= -1;
         }

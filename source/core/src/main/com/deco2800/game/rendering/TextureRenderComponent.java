@@ -1,7 +1,9 @@
 package com.deco2800.game.rendering;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -31,6 +33,21 @@ public class TextureRenderComponent extends RenderComponent {
   /** Scale the entity to a width of 1 and a height matching the texture's ratio */
   public void scaleEntity() {
     entity.setScale(1f, (float) texture.getHeight() / texture.getWidth());
+  }
+
+  /**
+   * Draws a square around the area enclosed by the texture for debugging
+   * @param batch SpriteBatch of game
+   */
+  public void drawTextureBox(SpriteBatch batch) {
+    ShapeRenderer sr = new ShapeRenderer();
+    sr.setProjectionMatrix(batch.getProjectionMatrix());
+    batch.end();
+    //Set hollow fill for black rectangle outline
+    sr.begin(ShapeRenderer.ShapeType.Line);
+    sr.setColor(Color.BLACK);
+
+    batch.begin();
   }
 
   public void setTexture(Texture texture) {
