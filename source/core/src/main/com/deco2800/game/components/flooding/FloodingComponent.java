@@ -40,7 +40,7 @@ public class FloodingComponent extends Component {
 
                 }
             }
-            ServiceLocator.getMapService().removeIslandTile(20,20);
+            //ServiceLocator.getMapService().removeIslandTile(20,20);
             // Reset the timer for next flooding event.
             this.timer = new Timer(10000, 10001);
         }
