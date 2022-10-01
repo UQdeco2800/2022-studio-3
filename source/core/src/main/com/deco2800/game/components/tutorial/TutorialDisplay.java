@@ -53,6 +53,9 @@ public class TutorialDisplay extends UIComponent {
         addActors();
     }
 
+
+
+
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
@@ -64,7 +67,8 @@ public class TutorialDisplay extends UIComponent {
 
 
 
-        TextButton skipBtn = new TextButton("Skip Tutorial", skin);
+        TextButton skipBtn = new TextButton("Skip", skin);
+        TextButton nextBtn = new TextButton("Next", skin);
 
         skipBtn.addListener(
                 new ChangeListener() {
@@ -76,7 +80,19 @@ public class TutorialDisplay extends UIComponent {
                     }
                 });
 
-        backTable.add(skipBtn).padBottom(100f).padRight(10f);
+        nextBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("next button clicked");
+                        entity.getEvents().trigger("next");
+                    }
+                });
+
+        backTable.add(nextBtn).padBottom(150f).padRight(10f);
+        backTable.add(skipBtn).padBottom(150f).padRight(10f);
+
         stage.addActor(backTable);
         stage.addActor(table);
 

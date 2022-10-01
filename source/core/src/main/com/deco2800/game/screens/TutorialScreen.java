@@ -61,9 +61,12 @@ public class TutorialScreen extends ScreenAdapter {
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
+    public DialogueBoxDisplay display = new DialogueBoxDisplay();
 
     public TutorialScreen(GdxGame game) {
         this.game = game;
+        this.display = new DialogueBoxDisplay();
+
 
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
@@ -94,11 +97,12 @@ public class TutorialScreen extends ScreenAdapter {
         loadAssets();
         createUI();
 
+
         logger.debug("Initialising main game screen entities");
 
         // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
         AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
-        TutorialGameArea tutorialGameArea = new TutorialGameArea(terrainFactory);
+        TutorialGameArea tutorialGameArea = new TutorialGameArea(terrainFactory, this.display);
         tutorialGameArea.create();
     }
 
@@ -180,7 +184,7 @@ public class TutorialScreen extends ScreenAdapter {
         // tutorial components
         ui.addComponent(new TutorialDisplay())
                 .addComponent(new InputDecorator(stage, 10))
-                .addComponent(new TutorialActions(game));
+                .addComponent(new TutorialActions(game, this.display));
 
         ServiceLocator.getEntityService().register(ui);
     }

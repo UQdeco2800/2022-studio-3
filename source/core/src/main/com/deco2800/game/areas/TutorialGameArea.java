@@ -11,6 +11,7 @@ import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.tutorial.TutorialActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.input.CameraInputComponent;
@@ -25,11 +26,10 @@ import java.util.Vector;
 public class TutorialGameArea extends GameArea {
 
     /** dialogue box */
-    private DialogueBoxDisplay dialogueBoxDisplay;
+    public DialogueBoxDisplay dialogueBoxDisplay;
 
     private final AtlantisTerrainFactory terrainFactory;
 
-    private AtlantisGameArea area;
     private Entity player;
 
     /** textures needed to load */
@@ -95,10 +95,13 @@ public class TutorialGameArea extends GameArea {
             "images/simpleman.png"
     };
 
-    public TutorialGameArea(AtlantisTerrainFactory terrainFactory) {
+    public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
+        this.dialogueBoxDisplay = display;
     }
+
+
 
 
     /**
@@ -126,9 +129,11 @@ public class TutorialGameArea extends GameArea {
     private void displayUI() {
 
         Entity dialogueBox = new Entity();
-        this.dialogueBoxDisplay = new DialogueBoxDisplay();
         dialogueBox.addComponent(this.dialogueBoxDisplay)
                 .addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
+
+
+
 
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("tutorial area"));
@@ -158,7 +163,12 @@ public class TutorialGameArea extends GameArea {
         spawnEntityAt(barracks, spawn.add(8, 10), true, true);
         Vector2 centreWorld = this.terrain.tileToWorldPosition(spawn.x, spawn.y);
         this.terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
-        this.dialogueBoxDisplay.setTitle("Tutorial");
+        this.dialogueBoxDisplay.setTitle("Welcome to Atlantis Sinks!");
+        this.dialogueBoxDisplay.setDialogue("Press next to get started or \nskip to play");
+    }
+
+    public void changeDialogue(String string) {
+        this.dialogueBoxDisplay.setDialogue(string);
     }
 
     private void spawnTerrain() {
