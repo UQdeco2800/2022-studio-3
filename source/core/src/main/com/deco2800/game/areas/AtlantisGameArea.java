@@ -44,7 +44,7 @@ public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final int NUM_TREES = 5;
     private static final int NUM_STONE = 10;
-    private static final String[] forestTextures = {
+    public static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
             "images/Ocean.png",
@@ -106,13 +106,13 @@ public class AtlantisGameArea extends GameArea {
     };
 
     /* TODO: remove unused textures wasting precious resources */
-    private static final String[] uiTextures = {
+    public static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
             "images/exit-button.PNG",
             "images/dialogue_box_background_Deep_Sea.png"
     };
-    private static final String[] forestTextureAtlases = {
+    public static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
@@ -120,7 +120,7 @@ public class AtlantisGameArea extends GameArea {
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas"
     };
-    private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
@@ -138,7 +138,6 @@ public class AtlantisGameArea extends GameArea {
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
-        loadAssets();
         displayUI();
         spawnTerrain();
         centreCameraOnCity();
@@ -157,10 +156,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-//        spawnBlueJokers();
-//        spawnWolf();
-//        spawnTitan();
-//        spawnSnakes();
+        spawnBlueJokers();
+        spawnWolf();
+        spawnTitan();
+        spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -549,20 +548,6 @@ public class AtlantisGameArea extends GameArea {
      */
     public List<Entity> getEntityByID(int id) {
         return areaEntities.stream().filter(x -> x.getId() == id).collect(Collectors.toList());
-    }
-
-    private void loadAssets() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadTextures(forestTextures);
-        resourceService.loadTextures(uiTextures);
-        resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(atlantisSounds);
-
-        while (!resourceService.loadForMillis(10)) {
-            // This could be upgraded to a loading screen
-            logger.info("Loading... {}%", resourceService.getProgress());
-        }
     }
 
     private void unloadAssets() {

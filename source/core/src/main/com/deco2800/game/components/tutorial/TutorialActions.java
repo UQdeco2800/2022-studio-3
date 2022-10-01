@@ -25,7 +25,7 @@ public class TutorialActions extends Component {
 
     private void onSkip() {
         logger.info("Skipping to game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen(GdxGame.ScreenType.LOADING);
     }
 
 }

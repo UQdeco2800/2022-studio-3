@@ -202,7 +202,6 @@ public class Entity {
   /** Dispose of the entity. This will dispose of all components on this entity. */
   public void dispose() {
     for (Component component : createdComponents) {
-      logger.info("Disposing component: {}", component);
       component.dispose();
     }
     ServiceLocator.getEntityService().unregister(this);
