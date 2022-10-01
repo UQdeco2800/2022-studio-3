@@ -3,6 +3,8 @@ com.deco2800.game.ai.movement
 com.deco2800.game.ai.tasks
 com.deco2800.game.areas
 com.deco2800.game.areas.MapGenerator
+com.deco2800.game.areas.MapGenerator.Buildings
+com.deco2800.game.areas.MapGenerator.pathBuilding
 com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.building
@@ -48,4 +50,3 @@ com.deco2800.game.worker.components.movement
 com.deco2800.game.worker.components.type
 com.deco2800.game.worker.resources
 com.deco2800.game.worker.type
-main.com.deco2800.game.components.weather
