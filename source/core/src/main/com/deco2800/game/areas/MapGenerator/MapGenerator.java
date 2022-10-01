@@ -1,7 +1,7 @@
 package com.deco2800.game.areas.MapGenerator;
 
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
-import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
+import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -629,4 +629,3 @@ public class MapGenerator {
         return newMap;
     }
 }
-

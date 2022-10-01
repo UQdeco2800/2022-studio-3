@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
+import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 
 import java.util.*;
 
@@ -57,6 +58,14 @@ public class BuildingGenerator {
      * Total number of buildings that have been placed at the corners
      */
     private int cornerBuildings = 0;
+    /**
+     * The height of the city in tiles.
+     */
+    private int cityHeight;
+    /**
+     * The width of the city in tiles.
+     */
+    private int cityWidth;
 
     public BuildingGenerator(MapGenerator mg) {
         //Get MapGenerator details
@@ -90,9 +99,9 @@ public class BuildingGenerator {
         }
 
         //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        this.cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
         //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+        this.cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
 
         //Determine number of rows to place buildings in
         numRows = (cityHeight - (2 * WALL_BUFFER)) / (maxHeight + ROW_BUFFER);
@@ -106,8 +115,37 @@ public class BuildingGenerator {
         //Place buildings in their rows
         placeBuildings();
 
+        //Add Paths
+        PathGenerator pg = new PathGenerator(this);
+
         //Test output
         //writeCity(cityHeight, cityWidth);
+    }
+
+    /**
+     * Gets the city height.
+     * 
+     * @return city height
+     */
+    public int getCityHeight() {
+        return this.cityHeight;
+    }
+
+    /**
+     * Gets the city width.
+     * 
+     * @return city width
+     */
+    public int getCityWidth() {
+        return this.cityWidth;
+    }
+
+    /**
+     * Returns a copy of this BuildingGenerator's buildingspec list
+     * @return List of BuildingSpecifications
+     */
+    public List<BuildingSpecification> getBuildings() {
+        return new ArrayList<>(buildings);
     }
 
     /**
