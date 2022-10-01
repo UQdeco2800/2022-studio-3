@@ -29,9 +29,9 @@ public class ResourceCountDisplay extends UIComponent {
     private Image metalImageLabel;
 
     /* Modify these to update the resource count */
-    private int woodCount = 100;
-    private int stoneCount = 22;
-    private int metalCount = 50;
+    private int woodCount = 0;
+    private int stoneCount = 0;
+    private int metalCount = 0;
 
 
     @Override

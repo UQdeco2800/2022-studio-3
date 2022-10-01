@@ -9,11 +9,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.type.BaseComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class EnemyDetectionComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(EnemyDetectionComponent.class);
     private HitboxComponent hitboxComponent;
 
     public EnemyDetectionComponent() {}
