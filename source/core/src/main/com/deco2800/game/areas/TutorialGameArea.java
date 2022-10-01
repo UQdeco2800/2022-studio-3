@@ -1,54 +1,26 @@
 package com.deco2800.game.areas;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Gdx;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
-import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.building.BuildingActions;
-import com.deco2800.game.components.friendlyunits.GestureDisplay;
-import com.deco2800.game.components.friendlyunits.MouseInputComponent;
+import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
-import com.deco2800.game.entities.factories.EnemyFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.map.MapService;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.worker.WorkerBaseFactory;
-import com.deco2800.game.worker.resources.StoneFactory;
-import com.deco2800.game.worker.resources.TreeFactory;
-import com.deco2800.game.worker.type.ForagerFactory;
-import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Vector;
 
 public class TutorialGameArea extends GameArea {
 
@@ -169,11 +141,42 @@ public class TutorialGameArea extends GameArea {
         spawnEntity(infoUi);
     }
 
+    private void spawnBuildings() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        Coordinate centre = cityDetails.get("Centre");
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+        this.terrain = terrainFactory.createAtlantisTerrainComponent();
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BROWN);
+        Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
+        spawnEntityAt(townHall, spawn.add(0, 2), true, true);
+
+        this.terrainFactory.getCameraComponent().getEntity().setPosition(new Vector2());
+        Entity barracks = BuildingFactory.createBarracks().addComponent(mapComponent);
+        spawnEntityAt(barracks, spawn.add(8, 10), true, true);
+        Vector2 centreWorld = this.terrain.tileToWorldPosition(spawn.x, spawn.y);
+        this.terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
+        this.dialogueBoxDisplay.setTitle("Tutorial");
+    }
+
+    private void spawnTerrain() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        terrainFactory.createAtlantisTerrainComponent();
+        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
+        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
+        terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
+                .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
+    }
+
     @Override
     public void create() {
 
         this.loadAssets();
         this.displayUI();
+        spawnBuildings();
+        spawnTerrain();
     }
 
     @Override

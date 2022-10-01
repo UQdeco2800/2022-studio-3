@@ -28,4 +28,5 @@ public class TutorialActions extends Component {
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
+
 }

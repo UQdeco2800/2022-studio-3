@@ -63,6 +63,7 @@ public class TutorialDisplay extends UIComponent {
         backTable.setFillParent(true);
 
 
+
         TextButton skipBtn = new TextButton("Skip Tutorial", skin);
 
         skipBtn.addListener(
@@ -75,7 +76,7 @@ public class TutorialDisplay extends UIComponent {
                     }
                 });
 
-        backTable.add(skipBtn).pad(25f);
+        backTable.add(skipBtn).padBottom(100f).padRight(10f);
         stage.addActor(backTable);
         stage.addActor(table);
 
