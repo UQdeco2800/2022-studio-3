@@ -192,10 +192,6 @@ public class AtlantisGameArea extends GameArea {
 
 //        spawnResources();
 //        spawnMiner();
-
-        // spawnWorkerBase();
-        // spawnResources();
-//        spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
 //         spawnMiner();
