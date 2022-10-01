@@ -169,7 +169,8 @@ public class BuildingFactory {
 
         titanShrine
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingUIDataComponent());
 
         // TODO: Make component to spawn titan.
 

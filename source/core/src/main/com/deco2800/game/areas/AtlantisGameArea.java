@@ -172,24 +172,25 @@ public class AtlantisGameArea extends GameArea {
 //            spawnPlayer();
 //        }
         centreCameraOnCity();
-        playMusic();
+        // playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
         spawnBarracks();
         spawnWalls();
+        spawnTitanShrine();
 
-        // spawnBuildings();
+//        spawnBuildings();
 
-        spawnForager();
-        spawnForager();
+//        spawnForager();
+//        spawnForager();
 
-        spawnResources();
-        spawnMiner();
+//        spawnResources();
+//        spawnMiner();
 
         // spawnWorkerBase();
         // spawnResources();
-        spawnMiner();
+//        spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
 //         spawnMiner();
@@ -457,8 +458,26 @@ public class AtlantisGameArea extends GameArea {
         mc2.display();
         mc2.setDisplayColour(Color.BROWN);
 
-        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc1), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc2), spawn2, true, true);
+        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
+        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc2)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2, true, true);
+    }
+
+    /**
+     * Spawns a titan shrine
+     */
+    private void spawnTitanShrine() {
+        // Position offset from centre of city
+        int offset = 10;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate centre = mg.getCityDetails().get("Centre");
+        // Two spawn-points for the barracks next ot TownHall located in the centre
+        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getWidth() - centre.getY()).add(offset, 0);
+
+        MapComponent mc1 = new MapComponent();
+        mc1.display();
+        mc1.setDisplayColour(Color.DARK_GRAY);
+
+        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
     }
 
     /**
