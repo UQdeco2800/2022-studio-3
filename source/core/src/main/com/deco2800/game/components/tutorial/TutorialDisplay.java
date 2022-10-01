@@ -54,8 +54,6 @@ public class TutorialDisplay extends UIComponent {
     }
 
 
-
-
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
@@ -64,8 +62,6 @@ public class TutorialDisplay extends UIComponent {
         backTable.bottom().right();
         table.setFillParent(true);
         backTable.setFillParent(true);
-
-
 
         TextButton skipBtn = new TextButton("Skip", skin);
         TextButton nextBtn = new TextButton("Next", skin);
@@ -102,7 +98,6 @@ public class TutorialDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
-
 
     @Override
     public float getZIndex() {

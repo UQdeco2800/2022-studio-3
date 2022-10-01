@@ -8,6 +8,7 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -29,8 +30,6 @@ public class TutorialGameArea extends GameArea {
     public DialogueBoxDisplay dialogueBoxDisplay;
 
     private final AtlantisTerrainFactory terrainFactory;
-
-    private Entity player;
 
     /** textures needed to load */
     private String[] tutorialTextures = {
@@ -102,8 +101,6 @@ public class TutorialGameArea extends GameArea {
     }
 
 
-
-
     /**
      * On init load needed textures
      */
@@ -132,9 +129,6 @@ public class TutorialGameArea extends GameArea {
         dialogueBox.addComponent(this.dialogueBoxDisplay)
                 .addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
-
-
-
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("tutorial area"));
 
@@ -146,6 +140,9 @@ public class TutorialGameArea extends GameArea {
         spawnEntity(infoUi);
     }
 
+    /**
+     * spawn tutorial area - needs mining camp
+     */
     private void spawnBuildings() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
@@ -167,10 +164,9 @@ public class TutorialGameArea extends GameArea {
         this.dialogueBoxDisplay.setDialogue("Press next to get started or \nskip to play");
     }
 
-    public void changeDialogue(String string) {
-        this.dialogueBoxDisplay.setDialogue(string);
-    }
-
+    /**
+     * spawn map terrain
+     */
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         terrainFactory.createAtlantisTerrainComponent();
