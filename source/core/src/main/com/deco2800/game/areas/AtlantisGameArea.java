@@ -129,7 +129,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas"
+            "images/newwolf.atlas","images/tree_.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 

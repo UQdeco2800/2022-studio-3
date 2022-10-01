@@ -14,11 +14,22 @@ import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.worker.components.type.StoneComponent;
 import com.deco2800.game.worker.components.type.TreeComponent;
+import com.deco2800.game.worker.resources.TreeFactory;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.GameTime;
+
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+
+
 
 public class ResourceCollectComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
@@ -29,8 +40,11 @@ public class ResourceCollectComponent extends Component {
     private boolean colliding;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
-    private final GameTime gameTime;
     private long lastTimeMined;
+    private GameTime gameTime;
+    private long at_time;
+    private static final long TIME_INTERVAL = 3000;
+
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -120,15 +134,16 @@ public class ResourceCollectComponent extends Component {
         } else {
             return;
         }
+
         startCollecting(me, other);
         if (targetStats.isDead()) {
+            target.getComponent(AnimationRenderComponent.class).startAnimation("tree_damaged");
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
-            target.dispose();
-
             ServiceLocator.getEntityService().unregister(target);
             returnToBase(collector);
-            
+
+
             // Idle the duration bar
             /*
             if(collectorIsMiner != null){

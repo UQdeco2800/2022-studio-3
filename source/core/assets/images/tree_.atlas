@@ -66,7 +66,7 @@ tree_grow
   orig: 128, 128
   offset: 0, 0
   index: 3
-tree_grow
+tree_idle
   rotate: false
   xy: 1152, 0
   size: 128, 128
