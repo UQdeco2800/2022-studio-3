@@ -7,6 +7,7 @@ import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -62,8 +63,9 @@ public class GateCollider extends Component {
                     //Turn off collision for this collider
                     gateCollider.setSensor(true);
                     //Play opening animation
+                    AnimationRenderComponent gateARC = gateEntity.getComponent(AnimationRenderComponent.class);
+                    gateARC.startAnimation("open_gate");
                     //Update image asset to open
-                    //Update asset image to closed
                     ResourceService resourceService = ServiceLocator.getResourceService();
                     Texture openTexture = resourceService.getAsset("images/gate_ns_open.png", Texture.class);
                     gateEntity.getComponent(TextureRenderComponent.class).setTexture(openTexture);
@@ -105,10 +107,12 @@ public class GateCollider extends Component {
                     //Turn on collision for this collider
                     gateCollider.setSensor(false);
                     //Play closing animation
-                    //Update asset image to closed
-                    ResourceService resourceService = ServiceLocator.getResourceService();
-                    Texture closedTexture = resourceService.getAsset("images/gate_ns_closed.png", Texture.class);
-                    gateEntity.getComponent(TextureRenderComponent.class).setTexture(closedTexture);
+                    AnimationRenderComponent gateARC = gateEntity.getComponent(AnimationRenderComponent.class);
+                    gateARC.startAnimation("close_gate");
+                    //Update asset image to closed - removed due to issues with animation
+                    //ResourceService resourceService = ServiceLocator.getResourceService();
+                    //Texture closedTexture = resourceService.getAsset("images/gate_ns_closed.png", Texture.class);
+                    //gateEntity.getComponent(TextureRenderComponent.class).setTexture(closedTexture);
                 }
             }
         }

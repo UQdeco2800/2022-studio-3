@@ -15,6 +15,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.BuildingOffset;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
@@ -137,7 +138,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas"
+            "images/newwolf.atlas", "images/ns_gate.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -477,8 +478,8 @@ public class AtlantisGameArea extends GameArea {
         //Find city width in tiles
         int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
 
-        int yLength = (cityHeight / 2) - 2; // Amount of walls to spawn in y direction
-        int xLength = (cityWidth / 2) - 2; // Amount of walls to spawn in x direction
+        int yLength = (cityHeight / 2) - 3; // Amount of walls to spawn in y direction
+        int xLength = (cityWidth / 2) - 3; // Amount of walls to spawn in x direction
         String[] cityCorners = {"NW", "NE", "SW", "SE"}; // Four corner locations to spawn walls in
         int direction = 1; // Spawning direction
 
@@ -503,13 +504,13 @@ public class AtlantisGameArea extends GameArea {
             if (direction == 1) {
                 //Spawn gate in the middle of the city - North/South orientation
                 Entity gate = BuildingFactory.createGate();
-                spawnEntityAt(gate, position.add(direction, 0), false, false);
-                System.out.println("Spawning gate: " + n / 2 + " at: " + position);
-                System.out.println("Gate width: ");
-                Vector2 gatePos = gate.getPosition();
-                Vector2 gateCentre = gate.getCenterPosition();
-                gatePos.add(gatePos.x - gateCentre.x, gatePos.y - gateCentre.y);
-                gate.setPosition(gatePos);
+                //Determine tile point to spawn gate
+                GridPoint2 tileSpawn = position.add(direction, 0);
+                //GridPoint2 tileSpawn = new GridPoint2(0,0);
+                //Set the spawn point of the gate
+                gate.getComponent(BuildingOffset.class).setSpawnPoint(tileSpawn, terrain);
+                //Spawn the gate
+                spawnEntity(gate);
             }
             direction *= -1;
         }

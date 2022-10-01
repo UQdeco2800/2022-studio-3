@@ -1,14 +1,13 @@
 package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.BuildingOffset;
 import com.deco2800.game.components.building.GateCollider;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
@@ -16,6 +15,7 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -79,6 +79,7 @@ public class BuildingFactory {
                 .getAsset("images/base.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
 
+        System.out.println("polyregioncoords: " + region.getTextureCoords()[0]);
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
             vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TH_SCALE);
@@ -158,10 +159,22 @@ public class BuildingFactory {
      */
     public static Entity createGate() {
         Entity gate = createBaseBuilding();
-        gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
-            .addComponent(new GateCollider());
 
-        gate.scaleHeight(5f);
+        //Create animation component
+        TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
+        AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
+        gateARC.addAnimation("open_gate", 0.1f, Animation.PlayMode.NORMAL);
+        gateARC.addAnimation("close_gate", 0.1f, Animation.PlayMode.NORMAL);
+
+        //Add all components
+        gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
+            .addComponent(new GateCollider())
+            .addComponent(gateARC)
+            .addComponent(new BuildingOffset(37f, 125f));
+
+        TextureRenderComponent gateTRC = gate.getComponent(TextureRenderComponent.class);
+
+        gate.scaleWidth(5f);
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
         PolygonShape boundingBox = new PolygonShape();
         Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
