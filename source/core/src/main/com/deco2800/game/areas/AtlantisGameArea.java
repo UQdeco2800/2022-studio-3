@@ -183,10 +183,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        //spawnBlueJokers();
+        //spawnWolf();
+        //spawnTitan();
+        //spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -466,8 +466,14 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         Coordinate corner;
         GridPoint2 position;
-        int yLength = 10; // Amount of walls to spawn in x direction
-        int xLength = 20; // Amount of walls to spawn in y direction
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Find city height in tiles
+        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        //Find city width in tiles
+        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+
+        int yLength = (cityHeight / 2) - 2; // Amount of walls to spawn in y direction
+        int xLength = (cityWidth / 2) - 2; // Amount of walls to spawn in x direction
         String[] cityCorners = {"NW", "NE", "SW", "SE"}; // Four corner locations to spawn walls in
         int direction = 1; // Spawning direction
 
@@ -488,6 +494,12 @@ public class AtlantisGameArea extends GameArea {
                 wall.getComponent(BuildingActions.class).addLevel();
                 wall.getComponent(BuildingActions.class).setWallNE();
                 spawnEntityAt(wall, position.add(direction, 0), true, true);
+            }
+            if (direction == 1) {
+                //Spawn gate in the middle of the city - North/South orientation
+                Entity gate = BuildingFactory.createGate();
+                System.out.print("Making gate");
+                spawnEntityAt(gate, position.add(direction, 0), true, true);
             }
             direction *= -1;
         }

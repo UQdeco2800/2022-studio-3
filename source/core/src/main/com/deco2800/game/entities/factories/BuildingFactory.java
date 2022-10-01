@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.GateCollider;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
@@ -149,6 +150,25 @@ public class BuildingFactory {
         wall.getComponent(ColliderComponent.class).setShape(boundingBox);
 
         return wall;
+    }
+
+    /**
+     * Creates a gate entity, that allows friendly units to leave and enter the city
+     * @return Gate Entity
+     */
+    public static Entity createGate() {
+        Entity gate = createBaseBuilding();
+        gate.addComponent(new TextureRenderComponent("images/base.png"))
+            .addComponent(new GateCollider());
+
+        gate.scaleWidth(2.2f);
+        // Setting Isometric Collider (Normal collider rotated 60 degrees)
+        PolygonShape boundingBox = new PolygonShape();
+        Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
+        boundingBox.setAsBox(center.x * 0.25f, center.y * 0.25f, center, (float) (60 * Math.PI / 180));
+        gate.getComponent(ColliderComponent.class).setShape(boundingBox);
+
+        return gate;
     }
 
 

@@ -104,6 +104,7 @@ public class CameraInputComponent extends InputComponent {
                 verticalChange = 0;
             }
         }
+
         super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
     }
