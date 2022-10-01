@@ -47,6 +47,11 @@ public class WorkerMovementTask extends DefaultTask {
         logger.debug("Starting movement towards {}", target);
         lastTimeMoved = gameTime.getTime();
         lastPos = owner.getEntity().getPosition();
+        owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
+    }
+
+    public void changeSpeed(float factor) {
+        this.movementComponent.changeSpeed(factor);
     }
 
     @Override
