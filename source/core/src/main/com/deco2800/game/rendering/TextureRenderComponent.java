@@ -121,10 +121,11 @@ public class TextureRenderComponent extends RenderComponent {
 
     //Debug - draw hitboxes around TextureScaled Entities
     /*
-    if (entity.getComponent(TextureScaler.class) !=  null) {
+    if (entity.getComponent(TextureScaler.class) !=  null && entity.getComponent(GateCollider.class) != null) {
       drawTextureBox(batch);
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
-    } */
+    }
+     */
   }
 }

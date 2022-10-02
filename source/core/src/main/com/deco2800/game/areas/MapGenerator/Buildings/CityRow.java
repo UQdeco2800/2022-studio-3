@@ -31,6 +31,11 @@ public class CityRow {
     private final int WALL_BUFFER;
 
     /**
+     * Space in tiles between the right edge of the city and the last building
+     */
+    private final int RIGHT_BUFFER;
+
+    /**
      * Denotes the space taken up from the left of the city row
      */
     private int leftSpaceTaken = 0;
@@ -53,13 +58,14 @@ public class CityRow {
      * @param CITY_BUFFER Space to leave (in tiles) between each building
      * @param WALL_BUFFER Space to leave (in tiles) between the edge of the city and the first and last buildings
      */
-    public CityRow(int cityWidth, int CITY_BUFFER, int WALL_BUFFER, int index) {
+    public CityRow(int cityWidth, int CITY_BUFFER, int WALL_BUFFER, int RIGHT_BUFFER, int index) {
         this.CITY_BUFFER = CITY_BUFFER;
         this.WALL_BUFFER = WALL_BUFFER;
+        this.RIGHT_BUFFER = RIGHT_BUFFER;
         this.rowWidth = cityWidth;
         this.index = index;
-        this.buildings = new LinkedList<>();
-        spaceRemaining = cityWidth - (2 * WALL_BUFFER);
+
+        resetRow();
     }
 
     /**
@@ -90,7 +96,7 @@ public class CityRow {
         this.buildings = new LinkedList<>();
         this.height = 0;
         this.leftSpaceTaken = 0;
-        spaceRemaining = rowWidth - (2 * WALL_BUFFER);
+        spaceRemaining = rowWidth - (2 * WALL_BUFFER) - RIGHT_BUFFER;
     }
 
     /**
@@ -122,7 +128,7 @@ public class CityRow {
             leftSpaceTaken += width + CITY_BUFFER;
         } else {
             //Determine where the coordinate will be placed in the row from the right
-            xPlacement = rowWidth - WALL_BUFFER - width;
+            xPlacement = rowWidth - WALL_BUFFER - width - RIGHT_BUFFER;
         }
 
         //Update space remaining in the row

@@ -31,6 +31,13 @@ public class BuildingGenerator {
      * Distance (in tiles) to allow for the walls around the city
      */
     private final int WALL_BUFFER = 3;
+
+    /**
+     * Distance in tiles between the right edge of the city and the last building
+     */
+    private final int RIGHT_BUFFER = 4;
+
+
     /**
      * Attempts to place each building in the city
      */
@@ -118,7 +125,7 @@ public class BuildingGenerator {
         //Allocate a list of CityRow based on numRows
         cityRows = new LinkedList<>();
         for (int i = 0; i < numRows; i++) {
-            cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, i));
+            cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, RIGHT_BUFFER, i));
         }
 
         //Place buildings in their rows
@@ -128,7 +135,7 @@ public class BuildingGenerator {
         this.pg = new PathGenerator(this);
 
         //Test output
-        //writeCity(cityHeight, cityWidth);
+        writeCity(cityHeight, cityWidth);
     }
 
     /**
@@ -175,6 +182,19 @@ public class BuildingGenerator {
         char[][] city = getCharMap();
         //Change or comment path as needed to test
         MapGenerator.writeMap(city, "E:\\Sprint 3\\city.txt", cityWidth, cityHeight);
+    }
+
+    /**
+     * Writes the contents of the city to a human readable text file
+     * @param cityHeight height of the city in tiles
+     * @param cityWidth width of the city in tiles
+     * @param path path to output file
+     */
+    public void writeCity(int cityHeight, int cityWidth, String path) {
+        //Test - write to output file
+        char[][] city = getCharMap();
+        //Change or comment path as needed to test
+        MapGenerator.writeMap(city, path, cityWidth, cityHeight);
     }
 
     /**
@@ -289,6 +309,7 @@ public class BuildingGenerator {
         int cityMinX = cityDetails.get("NW").getX();
         int cityMinY = cityDetails.get("NW").getY();
         int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+
 
         int spaceRemaining = (cityHeight - (2 * WALL_BUFFER)) - ((maxHeight + ROW_BUFFER) * numRows);
         int baseOffset = spaceRemaining / (numRows - 1);
