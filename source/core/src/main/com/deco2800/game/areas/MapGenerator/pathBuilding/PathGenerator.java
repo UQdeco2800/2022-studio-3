@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -37,16 +38,16 @@ public class PathGenerator {
     /**
      * Contructs a PathGenerator and generates paths between buildings.
      * 
-     * @param buildingGenerator an instance of BuildingGenerator
+     * @param bg an instance of BuildingGenerator
      * @param buildingBuffer the minimum number of tiles away a path should always be from a
      * building
      */
-    public PathGenerator(BuildingGenerator buildingGenerator, int buildingBuffer) {
+    public PathGenerator(BuildingGenerator bg, int buildingBuffer) {
         this.buildingBuffer = buildingBuffer;
-        this.city = buildingGenerator.getCharMap();
+        this.city = bg.getCharMap();
         bufferPositions = new ArrayList<>();
         debugInfo = "PATH GENERATION DEBUG OUTPUT\n\n";
-        List<BuildingSpecification> buildings = buildingGenerator.getBuildings();
+        List<BuildingSpecification> buildings = bg.getBuildings();
         Map<String, BuildingSpecification> symbolToBuilding = new HashMap<>();
 
         for (BuildingSpecification b : buildings) {
@@ -55,7 +56,6 @@ public class PathGenerator {
         }
 
         /*
-         * assume door is to bottom of buildings
          * assume building widths always odd
          * city[row][col] indexing
          */
@@ -63,6 +63,17 @@ public class PathGenerator {
 
         for (int row = 0; row < this.city.length; row++) {
             for (int col = 0; col < this.city[row].length; col++) {
+
+                int buff = bg.getWallBuffer();
+                int right = bg.getRightWallBuffer();
+                if (col < buff || col >= bg.getCityWidth() - right + 1 || row < buff || 
+                    row >= bg.getCityHeight() - buff) {
+                    GridPoint2 p = new GridPoint2(col, row);
+                    if (!this.bufferPositions.contains(p)) {
+                        this.bufferPositions.add(p);
+                    }
+                    this.city[row][col] = 'N';
+                }
 
                 BuildingSpecification bs = symbolToBuilding.get((new String(this.city[row]))
                     .substring(col, col + 1));
@@ -117,14 +128,13 @@ public class PathGenerator {
                     for (int j = -1 * this.buildingBuffer; j < (bs.getWidth() + this.buildingBuffer); j++) {
 
                         GridPoint2 p = new GridPoint2(row + i, col + j);
-                        if (isValid(p)) bufferPositions.add(p);
+                        if (isValid(p) && !this.bufferPositions.contains(p)) bufferPositions.add(p);
                     }
                 }
             }
         }
 
         debugInfo += "Number of paths: " + toGenerateFrom.size() + "\n";
-        // System.out.println(debugInfo);
         // need to repeatedly construct paths as well as check that paths are connected
         FindPath fp = new FindPath(this);
         CheckConnectivity cc = new CheckConnectivity(this);
@@ -147,31 +157,39 @@ public class PathGenerator {
         int i = -1;
         // connect any disconnected components
         while (remaining.size() > 0) {
-            List<GridPoint2> path = fp.findPathBetween(remaining.get(0), generated.get(++i % generated.size()));
+            if (i == 10) {
+                debugInfo += "\nCould not connect all paths...\n";
+                debugInfo += remaining.toString() + "\n";
+                break;
+            }
+            Random r = new Random();
+            List<GridPoint2> path = fp.findPathBetween(remaining.get(r.nextInt(remaining.size())), generated.get(r.nextInt(generated.size())));
             for (GridPoint2 p2 : path) {
                 this.city[p2.x][p2.y] = this.pathTile;
             }
             generated = cc.check(toGenerateFrom);
             remaining = new ArrayList<>(toGenerateFrom);
             remaining.removeAll(generated);
+            i++;
         }
 
-        MapGenerator.writeMap(this.city, this.debugFilePath + "cityMap.txt", buildingGenerator.getCityWidth(), buildingGenerator.getCityHeight());
+        MapGenerator.writeMap(this.city, this.debugFilePath + "cityMap.txt", bg.getCityWidth(), bg.getCityHeight());
         if (debug) this.debugWrite();
     }
 
     /**
      * Constructs a PathGenerator class with a building buffer of 3
      * 
-     * @param buildingGenerator an instance of BuildingGenerator
+     * @param bg an instance of BuildingGenerator
      */
-    public PathGenerator(BuildingGenerator buildingGenerator) {
-        this(buildingGenerator, 2);
+    public PathGenerator(BuildingGenerator bg) {
+        this(bg, bg.getCityBuffer() - 1);
     }
 
     /**
+     * Returns the city as an array.
      * 
-     * @return
+     * @return city array
      */
     public char[][] getCity() {
         return this.city.clone();

@@ -127,10 +127,11 @@ public class AtlantisGameArea extends GameArea {
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png",
-            // Blacksmith
+            // city buildings
             "images/blacksmith.png",
-            // Library
             "images/library.png",
+            "images/highlightedLibrary.png",
+            "images/farm.png",
             "images/pathTile.png"
     };
 
@@ -435,7 +436,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         BuildingGenerator bg = new BuildingGenerator(mg);
         spawnBuildings(bg,mg.getHeight());
-        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX() - 1);
+        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
     }
 
     /**
@@ -482,11 +483,14 @@ public class AtlantisGameArea extends GameArea {
                 } else if (building.getName().equals("Library")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createLibrary();
-                } else if (building.getName().equals("Blacksmith")) {
+                } else if (building.getName().equals("Smith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createBlacksmith();
                 } else if (building.getName().equals("Barracks")) {
                     buildingEntity = BuildingFactory.createBarracks();
+                } else if (building.getName().equals("Farm")) {
+                    // System.out.print("\n\nTH position: " + spawn + "\n\n");
+                    buildingEntity = BuildingFactory.createFarm();
                 } else {
                     // avoid null pointer exception
                     continue;
@@ -509,8 +513,8 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
+    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
+    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
     }
 
     /**

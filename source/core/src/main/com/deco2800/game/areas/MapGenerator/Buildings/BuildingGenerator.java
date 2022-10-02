@@ -147,6 +147,30 @@ public class BuildingGenerator {
     }
 
     /**
+     * Returns the number of tiles buildings are placed from the wall.
+     * @return wall buffer amount
+     */
+    public int getWallBuffer() {
+        return this.WALL_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from the right wall.
+     * @return right wall buffer amount
+     */
+    public int getRightWallBuffer() {
+        return this.RIGHT_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from each other.
+     * @return buidling buffer amount
+     */
+    public int getCityBuffer() {
+        return this.CITY_BUFFER;
+    }
+
+    /**
      * Gets the city height.
      * 
      * @return city height
