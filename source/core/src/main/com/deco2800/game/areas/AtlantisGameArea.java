@@ -132,6 +132,10 @@ public class AtlantisGameArea extends GameArea {
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas"
     };
+
+    private static final String[] shopTexture = {
+            "images/buildingSelectionMenu.png"
+    };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
@@ -158,7 +162,7 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        playMusic();
+        //playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
@@ -558,11 +562,13 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(shopBox);
     }
 
+    /**
+     * Use Gdx streaming music built-in
+     * music is declared in the AtlantisGameArea class
+     */
     private void playMusic() {
-        //Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
-
         music.setLooping(false);
-        music.setVolume(0.5f);
+        music.setVolume(0.3f);
         music.play();
     }
 
@@ -584,6 +590,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
+        resourceService.loadTextures(shopTexture);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -595,6 +602,7 @@ public class AtlantisGameArea extends GameArea {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
+        resourceService.unloadAssets(shopTexture);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(atlantisSounds);
     }
