@@ -236,7 +236,7 @@ public class BuildingFactory {
         // Methodology sourced from BuildingFactory.java
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-            5f, 176f,      // Vertex 0        3--2
+            5f, 176f,       // Vertex 0        3--2
             123f, 251f,     // Vertex 1      /  /
             244f, 192f,     // Vertex 2     /  /
             126f, 117f      // Vertex 3    0--1

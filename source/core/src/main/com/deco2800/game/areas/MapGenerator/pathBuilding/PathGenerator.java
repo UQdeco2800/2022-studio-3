@@ -55,7 +55,6 @@ public class PathGenerator {
         }
 
         /*
-         * assume door is to bottom of buildings
          * assume building widths always odd
          * city[row][col] indexing
          */
@@ -124,7 +123,6 @@ public class PathGenerator {
         }
 
         debugInfo += "Number of paths: " + toGenerateFrom.size() + "\n";
-        // System.out.println(debugInfo);
         // need to repeatedly construct paths as well as check that paths are connected
         FindPath fp = new FindPath(this);
         CheckConnectivity cc = new CheckConnectivity(this);
