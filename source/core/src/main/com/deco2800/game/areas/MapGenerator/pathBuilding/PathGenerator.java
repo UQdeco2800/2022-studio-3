@@ -30,9 +30,9 @@ public class PathGenerator {
     /* Contains handy debug information to be written to a textfile */
     public static String debugInfo;
     /* Put the directory path to where you would like the debug info stored e.g. "/home/dir/" */
-    private String debugFilePath = "/home/r0m4n/Documents/deco2800/";
+    private String debugFilePath = "/../";
     /* Set to true if you would like the debug output */
-    private boolean debug = true;
+    private boolean debug = false;
 
     /**
      * Contructs a PathGenerator and generates paths between buildings.
@@ -73,21 +73,44 @@ public class PathGenerator {
                     continue;
                 }
 
-                int doorTileRow = row + bs.getHeight();
-                int doorTileCol = col + (bs.getWidth() / 2);
+                int y = bs.getDoor().y;
+                int x = bs.getDoor().x;
+                int doorTileRow = row + y;
+                int doorTileCol = col + x;
 
-                for (int i = 0; i < this.buildingBuffer; i++) {
+                int dx, dy;
+                if (y == 0) {
+                    dy = -1;
+                    dx = 0;
+                } else if (y == bs.getHeight() - 1) {
+                    dy = 1;
+                    dx = 0;
+                } else if (x == bs.getWidth() - 1) {
+                    dy = 0;
+                    dx = 1;
+                } else if (x == 0) {
+                    dy = 0;
+                    dx = -1;
+                } else {
+                    dy = 0;
+                    dx = 0;
+                }
 
-                    if (this.isValid(new GridPoint2(doorTileRow + i, doorTileCol))) {
+                for (int i = 1; i <= this.buildingBuffer + 1; i++) {
 
-                        this.city[doorTileRow + i][doorTileCol] = this.pathTile;
+                    if (this.isValid(new GridPoint2(doorTileRow + i * dy, doorTileCol + i * dx))) {
+
+                        this.city[doorTileRow + i * dy][doorTileCol + i * dx] = this.pathTile;
                     }
                 }
 
-                if (this.isValid(new GridPoint2(doorTileRow + this.buildingBuffer, doorTileCol))) {
+                int xBuffer = (this.buildingBuffer + 1) * dx;
+                int yBuffer = (this.buildingBuffer + 1) * dy;
 
-                    this.city[doorTileRow + this.buildingBuffer][doorTileCol] = this.pathTile;
-                    toGenerateFrom.add(new GridPoint2(doorTileRow + this.buildingBuffer, doorTileCol));
+                if (this.isValid(new GridPoint2(doorTileRow + yBuffer, doorTileCol + xBuffer))) {
+
+                    this.city[doorTileRow + yBuffer][doorTileCol + xBuffer] = this.pathTile;
+                    toGenerateFrom.add(new GridPoint2(doorTileRow + yBuffer, doorTileCol + xBuffer));
                 }
 
                 for (int i = -1 * this.buildingBuffer; i < (bs.getHeight() + this.buildingBuffer); i++) {
@@ -101,6 +124,7 @@ public class PathGenerator {
         }
 
         debugInfo += "Number of paths: " + toGenerateFrom.size() + "\n";
+        // System.out.println(debugInfo);
         // need to repeatedly construct paths as well as check that paths are connected
         FindPath fp = new FindPath(this);
         CheckConnectivity cc = new CheckConnectivity(this);

@@ -55,9 +55,12 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
-        final float TH_SCALE = 7f;
+        final float TH_SCALE = 5f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
+
+        Vector2 leftPoint = new Vector2(21f, 632f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -68,9 +71,10 @@ public class BuildingFactory {
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
                 .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"))
-                .addComponent(mp);
+                .addComponent(mp)
+                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
-        townHall.scaleWidth(TH_SCALE);
+        townHall.getComponent(TextureScaler.class).setPreciseScale(TH_SCALE);
         // Setting Isometric Collider
 
         // Points (in pixels) on the texture to set the collider to
@@ -163,38 +167,93 @@ public class BuildingFactory {
     }
 
     /**
-     * 
-     * @return
+     * Creates and returns a library building entity
+     * @return library
      */
     public static Entity createLibrary() {
         Entity library = createBaseBuilding();
+        final float LIBRARY_SCALE = 3f;
+
+        Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
 
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.ORANGE);
         library.addComponent(new TextureRenderComponent("images/library.png"))
-               .addComponent(mp);
+               .addComponent(mp)
+               .addComponent(new TextureScaler(leftPoint, rightPoint));
 
-        library.scaleWidth(3.0f);
+        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
+
+        // Methodology sourced from BuildingFactory.java
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[] {      // Four vertices
+            69f, 351f,      // Vertex 0       3--2
+            280f, 457f,     // Vertex 1      /  /
+            446f, 374f,     // Vertex 2     /  /
+            235f, 268f      // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/library.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(LIBRARY_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        boundingBox.set(vertices);
+        library.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return library;
     }
 
     /**
-     * 
-     * @return
+     * Creates and returns a blacksmith building entity
+     * @return blacksmith entity
      */
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
+        final float BLACKSMITH_SCALE = 3f;
+
+        Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
 
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.BLACK);
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
-          .addComponent(mp);
+          .addComponent(mp)
+          .addComponent(new TextureScaler(leftPoint, rightPoint));
 
-        bs.scaleWidth(3.0f);
+        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
 
+        // Setting Isometric Collider
+
+        // Methodology sourced from BuildingFactory.java
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[] {      // Four vertices
+            5f, 176f,      // Vertex 0        3--2
+            123f, 251f,     // Vertex 1      /  /
+            244f, 192f,     // Vertex 2     /  /
+            126f, 117f      // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/blacksmith.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(BLACKSMITH_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        boundingBox.set(vertices);
+        bs.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider'
+        
         return bs;
     }
 

@@ -1,5 +1,7 @@
 package com.deco2800.game.areas.MapGenerator.Buildings;
 
+import com.badlogic.gdx.math.GridPoint2;
+
 public class BuildingSpecification {
     /**
      * Building type to add to game
@@ -22,10 +24,14 @@ public class BuildingSpecification {
      * @param name name of building
      * @param width width in tiles
      * @param height height in tiles
+     * @param door coordinates of the building door
      * @param num number of this building to place
      */
-    public BuildingSpecification(String name, int width, int height, int num) {
-        this.building = new Building(width, height, name);
+    public BuildingSpecification(String name, int width, int height, String door, int num) {
+        String[] components = door.split(",");
+        int xCoord = Integer.parseInt(components[0]);
+        int yCoord = Integer.parseInt(components[1]);
+        this.building = new Building(width, height, name, new GridPoint2(xCoord, yCoord));
         this.num = num;
         this.numPlaced = 0;
     }
@@ -55,6 +61,10 @@ public class BuildingSpecification {
 
     public int getWidth() {
         return building.getWidth();
+    }
+
+    public GridPoint2 getDoor() {
+        return building.getDoor();
     }
 
     public void resetPlacements() {

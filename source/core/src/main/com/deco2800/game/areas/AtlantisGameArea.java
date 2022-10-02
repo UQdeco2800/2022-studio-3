@@ -3,6 +3,10 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
@@ -22,6 +26,7 @@ import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -42,6 +47,7 @@ import com.deco2800.game.worker.type.MinerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Map;
@@ -119,7 +125,8 @@ public class AtlantisGameArea extends GameArea {
             // Blacksmith
             "images/blacksmith.png",
             // Library
-            "images/library.png"
+            "images/library.png",
+            "images/pathTile.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -170,7 +177,7 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
-        spawnBuildings();
+        spawnCity();
 
 
         spawnForager();
@@ -415,32 +422,66 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Spawns all buildings in game
+     * Spawns the buildings and paths of the city.
      */
-    private void spawnBuildings() {
+    private void spawnCity() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         BuildingGenerator bg = new BuildingGenerator(mg);
+        spawnBuildings(bg,mg.getHeight());
+        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX() - 1);
+    }
+
+    /**
+     * Generates the paths between city buildings.
+     * @param bg
+     */
+    private void spawnPaths(BuildingGenerator bg, int height, int yOffset, int xOffset) {
+        Texture t = ServiceLocator.getResourceService().getAsset("images/pathTile.png", Texture.class);
+        TextureRegion tr = new TextureRegion(t);
+        TerrainTile path = new TerrainTile(tr);
+        char[][] city = bg.getPathGenerator().getCity();
+        TiledMapTileLayer layer = (TiledMapTileLayer) terrain.getMap().getLayers().get(0);
+        terrain.getMap().getLayers().remove(0);
+
+        for (int y = 0; y < city.length; y++) {
+            for (int x = 0; x < city[y].length; x++) {
+                Cell cell = new Cell();
+                if (city[y][x] == bg.getPathGenerator().getPathTile()) {
+                    cell.setTile(path);
+                    layer.setCell(x + xOffset, height - yOffset - 1 - y, cell);
+                }
+            }
+        }
+
+        terrain.getMap().getLayers().add(layer);
+    }
+
+    /**
+     * Spawns all buildings in game
+     */
+    private void spawnBuildings(BuildingGenerator bg, int height) {
         List<CityRow> cityRows = bg.getCityRows();
         for (CityRow cr : cityRows) {
             List<Building> buildings = cr.getBuildings();
             for (Building building : buildings) {
                 Coordinate placement = building.getPlacement();
-                GridPoint2 spawn = new GridPoint2(placement.getX() + building.getWidth() - 2, 
-                                                    mg.getHeight() - placement.getY() - 
-                                                    building.getHeight() - 6);
+                GridPoint2 spawn = new GridPoint2(placement.getX(), height - 1 - placement.getY() - building.getHeight());
+                Entity buildingEntity = null;
                 if (building.getName().equals("Town Hall")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
-                    Entity buildingEntity = BuildingFactory.createTownHall();
-                    spawnEntityAt(buildingEntity, spawn, false, false);
+                    buildingEntity = BuildingFactory.createTownHall();
                 } else if (building.getName().equals("Library")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
-                    Entity buildingEntity = BuildingFactory.createLibrary();
-                    spawnEntityAt(buildingEntity, spawn, false, false);
+                    buildingEntity = BuildingFactory.createLibrary();
                 } else if (building.getName().equals("Blacksmith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
-                    Entity buildingEntity = BuildingFactory.createBlacksmith();
-                    spawnEntityAt(buildingEntity, spawn, false, false);
+                    buildingEntity = BuildingFactory.createBlacksmith();
+                } else {
+                    // avoid null pointer exception
+                    continue;
                 }
+                buildingEntity.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                spawnEntity(buildingEntity);
             }
         }
     }
