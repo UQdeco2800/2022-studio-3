@@ -13,6 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class PhysicsEngine implements Disposable {
     this.world = world;
     world.setContactListener(new PhysicsContactListener());
     this.timeSource = timeSource;
+    this.toDestroy = new ArrayList<>();
   }
 
   public void update() {
@@ -58,6 +60,10 @@ public class PhysicsEngine implements Disposable {
       world.step(PHYSICS_TIMESTEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
       accumulator -= PHYSICS_TIMESTEP;
     }
+    for (Entity bullet : this.toDestroy) {
+      bullet.dispose();
+    }
+    toDestroy.clear();
   }
 
   public void addToDestroy(Entity entity) {

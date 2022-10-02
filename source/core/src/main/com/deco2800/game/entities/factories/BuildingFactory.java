@@ -6,12 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
+import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.tasks.EnemyMovement;
+import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
@@ -254,34 +257,19 @@ public class BuildingFactory {
      * that spawns titan's.
      * @return Trebuchet building entity.
      */
-    public static Entity createTrebuchet() {
-        final float SHIP_SCALE = 5f;
+    public static Entity createTrebuchet(Entity target, GameArea gameArea) {
+        final float Trebuchet_SCALE = 4f;
         Entity trebuchet = createBaseBuilding();
-        ShipConfig config = configs.ship;
+        TrebuchetConfig config = configs.trebuchet;
+        AITaskComponent aiComponent = new AITaskComponent()
+                .addTask(new rangedAttackTask(target, 2, 10, 20f));
 
-        // TODO: Change sprite to ship when its done.
-
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(ServiceLocator.getResourceService()
-                        .getAsset("images/titanshrine.atlas",
-                                    TextureAtlas.class));
-
-        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
-
-        trebuchet
-            .addComponent(new BuildingActions(config.type, config.level))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
-
-        // TODO: Make component to spawn enemy units.
-
-        trebuchet.scaleWidth(SHIP_SCALE);
-
-        // TODO: Set isometric colliders
-
+        trebuchet.addComponent(new TextureRenderComponent("images/trebuchet.png"))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(aiComponent)
+                .addComponent(new AttackListener(target, gameArea));
+        trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;
     }
 

@@ -51,6 +51,7 @@ import com.deco2800.game.worker.components.type.MinerComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -92,6 +93,7 @@ public class AtlantisGameArea extends GameArea {
             "images/TransBox.png",
             "images/white.png",
             "images/stone.png",
+            "images/bullet1.png",
             /* Building assets */
             // TownHall
             "images/base.png",
@@ -101,6 +103,9 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
+            "images/barracks_level_2.0_Highlight.png",
+            //trebuchet
+            "images/trebuchet.png",
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
@@ -146,6 +151,8 @@ public class AtlantisGameArea extends GameArea {
 
     private Entity player;
 
+    private Entity townHall;
+
     private EventHandler gameAreaEventHandle;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
@@ -178,18 +185,12 @@ public class AtlantisGameArea extends GameArea {
         spawnTownHall();
 //        spawnBarracks();
         spawnWalls();
+        spawnTrebuchet(townHall, this);
         spawnTitanShrine();
-
-//        spawnBuildings();
-
 //        spawnForager();
 //        spawnForager();
 
 //        spawnResources();
-//        spawnMiner();
-
-        // spawnWorkerBase();
-        // spawnResources();
 //        spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
@@ -411,7 +412,7 @@ public class AtlantisGameArea extends GameArea {
         MapComponent mapComponent = new MapComponent();
         mapComponent.display();
         mapComponent.setDisplayColour(Color.BROWN);
-        Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
+        townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
         spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
@@ -528,6 +529,16 @@ public class AtlantisGameArea extends GameArea {
             }
 
         }
+    }
+
+    private void spawnTrebuchet(Entity target, GameArea gameArea) {
+        int offset = 20;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate centre = mg.getCityDetails().get("Centre");
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
+        spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
+                true, true);
     }
 
     /**
