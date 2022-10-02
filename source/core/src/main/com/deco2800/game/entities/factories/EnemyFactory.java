@@ -68,7 +68,6 @@ public class EnemyFactory {
     Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
 
     newTarget = newTarget.scl(1000).add(from.getPosition());
-    //newTarget = newTarget.add(from.getPosition());
 
     Entity bullet1 =
             new Entity()
@@ -79,7 +78,7 @@ public class EnemyFactory {
                     .addComponent(new bulletHitShips(target, gameArea));
 
     bullet1.getComponent(TextureRenderComponent.class).scaleEntity();
-    bullet1.scaleHeight(0.5f);
+    bullet1.scaleHeight(0.7f);
     PhysicsUtils.setScaledCollider(bullet1, 0.5f, 0.3f);
 
     bullet1.setPosition(x1 - bullet1.getScale().x / 2 + from.getScale().x / 2,

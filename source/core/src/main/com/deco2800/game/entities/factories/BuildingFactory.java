@@ -264,7 +264,7 @@ public class BuildingFactory {
         AITaskComponent aiComponent = new AITaskComponent()
                 .addTask(new rangedAttackTask(target, 2, 10, 20f));
 
-        trebuchet.addComponent(new TextureRenderComponent("images/trebuchet.png"))
+        trebuchet.addComponent(new TextureRenderComponent("images/Trebuchet-lv1-north.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(aiComponent)

@@ -106,6 +106,7 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_level_2.0_Highlight.png",
             //trebuchet
             "images/trebuchet.png",
+            "images/Trebuchet-lv1-north.png",
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
