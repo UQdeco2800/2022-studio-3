@@ -3,7 +3,6 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
@@ -16,12 +15,12 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -32,20 +31,14 @@ import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.map.MapService;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +65,7 @@ public class AtlantisGameArea extends GameArea {
             "images/Base_Highlight.png",
             "images/box_boy_highlight.png",
             "images/tree.png",
+            "images/iso_grass_1.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/grass_1.png",
@@ -100,6 +94,11 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_level_1.1.png",
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
+            //Gate
+            "images/gate_ew_closed.png",
+            "images/gate_ew_open.png",
+            "images/gate_ns_closed.png",
+            "images/gate_ns_open.png",
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
@@ -136,7 +135,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas"
+            "images/newwolf.atlas", "images/ns_gate.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -164,7 +163,7 @@ public class AtlantisGameArea extends GameArea {
             spawnPlayer();
         }
         centreCameraOnCity();
-        playMusic();
+        //playMusic();
 
         // Spawn Buildings in the city
         spawnTownHall();
@@ -172,6 +171,7 @@ public class AtlantisGameArea extends GameArea {
         spawnWalls();
 
         spawnBuildings();
+
 
         spawnForager();
         spawnForager();
@@ -186,10 +186,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        //spawnBlueJokers();
+        //spawnWolf();
+        //spawnTitan();
+        //spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -278,7 +278,7 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(dialogueBoxDisplay);
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
 
-        spawnEntity(dialogueBox);
+        //spawnEntity(dialogueBox);
     }
 
     private void spawnTerrain() {
@@ -469,8 +469,14 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         Coordinate corner;
         GridPoint2 position;
-        int yLength = 10; // Amount of walls to spawn in x direction
-        int xLength = 20; // Amount of walls to spawn in y direction
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Find city height in tiles
+        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        //Find city width in tiles
+        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+
+        int yLength = (cityHeight / 2) - 3; // Amount of walls to spawn in y direction
+        int xLength = (cityWidth / 2) - 3; // Amount of walls to spawn in x direction
         String[] cityCorners = {"NW", "NE", "SW", "SE"}; // Four corner locations to spawn walls in
         int direction = 1; // Spawning direction
 
@@ -491,6 +497,17 @@ public class AtlantisGameArea extends GameArea {
                 wall.getComponent(BuildingActions.class).addLevel();
                 wall.getComponent(BuildingActions.class).setWallNE();
                 spawnEntityAt(wall, position.add(direction, 0), true, true);
+            }
+            if (direction == 1) {
+                //Spawn gate in the middle of the city - North/South orientation
+                Entity gate = BuildingFactory.createGate();
+                //Determine tile point to spawn gate
+                GridPoint2 tileSpawn = position.add(direction, 0);
+                //GridPoint2 tileSpawn = new GridPoint2(0,0);
+                //Set the spawn point of the gate
+                gate.getComponent(TextureScaler.class).setSpawnPoint(tileSpawn, terrain);
+                //Spawn the gate
+                spawnEntity(gate);
             }
             direction *= -1;
         }

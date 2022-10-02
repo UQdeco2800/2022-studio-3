@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -196,6 +197,8 @@ public class UnitFactory {
         PhysicsUtils.setRadiusCollider(unit, unitStats.movementRadius);
         // start us in an idle state
         unit.getEvents().trigger("forward_right_idle");
+        //Add FriendlyComponent, to indicate that this Entity should be allowed out of the City
+        unit.addComponent(new FriendlyComponent());
         return unit;
     }
 
