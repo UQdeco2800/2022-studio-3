@@ -24,9 +24,14 @@ public class TextureScaler extends Component{
         this.rightPoint = rightPoint;
     }
 
-    public TextureScaler setPreciseScale(float desiredScale) {
+    /**
+     * Scales an entity with a TextureRenderComponent such that it occupies the desired number of tiles
+     * @param desiredScale desired number of tiles to occupy (potentially float, but preferably integer input)
+     * @return true if the entity was scaled, else false
+     */
+    public boolean setPreciseScale(float desiredScale) {
         if (entity == null) {
-            return this;
+            return false;
         }
 
         Vector2 baseScale = new Vector2(1,1);
@@ -37,7 +42,7 @@ public class TextureScaler extends Component{
         Texture buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
-
+        //Determine the positions of both points of the image in world coordinates
         Vector2 leftPointWorldPosition = new Vector2(translatedCoords[0], translatedCoords[1])
                 .scl(baseScale);
         Vector2 rightPointWorldPosition = new Vector2(translatedCoords[2], translatedCoords[3])
@@ -48,15 +53,16 @@ public class TextureScaler extends Component{
         //Distance between the two points of the image in world coordinates
         float distance = (float) Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance , 2));
 
-        //Calculate desired distance
-        //float desiredDistance = (float) Math.sqrt(Math.pow(0.26562f * desiredScale, 2) + Math.pow(0.49687f * desiredScale,2));
+        //Calculate desired distance between points in world coordinates (0.25 increase in world y per tile, 0.5 increase in world x per tile)
         float desiredDistance = (float) Math.sqrt(Math.pow(0.25f * desiredScale, 2) + Math.pow(0.5f * desiredScale,2));
 
+        //Calculate scale required to yield this desired distance
         float scale = desiredDistance / distance;
 
+        //Scale the entity
         entity.scaleWidth(scale);
 
-        return this;
+        return true;
     }
 
     public void setSpawnPoint(GridPoint2 tilePoint, TerrainComponent terrain) {

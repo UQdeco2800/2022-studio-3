@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.building.GateCollider;
@@ -153,10 +154,10 @@ public class BuildingFactory {
     }
 
     /**
-     * Creates a gate entity, that allows friendly units to leave and enter the city
-     * @return Gate Entity
+     * Creates a north/south facing gate entity, that allows friendly units to leave and enter the city
+     * @return North/South Gate Entity
      */
-    public static Entity createGate() {
+    public static Entity createNSGate() {
         Entity gate = createBaseBuilding();
         final float GATE_SCALE = 5f;
 
@@ -174,8 +175,9 @@ public class BuildingFactory {
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
-            .addComponent(new TextureScaler(leftPoint, rightPoint));
-
+            .addComponent(new TextureScaler(leftPoint, rightPoint))
+            .addComponent(new BuildingActions(Building.GATE_NS, 1));
+        
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
 
@@ -189,6 +191,42 @@ public class BuildingFactory {
         return gate;
     }
 
+    /**
+     * Creates a east/west facing gate entity, that allows friendly units to leave and enter the city
+     * @return East/West facing Gate Entity
+     */
+    public static Entity createEWGate() {
+        Entity gate = createBaseBuilding();
+        final float GATE_SCALE = 5f;
+
+        //Create animation component
+        TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ew_gate.atlas", TextureAtlas.class);
+        AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
+        gateARC.addAnimation("open_gate", 0.1f, Animation.PlayMode.NORMAL);
+        gateARC.addAnimation("close_gate", 0.1f, Animation.PlayMode.NORMAL);
+
+        //Set up building points
+        Vector2 leftPoint = new Vector2(37f, 178f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(170f, 113f); //Bottom rightmost edge in pixels
+
+        //Add all components
+        gate.addComponent(new TextureRenderComponent("images/gate_ew_closed.png"))
+                .addComponent(new GateCollider())
+                .addComponent(gateARC)
+                .addComponent(new TextureScaler(leftPoint, rightPoint))
+                .addComponent(new BuildingActions(Building.GATE_EW, 1));
+
+        //Scale building precisely
+        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
+
+        // Setting Isometric Collider (Normal collider rotated 60 degrees)
+        PolygonShape boundingBox = new PolygonShape();
+        Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
+        boundingBox.setAsBox(center.x * 0.5f, center.y * 0.5f, center, (float) (60 * Math.PI / 180));
+        gate.getComponent(ColliderComponent.class).setShape(boundingBox);
+
+        return gate;
+    }
 
     private BuildingFactory() {
         throw new IllegalStateException("Instantiating static util class");

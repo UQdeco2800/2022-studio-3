@@ -61,7 +61,8 @@ public class TextureRenderComponent extends RenderComponent {
   /**
    * Debug function which draws a box around an entity with a TextureRenderComponent
    * @param positions positions to draw a box around
-   * @param batch the SpriteBatch of the gamne
+   * @param linePos list of points to draw lines between
+   * @param batch the SpriteBatch of the game
    */
   public void drawTextureBox (List<Vector2> positions, List<Vector2> linePos, SpriteBatch batch) {
     for (Vector2 position : positions) {

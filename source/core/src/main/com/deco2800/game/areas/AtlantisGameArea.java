@@ -131,7 +131,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/ns_gate.atlas"
+            "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -421,7 +421,7 @@ public class AtlantisGameArea extends GameArea {
             List<Building> buildings = cr.getBuildings();
             for (Building building : buildings) {
                 Coordinate placement = building.getPlacement();
-                GridPoint2 spawn = new GridPoint2(placement.getX() + building.getWidth() - 2, mg.getHeight() - placement.getY() - building.getHeight() - 6);
+                GridPoint2 spawn = new GridPoint2(placement.getX(), placement.getY() - building.getHeight());
                 if (building.getName().equals("Town Hall")) {
                     MapComponent mapComponent = new MapComponent();
                     mapComponent.display();
@@ -496,12 +496,15 @@ public class AtlantisGameArea extends GameArea {
             }
             if (direction == 1) {
                 //Spawn gate in the middle of the city - North/South orientation
-                Entity gate = BuildingFactory.createGate();
+                Entity gate = BuildingFactory.createNSGate();
                 //Determine tile point to spawn gate
                 GridPoint2 tileSpawn = position.add(direction, 0);
                 //GridPoint2 tileSpawn = new GridPoint2(0,0);
                 //Set the spawn point of the gate
                 gate.getComponent(TextureScaler.class).setSpawnPoint(tileSpawn, terrain);
+                Entity gate2 = BuildingFactory.createEWGate();
+                gate2.getComponent(TextureScaler.class).setSpawnPoint(new GridPoint2(0,0), terrain);
+                spawnEntity(gate2);
                 //Spawn the gate
                 spawnEntity(gate);
             }

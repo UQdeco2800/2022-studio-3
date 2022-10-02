@@ -59,6 +59,10 @@ public class GateCollider extends Component {
                 if (alliedUnitsCollided.size() == 1) {
                     //First unit in contact with gate - open it
                     Entity gateEntity = ((BodyUserData) gate.getBody().getUserData()).entity;
+                    //Determine gate orientation and associated string to change the provided texture
+                    Building gateType = gateEntity.getComponent(BuildingActions.class).getType();
+                    String gateString = gateType == Building.GATE_EW ? "ew" : "ns";
+
                     ColliderComponent gateCollider = gateEntity.getComponent(ColliderComponent.class);
                     //Turn off collision for this collider
                     gateCollider.setSensor(true);
@@ -67,7 +71,7 @@ public class GateCollider extends Component {
                     gateARC.startAnimation("open_gate");
                     //Update image asset to open
                     ResourceService resourceService = ServiceLocator.getResourceService();
-                    Texture openTexture = resourceService.getAsset("images/gate_ns_open.png", Texture.class);
+                    Texture openTexture = resourceService.getAsset("images/gate_" + gateString +"_open.png", Texture.class);
                     gateEntity.getComponent(TextureRenderComponent.class).setTexture(openTexture);
                 }
             }
