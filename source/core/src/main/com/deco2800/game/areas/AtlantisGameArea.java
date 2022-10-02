@@ -101,8 +101,8 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
-            "images/simpleman.png"
-
+            "images/simpleman.png",
+            "images/health bar_6.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
