@@ -14,18 +14,13 @@ import org.slf4j.LoggerFactory;
 
 public class ShopDisplay extends UIComponent {
     //private final ShopDisplay shopBox;
-    private static final Logger logger = LoggerFactory.getLogger(ShopDisplay.class);
+    //private static final Logger logger = LoggerFactory.getLogger(ShopDisplay.class);
     private Image backgroundShopImage;
-
     float initHeight, initWidth;
-
+    private static final String image = "images/buildingSelectionMenu.png";
     Table buildingTable;
-
     Table costTable;
-
     //UserSettings.Settings settings = UserSettings.get();
-
-
     @Override
     public void create(){
         super.create();
@@ -33,13 +28,8 @@ public class ShopDisplay extends UIComponent {
     }
 
     private void addActors() {
-        Texture texture = ServiceLocator.
-                getResourceService().getAsset("images/building-selection-menu.png", Texture.class);
-        if (texture == null) {
-            logger.debug("Fail get asset building selection menu png");
+        Texture texture = ServiceLocator.getResourceService().getAsset(image, Texture.class);
 
-        }
-        /*
         backgroundShopImage = new Image(texture);
         this.initHeight = backgroundShopImage.getHeight();
         this.initHeight = backgroundShopImage.getWidth();
@@ -48,13 +38,10 @@ public class ShopDisplay extends UIComponent {
         backgroundShopImage.setPosition(0f, 0f);
 
         this.buildingTable = new Table();
+        buildingTable.setDebug(true);
         buildingTable.setWidth(256);
         buildingTable.setHeight(256);
-
         buildingTable.setPosition(150, Gdx.graphics.getHeight() - 1020);
-
-        buildingTable.setDebug(true);
-        */
     }
 
     @Override
