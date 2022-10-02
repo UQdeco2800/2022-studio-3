@@ -14,6 +14,7 @@ import java.util.List;
 public class TextureScaler extends Component{
     private Vector2 leftPoint;
     private Vector2 rightPoint;
+    private float initialScale = 0;
 
     //testing
     public List<Vector2> drawPoints = new ArrayList<>();
@@ -33,7 +34,7 @@ public class TextureScaler extends Component{
         if (entity == null) {
             return false;
         }
-
+        initialScale = desiredScale;
         Vector2 baseScale = new Vector2(1,1);
 
         float[] points = new float[] {
@@ -70,8 +71,6 @@ public class TextureScaler extends Component{
         Vector2 worldPos = terrain.tileToWorldPosition(tilePoint);
         Vector2 centrePosition = worldPos.cpy();
 
-        linePoints.add(worldPos.cpy());
-        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) 5, tilePoint.y)));
         drawPoints.add(worldPos.cpy());
 
         float tileSize = terrain.getTileSize();
@@ -111,14 +110,14 @@ public class TextureScaler extends Component{
         worldPos.x += offsetDistance.x;
         worldPos.y += offsetDistance.y + constantOffset;
 
-        //Testing
+        //Debug code - shows how the object was scaled
         linePoints.add(centrePosition.cpy().add(0, constantOffset));
-        Vector2 lineShift = terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) 5, tilePoint.y))
+        Vector2 lineShift = terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) initialScale, tilePoint.y))
                 .add(0,  constantOffset);
         linePoints.add(lineShift);
 
         linePoints.add(centrePosition.cpy().add(0, constantOffset));
-        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x, tilePoint.y + 5))
+        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x, tilePoint.y + (int) initialScale))
                 .add(0,  constantOffset));
 
         entity.setPosition(worldPos);

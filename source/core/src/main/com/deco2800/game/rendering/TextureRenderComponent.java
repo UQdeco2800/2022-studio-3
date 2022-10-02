@@ -88,6 +88,10 @@ public class TextureRenderComponent extends RenderComponent {
       //Draw lines
       sr.setColor(Color.VIOLET);
       for (int i = 0; i < linePos.size(); i+=2) {
+        if (i + 1 > linePos.size() - 1) {
+          //Incorrect input, should always be two pairs of coordinates to draw a line between
+          break;
+        }
         float x1 = linePos.get(i).x;
         float x2 = linePos.get(i+1).x;
         float y1 = linePos.get(i).y;
@@ -125,7 +129,7 @@ public class TextureRenderComponent extends RenderComponent {
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
 
     //debug
-    if (entity.getComponent(GateCollider.class) !=  null) {
+    if (entity.getComponent(TextureScaler.class) !=  null) {
       drawTextureBox(batch);
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
