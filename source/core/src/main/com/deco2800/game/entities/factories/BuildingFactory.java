@@ -67,7 +67,7 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
-        final float TH_SCALE = 8f;
+        final float TH_SCALE = 7f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
@@ -181,10 +181,10 @@ public class BuildingFactory {
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-            0f, 220f,      // Vertex 0       3--2
-            207f, 322f,     // Vertex 1      /  /
-            429f, 210f,     // Vertex 2     /  /
-            222f, 108f      // Vertex 3    0--1
+            33f, 199f,      // Vertex 0       3--2
+            113f, 240f,     // Vertex 1      /  /
+            253f, 173f,     // Vertex 2     /  /
+            169f, 137f      // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -284,11 +284,13 @@ public class BuildingFactory {
         // Methodology sourced from BuildingFactory.java
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
-        float[] points = new float[] {      // Four vertices
-            69f, 351f,      // Vertex 0       3--2
-            280f, 457f,     // Vertex 1      /  /
-            446f, 374f,     // Vertex 2     /  /
-            235f, 268f      // Vertex 3    0--1
+        float[] points = new float[] {      // Six vertices
+            81f, 354f,
+            191f, 411f,
+            276f, 370f,
+            361f, 420f,
+            446f, 375f,
+            247f, 273f
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
