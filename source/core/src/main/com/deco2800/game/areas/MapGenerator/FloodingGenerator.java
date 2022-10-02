@@ -4,10 +4,11 @@ import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.utils.random.Timer;
+import com.deco2800.game.components.Component;
 
 import java.util.Map;
 
-public class FloodingGenerator {
+public class FloodingGenerator extends Component {
     private final AtlantisTerrainFactory atlantisTerrainFactory;
     private MapService mapService;
     private MapGenerator mapGenerator;
@@ -17,20 +18,29 @@ public class FloodingGenerator {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
         this.timer = new Timer(10000, 10000);
         this.timer.start();
-        while (true) {
-            if (this.timer.isTimerExpired()) {
-                triggerFloodEvent();
-                this.timer = new Timer(10000, 10000);
-                this.timer.start();
-            }
-        }
         //TODO - How do we pause the timer when the game is paused?
-
         //TODO - IDEAS: Flash tile that is picked to be flooded next.
         //TODO - Visual Timer on the screen.
     }
 
+    @Override
+    public void create() {
+        super.create();
+    }
 
+    @Override
+    public void update() {
+        if (this.timer.isTimerExpired()) {
+            triggerFloodEvent();
+            this.timer = new Timer(10000, 10000);
+            this.timer.start();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 
     /**
      *
