@@ -234,9 +234,7 @@ public class BuildingFactory {
                 88f, 153f,
                 120f, 170f,
                 152f, 152f,
-                155, 62f,
-                119f, 44f,
-                88f, 61f,
+                119, 138
         };
 
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
@@ -354,25 +352,23 @@ public class BuildingFactory {
     }
 
     /**
-     * Creates a gate entity, that allows friendly units to leave and enter the city
-     * @return Gate Entity
+     * Creates a connector between wall pillars, oriented to face north/south
+     * @return wall connector oriented to face north/south
      */
     public static Entity createNSConnector() {
         Entity connector = createBaseBuilding();
 
         //Set up building points for texture scaling
-        //Vector2 leftPoint = new Vector2(79f, 131f); //Bottom leftmost edge in pixels
-        Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels
+        //Vector2 leftPoint = new Vector2(79f, 131f); //Bottom leftmost edge in pixels - precise point, no offset
+        Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         Vector2 rightPoint = new Vector2(138f, 162f); //Bottom rightmost edge in pixels
 
         //Set up building points for isometric collider
         float[] points = new float[] {
                 79f, 131f,
                 138f, 162f,
-                146f, 156f,
-                146, 77f,
-                89f, 48f,
-                78f, 53f,
+                145f, 156f,
+                86f, 126f
         };
 
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
@@ -399,6 +395,49 @@ public class BuildingFactory {
     }
 
     /**
+     * Creates a connector between wall pillars, oriented to face east/west
+     * @return wall connector oriented to face east/west
+     */
+    public static Entity createEWConnector() {
+        Entity connector = createBaseBuilding();
+
+        //Set up building points for texture scaling
+        Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
+        Vector2 rightPoint = new Vector2(138f, 124f); //Bottom rightmost edge in pixels
+
+        //Set up building points for isometric collider
+        float[] points = new float[] {
+                79f, 152f,
+                87f, 159f,
+                146f, 127f,
+                138f, 124f
+        };
+
+        connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
+                .addComponent(new TextureScaler(leftPoint, rightPoint));
+
+        //Scale connector precisely
+        connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
+
+        //Set isometric collider
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/wall_pillar.png", Texture.class)), points, null);
+
+        float[] coords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < coords.length / 2; i++) {
+            vertices[i] = new Vector2(coords[2*i], coords[2*i+1]).scl(connector.getScale().x);
+        }
+
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        connector.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
+        return connector;
+    }
+
+
+    /**
      * Creates a north/south facing gate entity, that allows friendly units to leave and enter the city
      * @return North/South Gate Entity
      */
@@ -415,6 +454,15 @@ public class BuildingFactory {
         Vector2 leftPoint = new Vector2(37f, 125f); //Bottom leftmost edge in pixels
         Vector2 rightPoint = new Vector2(170f, 196f); //Bottom rightmost edge in pixels
 
+        //Set up building points for isometric collider
+        float[] points = new float[] {
+                37f, 125f,
+                170f, 196f,
+                202f, 178f,
+                63f, 109f
+        };
+
+
         //Add all components
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
@@ -426,11 +474,19 @@ public class BuildingFactory {
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
 
 
-        // Setting Isometric Collider (Normal collider rotated 60 degrees)
-        PolygonShape boundingBox = new PolygonShape();
-        Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
-        boundingBox.setAsBox(center.x * 0.5f, center.y * 0.5f, center, (float) (60 * Math.PI / 180));
-        gate.getComponent(ColliderComponent.class).setShape(boundingBox);
+        //Set isometric collider
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/wall_pillar.png", Texture.class)), points, null);
+
+        float[] coords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < coords.length / 2; i++) {
+            vertices[i] = new Vector2(coords[2*i], coords[2*i+1]).scl(gate.getScale().x);
+        }
+
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        gate.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return gate;
     }
@@ -452,6 +508,14 @@ public class BuildingFactory {
         Vector2 leftPoint = new Vector2(37f, 178f); //Bottom leftmost edge in pixels
         Vector2 rightPoint = new Vector2(170f, 113f); //Bottom rightmost edge in pixels
 
+        //Set up building points for isometric collider
+        float[] points = new float[] {
+                37f, 178f,
+                70f, 197f,
+                203f, 125f,
+                170f, 113f
+        };
+
         //Add all components
         gate.addComponent(new TextureRenderComponent("images/gate_ew_closed.png"))
                 .addComponent(new GateCollider())
@@ -462,11 +526,19 @@ public class BuildingFactory {
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
 
-        // Setting Isometric Collider (Normal collider rotated 60 degrees)
-        PolygonShape boundingBox = new PolygonShape();
-        Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity
-        boundingBox.setAsBox(center.x * 0.5f, center.y * 0.5f, center, (float) (60 * Math.PI / 180));
-        gate.getComponent(ColliderComponent.class).setShape(boundingBox);
+        //Set isometric collider
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/wall_pillar.png", Texture.class)), points, null);
+
+        float[] coords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < coords.length / 2; i++) {
+            vertices[i] = new Vector2(coords[2*i], coords[2*i+1]).scl(gate.getScale().x);
+        }
+
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        gate.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return gate;
     }

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -30,7 +31,7 @@ public class PathGenerator {
     /* Contains handy debug information to be written to a textfile */
     public static String debugInfo;
     /* Put the directory path to where you would like the debug info stored e.g. "/home/dir/" */
-    private String debugFilePath = "/home/r0m4n/Documents/deco2800/";
+    private String debugFilePath = "/../";
     /* Set to true if you would like the debug output */
     private boolean debug = false;
 
@@ -64,7 +65,8 @@ public class PathGenerator {
             for (int col = 0; col < this.city[row].length; col++) {
 
                 int buff = bg.getWallBuffer();
-                if (col < buff || col >= bg.getCityWidth() - buff || row < buff || 
+                int right = bg.getRightWallBuffer();
+                if (col < buff || col >= bg.getCityWidth() - right + 1 || row < buff || 
                     row >= bg.getCityHeight() - buff) {
                     GridPoint2 p = new GridPoint2(col, row);
                     if (!this.bufferPositions.contains(p)) {
@@ -156,15 +158,19 @@ public class PathGenerator {
         // connect any disconnected components
         while (remaining.size() > 0) {
             if (i == 10) {
+                debugInfo += "\nCould not connect all paths...\n";
+                debugInfo += remaining.toString() + "\n";
                 break;
             }
-            List<GridPoint2> path = fp.findPathBetween(remaining.get(0), generated.get(++i % generated.size()));
+            Random r = new Random();
+            List<GridPoint2> path = fp.findPathBetween(remaining.get(r.nextInt(remaining.size())), generated.get(r.nextInt(generated.size())));
             for (GridPoint2 p2 : path) {
                 this.city[p2.x][p2.y] = this.pathTile;
             }
             generated = cc.check(toGenerateFrom);
             remaining = new ArrayList<>(toGenerateFrom);
             remaining.removeAll(generated);
+            i++;
         }
 
         MapGenerator.writeMap(this.city, this.debugFilePath + "cityMap.txt", bg.getCityWidth(), bg.getCityHeight());
