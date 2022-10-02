@@ -92,15 +92,6 @@ public class TextureRenderComponent extends RenderComponent {
           //Incorrect input, should always be two pairs of coordinates to draw a line between
           break;
         }
-        float x1 = linePos.get(i).x;
-        float x2 = linePos.get(i+1).x;
-        float y1 = linePos.get(i).y;
-        float y2 = linePos.get(i+1).y;
-        float a = x2-x1;
-        float b = y2-y1;
-        float c = (float) Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
-        float c2 = (float) Math.sqrt(Math.pow(0.26562f * 5,2) + Math.pow(0.49687f * 5f,2));
-        //System.out.println("distance observed: " +c + " distance theoretical: " + c2);
         sr.line(linePos.get(i), linePos.get(i+1));
       }
 
@@ -128,11 +119,12 @@ public class TextureRenderComponent extends RenderComponent {
     Vector2 scale = entity.getScale();
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
 
-    //debug
+    //Debug - draw hitboxes around TextureScaled Entities
+    /*
     if (entity.getComponent(TextureScaler.class) !=  null) {
       drawTextureBox(batch);
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
-    }
+    } */
   }
 }

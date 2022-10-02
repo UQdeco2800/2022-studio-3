@@ -217,10 +217,8 @@ public class BuildingFactory {
     }
 
     /**
-<<<<<<< HEAD
      * Creates a north/south facing wall connector entity
      * @return north/south facing wall connector
-=======
      * Creates and returns a library building entity
      * @return library
      */

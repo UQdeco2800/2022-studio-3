@@ -176,10 +176,10 @@ public class AtlantisGameArea extends GameArea {
         }
         centreCameraOnCity();
         //playMusic();
-
+        spawnResources();
         // Spawn Buildings in the city
-        spawnTownHall();
-        spawnBarracks();
+        //spawnTownHall();
+        //spawnBarracks();
         //spawnWalls();
         spawnCityWalls();
 
@@ -189,7 +189,7 @@ public class AtlantisGameArea extends GameArea {
         spawnForager();
         spawnForager();
 
-        spawnResources();
+
         spawnMiner();
 
         // spawnWorkerBase();
@@ -466,6 +466,7 @@ public class AtlantisGameArea extends GameArea {
      * Spawns all buildings in game
      */
     private void spawnBuildings(BuildingGenerator bg, int height) {
+        System.out.println("Spawning buildings");
         List<CityRow> cityRows = bg.getCityRows();
         for (CityRow cr : cityRows) {
             List<Building> buildings = cr.getBuildings();
@@ -502,7 +503,6 @@ public class AtlantisGameArea extends GameArea {
         // Position offset from centre of city
         int offset = 10;
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getCityDetails().get("Centre");
         // Two spawn-points for the barracks next ot TownHall located in the centre
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
@@ -609,36 +609,53 @@ public class AtlantisGameArea extends GameArea {
         int nsJoinersNeeded = (cityWidth - gateLength) / (pillarLength + wallLength);
         int ewJoinersNeeded = (cityHeight - gateLength) / (pillarLength + wallLength);
 
+        boolean direction = true;
+
         //Spawn NS gate entities
         GridPoint2 swSpawn = new GridPoint2(cityDetails.get("SW").getX(), mg.getHeight() - 1 - cityDetails.get("SW").getY());
-        GridPoint2 nwSpawn = new GridPoint2(cityDetails.get("NW").getX(), mg.getHeight() - 1 - cityDetails.get("NW").getY() - pillarLength);
+        GridPoint2 nwSpawn = new GridPoint2(cityDetails.get("NW").getX(), mg.getHeight() - cityDetails.get("NW").getY() - pillarLength);
         //Spawn edge pillars on NW and SW edge of city
         for (int i = 1; i <= nsJoinersNeeded; i++) {
-            //Spawn SW pillar
+            //SW pillar
             Entity pillarSW = BuildingFactory.createCornerWall();
-            pillarSW.getComponent(TextureScaler.class).setSpawnPoint(swSpawn, terrain);
-            spawnEntity(pillarSW);
-            //Increase spawn location x value
-            swSpawn.add(pillarLength, 0);
-            //Spawn SW connector
+            GridPoint2 swPillarSpawn;
+            //SW connector
             Entity connectorSW = BuildingFactory.createNSConnector();
-            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swSpawn, terrain);
-            spawnEntity(connectorSW);
-            //Increase spawn location x value
-            swSpawn.add(wallLength, 0 );
-
-            //Spawn NW pillar
+            GridPoint2 swConnectorSpawn;
+            //NW pillar
             Entity pillarNW = BuildingFactory.createCornerWall();
-            pillarNW.getComponent(TextureScaler.class).setSpawnPoint(nwSpawn, terrain);
-            spawnEntity(pillarNW);
-            //Increase spawn location x value
-            nwSpawn.add(pillarLength, 0 );
-            //Spawn NW connector
+            GridPoint2 nwPillarSpawn;
+            //NW connector
             Entity connectorNW = BuildingFactory.createNSConnector();
-            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwSpawn, terrain);
+            GridPoint2 nwConnectorSpawn;
+
+            if (direction) {
+                swPillarSpawn = swSpawn.cpy();
+                swConnectorSpawn = swSpawn.cpy().add(pillarLength, 0);
+                nwPillarSpawn = nwSpawn.cpy();
+                nwConnectorSpawn = nwSpawn.cpy().add(pillarLength, 0);
+            } else {
+                swPillarSpawn = swSpawn.cpy().add(wallLength, 0);
+                swConnectorSpawn = swSpawn.cpy();
+                nwPillarSpawn = nwSpawn.cpy().add(wallLength, 0);
+                nwConnectorSpawn = nwSpawn.cpy();
+            }
+
+            pillarSW.getComponent(TextureScaler.class).setSpawnPoint(swPillarSpawn, terrain);
+            spawnEntity(pillarSW);
+
+            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swConnectorSpawn, terrain);
+            spawnEntity(connectorSW);
+
+            pillarNW.getComponent(TextureScaler.class).setSpawnPoint(nwPillarSpawn, terrain);
+            spawnEntity(pillarNW);
+
+            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain);
             spawnEntity(connectorNW);
-            //Increase spawn location x value
-            nwSpawn.add(wallLength, 0 );
+
+            swSpawn.add(pillarLength + wallLength, 0);
+            nwSpawn.add(pillarLength + wallLength, 0);
+
 
             //Check to see if gate needs to be added
             if (i == nsJoinersNeeded / 2) {
@@ -655,8 +672,15 @@ public class AtlantisGameArea extends GameArea {
                 //Spawn the gate
                 spawnEntity(gateNW);
                 nwSpawn.add(gateLength, 0);
+
+                //Invert direction
+                direction = !direction;
             }
         }
+
+        //Spawn East/West gate entities
+        GridPoint2 neSpawn = new GridPoint2(cityDetails.get("NE").getX(), mg.getHeight() - 1 - cityDetails.get("NE").getY());
+        nwSpawn = new GridPoint2(cityDetails.get("NW").getX(), mg.getHeight() - cityDetails.get("NW").getY() - pillarLength);
     }
 
     /**
