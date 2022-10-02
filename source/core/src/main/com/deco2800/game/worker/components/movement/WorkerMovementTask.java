@@ -56,7 +56,7 @@ public class WorkerMovementTask extends DefaultTask {
         } else {
             this.setTarget(target);
             movementComponent.setMoving(true);
-            logger.info("NO PATH FOUND Starting movement towards {}", MapService.worldToTile(target));
+            logger.info("NO PATH FOUND USING DEFAULT MOVEMENT Starting movement towards {}", MapService.worldToTile(target));
         }    
     }
 
@@ -68,19 +68,29 @@ public class WorkerMovementTask extends DefaultTask {
     public void update() {
         if (isAtTarget()) {
             if (path.isEmpty()) {
-                setTarget(finalTarget);
                 movementComponent.setMoving(false);
                 status = Status.FINISHED;
                 logger.info("Finished path");
-                
             } else {
                 setTarget(MapService.tileToWorldPosition(path.get(0)));
                 path.remove(0);
+                movementComponent.setMoving(true);
                 logger.info("Moving to the next target: {}", MapService.worldToTile(target));
+                lastTimeMoved = gameTime.getTime();
+                lastPos = owner.getEntity().getPosition();
             }
         } else {
             //logger.info("Failed to move to {}", MapService.worldToTile(target));
-            checkIfStuck();
+            if (gameTime.getTime() - lastTimeMoved > 1000) {
+                if (lastPos.epsilonEquals(owner.getEntity().getPosition(), 0.01f)) {
+                    logger.info("Stuck, moving to final target");
+                    setTarget(finalTarget);
+                    movementComponent.setMoving(true);
+                    path.clear();
+                }
+                lastTimeMoved = gameTime.getTime();
+                lastPos = owner.getEntity().getPosition();
+            }
         }
     }
 
@@ -112,7 +122,7 @@ public class WorkerMovementTask extends DefaultTask {
             movementComponent.setMoving(false);
             status = Status.FAILED;
             logger.info("Got stuck! Failing movement task");
-            movementComponent.setTarget(finalTarget);
+            //movementComponent.setTarget(finalTarget);
         }
     }
 
