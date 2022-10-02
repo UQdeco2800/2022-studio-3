@@ -467,7 +467,6 @@ public class AtlantisGameArea extends GameArea {
      * Spawns all buildings in game
      */
     private void spawnBuildings(BuildingGenerator bg, int height) {
-        System.out.println("Spawning buildings");
         List<CityRow> cityRows = bg.getCityRows();
         for (CityRow cr : cityRows) {
             List<Building> buildings = cr.getBuildings();
@@ -594,8 +593,7 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnCityWalls() {
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate corner;
-        GridPoint2 position;
+
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
         //Find city height in tiles
         int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
@@ -611,6 +609,7 @@ public class AtlantisGameArea extends GameArea {
         //int nsJoinersNeeded = (cityWidth - minimumSideLength) / (2 * (pillarLength + wallLength));
         int nsJoinersNeeded = (cityWidth - gateLength) / (pillarLength + wallLength);
         int ewJoinersNeeded = (cityHeight - gateLength) / (pillarLength + wallLength);
+
 
         boolean direction = true;
 
@@ -682,7 +681,7 @@ public class AtlantisGameArea extends GameArea {
 
         //Spawn East/West gate entities
         direction = true;
-        GridPoint2 neSpawn = new GridPoint2(cityDetails.get("NE").getX() - pillarLength + 1, mg.getHeight() - 1 - cityDetails.get("NE").getY() - 1);
+        GridPoint2 neSpawn = new GridPoint2(cityDetails.get("NE").getX() - pillarLength + 1, mg.getHeight() - 1 - cityDetails.get("NE").getY() + 1 - pillarLength);
         nwSpawn = new GridPoint2(cityDetails.get("NW").getX(), mg.getHeight() - cityDetails.get("NW").getY() - pillarLength);
         for (int i = 1; i <= ewJoinersNeeded; i++) {
             //NE pillar

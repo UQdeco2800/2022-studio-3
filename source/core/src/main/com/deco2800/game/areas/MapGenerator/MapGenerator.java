@@ -158,7 +158,7 @@ public class MapGenerator {
             return dimension;
         } else {
             //Add on the necessary difference to complete wall around city
-            return dimension + tileDifference;
+            return dimension + (2 * wallConnectorDistance - tileDifference);
         }
     }
 

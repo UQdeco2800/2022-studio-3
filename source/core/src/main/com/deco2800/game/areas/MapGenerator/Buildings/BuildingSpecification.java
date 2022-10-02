@@ -70,4 +70,9 @@ public class BuildingSpecification {
     public void resetPlacements() {
         this.numPlaced = 0;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
