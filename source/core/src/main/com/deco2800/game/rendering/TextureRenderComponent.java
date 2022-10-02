@@ -61,7 +61,8 @@ public class TextureRenderComponent extends RenderComponent {
   /**
    * Debug function which draws a box around an entity with a TextureRenderComponent
    * @param positions positions to draw a box around
-   * @param batch the SpriteBatch of the gamne
+   * @param linePos list of points to draw lines between
+   * @param batch the SpriteBatch of the game
    */
   public void drawTextureBox (List<Vector2> positions, List<Vector2> linePos, SpriteBatch batch) {
     for (Vector2 position : positions) {
@@ -87,15 +88,10 @@ public class TextureRenderComponent extends RenderComponent {
       //Draw lines
       sr.setColor(Color.VIOLET);
       for (int i = 0; i < linePos.size(); i+=2) {
-        float x1 = linePos.get(i).x;
-        float x2 = linePos.get(i+1).x;
-        float y1 = linePos.get(i).y;
-        float y2 = linePos.get(i+1).y;
-        float a = x2-x1;
-        float b = y2-y1;
-        float c = (float) Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
-        float c2 = (float) Math.sqrt(Math.pow(0.26562f * 5,2) + Math.pow(0.49687f * 5f,2));
-        //System.out.println("distance observed: " +c + " distance theoretical: " + c2);
+        if (i + 1 > linePos.size() - 1) {
+          //Incorrect input, should always be two pairs of coordinates to draw a line between
+          break;
+        }
         sr.line(linePos.get(i), linePos.get(i+1));
       }
 
@@ -123,11 +119,12 @@ public class TextureRenderComponent extends RenderComponent {
     Vector2 scale = entity.getScale();
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
 
-    //debug
-    if (entity.getComponent(GateCollider.class) !=  null) {
+    //Debug - draw hitboxes around TextureScaled Entities
+    /*
+    if (entity.getComponent(TextureScaler.class) !=  null) {
       drawTextureBox(batch);
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
-    }
+    } */
   }
 }

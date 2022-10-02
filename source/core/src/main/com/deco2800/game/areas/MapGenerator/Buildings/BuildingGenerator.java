@@ -30,7 +30,7 @@ public class BuildingGenerator {
     /**
      * Distance (in tiles) to allow for the walls around the city
      */
-    private final int WALL_BUFFER = 1;
+    private final int WALL_BUFFER = 3;
     /**
      * Attempts to place each building in the city
      */
@@ -137,6 +137,14 @@ public class BuildingGenerator {
      */
     public PathGenerator getPathGenerator() {
         return this.pg;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from the wall.
+     * @return wall buffer amount
+     */
+    public int getWallBuffer() {
+        return this.WALL_BUFFER;
     }
 
     /**

@@ -14,6 +14,7 @@ import java.util.List;
 public class TextureScaler extends Component{
     private Vector2 leftPoint;
     private Vector2 rightPoint;
+    private float initialScale = 0;
 
     //testing
     public List<Vector2> drawPoints = new ArrayList<>();
@@ -24,11 +25,16 @@ public class TextureScaler extends Component{
         this.rightPoint = rightPoint;
     }
 
-    public TextureScaler setPreciseScale(float desiredScale) {
+    /**
+     * Scales an entity with a TextureRenderComponent such that it occupies the desired number of tiles
+     * @param desiredScale desired number of tiles to occupy (potentially float, but preferably integer input)
+     * @return true if the entity was scaled, else false
+     */
+    public boolean setPreciseScale(float desiredScale) {
         if (entity == null) {
-            return this;
+            return false;
         }
-
+        initialScale = desiredScale;
         Vector2 baseScale = new Vector2(1,1);
 
         float[] points = new float[] {
@@ -37,7 +43,7 @@ public class TextureScaler extends Component{
         Texture buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
-
+        //Determine the positions of both points of the image in world coordinates
         Vector2 leftPointWorldPosition = new Vector2(translatedCoords[0], translatedCoords[1])
                 .scl(baseScale);
         Vector2 rightPointWorldPosition = new Vector2(translatedCoords[2], translatedCoords[3])
@@ -48,15 +54,16 @@ public class TextureScaler extends Component{
         //Distance between the two points of the image in world coordinates
         float distance = (float) Math.sqrt(Math.pow(xDistance,2) + Math.pow(yDistance , 2));
 
-        //Calculate desired distance
-        //float desiredDistance = (float) Math.sqrt(Math.pow(0.26562f * desiredScale, 2) + Math.pow(0.49687f * desiredScale,2));
+        //Calculate desired distance between points in world coordinates (0.25 increase in world y per tile, 0.5 increase in world x per tile)
         float desiredDistance = (float) Math.sqrt(Math.pow(0.25f * desiredScale, 2) + Math.pow(0.5f * desiredScale,2));
 
+        //Calculate scale required to yield this desired distance
         float scale = desiredDistance / distance;
 
+        //Scale the entity
         entity.scaleWidth(scale);
 
-        return this;
+        return true;
     }
 
     public void setSpawnPoint(GridPoint2 tilePoint, TerrainComponent terrain) {
@@ -64,8 +71,6 @@ public class TextureScaler extends Component{
         Vector2 worldPos = terrain.tileToWorldPosition(tilePoint);
         Vector2 centrePosition = worldPos.cpy();
 
-        linePoints.add(worldPos.cpy());
-        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) 5, tilePoint.y)));
         drawPoints.add(worldPos.cpy());
 
         float tileSize = terrain.getTileSize();
@@ -105,14 +110,14 @@ public class TextureScaler extends Component{
         worldPos.x += offsetDistance.x;
         worldPos.y += offsetDistance.y + constantOffset;
 
-        //Testing
+        //Debug code - shows how the object was scaled
         linePoints.add(centrePosition.cpy().add(0, constantOffset));
-        Vector2 lineShift = terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) 5, tilePoint.y))
+        Vector2 lineShift = terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) initialScale, tilePoint.y))
                 .add(0,  constantOffset);
         linePoints.add(lineShift);
 
         linePoints.add(centrePosition.cpy().add(0, constantOffset));
-        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x, tilePoint.y + 5))
+        linePoints.add(terrain.tileToWorldPosition(new GridPoint2(tilePoint.x, tilePoint.y + (int) initialScale))
                 .add(0,  constantOffset));
 
         entity.setPosition(worldPos);

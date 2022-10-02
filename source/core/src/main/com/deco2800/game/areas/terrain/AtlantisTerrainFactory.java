@@ -30,7 +30,7 @@ public class AtlantisTerrainFactory {
     private static final int mapWidth = 200;
     private static final int mapHeight = 90;
     private static final int cityWidth = 50;
-    private static final int cityHeight = 40;
+    private static final int cityHeight = 44;
     private static final int islandSize = 80;
 
     public static final float mapTileScale = 1f;
@@ -69,6 +69,7 @@ public class AtlantisTerrainFactory {
         ResourceService resourceService = ServiceLocator.getResourceService();
         textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
         textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
+        textures.put("City", new TextureRegion(resourceService.getAsset("images/city_tile.png", Texture.class)));
         textures.put("Sea1", new TextureRegion(resourceService.getAsset("images/sea_1.png", Texture.class)));
         textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
         textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/sea_3.png", Texture.class)));
@@ -122,9 +123,8 @@ public class AtlantisTerrainFactory {
      */
     private void fillTiles(TiledMapTileLayer layer) {
         //Set terrainTiles based on textures stored in textures
-        TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
+        TerrainTile cityTile = new TerrainTile(textures.get("City"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
-        TerrainTile testTile = new TerrainTile(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/iso_grass_1.png", Texture.class)));
 
         //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
         Array<StaticTiledMapTile> oceanFrames = new Array<>();
@@ -135,7 +135,7 @@ public class AtlantisTerrainFactory {
         AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
 
         //Set id for each tile - used for visualising minimap
-        grassTile.setId(0);
+        cityTile.setId(0);
         sandTile.setId(1);
 
         //Load the map from the map generator
@@ -146,15 +146,14 @@ public class AtlantisTerrainFactory {
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
                     //Set ocean tiles to animated ocean textures
-                    //cell.setTile(animatedOceanTile);
-                    cell.setTile(testTile);
+                    cell.setTile(animatedOceanTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     cell.setTile(sandTile);
                     // register position with MapService (TODO: move somewhere nicer)
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 } else {
-                    cell.setTile(grassTile);
+                    cell.setTile(cityTile);
                     // register position with MapService (TODO: move somewhere nicer)
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }

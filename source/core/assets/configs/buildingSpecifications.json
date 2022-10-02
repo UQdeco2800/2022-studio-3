@@ -11,14 +11,14 @@ buildings: [
         "name": "Library",
         "width": 3,
         "height": 3,
-        "door": "1,2",
+        "door": "0,2",
         "num": 2,
     },
     {
         "name": "Blacksmith",
         "width": 3,
         "height": 3,
-        "door": "1,2",
+        "door": "0,2",
         "num": 2,
     }
 ]
