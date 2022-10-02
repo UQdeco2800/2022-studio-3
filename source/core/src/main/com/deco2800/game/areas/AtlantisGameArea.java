@@ -19,6 +19,7 @@ import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.shop.ShopDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -184,6 +185,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+        spawnShop();
     }
 
     /**
@@ -548,6 +550,12 @@ public class AtlantisGameArea extends GameArea {
                 }
             }
         }
+    }
+
+    private void spawnShop() {
+        Entity shopBox = new Entity();
+        shopBox.addComponent(new ShopDisplay());
+        spawnEntity(shopBox);
     }
 
     private void playMusic() {
