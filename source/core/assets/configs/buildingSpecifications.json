@@ -7,7 +7,13 @@ buildings: [
         "num": 1,
     },
     {
-        "name": "Barracks",
+        "name": "Library",
+        "width": 3,
+        "height": 3,
+        "num": 2,
+    },
+    {
+        "name": "Blacksmith",
         "width": 3,
         "height": 3,
         "num": 2,

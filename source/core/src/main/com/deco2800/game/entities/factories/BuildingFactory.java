@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
@@ -12,6 +13,7 @@ import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -56,12 +58,16 @@ public class BuildingFactory {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.BROWN);
         townHall.addComponent(new TextureRenderComponent("images/base.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
-                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"));
+                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"))
+                .addComponent(mp);
 
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
@@ -98,10 +104,14 @@ public class BuildingFactory {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.GOLDENROD);
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(mp);
 
         barracks.scaleWidth(BARRACKS_SCALE);
         // Setting Isometric Collider
@@ -151,6 +161,41 @@ public class BuildingFactory {
         return wall;
     }
 
+    /**
+     * 
+     * @return
+     */
+    public static Entity createLibrary() {
+        Entity library = createBaseBuilding();
+
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.ORANGE);
+        library.addComponent(new TextureRenderComponent("images/library.png"))
+               .addComponent(mp);
+
+        library.scaleWidth(3.0f);
+
+        return library;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public static Entity createBlacksmith() {
+        Entity bs = createBaseBuilding();
+
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.BLACK);
+        bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
+          .addComponent(mp);
+
+        bs.scaleWidth(3.0f);
+
+        return bs;
+    }
 
     private BuildingFactory() {
         throw new IllegalStateException("Instantiating static util class");
