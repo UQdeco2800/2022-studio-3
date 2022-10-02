@@ -2,9 +2,11 @@ package com.deco2800.game.worker.components.movement;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -84,6 +86,13 @@ public class WorkerMovementTask extends DefaultTask {
             if (gameTime.getTime() - lastTimeMoved > 1000) {
                 if (lastPos.epsilonEquals(owner.getEntity().getPosition(), 0.01f)) {
                     logger.info("Stuck, moving to final target");
+                    PhysicsComponent physicsComponent = owner.getEntity().getComponent(PhysicsComponent.class);
+                    if (physicsComponent != null) {
+                        Body entityBody = physicsComponent.getBody();
+                        Vector2 direction = owner.getEntity().getCenterPosition().sub(owner.getEntity().getCenterPosition());
+                        Vector2 impulse = direction.setLength(0.2f);
+                        entityBody.applyLinearImpulse(impulse, entityBody.getWorldCenter(), true);
+                    }
                     setTarget(finalTarget);
                     movementComponent.setMoving(true);
                     path.clear();
