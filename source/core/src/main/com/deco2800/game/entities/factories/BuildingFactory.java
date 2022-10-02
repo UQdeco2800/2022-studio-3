@@ -67,7 +67,7 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
-        final float TH_SCALE = 5f;
+        final float TH_SCALE = 8f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
@@ -121,6 +121,9 @@ public class BuildingFactory {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
+        Vector2 leftPoint = new Vector2(151f, 861f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(592f, 1050f); //Bottom rightmost edge in pixels
+
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.GOLDENROD);
@@ -128,9 +131,10 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(mp);
+                .addComponent(mp)
+                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
-        barracks.scaleWidth(BARRACKS_SCALE);
+        barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE);
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[]{
@@ -154,6 +158,47 @@ public class BuildingFactory {
         barracks.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         return barracks;
+    }
+
+    public static Entity createFarm() {
+        Entity farm = createBaseBuilding();
+        final float FARM_SCALE = 5f;
+
+        Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.ORANGE);
+        farm.addComponent(new TextureRenderComponent("images/farm.png"))
+               .addComponent(mp)
+               .addComponent(new TextureScaler(leftPoint, rightPoint));
+
+        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
+
+        // Methodology sourced from BuildingFactory.java
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[] {      // Four vertices
+            0f, 220f,      // Vertex 0       3--2
+            207f, 322f,     // Vertex 1      /  /
+            429f, 210f,     // Vertex 2     /  /
+            222f, 108f      // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/farm.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(FARM_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        boundingBox.set(vertices);
+        farm.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
+        return farm;
     }
 
     /**
@@ -217,14 +262,12 @@ public class BuildingFactory {
     }
 
     /**
-     * Creates a north/south facing wall connector entity
-     * @return north/south facing wall connector
      * Creates and returns a library building entity
      * @return library
      */
     public static Entity createLibrary() {
         Entity library = createBaseBuilding();
-        final float LIBRARY_SCALE = 3f;
+        final float LIBRARY_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
         Vector2 rightPoint = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
@@ -234,6 +277,7 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.ORANGE);
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
+            //    .addComponent(new HighlightedTextureRenderComponent("images/highlightedLibrary.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
@@ -269,7 +313,7 @@ public class BuildingFactory {
      */
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
-        final float BLACKSMITH_SCALE = 3f;
+        final float BLACKSMITH_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
         Vector2 rightPoint = new Vector2(123f, 251f); //Bottom rightmost edge in pixels

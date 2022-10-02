@@ -127,10 +127,11 @@ public class AtlantisGameArea extends GameArea {
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png",
-            // Blacksmith
+            // city buildings
             "images/blacksmith.png",
-            // Library
             "images/library.png",
+            "images/highlightedLibrary.png",
+            "images/farm.png",
             "images/pathTile.png"
     };
 
@@ -483,9 +484,15 @@ public class AtlantisGameArea extends GameArea {
                 } else if (building.getName().equals("Library")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createLibrary();
-                } else if (building.getName().equals("Blacksmith")) {
+                } else if (building.getName().equals("Smith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createBlacksmith();
+                } else if (building.getName().equals("Barracks")) {
+                    // System.out.print("\n\nTH position: " + spawn + "\n\n");
+                    buildingEntity = BuildingFactory.createBarracks();
+                } else if (building.getName().equals("Farm")) {
+                    // System.out.print("\n\nTH position: " + spawn + "\n\n");
+                    buildingEntity = BuildingFactory.createFarm();
                 } else {
                     // avoid null pointer exception
                     continue;
