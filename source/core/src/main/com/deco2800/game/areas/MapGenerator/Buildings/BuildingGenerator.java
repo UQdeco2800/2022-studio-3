@@ -135,7 +135,7 @@ public class BuildingGenerator {
         this.pg = new PathGenerator(this);
 
         //Test output
-        writeCity(cityHeight, cityWidth);
+        //writeCity(cityHeight, cityWidth);
     }
 
     /**
