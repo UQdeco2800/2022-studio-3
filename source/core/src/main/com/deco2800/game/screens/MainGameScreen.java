@@ -11,6 +11,7 @@ import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.shop.ShopDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -28,7 +29,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.components.maingame.MainGameExitDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
@@ -41,7 +41,14 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png","images/bigblack.png", "images/resource_display.png", "images/gainstone.png", "images/gain10wood.png", "images/gainmetal.png"};
+  private static final String[] mainGameTextures = {
+          "images/heart.png","images/bigblack.png",
+          "images/resource_display.png",
+          "images/buildingSelectionMenu.png",
+          "images/gainstone.png",
+          "images/gain10wood.png",
+          "images/gainmetal.png"
+  };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
   private final GdxGame game;
@@ -155,6 +162,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGameExitDisplay())
+        .addComponent(new ShopDisplay())
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())

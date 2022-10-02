@@ -15,15 +15,21 @@ import org.slf4j.LoggerFactory;
 
 
 public class ShopDisplay extends UIComponent {
-    //private final ShopDisplay shopBox;
-    private static final Logger logger = LoggerFactory.getLogger(ShopDisplay.class);
+    //private static final Logger logger = LoggerFactory.getLogger(ShopDisplay.class);
     private Image backgroundShopImage;
     float initHeight, initWidth;
     private static final String image = "images/buildingSelectionMenu.png";
     Table buildingTable;
     Table costTable;
+    private Label woodLabel;
+    private Label stoneLabel;
+    private Label metalLabel;
 
-    UserSettings.Settings settings = UserSettings.get();
+    private Image resourceLabel;
+    private Image stoneImageLabel;
+    private Image woodImageLabel;
+    private Image metalImageLabel;
+
     @Override
     public void create(){
         super.create();
@@ -35,34 +41,18 @@ public class ShopDisplay extends UIComponent {
         Texture texture = ServiceLocator.getResourceService().getAsset(image, Texture.class);
 
         backgroundShopImage = new Image(texture);
-        this.initHeight = backgroundShopImage.getHeight();
-        this.initHeight = backgroundShopImage.getWidth();
-        backgroundShopImage.setWidth((float) (initWidth * 1.5));
-        backgroundShopImage.setHeight((float) (initHeight * 1.5));
-        backgroundShopImage.setPosition(0f, 0f);
+        backgroundShopImage.setSize(663, 330);
 
-        Label nameLabel = new Label("Name:", skin);
-        TextField nameText = new TextField("", skin);
-        Label addressLabel = new Label("Address:", skin);
-        TextField addressText = new TextField("", skin);
-        this.buildingTable = new Table();
-        buildingTable.setDebug(true);
-        buildingTable.setWidth(256);
-        buildingTable.setHeight(256);
-        buildingTable.setPosition(150, Gdx.graphics.getHeight() - 1020);
-
-        buildingTable.add(nameLabel);
-        buildingTable.add(nameText).width(100);
-        buildingTable.row();
-        buildingTable.add(addressLabel);
-        buildingTable.add(addressText).width(100);
-
-
+        stage.addActor(backgroundShopImage);
     }
 
     @Override
     protected void draw(SpriteBatch batch) {
-
+        int screenHeight = Gdx.graphics.getHeight();
+        int screenWidth = Gdx.graphics.getWidth();
+        float offsetX = 1000f;
+        float offsetY = 800f;
+        backgroundShopImage.setPosition(screenWidth - offsetX, screenHeight - offsetY);
     }
 
     @Override
