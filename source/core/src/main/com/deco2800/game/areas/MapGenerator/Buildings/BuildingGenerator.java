@@ -140,6 +140,14 @@ public class BuildingGenerator {
     }
 
     /**
+     * Returns the number of tiles buildings are placed from the wall.
+     * @return wall buffer amount
+     */
+    public int getWallBuffer() {
+        return this.WALL_BUFFER;
+    }
+
+    /**
      * Gets the city height.
      * 
      * @return city height

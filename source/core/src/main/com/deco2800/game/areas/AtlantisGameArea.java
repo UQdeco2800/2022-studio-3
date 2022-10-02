@@ -434,7 +434,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         BuildingGenerator bg = new BuildingGenerator(mg);
         spawnBuildings(bg,mg.getHeight());
-        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX() - 1);
+        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
     }
 
     /**
@@ -496,20 +496,20 @@ public class AtlantisGameArea extends GameArea {
         }
     }
 
-    /**
-     * Spawns two Barracks in locations next to the TownHall
-     */
-    private void spawnBarracks() {
-        // Position offset from centre of city
-        int offset = 10;
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        // Two spawn-points for the barracks next ot TownHall located in the centre
-        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
-        GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
+    // /**
+    //  * Spawns two Barracks in locations next to the TownHall
+    //  */
+    // private void spawnBarracks() {
+    //     // Position offset from centre of city
+    //     int offset = 10;
+    //     MapGenerator mg = terrainFactory.getMapGenerator();
+    //     // Two spawn-points for the barracks next ot TownHall located in the centre
+    //     GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
+    //     GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
-    }
+    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
+    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
+    // }
 
     /**
      * Spawns corner bounding walls for the city
