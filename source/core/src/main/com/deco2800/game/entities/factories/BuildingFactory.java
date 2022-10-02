@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
-import com.deco2800.game.components.building.BuildingOffset;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.building.GateCollider;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
@@ -79,7 +79,6 @@ public class BuildingFactory {
                 .getAsset("images/base.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
 
-        System.out.println("polyregioncoords: " + region.getTextureCoords()[0]);
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
             vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TH_SCALE);
@@ -159,6 +158,7 @@ public class BuildingFactory {
      */
     public static Entity createGate() {
         Entity gate = createBaseBuilding();
+        final float GATE_SCALE = 5f;
 
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
@@ -166,15 +166,20 @@ public class BuildingFactory {
         gateARC.addAnimation("open_gate", 0.1f, Animation.PlayMode.NORMAL);
         gateARC.addAnimation("close_gate", 0.1f, Animation.PlayMode.NORMAL);
 
+        //Set up building points
+        Vector2 leftPoint = new Vector2(37f, 125f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(170f, 196f); //Bottom rightmost edge in pixels
+
         //Add all components
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
-            .addComponent(new BuildingOffset(37f, 125f));
+            .addComponent(new TextureScaler(leftPoint, rightPoint));
 
-        TextureRenderComponent gateTRC = gate.getComponent(TextureRenderComponent.class);
+        //Scale building precisely
+        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
 
-        gate.scaleWidth(5f);
+
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
         PolygonShape boundingBox = new PolygonShape();
         Vector2 center = gate.getCenterPosition(); // Collider to be set around center of entity

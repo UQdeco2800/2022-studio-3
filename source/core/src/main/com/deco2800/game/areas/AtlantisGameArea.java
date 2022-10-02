@@ -3,7 +3,6 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
@@ -15,13 +14,12 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.building.BuildingActions;
-import com.deco2800.game.components.building.BuildingOffset;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -32,20 +30,14 @@ import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.map.MapService;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.Component;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +64,7 @@ public class AtlantisGameArea extends GameArea {
             "images/Base_Highlight.png",
             "images/box_boy_highlight.png",
             "images/tree.png",
+            "images/iso_grass_1.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/grass_1.png",
@@ -281,7 +274,7 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(dialogueBoxDisplay);
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
 
-        spawnEntity(dialogueBox);
+        //spawnEntity(dialogueBox);
     }
 
     private void spawnTerrain() {
@@ -508,7 +501,7 @@ public class AtlantisGameArea extends GameArea {
                 GridPoint2 tileSpawn = position.add(direction, 0);
                 //GridPoint2 tileSpawn = new GridPoint2(0,0);
                 //Set the spawn point of the gate
-                gate.getComponent(BuildingOffset.class).setSpawnPoint(tileSpawn, terrain);
+                gate.getComponent(TextureScaler.class).setSpawnPoint(tileSpawn, terrain);
                 //Spawn the gate
                 spawnEntity(gate);
             }

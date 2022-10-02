@@ -119,7 +119,8 @@ public class CameraInputComponent extends InputComponent {
         OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
         Vector3 worldCoords = camera.unproject(new Vector3(currentX, currentY,0));
         GridPoint2 tileCoords = worldToTile(worldCoords.x, worldCoords.y);
-        System.out.println("TileX: " + tileCoords.x + " | TileY: " + tileCoords.y);
+        //System.out.println("TileX: " + tileCoords.x + " | TileY: " + tileCoords.y);
+        System.out.println("WorldX: " + worldCoords.x + " WorldY: " + worldCoords.y);
         return true;
     }
 

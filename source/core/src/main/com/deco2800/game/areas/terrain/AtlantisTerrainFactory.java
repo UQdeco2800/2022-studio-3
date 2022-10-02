@@ -124,6 +124,7 @@ public class AtlantisTerrainFactory {
         //Set terrainTiles based on textures stored in textures
         TerrainTile grassTile = new TerrainTile(textures.get("Grass"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
+        TerrainTile testTile = new TerrainTile(new TextureRegion(ServiceLocator.getResourceService().getAsset("images/iso_grass_1.png", Texture.class)));
 
         //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
         Array<StaticTiledMapTile> oceanFrames = new Array<>();
@@ -145,7 +146,8 @@ public class AtlantisTerrainFactory {
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
                     //Set ocean tiles to animated ocean textures
-                    cell.setTile(animatedOceanTile);
+                    //cell.setTile(animatedOceanTile);
+                    cell.setTile(testTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     cell.setTile(sandTile);

@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.deco2800.game.components.building.BuildingOffset;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.building.GateCollider;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -64,7 +63,7 @@ public class TextureRenderComponent extends RenderComponent {
    * @param positions positions to draw a box around
    * @param batch the SpriteBatch of the gamne
    */
-  public void drawTextureBox (List<Vector2> positions, SpriteBatch batch) {
+  public void drawTextureBox (List<Vector2> positions, List<Vector2> linePos, SpriteBatch batch) {
     for (Vector2 position : positions) {
       ShapeRenderer sr = new ShapeRenderer();
       sr.setProjectionMatrix(batch.getProjectionMatrix());
@@ -84,6 +83,22 @@ public class TextureRenderComponent extends RenderComponent {
       //Get size of texture in world coordinates
       Vector2 entityScale = entity.getScale();
       sr.rect(position.x, position.y, entityScale.x, entityScale.y);
+
+      //Draw lines
+      sr.setColor(Color.VIOLET);
+      for (int i = 0; i < linePos.size(); i+=2) {
+        float x1 = linePos.get(i).x;
+        float x2 = linePos.get(i+1).x;
+        float y1 = linePos.get(i).y;
+        float y2 = linePos.get(i+1).y;
+        float a = x2-x1;
+        float b = y2-y1;
+        float c = (float) Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
+        float c2 = (float) Math.sqrt(Math.pow(0.26562f * 5,2) + Math.pow(0.49687f * 5f,2));
+        //System.out.println("distance observed: " +c + " distance theoretical: " + c2);
+        sr.line(linePos.get(i), linePos.get(i+1));
+      }
+
       sr.end();
       sr.dispose();
       batch.begin();
@@ -111,7 +126,8 @@ public class TextureRenderComponent extends RenderComponent {
     //debug
     if (entity.getComponent(GateCollider.class) !=  null) {
       drawTextureBox(batch);
-      drawTextureBox(entity.getComponent(BuildingOffset.class).drawPoints, batch);
+      TextureScaler bo = entity.getComponent(TextureScaler.class);
+      drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
     }
   }
 }
