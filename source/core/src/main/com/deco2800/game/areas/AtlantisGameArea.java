@@ -117,8 +117,8 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
-            "images/simpleman.png"
-
+            "images/simpleman.png",
+            "images/titanshrine-default.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -176,7 +176,7 @@ public class AtlantisGameArea extends GameArea {
 
         // Spawn Buildings in the city
         spawnTownHall();
-        spawnBarracks();
+//        spawnBarracks();
         spawnWalls();
         spawnTitanShrine();
 
@@ -471,7 +471,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         Coordinate centre = mg.getCityDetails().get("Centre");
         // Two spawn-points for the barracks next ot TownHall located in the centre
-        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getWidth() - centre.getY()).add(offset, 0);
+        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
 
         MapComponent mc1 = new MapComponent();
         mc1.display();

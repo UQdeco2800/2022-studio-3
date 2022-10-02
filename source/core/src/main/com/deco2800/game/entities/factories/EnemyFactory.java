@@ -221,6 +221,7 @@ public class EnemyFactory {
             .addComponent(new EnemyAnimationController());
 
     titan.getComponent(AnimationRenderComponent.class).scaleEntity();
+    titan.scaleWidth(1f);
 
     return titan;
   }

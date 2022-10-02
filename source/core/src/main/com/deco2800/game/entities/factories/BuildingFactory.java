@@ -152,7 +152,7 @@ public class BuildingFactory {
      * @return Titan Shrine Building Entity
      */
     public static Entity createTitanShrine() {
-        final float TITANSHRINE_SCALE = 5f;
+        final float TITANSHRINE_SCALE = 10f;
         Entity titanShrine = createBaseBuilding();
         TitanShrineConfig config = configs.titanShrine;
 
@@ -166,14 +166,43 @@ public class BuildingFactory {
         animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         titanShrine
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(animator);
+
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1111,    // Vertex 0        3
+                1100f, 870f,     // Vertex 1    4 /   \ 2
+                1100f, 800f,     // Vertex 2     |     |
+                605f, 581f,     // Vertex 3    5 \   / 1
+                100f, 800f,     // Vertex 4        0
+                100f, 874f      // Vertex 5
+        };
+
+        Texture titanShrineTexture = ServiceLocator.getResourceService()
+                                                   .getAsset("images/titanshrine-default.png",
+                                                             Texture.class);
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TITANSHRINE_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        titanShrine.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         // TODO: Make component to spawn titan.
-
+        titanShrine.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        titanShrine.getComponent(AnimationRenderComponent.class).scaleEntity();
         titanShrine.scaleWidth(TITANSHRINE_SCALE);
 
         // TODO: Set isometric colliders
