@@ -171,7 +171,11 @@ public class MapService {
 		}
 		fringe.add(new Node(start, null));
 
+		int tempCounter = 0;
+		ArrayList<MapComponent> temp = new ArrayList();
+
 		while (fringe.size() > 0) {
+			tempCounter++;
 			Node node = fringe.get(0);
 			fringe.remove(0);
 			if (goal.equals(node.position)) {
@@ -184,13 +188,13 @@ public class MapService {
 						fringe.add(child);
 						visited.add(child);
 					} else {
-						logger.info("Occupied tile: " + child.position);
+						temp.add(positionToEntity.get(child.position));
 					}
-					
 				}
 			}
 		}
 		// no solution
+		logger.info("No path found after " + tempCounter + " iterations");
 		return new ArrayList<>();
 	}
 

@@ -155,7 +155,7 @@ public class AtlantisGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        player = spawnPlayer();
+        //player = spawnPlayer();
         /*
         for (int i = 0; i < 5; i++) {
             spawnPlayer();
@@ -169,8 +169,8 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
-        //spawnForager();
-        //spawnForager();
+        spawnForager();
+        spawnForager();
         spawnBuilder();
         spawnResources();
         spawnMiner();
@@ -388,6 +388,7 @@ public class AtlantisGameArea extends GameArea {
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
         MapComponent mapComponent = new MapComponent();
+        mapComponent.setName("Town Hall");
         mapComponent.display();
         mapComponent.setDisplayColour(Color.BROWN);
         Entity townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
@@ -407,7 +408,9 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
         MapComponent mapComponent1 = new MapComponent();
+        mapComponent1.setName("Barracks 1");
         MapComponent mapComponent2 = new MapComponent();
+        mapComponent2.setName("Barracks 2");
 
         spawnEntityAt(BuildingFactory.createBarracks().addComponent(mapComponent1), spawn1, true, true);
         spawnEntityAt(BuildingFactory.createBarracks().addComponent(mapComponent2), spawn2, true, true);
@@ -433,12 +436,14 @@ public class AtlantisGameArea extends GameArea {
 
             // Absolute corner walls will have default wall texture (doesn't point in any direction)
             Entity wall = BuildingFactory.createWall();
+            wall.addComponent(new MapComponent());
             wall.getComponent(BuildingActions.class).addLevel();
             wall.getComponent(BuildingActions.class).setWallDefault();
             spawnEntityAt(wall, position, true, true);
 
             for (int i = 0; i < xLength; i++) {
                 wall = BuildingFactory.createWall();
+                wall.addComponent(new MapComponent());
                 // Sets wall texture which points in positive x direction
                 wall.getComponent(BuildingActions.class).addLevel();
                 wall.getComponent(BuildingActions.class).setWallNE();

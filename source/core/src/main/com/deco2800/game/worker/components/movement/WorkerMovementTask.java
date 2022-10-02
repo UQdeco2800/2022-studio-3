@@ -23,7 +23,7 @@ public class WorkerMovementTask extends DefaultTask {
 
     private final GameTime gameTime;
     private Vector2 target;
-    private GridPoint2 gridTarget;
+    private Vector2 finalTarget;
     private float stopDistance = 0.01f;
     private long lastTimeMoved;
     private Vector2 lastPos;
@@ -43,6 +43,7 @@ public class WorkerMovementTask extends DefaultTask {
         this.mapService = ServiceLocator.getMapService();
         this.mapService.unregister(owner.getEntity().getComponent(MapComponent.class));
         this.path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
+        this.finalTarget = target;
         logger.info("Path from {} to {}: {}", MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target), path);
         if (!path.isEmpty()) {
             this.setTarget(MapService.tileToWorldPosition(path.get(0)));
@@ -52,7 +53,11 @@ public class WorkerMovementTask extends DefaultTask {
             lastTimeMoved = gameTime.getTime();
             lastPos = owner.getEntity().getPosition();
             owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
-        }        
+        } else {
+            this.setTarget(target);
+            movementComponent.setMoving(true);
+            logger.info("NO PATH FOUND Starting movement towards {}", MapService.worldToTile(target));
+        }    
     }
 
     public void changeSpeed(float factor) {
@@ -62,13 +67,16 @@ public class WorkerMovementTask extends DefaultTask {
     @Override
     public void update() {
         if (isAtTarget()) {
-            if (path.size() == 0) {
+            if (path.isEmpty()) {
+                setTarget(finalTarget);
                 movementComponent.setMoving(false);
                 status = Status.FINISHED;
                 logger.info("Finished path");
+                
             } else {
                 setTarget(MapService.tileToWorldPosition(path.get(0)));
                 path.remove(0);
+                logger.info("Moving to the next target: {}", MapService.worldToTile(target));
             }
         } else {
             //logger.info("Failed to move to {}", MapService.worldToTile(target));
@@ -77,7 +85,6 @@ public class WorkerMovementTask extends DefaultTask {
     }
 
     public void setTarget(Vector2 target) {
-        this.gridTarget = MapService.worldToTile(target);
         this.target = target;
         movementComponent.setTarget(target);
     }
@@ -105,6 +112,7 @@ public class WorkerMovementTask extends DefaultTask {
             movementComponent.setMoving(false);
             status = Status.FAILED;
             logger.info("Got stuck! Failing movement task");
+            movementComponent.setTarget(finalTarget);
         }
     }
 
