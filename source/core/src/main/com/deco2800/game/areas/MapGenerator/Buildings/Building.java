@@ -1,17 +1,20 @@
 package com.deco2800.game.areas.MapGenerator.Buildings;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 
 public class Building {
     private final int width;
     private final int height;
     private final String name;
+    private final GridPoint2 door;
     private Coordinate placement;
 
-    public Building (int width, int height, String name) {
+    public Building (int width, int height, String name, GridPoint2 door) {
         this.width = width;
         this.height = height;
         this.name = name;
+        this.door = door;
     }
 
     /**
@@ -36,6 +39,14 @@ public class Building {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns the building coordinates of the door.
+     * @return door coodinates
+     */
+    public GridPoint2 getDoor() {
+        return this.door;
     }
 
     /**

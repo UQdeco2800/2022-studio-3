@@ -1,6 +1,7 @@
 package com.deco2800.game.areas.MapGenerator.Buildings;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
@@ -29,7 +30,7 @@ public class BuildingGenerator {
     /**
      * Distance (in tiles) to allow for the walls around the city
      */
-    private final int WALL_BUFFER = 1;
+    private final int WALL_BUFFER = 3;
     /**
      * Attempts to place each building in the city
      */
@@ -66,6 +67,14 @@ public class BuildingGenerator {
      * The width of the city in tiles.
      */
     private int cityWidth;
+    /**
+     * Character that symbolises a door position in the char map.
+     */
+    private char doorSymbol = 'D';
+    /**
+     * 
+     */
+    private PathGenerator pg;
 
     public BuildingGenerator(MapGenerator mg) {
         //Get MapGenerator details
@@ -85,7 +94,7 @@ public class BuildingGenerator {
         for (JsonValue b : buildingsJson.iterator()) {
             //Define object
             BuildingSpecification building = new BuildingSpecification(b.getString("name"),
-                    b.getInt("width"),b.getInt("height"),b.getInt("num"));
+                    b.getInt("width"),b.getInt("height"),b.getString("door"),b.getInt("num"));
 
             //Add object to list
             buildings.add(building);
@@ -116,10 +125,18 @@ public class BuildingGenerator {
         placeBuildings();
 
         //Add Paths
-        PathGenerator pg = new PathGenerator(this);
+        this.pg = new PathGenerator(this);
 
         //Test output
         //writeCity(cityHeight, cityWidth);
+    }
+
+    /**
+     * Returns the PathGenerator instance.
+     * @return PathGenerator instance
+     */
+    public PathGenerator getPathGenerator() {
+        return this.pg;
     }
 
     /**
@@ -193,6 +210,8 @@ public class BuildingGenerator {
                         city[translatedY][translatedX] = buildingChar;
                     }
                 }
+                GridPoint2 door = b.getDoor();
+                city[placement.getY() - cityMinY + door.y][placement.getX() - cityMinX + door.x] = this.doorSymbol;
             }
         }
         return city;
@@ -223,7 +242,7 @@ public class BuildingGenerator {
             BuildingSpecification currentBuilding = remainingBuildings.get(new Random().nextInt(remainingBuildings.size()));
 
             //Make a building object to mirror this
-            Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName());
+            Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName(), currentBuilding.getDoor());
 
             //While a row can't be found or until the max rows have been exhausted
             int seed = 0;
