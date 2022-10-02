@@ -210,8 +210,8 @@ public class ResourceGenerator {
 
         //For all 1x1 resources, check to see if they are next to the city
         if (resource.getWidth() == 1 && resource.getHeight() == 1) {
-            for (int i = -1; i < 2; i ++) {
-                for (int j = -1; j < 2; j++) {
+            for (int i = -2; i < 3; i ++) {
+                for (int j = -2; j < 3; j++) {
                     Coordinate checkLocation = new Coordinate(location.getX() + i, location.getY() + j);
                     if (checkLocation.inBounds(mg.getWidth(), mg.getHeight()) && map[checkLocation.getY()][checkLocation.getX()] == mg.getCityChar()) {
                         //This 1x1 resource is adjacent to a city tile

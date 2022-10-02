@@ -473,7 +473,6 @@ public class AtlantisGameArea extends GameArea {
             List<Building> buildings = cr.getBuildings();
             for (Building building : buildings) {
                 Coordinate placement = building.getPlacement();
-                //GridPoint2 spawn = new GridPoint2(placement.getX(), placement.getY() - building.getHeight());
 
                 GridPoint2 spawn = new GridPoint2(placement.getX(), height - 1 - placement.getY() - building.getHeight());
                 Entity buildingEntity = null;
@@ -487,6 +486,8 @@ public class AtlantisGameArea extends GameArea {
                 } else if (building.getName().equals("Blacksmith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createBlacksmith();
+                } else if (building.getName().equals("Barracks")) {
+                    buildingEntity = BuildingFactory.createBarracks();
                 } else {
                     // avoid null pointer exception
                     continue;

@@ -103,7 +103,7 @@ public class BuildingFactory {
 
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
-            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TH_SCALE);
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(townHall.getScale().x);
         }
         PolygonShape boundingBox = new PolygonShape();  // Collider shape
         boundingBox.set(vertices);
@@ -117,9 +117,12 @@ public class BuildingFactory {
      * @return Barracks Entity
      */
     public static Entity createBarracks() {
-        final float BARRACKS_SCALE = 5f;
+        final float BARRACKS_SCALE = 4f;
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
+
+        Vector2 leftPoint = new Vector2(154f, 854f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(596f, 1040f); //Bottom rightmost edge in pixels
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -128,9 +131,11 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new TextureScaler(leftPoint, rightPoint))
                 .addComponent(mp);
 
-        barracks.scaleWidth(BARRACKS_SCALE);
+        barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE);
+
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[]{
@@ -147,7 +152,7 @@ public class BuildingFactory {
         float[] cords = region.getTextureCoords();
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
-            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(BARRACKS_SCALE);
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(barracks.getScale().x);
         }
         PolygonShape boundingBox = new PolygonShape(); // Collider shape
         boundingBox.set(vertices);
@@ -252,7 +257,7 @@ public class BuildingFactory {
 
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
-            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(LIBRARY_SCALE);
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(library.getScale().x);
         }
         PolygonShape boundingBox = new PolygonShape();  // Collider shape
         boundingBox.set(vertices);
@@ -298,7 +303,7 @@ public class BuildingFactory {
 
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
-            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(BLACKSMITH_SCALE);
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(bs.getScale().x);
         }
         PolygonShape boundingBox = new PolygonShape();  // Collider shape
         boundingBox.set(vertices);

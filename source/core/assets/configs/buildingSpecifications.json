@@ -20,6 +20,13 @@ buildings: [
         "height": 3,
         "door": "1,2",
         "num": 2,
+    },
+    {
+        "name": "Barracks",
+        "width": 4,
+        "height": 4,
+        "door": "2,3",
+        "num": 2,
     }
 ]
 }

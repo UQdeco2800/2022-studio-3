@@ -111,7 +111,7 @@ public class CameraInputComponent extends InputComponent {
 
     }
 
-    //test function
+    /*Debug function - prints specific world coordinates or tile positions on key press
     public boolean keyTyped(char character) {
         //testing
         int currentX = Gdx.input.getX();
@@ -122,7 +122,7 @@ public class CameraInputComponent extends InputComponent {
         //System.out.println("TileX: " + tileCoords.x + " | TileY: " + tileCoords.y);
         System.out.println("WorldX: " + worldCoords.x + " WorldY: " + worldCoords.y);
         return true;
-    }
+    }*/
 
     /**
      * Checks to see if the cursor is hovered to a screen edge, and if so updates the direction it
