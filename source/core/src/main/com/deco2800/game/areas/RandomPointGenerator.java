@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.RandomUtils;
 
 import java.util.ArrayList;
@@ -176,7 +177,7 @@ public class RandomPointGenerator {
 
     /**
      * Gets a position to deploy entities in the sea, the range value
-     * is to choose a point such that the entity being places fits
+     * is to choose a point such that the entity being placed fits
      * in only sea tiles and doesn't end up being spawned at the edges.
      * @param terrainFactory the factory for the Atlantis map
      * @param range points within this range must be ocean tiles.
@@ -212,6 +213,59 @@ public class RandomPointGenerator {
                 for (int i = y; i < y + range; i++) {
                     for (int j = x; j < x + range; j++) {
                         if (map[j][i] != mg.getOceanChar()) {
+                            notFound = true;
+                            break;
+                        } else {
+                            System.out.println("All good");
+                        }
+                    }
+                }
+                return point;
+            } catch (IndexOutOfBoundsException e) {
+                notFound = true;
+            }
+        }
+        return new GridPoint2(0 , 0);
+    }
+
+    /**
+     * Gets a position to deploy entities on the island, the range value
+     * is to choose a point such that the entity being placed fits
+     * in only island tiles and doesn't end up being spawned at the edges.
+     * @param terrainFactory the factory for the Atlantis map
+     * @param range points within this range must be island tiles.
+     * @return
+     */
+    public static GridPoint2 getRandomPointInIsland(AtlantisTerrainFactory terrainFactory, int range) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        char[][] map = mg.getMap();
+        char[][] smallerMap = new char[range][range];
+
+        List<GridPoint2> islandTiles = new ArrayList<>();
+        for (int y = 0; y < mg.getHeight(); y++) {
+            for (int x = 0; x < mg.getWidth(); x++) {
+                if (map[y][x] == mg.getIslandChar()) {
+                    GridPoint2 point = new GridPoint2(x, (mg.getHeight()-1)-y);
+                    islandTiles.add(point);
+                }
+            }
+        }
+
+        boolean notFound = true;
+
+        while (notFound) {
+            GridPoint2 point1 = islandTiles.get(0);
+            GridPoint2 point2 = islandTiles.get(islandTiles.size()-1);
+            Random rand = new Random();
+
+            GridPoint2 point = islandTiles.get(rand.nextInt(islandTiles.size()-1));
+            int x = point.x;
+            int y = (mg.getHeight()-1) - point.y;
+
+            try {
+                for (int i = y; i < y + range; i++) {
+                    for (int j = x; j < x + range; j++) {
+                        if (map[j][i] != mg.getIslandChar()) {
                             notFound = true;
                             break;
                         } else {

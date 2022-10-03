@@ -470,28 +470,18 @@ public class AtlantisGameArea extends GameArea {
      * Spawns a titan shrine
      */
     private void spawnTitanShrine() {
-        int offset = 20;
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        // Two spawn-points for the barracks next ot TownHall located in the centre
-        Random pointChoosed = new Random();
-        List<GridPoint2> islandTiles = ServiceLocator.getMapService().getIslandTiles();
-        GridPoint2 spawnPoint = new GridPoint2();
-        int numberOfTiles = islandTiles.size();
-        boolean notFound = true;
-        while (notFound) {
-            int point = pointChoosed.nextInt(numberOfTiles-1);
-            spawnPoint = islandTiles.get(point);
-            spawnPoint.add(offset, 0);
-            if (!ServiceLocator.getMapService().isOccupied(spawnPoint)) {
-                notFound = false;
-            }
-        }
+        int range = 10;
+
+        // To get spawn point
+        GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInIsland(terrainFactory, range);
 
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.DARK_GRAY);
 
-        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawnPoint, true, true);
+        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1))
+                                                          .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
+                       spawnPoint, true, true);
     }
 
     /**
