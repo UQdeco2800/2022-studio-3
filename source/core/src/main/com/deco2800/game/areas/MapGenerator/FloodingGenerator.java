@@ -21,7 +21,7 @@ public class FloodingGenerator extends Component {
     public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory, AtlantisGameArea atlantisGameArea) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
         this.atlantisGameArea = atlantisGameArea;
-        this.timer = new Timer(1000, 1001);
+        this.timer = new Timer(30000, 30001);
         this.timer.start();
         //TODO - How do we pause the timer when the game is paused?
         //TODO - IDEAS: Flash tile that is picked to be flooded next.
@@ -38,7 +38,7 @@ public class FloodingGenerator extends Component {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
             this.atlantisGameArea.flood();
-            this.timer = new Timer(500, 501);
+            this.timer = new Timer(30000, 30001);
             this.timer.start();
         }
     }
@@ -63,20 +63,32 @@ public class FloodingGenerator extends Component {
         int[] coords = pickTileToFlood();
         int x = coords[0];
         int y = coords[1];
-
         //The call to atlantisTerrainFactory updates the structure of mapGenerator
         this.mapGenerator = this.atlantisTerrainFactory.floodTiles(x, y);
     }
 
     public int[] pickTileToFlood() {
         //TODO - Pick Tiles to be flooded (Dito/Jordan)
-
-        //Dummy code for now
         int[] coords = new int[2];
-        coords[0] = PseudoRandom.seedRandomInt(1,89);
-        coords[1] = PseudoRandom.seedRandomInt(1,199);
+//        int[][] listOfCoords = new int[2][];
+//        char[][] map = mapGenerator.getMap();
+//        for (int x = 0; x < mapGenerator.getWidth(); x++) {
+//            for (int y = 0; y < mapGenerator.getHeight(); y++) {
+//                int i = 0;
+//                if (map[y][x] == mapGenerator.getIslandChar() && (
+//                    map[y-1][x] == mapGenerator.getOceanChar() ||
+//                    map[y+1][x] == mapGenerator.getOceanChar() ||
+//                    map[y][x-1] == mapGenerator.getOceanChar() ||
+//                    map[y][x+1] == mapGenerator.getOceanChar())) {
+//                        listOfCoords[0][i] = x;
+//                        listOfCoords[1][i] = y;
+//                }
+//            }
+//        }
+        // Dummy code for initial test
+         coords[0] = PseudoRandom.seedRandomInt(1,89);
+         coords[1] = PseudoRandom.seedRandomInt(1,199);
         return coords;
-
 
     }
 }
