@@ -16,6 +16,7 @@ import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
+import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.areas.terrain.MinimapComponent;
@@ -112,7 +113,10 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
-            "images/simpleman.png"
+            "images/simpleman.png",
+            "images/spellbox-zeus.png",
+            "images/spell-btn-unclickable.png",
+            "images/spell-btn.png"
 
     };
 
@@ -129,7 +133,8 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/forager.atlas"
+            "images/newwolf.atlas", "images/forager.atlas",
+            "images/spell.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -181,6 +186,8 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+
+        spawnExplosion((new Explosion()).getEntity());
     }
 
     /**
@@ -203,6 +210,23 @@ public class AtlantisGameArea extends GameArea {
             Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
             spawnEntityAt(snake, spawnPoint, true, true);
         }
+    }
+
+    public void spawnExplosion(Entity entity) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        //Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        //Spawn player at centre of city
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.PURPLE);
+        entity.addComponent(mapComponent);
+        entity.setEnabled(false);
+        spawnEntityAt(entity, spawn, true, true);
     }
 
     /**
