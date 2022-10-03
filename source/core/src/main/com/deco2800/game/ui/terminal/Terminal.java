@@ -2,6 +2,7 @@ package com.deco2800.game.ui.terminal;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.ui.terminal.commands.Command;
+import com.deco2800.game.ui.terminal.commands.ConstructionCommand;
 import com.deco2800.game.ui.terminal.commands.DebugCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class Terminal extends Component {
     this.commands = commands;
 
     addCommand("debug", new DebugCommand());
+    addCommand("build", new ConstructionCommand());
   }
 
   /** @return message entered by user */

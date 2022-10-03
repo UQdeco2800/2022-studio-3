@@ -12,10 +12,10 @@ public class MapGeneratorTest {
      * @return map generator with static values for testing
      */
     private static MapGenerator createMapGenerator() {
-        int mapWidth = 100;
-        int mapHeight = 45;
-        int cityWidth = 7;
-        int cityHeight = 7;
+        int mapWidth = 200;
+        int mapHeight = 90;
+        int cityWidth = 50;
+        int cityHeight = 44;
         int islandSize = 80;
         return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
     }
@@ -67,14 +67,14 @@ public class MapGeneratorTest {
     public void mapGetWidthTest() {
         //Ensures width getter functions
         MapGenerator mg = createMapGenerator();
-        assertEquals(100, mg.getWidth());
+        assertEquals(200, mg.getWidth());
     }
 
     @Test
     public void mapGetHeightTest() {
         //Ensures height getter functions
         MapGenerator mg = createMapGenerator();
-        assertEquals(45, mg.getHeight());
+        assertEquals(90, mg.getHeight());
     }
 
     @Test

@@ -61,6 +61,30 @@ public class TerrainComponent extends RenderComponent {
     }
   }
 
+  /**
+   * Converts a vector2 into the closest game tile for placement purposes
+   * @param worldPos the vector to convert
+   * @return Where this is in terms of map tiles
+   */
+  public GridPoint2 worldPositionToTile(Vector2 worldPos) {
+    // really just invert the previous function
+    switch (orientation) {
+      case HEXAGONAL:
+        int x = Math.round(worldPos.x * 2.0f / (tileSize + tileSize/2));
+        int y = Math.round(worldPos.y - ((x % 2 ==0)? 0.5f * tileSize : 0f));
+        return new GridPoint2(x, y);
+      case ORTHOGONAL:
+        return new GridPoint2(Math.round(worldPos.x / tileSize),
+                Math.round(worldPos.y / tileSize));
+      case ISOMETRIC:
+        float i = ((worldPos.x * 2f) - (worldPos.y * 3.724f)) / tileSize;
+        float j = ((worldPos.x * 2f) + (worldPos.y * 3.724f)) / tileSize;
+        return new GridPoint2(Math.round(i), Math.round(j));
+      default:
+        return null;
+    }
+  }
+
   public float getTileSize() {
     return tileSize;
   }

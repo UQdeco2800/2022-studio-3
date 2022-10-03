@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import main.com.deco2800.game.components.weather.WeatherIconProperties;
+import com.deco2800.game.components.weather.WeatherIconProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
