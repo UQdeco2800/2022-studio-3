@@ -108,6 +108,17 @@ public class ColliderComponent extends Component {
     setShape(brad);
     return this;
   }
+
+  public ColliderComponent setAsCentredTile() {
+    Vector2 tileCentre = entity.getCenterPosition();
+    PolygonShape tileBox = new PolygonShape();
+    Vector2 size = entity.getScale();
+    tileBox.setAsBox(size.x, size.y, tileCentre,
+            (float) (Math.PI / 4.0f));
+    setShape(tileBox);
+    return this;
+  }
+
   /**
    * Set friction. This affects the object when touching other objects, but does not affect friction
    * with the ground.

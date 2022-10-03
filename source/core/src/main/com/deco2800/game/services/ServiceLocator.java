@@ -30,7 +30,7 @@ public class ServiceLocator {
   private static ResourceService resourceService;
   private static MapService mapService;
   private static GameAreaEventService gameAreaEventService;
-  public static ForestGameArea gameArea;
+  public static AtlantisGameArea gameArea;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -60,7 +60,7 @@ public class ServiceLocator {
     return resourceService;
   }
 
-  public static ForestGameArea getGameArea(){
+  public static AtlantisGameArea getGameArea(){
     return gameArea;
   }
 
@@ -107,7 +107,7 @@ public class ServiceLocator {
     resourceService = source;
   }
 
-  public static void registerGameArea(ForestGameArea source){
+  public static void registerGameArea(AtlantisGameArea source){
     gameArea = source;
   }
 
