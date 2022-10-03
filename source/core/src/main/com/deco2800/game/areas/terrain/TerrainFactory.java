@@ -27,11 +27,11 @@ import java.io.IOException;
 
 /** Factory for creating game terrain. */
 public class TerrainFactory {
-  private static final int mapWidth = 100;
-  private static final int mapHeight = 45;
-  private static final int cityWidth = 7;
-  private static final int cityHeight = 7;
-  private static final int islandSize = 70;
+  private static final int mapWidth = 200;
+  private static final int mapHeight = 90;
+  private static final int cityWidth = 50;
+  private static final int cityHeight = 44;
+  private static final int islandSize = 80;
 
   private static final GridPoint2 MAP_SIZE = new GridPoint2(mapWidth, mapHeight);
   private static final int TUFT_TILE_COUNT = 30;
