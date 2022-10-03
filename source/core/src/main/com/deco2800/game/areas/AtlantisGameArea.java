@@ -128,10 +128,14 @@ public class AtlantisGameArea extends GameArea {
             "images/spearman.png",
             "images/simpleman.png",
             // city buildings
+            "images/highlightedBlacksmith.png",
             "images/blacksmith.png",
             "images/library.png",
+            "images/rightFacingLibrary.png",
             "images/highlightedLibrary.png",
+            "images/highlightedLeftFacingLibrary.png",
             "images/farm.png",
+            "images/highlightedFarm.png",
             "images/pathTile.png"
     };
 
