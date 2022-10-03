@@ -69,10 +69,10 @@ public class AtlantisTerrainFactory {
         ResourceService resourceService = ServiceLocator.getResourceService();
         textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
         textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
-        textures.put("Sea1", new TextureRegion(resourceService.getAsset("images/Waves tile/wave_1.png", Texture.class)));
-        textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/Waves tile/wave_2.png", Texture.class)));
-        textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/Waves tile/wave_3.png", Texture.class)));
-        textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/Waves tile/wave_4.png", Texture.class)));
+        textures.put("Sea1", new TextureRegion(resourceService.getAsset("images/sea_1.png", Texture.class)));
+        textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
+        textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/sea_3.png", Texture.class)));
+        textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/sea_4.png", Texture.class)));
     }
 
     public TerrainComponent createAtlantisTerrainComponent() {
