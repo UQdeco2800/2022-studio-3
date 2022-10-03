@@ -21,6 +21,8 @@ import com.deco2800.game.utils.random.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
 
 
 public class InfoBoxDisplay extends UIComponent {
@@ -298,7 +300,7 @@ public class InfoBoxDisplay extends UIComponent {
     private void onRelease() {
         logger.info("Releasing Spell");
         spellBtn.setVisible(false);
-        this.timer = new Timer(10000, 10001);
+        this.timer = new Timer(20000, 20001);
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
             if (entity.getEntityName() == "Explosion") {
                 spell = entity;
@@ -307,6 +309,15 @@ public class InfoBoxDisplay extends UIComponent {
         }
         spell.setEnabled(true);
         spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+
+        String[] enemy = {"blueJoker","snake","titan","wolf"};
+        List enemyList = Arrays.asList(enemy);
+
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            if (enemyList.contains(entity.getEntityName())) {
+                entity.dispose();
+            }
+        }
     }
 }
 

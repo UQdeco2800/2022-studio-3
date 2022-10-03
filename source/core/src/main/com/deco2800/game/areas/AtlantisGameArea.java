@@ -197,6 +197,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+            blueJoker.setEntityName("blueJoker");
             spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
     }
@@ -208,6 +209,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+            snake.setEntityName("snake");
             spawnEntityAt(snake, spawnPoint, true, true);
         }
     }
@@ -236,6 +238,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 5; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+            titan.setEntityName("titan");
             spawnEntityAt(titan, spawnPoint, true, true);
         }
     }
@@ -247,6 +250,7 @@ public class AtlantisGameArea extends GameArea {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+            wolf.setEntityName("wolf");
             spawnEntityAt(wolf, spawnPoint, true, true);
         }
     }
