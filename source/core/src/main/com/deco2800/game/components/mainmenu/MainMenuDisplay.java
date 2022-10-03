@@ -22,6 +22,8 @@ public class MainMenuDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
     private static final float Z_INDEX = 2f;
     private static final String[] buttonImages = {"images/start-button.PNG", "images/exit-button.PNG"};
+    private static final String[] buttonImageHovers = {"images/start-button-hover.PNG", "images/exit-button-hover.PNG"};
+
     private Table table;
 
     @Override
@@ -42,10 +44,14 @@ public class MainMenuDisplay extends UIComponent {
         
         /* Load textures to create image buttons */
         Texture startTexture = new Texture(Gdx.files.internal("images/start-button.PNG"));
+        Texture startTextureHover = new Texture(Gdx.files.internal("images/start-button-hover.PNG"));
         Texture exitTexture = new Texture(Gdx.files.internal("images/exit-button.PNG"));
+        Texture exitTextureHover = new Texture(Gdx.files.internal("images/exit-button-hover.PNG"));
 
         ImageButton startBtn = new ImageButton(new TextureRegionDrawable(startTexture));
         ImageButton exitBtn = new ImageButton(new TextureRegionDrawable(exitTexture));
+        ImageButton startBtnHover = new ImageButton(new TextureRegionDrawable(startTextureHover));
+        ImageButton exitBtnHover = new ImageButton(new TextureRegionDrawable(exitTextureHover));
 
         // Triggers an event when the button is pressed
         startBtn.addListener(
@@ -69,9 +75,15 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        table.add(startBtn).padTop(30f);
+        //table.add(startBtn).left().width(600f);
+        //table.add(exitBtn);
+
+        table.left();
+        table.add(startBtn).left().width(800f);
         table.row();
-        table.add(exitBtn).padTop(15f);
+        table.add(exitBtn).left().width(800f);
+        table.pack();
+
 
         stage.addActor(titleImage);
         stage.addActor(table);
