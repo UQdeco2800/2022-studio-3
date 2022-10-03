@@ -1,22 +1,27 @@
 package com.deco2800.game.areas.MapGenerator;
 
+import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.utils.random.Timer;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.utils.random.PseudoRandom;
 
 import java.util.Map;
+import java.util.Random;
 
 public class FloodingGenerator extends Component {
     private final AtlantisTerrainFactory atlantisTerrainFactory;
     private MapService mapService;
     private MapGenerator mapGenerator;
+    private AtlantisGameArea atlantisGameArea;
     private Timer timer;
 
-    public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory) {
+    public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory, AtlantisGameArea atlantisGameArea) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
-        this.timer = new Timer(10000, 10000);
+        this.atlantisGameArea = atlantisGameArea;
+        this.timer = new Timer(1000, 1001);
         this.timer.start();
         //TODO - How do we pause the timer when the game is paused?
         //TODO - IDEAS: Flash tile that is picked to be flooded next.
@@ -32,7 +37,8 @@ public class FloodingGenerator extends Component {
     public void update() {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
-            this.timer = new Timer(10000, 10000);
+            this.atlantisGameArea.flood();
+            this.timer = new Timer(100, 101);
             this.timer.start();
         }
     }
@@ -67,8 +73,8 @@ public class FloodingGenerator extends Component {
 
         //Dummy code for now
         int[] coords = new int[2];
-        coords[0] = 20;
-        coords[1] = 20;
+        coords[0] = PseudoRandom.seedRandomInt(1,89);
+        coords[1] = PseudoRandom.seedRandomInt(1,199);
         return coords;
     }
 }

@@ -148,7 +148,7 @@ public class AtlantisGameArea extends GameArea {
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.floodingGenerator = new FloodingGenerator(this.terrainFactory);
+        this.floodingGenerator = new FloodingGenerator(this.terrainFactory, this);
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
@@ -189,6 +189,14 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+
+        startFlooding();
+    }
+
+    public void startFlooding() {
+        Entity floodingEntity = new Entity();
+        floodingEntity.addComponent(new FloodingGenerator(this.terrainFactory, this));
+        ServiceLocator.getEntityService().register(floodingEntity);
     }
 
     /**
@@ -261,6 +269,17 @@ public class AtlantisGameArea extends GameArea {
         dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
 
         spawnEntity(dialogueBox);
+    }
+
+    public void flood() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        terrain = terrainFactory.createAtlantisTerrainComponent();
+        ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
+        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
+        // allow access to minimap via UI for dynamic resizing/positioning
+        this.dialogueBoxDisplay.setMinimap(minimapComponent);
+
+        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
     }
 
     private void spawnTerrain() {

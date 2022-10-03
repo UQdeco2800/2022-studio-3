@@ -19,6 +19,7 @@ import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class AtlantisTerrainFactory {
     /**
      * Instantiate a new MapGenerator for this terrain factory
      */
-    private static MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
+    private MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
     /**
      * Create a terrain factory with Isometric orientation
@@ -95,7 +96,15 @@ public class AtlantisTerrainFactory {
 
     public MapGenerator floodTiles(int height, int width) {
         mapGenerator.floodTile(height, width);
+        this.createAtlantisTerrainComponent();
+
         //TODO - re-Draw to the screen - (Jordan/Dito)
+
+//        TextureRegion grass = textures.get("Grass");
+//        GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
+//        TiledMap tiledMap = this.createMapTiles(tilePixelSize);
+
+//        this.fillTiles(tiledMap);
 
         //Return new mapGenerator
         return mapGenerator;
@@ -149,7 +158,7 @@ public class AtlantisTerrainFactory {
         sandTile.setId(1);
 
         //Load the map from the map generator
-        char[][] map = mapGenerator.getMap();
+        char[][] map = this.mapGenerator.getMap();
         //Iterate through the map and set cells according to their type
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight; y++) {
@@ -223,9 +232,5 @@ public class AtlantisTerrainFactory {
      */
     public MapGenerator getMapGenerator() {
         return this.mapGenerator;
-    }
-
-    public void floodTiles() {
-
     }
 }

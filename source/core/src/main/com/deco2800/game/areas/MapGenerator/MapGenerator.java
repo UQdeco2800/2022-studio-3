@@ -601,18 +601,32 @@ public class MapGenerator {
     public void floodTile(int x, int y) throws IllegalArgumentException {
         //Check that the square to be flooded is a flood-able square
         //Return without crashing game if an error has been made
-        char tileToBeFlooded = this.map[x][y];
-        try {
-            if (tileToBeFlooded == this.getIslandChar() ||
-                    tileToBeFlooded == this.getCityChar()) {
-                throw new IllegalArgumentException();
+        System.out.println("HEIGHT: " + mapHeight);
+        System.out.println("WIDTH: " + mapWidth);
+
+        //DUMMY CODE
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] != this.getOceanChar()) {
+                    if (this.map[i][j] == this.getIslandChar()) {
+                        this.map[i][j] = this.getOceanChar();
+                        return;
+                    }
+                }
             }
-        } catch (IllegalArgumentException e) {
-            return;
         }
 
+//        char tileToBeFlooded = this.map[x][y];
+//        try {
+//            if (tileToBeFlooded == this.getIslandChar() ||
+//                    tileToBeFlooded == this.getCityChar()) {
+//                throw new IllegalArgumentException();
+//            }
+//        } catch (IllegalArgumentException e) {
+//            return;
+//        }
+
         //Update internal structure, flooding tile
-        this.map[x][y] = this.getOceanChar();
         //TODO - Anything else that needs to be updated to do with the
         //TODO - map. Perhaps the outline of the map if it is intended
         //TODO - to be reused.
