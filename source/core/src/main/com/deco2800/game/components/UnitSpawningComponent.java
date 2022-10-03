@@ -38,7 +38,7 @@ public class UnitSpawningComponent extends Component {
 
     @Override
     public void update() {
-        if (timer.getTimeSince(lastTime) >= 5000) {
+        if (timer.getTimeSince(lastTime) >= 30000) {
             lastTime = timer.getTime();
             spawnUnit();
         }
@@ -58,14 +58,11 @@ public class UnitSpawningComponent extends Component {
         switch(buildingType) {
             case BARRACKS:
                 eventHandler.trigger("spawnHoplite", spawnPoint);
-                eventHandler.trigger("spawnArcher", spawnPoint);
-                eventHandler.trigger("spawnSpearmint", spawnPoint);
                  break;
             case TITANSHRINE:
                 eventHandler.trigger("spawnTitan", spawnPoint);
                 break;
             case SHIP:
-                eventHandler.trigger("spawnBlueJoker", spawnPoint);
                 eventHandler.trigger("spawnSnake", spawnPoint);
                 break;
         }

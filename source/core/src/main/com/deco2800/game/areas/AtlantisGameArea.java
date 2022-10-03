@@ -470,7 +470,7 @@ public class AtlantisGameArea extends GameArea {
      * Spawns a titan shrine
      */
     private void spawnTitanShrine() {
-        int range = 10;
+        int range = 20;
 
         // To get spawn point
         GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInIsland(terrainFactory, range);
@@ -481,7 +481,7 @@ public class AtlantisGameArea extends GameArea {
 
         spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1))
                                                           .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
-                       spawnPoint, true, true);
+                       spawnPoint, false, false);
     }
 
     /**
