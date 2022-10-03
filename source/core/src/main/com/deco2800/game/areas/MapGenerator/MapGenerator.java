@@ -482,7 +482,7 @@ public class MapGenerator {
      */
     private void defineIslandEdges() throws IllegalArgumentException {
         if (mapWidth < islandSize + cityWidth + 2 * islandBuffer) {
-            throw new IllegalArgumentException("Map too small for island of size " + islandSize);
+            throw new IllegalArgumentException("Map too small for island of size " + islandSize + " and city of width " + cityWidth);
         }
         Coordinate centre = cityDetails.get("Centre");
 
