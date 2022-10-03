@@ -2,20 +2,28 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.AtlantisGameArea;
+import com.deco2800.game.areas.GameArea;
+import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.BuildingUIDataComponent;
+import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.damageAnimation;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BarracksConfig;
-import com.deco2800.game.entities.configs.BuildingConfigs;
-import com.deco2800.game.entities.configs.TownHallConfig;
-import com.deco2800.game.entities.configs.WallConfig;
+import com.deco2800.game.entities.configs.*;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputService;
@@ -23,6 +31,8 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -69,10 +79,20 @@ class BuildingFactoryTest {
                 "images/barracks_level_1.0.png",
                 // Walls
                 "images/wooden_wall.png",
+                // Trebuchet
+                "images/Trebuchet-lv1-north.png"
+        };
+        String[] atlasFiles = new String[] {
+                // Titan Shrine
+                "images/titanshrine.atlas",
+                // Ship
+                "images/ship2.atlas"
         };
         AssetManager assetManager = spy(AssetManager.class);
         ResourceService resourceService = new ResourceService(assetManager);
         resourceService.loadTextures(textures);
+        resourceService.loadTextureAtlases(atlasFiles);
+
         resourceService.loadAll();
 
         ServiceLocator.registerResourceService(resourceService);
@@ -193,6 +213,144 @@ class BuildingFactoryTest {
         assertInstanceOf(CombatStatsComponent.class, barracks.getComponent(CombatStatsComponent.class));
 
         assertEquals(6, boundingBox.getVertexCount());
+    }
+
+    /**
+     * Test focuses on adding required components for a titan shrine entity and the usage of configs to construct these
+     * components. Also tests the setting of new shaped collider. This new collider is also visually tested using the
+     * debug terminal to show hit-boxes in game
+     */
+    @Test
+    void createTitanShrine() {
+        final float TITANSHRINE_SCALE = 10f;
+        Entity titanShrine = new Entity();
+        TitanShrineConfig config = configs.titanShrine;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/titanshrine.atlas",
+                                TextureAtlas.class));
+
+        // Animations aren't tested here, that requires visiual testing.
+
+        titanShrine
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new damageAnimation())
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(animator);
+
+
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1111,      // Vertex 0        3
+                1100f, 870f,     // Vertex 1    4 /   \ 2
+                1100f, 800f,     // Vertex 2     |     |
+                605f, 581f,      // Vertex 3    5 \   / 1
+                100f, 800f,      // Vertex 4        0
+                100f, 874f       // Vertex 5
+        };
+
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TITANSHRINE_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        titanShrine.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
+
+        // We don't know the expected vertices for the bounding box so this is something we will have to test visually
+        assertInstanceOf(Entity.class, titanShrine);
+        // Check barracks has correct components
+        assertInstanceOf(ColliderComponent.class, titanShrine.getComponent(ColliderComponent.class));
+        assertInstanceOf(AnimationRenderComponent.class, titanShrine.getComponent(AnimationRenderComponent.class));
+        assertInstanceOf(BuildingActions.class, titanShrine.getComponent(BuildingActions.class));
+        assertInstanceOf(CombatStatsComponent.class, titanShrine.getComponent(CombatStatsComponent.class));
+        assertInstanceOf(damageAnimation.class, titanShrine.getComponent(damageAnimation.class));
+        assertInstanceOf(BuildingUIDataComponent.class, titanShrine.getComponent(BuildingUIDataComponent.class));
+
+        assertEquals(6, boundingBox.getVertexCount());
+    }
+
+    /**
+     * Test focuses on adding required components for a titan shrine entity and the usage of configs to construct these
+     * components. Also tests the setting of new shaped collider. This new collider is also visually tested using the
+     * debug terminal to show hit-boxes in game
+     */
+    @Test
+    void createShip() {
+        final float SHIP_SCALE = 5f;
+        Entity ship = new Entity();
+        ShipConfig config = configs.ship;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/ship2.atlas", TextureAtlas.class));
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        ship
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(animator);
+
+        ship.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        ship.getComponent(AnimationRenderComponent.class).scaleEntity();
+        ship.scaleWidth(SHIP_SCALE);
+
+        assertInstanceOf(Entity.class, ship);
+        // Check barracks has correct components
+        assertInstanceOf(ColliderComponent.class, ship.getComponent(ColliderComponent.class));
+        assertInstanceOf(AnimationRenderComponent.class, ship.getComponent(AnimationRenderComponent.class));
+        assertInstanceOf(BuildingActions.class, ship.getComponent(BuildingActions.class));
+        assertInstanceOf(CombatStatsComponent.class, ship.getComponent(CombatStatsComponent.class));
+        assertInstanceOf(PhysicsMovementComponent.class, ship.getComponent(PhysicsMovementComponent.class));
+    }
+
+    /**
+     * Test focuses on adding required components for a trebuchet entity and the usage of configs to construct these
+     * components.
+     */
+    @Test
+    void createTrebuchet() {
+        final float Trebuchet_SCALE = 3f;
+        Entity trebuchet = new Entity();
+
+        // To make the tests work.
+        Entity target = new Entity();
+        GameArea gameArea = new AtlantisGameArea(new AtlantisTerrainFactory(new CameraComponent()));
+
+        TrebuchetConfig config = configs.trebuchet;
+        AITaskComponent aiComponent = new AITaskComponent()
+                .addTask(new rangedAttackTask(target, 4, 10, 2000f));
+
+        trebuchet
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new TextureRenderComponent("images/Trebuchet-lv1-north.png"))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(aiComponent)
+                .addComponent(new AttackListener(target, gameArea));
+        trebuchet.scaleHeight(Trebuchet_SCALE);
+
+        // We don't know the expected vertices for the bounding box so this is something we will have to test visually
+        assertInstanceOf(Entity.class, trebuchet);
+        // Check barracks has correct components
+        assertInstanceOf(ColliderComponent.class, trebuchet.getComponent(ColliderComponent.class));
+        assertInstanceOf(TextureRenderComponent.class, trebuchet.getComponent(TextureRenderComponent.class));
+        assertInstanceOf(BuildingActions.class, trebuchet.getComponent(BuildingActions.class));
+        assertInstanceOf(CombatStatsComponent.class, trebuchet.getComponent(CombatStatsComponent.class));
+        assertInstanceOf(AITaskComponent.class, trebuchet.getComponent(AITaskComponent.class));
+        assertInstanceOf(AttackListener.class, trebuchet.getComponent(AttackListener.class));
     }
 
     /**

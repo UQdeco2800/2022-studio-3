@@ -237,7 +237,7 @@ public class BuildingFactory {
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
 
-        // TODO: Set isometric colliders
+        //TODO: Set isometric colliders
 
 
 
