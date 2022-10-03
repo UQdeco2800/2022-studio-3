@@ -38,7 +38,7 @@ public class FloodingGenerator extends Component {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
             this.atlantisGameArea.flood();
-            this.timer = new Timer(10, 11);
+            this.timer = new Timer(500, 501);
             this.timer.start();
         }
     }
@@ -76,6 +76,8 @@ public class FloodingGenerator extends Component {
         coords[0] = PseudoRandom.seedRandomInt(1,89);
         coords[1] = PseudoRandom.seedRandomInt(1,199);
         return coords;
+
+
     }
 }
 
