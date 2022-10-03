@@ -131,7 +131,8 @@ public class AtlantisTerrainFactory {
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
-        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1f/2f, oceanFrames);
+
 
         //Set id for each tile - used for visualising minimap
         grassTile.setId(0);
