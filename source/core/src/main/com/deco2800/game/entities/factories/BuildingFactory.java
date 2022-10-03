@@ -42,7 +42,7 @@ public class BuildingFactory {
     /**
      * Width in tiles of a wall pillar entity
      */
-    public static final float CORNER_SCALE = 2f;
+    public static final float CORNER_SCALE = 3f;
 
     /**
      * Width in tiles of wall connectors and gates - do not change as they are contingent on CORNER_SCALE

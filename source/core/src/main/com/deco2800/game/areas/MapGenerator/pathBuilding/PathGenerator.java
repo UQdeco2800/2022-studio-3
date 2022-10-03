@@ -31,9 +31,9 @@ public class PathGenerator {
     /* Contains handy debug information to be written to a textfile */
     public static String debugInfo;
     /* Put the directory path to where you would like the debug info stored e.g. "/home/dir/" */
-    private String debugFilePath = "/home/r0m4n/Documents/deco2800/";
+    private String debugFilePath = "/../";
     /* Set to true if you would like the debug output */
-    private boolean debug = true;
+    private boolean debug = false;
 
     /**
      * Contructs a PathGenerator and generates paths between buildings.
@@ -188,7 +188,7 @@ public class PathGenerator {
      * @param bg an instance of BuildingGenerator
      */
     public PathGenerator(BuildingGenerator bg) {
-        this(bg, bg.getCityBuffer() - 1);
+        this(bg, ((bg.getRowBuffer() + 1) / 2) - 1);
     }
 
     /**

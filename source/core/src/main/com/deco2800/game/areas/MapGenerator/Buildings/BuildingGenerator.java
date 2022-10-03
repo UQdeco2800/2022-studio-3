@@ -79,7 +79,7 @@ public class BuildingGenerator {
      */
     private char doorSymbol = 'D';
     /**
-     * 
+     * PathGenerator instance used for paths
      */
     private PathGenerator pg;
 
@@ -168,6 +168,14 @@ public class BuildingGenerator {
      */
     public int getCityBuffer() {
         return this.CITY_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from each other on the y axis.
+     * @return buidling buffer amount
+     */
+    public int getRowBuffer() {
+        return this.ROW_BUFFER;
     }
 
     /**
