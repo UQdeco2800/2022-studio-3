@@ -105,13 +105,15 @@ public class WeatherIcon extends Actor {
         Texture rainEffects = new Texture("images/Rain.png");
         TextureRegion[][] tmpFrames = TextureRegion.split(img,200,200);
         TextureRegion[][] rainImages = TextureRegion.split(rainEffects, 1000, 1000);
-        this.iceFrames = new TextureRegion[4];
+        this.iceFrames = new TextureRegion[3];
+        this.iceFrames[0] = new TextureRegion(new Texture("images/weather-filter/snowfall_1.png"));
+        this.iceFrames[1] = new TextureRegion(new Texture("images/weather-filter/snowfall_2.png"));
+        this.iceFrames[2] = new TextureRegion(new Texture("images/weather-filter/snowfall_3.png"));
         this.rainFrames = new TextureRegion[4];
         int frame=0;
         for (int i=0; i<2; i++){
             for (int j=0; j<2; j++) {
-                rainFrames[frame] = rainImages[j][i];
-                iceFrames[frame++] = tmpFrames[j][i];
+                rainFrames[frame++] = rainImages[j][i];
 
             }
         }
@@ -191,16 +193,21 @@ public class WeatherIcon extends Actor {
         elapsedTime+= Gdx.graphics.getDeltaTime();
         if (weatherIconProperties == WeatherIconProperties.SNOWY) {
             Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
-            temp.setScale(15, 8);
-            temp.setPosition(-500, -200);
+            temp.setScale(1, 1);
+            temp.setPosition(-100, -200);
             this.weatherFilter = temp;
         }
         if (weatherIconProperties == WeatherIconProperties.RAINY){
             Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
             temp.setScale(1.5f, 1);
             temp.setPosition(200, 0);
-            temp.draw(batch, parentAlpha);
             this.weatherFilter = temp;
+        }
+        if (weatherIconProperties == WeatherIconProperties.STORMY){
+            Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
+            temp.setScale(1.5f, 1);
+            temp.setPosition(200, 0);
+            temp.draw(batch, parentAlpha);
         }
 
         this.weatherFilter.draw(batch, parentAlpha);
