@@ -133,7 +133,9 @@ public class AtlantisGameArea extends GameArea {
             "images/library.png",
             "images/rightFacingLibrary.png",
             "images/highlightedLibrary.png",
+            "images/highlightedLeftFacingLibrary.png",
             "images/farm.png",
+            "images/highlightedFarm.png",
             "images/pathTile.png"
     };
 

@@ -173,6 +173,7 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.ORANGE);
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
                .addComponent(mp)
+               .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
@@ -276,7 +277,7 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.ORANGE);
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
-               .addComponent(new HighlightedTextureRenderComponent("images/highlightedLibrary.png"))
+               .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
