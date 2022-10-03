@@ -314,7 +314,8 @@ public class InfoBoxDisplay extends UIComponent {
         List enemyList = Arrays.asList(enemy);
 
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-            if (enemyList.contains(entity.getEntityName())) {
+            String name = entity.getEntityName();
+            if (name != null && enemyList.contains(name)) {
                 entity.dispose();
             }
         }

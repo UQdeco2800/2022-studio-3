@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
+import com.deco2800.game.areas.MapGenerator.Buildings.Building;
+import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
+import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
@@ -166,9 +169,16 @@ public class AtlantisGameArea extends GameArea {
         spawnBarracks();
         spawnWalls();
 
+        // spawnBuildings();
+
         spawnForager();
         spawnForager();
+
         spawnResources();
+        spawnMiner();
+
+        // spawnWorkerBase();
+        // spawnResources();
         spawnMiner();
         // spawnWorkerBase();
         // spawnMiner();
@@ -196,7 +206,10 @@ public class AtlantisGameArea extends GameArea {
     private void spawnBlueJokers() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(new MapComponent());
+            MapComponent mc = new MapComponent();
+            mc.display();
+            mc.setDisplayColour(Color.BLUE);
+            Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(mc);
             blueJoker.setEntityName("blueJoker");
             spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
@@ -208,7 +221,10 @@ public class AtlantisGameArea extends GameArea {
     private void spawnSnakes() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(new MapComponent());
+            MapComponent mc = new MapComponent();
+            mc.display();
+            mc.setDisplayColour(Color.GREEN);
+            Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(mc);
             snake.setEntityName("snake");
             spawnEntityAt(snake, spawnPoint, true, true);
         }
@@ -237,7 +253,10 @@ public class AtlantisGameArea extends GameArea {
     private void spawnTitan() {
         for (int i = 0; i < 5; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(new MapComponent());
+            MapComponent mc = new MapComponent();
+            mc.display();
+            mc.setDisplayColour(Color.RED);
+            Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(mc);
             titan.setEntityName("titan");
             spawnEntityAt(titan, spawnPoint, true, true);
         }
@@ -249,7 +268,10 @@ public class AtlantisGameArea extends GameArea {
     private void spawnWolf() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
-            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(new MapComponent());
+            MapComponent mc = new MapComponent();
+            mc.display();
+            mc.setDisplayColour(Color.WHITE);
+            Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(mc);
             wolf.setEntityName("wolf");
             spawnEntityAt(wolf, spawnPoint, true, true);
         }
@@ -414,6 +436,30 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
+     * Spawns all buildings in game
+     */
+    private void spawnBuildings() {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        BuildingGenerator bg = new BuildingGenerator(mg);
+        List<CityRow> cityRows = bg.getCityRows();
+        for (CityRow cr : cityRows) {
+            List<Building> buildings = cr.getBuildings();
+            for (Building building : buildings) {
+                Coordinate placement = building.getPlacement();
+                GridPoint2 spawn = new GridPoint2(placement.getX() + building.getWidth() - 2, mg.getHeight() - placement.getY() - building.getHeight() - 6);
+                if (building.getName().equals("Town Hall")) {
+                    MapComponent mapComponent = new MapComponent();
+                    mapComponent.display();
+                    mapComponent.setDisplayColour(Color.BROWN);
+                    Entity buildingEntity = BuildingFactory.createTownHall().addComponent(mapComponent);
+                    spawnEntityAt(buildingEntity, spawn, false, false);
+                }
+
+            }
+        }
+    }
+
+    /**
      * Spawns two Barracks in locations next to the TownHall
      */
     private void spawnBarracks() {
@@ -425,8 +471,15 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
 
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-        spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
+        MapComponent mc1 = new MapComponent();
+        mc1.display();
+        mc1.setDisplayColour(Color.BROWN);
+        MapComponent mc2 = new MapComponent();
+        mc2.display();
+        mc2.setDisplayColour(Color.BROWN);
+
+        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc1), spawn1, true, true);
+        spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc2), spawn2, true, true);
     }
 
     /**
@@ -528,7 +581,10 @@ public class AtlantisGameArea extends GameArea {
      * @param location offset from centre of city
      */
     private void spawnUnit(UnitType type, GridPoint2 location) {
-        Entity unit = UnitFactory.createUnit(type);
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
+        Entity unit = UnitFactory.createUnit(type).addComponent(mc);
         MapGenerator mg = terrainFactory.getMapGenerator();
         Coordinate cityCentre = mg.getCityDetails().get("Centre");
         spawnEntityAt(unit, new GridPoint2(cityCentre.getX(),

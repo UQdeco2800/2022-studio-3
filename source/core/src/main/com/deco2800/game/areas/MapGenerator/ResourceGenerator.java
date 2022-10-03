@@ -20,6 +20,9 @@ public class ResourceGenerator {
 
     private int generationAttempts = 0;
     private final int MAX_GENERATION_ATTEMPTS = 5;
+    /**
+     * Space between each resource in tiles (all around it)
+     */
     private final int RESOURCE_BUFFER = 1;
 
     /**
@@ -59,7 +62,7 @@ public class ResourceGenerator {
         //Place each resource the desired number of times based on preferred distance
         placeResources();
         //Test output
-        //writeCurrentResources("E:\\Deco2800 sprint 2\\Testing\\complete.txt");
+        // writeCurrentResources("/");
     }
 
     /**
@@ -293,7 +296,7 @@ public class ResourceGenerator {
             return (int)(Math.pow(2, 10.5 * distance / maxXDistance));
         } else if (preferredDistance <= 4) {
             //If distance is too close to centre, weight points with lower distance seen as more favourable
-            return (int) Math.pow(2, 9/distance);
+            return distance > 0 ? (int) Math.pow(2, 9/distance) : 0;
         } else {
             //Calculate the difference between the distance between the placement
             // and the centre of the city and the preferred distance
