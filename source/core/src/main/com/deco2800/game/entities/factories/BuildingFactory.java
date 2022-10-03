@@ -281,7 +281,7 @@ public class BuildingFactory {
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
 
-        // Methodology sourced from BuildingFactory.java
+        // Methodology sourced from BuildingFactory.java:createTownHall()
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Six vertices

@@ -31,7 +31,7 @@ public class PathGenerator {
     /* Contains handy debug information to be written to a textfile */
     public static String debugInfo;
     /* Put the directory path to where you would like the debug info stored e.g. "/home/dir/" */
-    private String debugFilePath = "/../";
+    private String debugFilePath = "";
     /* Set to true if you would like the debug output */
     private boolean debug = false;
 
