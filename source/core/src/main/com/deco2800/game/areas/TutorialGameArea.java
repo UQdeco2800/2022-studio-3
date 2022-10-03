@@ -89,6 +89,7 @@ public class TutorialGameArea extends GameArea {
             "images/stone.png",
             "images/archer.png",
             "images/swordsman.png",
+            "images/SirFred.png",
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png"
@@ -162,6 +163,7 @@ public class TutorialGameArea extends GameArea {
         this.terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
         this.dialogueBoxDisplay.setTitle("Welcome to Atlantis Sinks!");
         this.dialogueBoxDisplay.setDialogue("Press next to get started or \nskip to play");
+        this.dialogueBoxDisplay.setImage("images/SirFred.png");
     }
 
     /**

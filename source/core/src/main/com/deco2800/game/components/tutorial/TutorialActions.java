@@ -27,12 +27,13 @@ public class TutorialActions extends Component {
             "If you know how to play, press skip!",
             "Navigate through the map using the 4 sides \n Zoom in and out using your mouse scroll",
             "Great! Now that we can navigate \n Lets talk about gameplay",
-            "The top right hand corner shows your resources,\n the bottom right shows where you are on the map",
+            "The top right corner shows your resources,\n the bottom right shows where you are on the map",
             "If you want to skip any character dialogues,\n press exit",
             "The town hall is where the Atlanteans live, and\n must be protected at all costs!",
             "The barracks is where you can train troops \nto defend Atlantis!",
             "Mining camps are used to gather resources to \nupgrade the city",
-            "Start protecting Atlantis by clicking the\n town hall and creating the bubble!"
+            "Start protecting Atlantis by clicking the\n town hall and creating the bubble!",
+            "Great! Now save Atlantis!"
 
     };
 
@@ -63,10 +64,9 @@ public class TutorialActions extends Component {
             this.count++;
         }
 
-
-
+        if (this.count >= tutorialDialogues.length) {
+            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        }
 
     }
-
-
 }

@@ -162,8 +162,10 @@ public class DialogueBoxDisplay extends UIComponent {
      * @param imagePath - image to be displayed
      */
     public void setImage(String imagePath) {
-
+        // this remove and addActor() methods allow image to be updated - pretty jank, maybe a better way to do this
+        this.image.remove();
         this.image = new Image(new Texture(Gdx.files.internal(imagePath)));
+        stage.addActor(this.image);
     }
 
     /**
