@@ -102,17 +102,21 @@ public class WeatherIcon extends Actor {
         this.speedFactor = this.weatherIconProperties.getSpeedFactor();
 
         Texture img = new Texture("images/weather-filter/ice-frames.png");
+        Texture rainEffects = new Texture("images/Rain.png");
         TextureRegion[][] tmpFrames = TextureRegion.split(img,200,200);
+        TextureRegion[][] rainImages = TextureRegion.split(rainEffects, 1000, 1000);
         this.iceFrames = new TextureRegion[4];
         this.rainFrames = new TextureRegion[4];
         int frame=0;
         for (int i=0; i<2; i++){
             for (int j=0; j<2; j++) {
+                rainFrames[frame] = rainImages[j][i];
                 iceFrames[frame++] = tmpFrames[j][i];
 
             }
         }
         iceAnimation = new Animation(0.5f, iceFrames);
+        rainAnimation = new Animation(0.5f, rainFrames);
         layout();
     }
 
@@ -189,6 +193,12 @@ public class WeatherIcon extends Actor {
             Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
             temp.setScale(15, 8);
             temp.setPosition(-500, -200);
+            this.weatherFilter = temp;
+        }
+        if (weatherIconProperties == WeatherIconProperties.RAINY){
+            Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
+            temp.setScale(1.5f, 1);
+            temp.setPosition(200, 0);
             temp.draw(batch, parentAlpha);
             this.weatherFilter = temp;
         }
