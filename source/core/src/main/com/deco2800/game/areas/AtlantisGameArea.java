@@ -469,11 +469,11 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnTitanShrine() {
         // Position offset from centre of city
-        int offset = 10;
+        int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getCityDetails().get("Centre");
+        Coordinate centre = mg.getIslandEdges().get("Left");
         // Two spawn-points for the barracks next ot TownHall located in the centre
-        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
+        GridPoint2 spawn1 = new GridPoint2(centre.getX()+1, centre.getY());
 
         MapComponent mc1 = new MapComponent();
         mc1.display();

@@ -180,12 +180,12 @@ public class BuildingFactory {
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[]{
-                605f, 1111,    // Vertex 0        3
+                605f, 1111,      // Vertex 0        3
                 1100f, 870f,     // Vertex 1    4 /   \ 2
                 1100f, 800f,     // Vertex 2     |     |
-                605f, 581f,     // Vertex 3    5 \   / 1
-                100f, 800f,     // Vertex 4        0
-                100f, 874f      // Vertex 5
+                605f, 581f,      // Vertex 3    5 \   / 1
+                100f, 800f,      // Vertex 4        0
+                100f, 874f       // Vertex 5
         };
 
         Texture titanShrineTexture = ServiceLocator.getResourceService()
@@ -203,12 +203,9 @@ public class BuildingFactory {
         boundingBox.set(vertices);
         titanShrine.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
-        // TODO: Make component to spawn titan.
         titanShrine.getComponent(AnimationRenderComponent.class).startAnimation("default");
         titanShrine.getComponent(AnimationRenderComponent.class).scaleEntity();
         titanShrine.scaleWidth(TITANSHRINE_SCALE);
-
-        // TODO: Set isometric colliders
 
         return titanShrine;
     }
@@ -241,8 +238,6 @@ public class BuildingFactory {
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new PhysicsMovementComponent());
 
-        // TODO: Make component to spawn enemy units.
-
         ship.scaleWidth(SHIP_SCALE);
 
         // TODO: Set isometric colliders
@@ -258,7 +253,7 @@ public class BuildingFactory {
      * @return Trebuchet building entity.
      */
     public static Entity createTrebuchet(Entity target, GameArea gameArea) {
-        final float Trebuchet_SCALE = 4f;
+        final float Trebuchet_SCALE = 1f;
         Entity trebuchet = createBaseBuilding();
         TrebuchetConfig config = configs.trebuchet;
         AITaskComponent aiComponent = new AITaskComponent()
