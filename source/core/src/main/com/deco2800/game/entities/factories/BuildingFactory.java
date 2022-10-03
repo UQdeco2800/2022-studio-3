@@ -276,7 +276,7 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.ORANGE);
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
-            //    .addComponent(new HighlightedTextureRenderComponent("images/highlightedLibrary.png"))
+               .addComponent(new HighlightedTextureRenderComponent("images/highlightedLibrary.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
@@ -323,6 +323,7 @@ public class BuildingFactory {
         mp.display();
         mp.setDisplayColour(Color.BLACK);
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
+          .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
           .addComponent(mp)
           .addComponent(new TextureScaler(leftPoint, rightPoint));
 
