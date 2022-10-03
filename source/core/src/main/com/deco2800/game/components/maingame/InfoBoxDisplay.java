@@ -204,7 +204,7 @@ public class InfoBoxDisplay extends UIComponent {
                     infoTable.row();
 
                     entityName = entity.getComponent(BuildingActions.class).getType().toString();
-                    health.setText(String.format("%s:%d/%dhp", entityName, hp, maxHp));
+                    health.setText(String.format("%s: %d/%dHP", entityName, hp, maxHp));
                     infoTable.add(health);
 //                    buildingTable.add(levelUpBtn);
 //                    switch (entity.getComponent(BuildingActions.class).getType()){

@@ -60,7 +60,7 @@ public class HealthBarComponent extends RenderComponent {
             // Combat Stats component required for Health
             this.dispose();
         }
-        lastUpdate = TimeUtils.millis();
+        lastUpdate = ServiceLocator.getTimeSource().getTime();
         showing = true;
         zIndex = 0f;
 
@@ -116,7 +116,7 @@ public class HealthBarComponent extends RenderComponent {
     public void update() {
         if (ServiceLocator.getRenderService().getDebug().getActive()) {
             showing = true; // debug command sets health bar to be visible
-        } else if (TimeUtils.timeSinceMillis(lastUpdate) > VISIBLE_TIME) {
+        } else if (ServiceLocator.getTimeSource().getTimeSince(lastUpdate) > VISIBLE_TIME) {
             showing = false; // hides health bar after time of inactivity
         }
     }
@@ -127,8 +127,20 @@ public class HealthBarComponent extends RenderComponent {
      * @param newHealth
      */
     public void updateHealth(int newHealth) {
-        lastUpdate = TimeUtils.millis();
+        lastUpdate = ServiceLocator.getTimeSource().getTime();
         showing = true;
+    }
+
+    public void hideHealthBar() {
+        lastUpdate = ServiceLocator.getTimeSource().getTime() - VISIBLE_TIME;
+    }
+
+    public void showHealthBar(long time) {
+        lastUpdate = ServiceLocator.getTimeSource().getTime() - VISIBLE_TIME + time;
+    }
+
+    public void showHealthBar() {
+        showHealthBar(VISIBLE_TIME);
     }
 
     @Override
