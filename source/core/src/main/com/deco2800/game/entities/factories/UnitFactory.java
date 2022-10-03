@@ -57,7 +57,8 @@ public class UnitFactory {
                         stats.example.movementRadius))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                        .addComponent(new FriendlyComponent());
         PhysicsUtils.setRadiusCollider(unit, stats.example.movementRadius);
         return unit;
     }
@@ -167,7 +168,8 @@ public class UnitFactory {
             troop.addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
-                    .addComponent(animator);
+                    .addComponent(animator)
+                    .addComponent(new FriendlyComponent());
             PhysicsUtils.setScaledCollider(troop, 0.2f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.setScale(2f,2f); // make size more manageable
