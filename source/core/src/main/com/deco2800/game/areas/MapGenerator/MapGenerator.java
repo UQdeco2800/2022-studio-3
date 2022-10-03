@@ -607,10 +607,42 @@ public class MapGenerator {
         //DUMMY CODE
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                if (this.map[i][j] != this.getOceanChar()) {
-                    if (this.map[i][j] == this.getIslandChar()) {
-                        this.map[i][j] = this.getOceanChar();
-                        return;
+                if (this.map[i][j] == this.getIslandChar()) {
+                    try {
+                        if (this.map[i - 1][j] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i - 1][j - 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i - 1][j + 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i + 1][j] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i + 1][j + 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i + 1][j - 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i][j - 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                        if (this.map[i][j + 1] == this.getOceanChar()) {
+                            this.map[i][j] = this.getOceanChar();
+                            return;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //Do Nothing
                     }
                 }
             }

@@ -145,6 +145,8 @@ public class AtlantisGameArea extends GameArea {
 
     private FloodingGenerator floodingGenerator;
 
+    private Entity terrainMapAndMiniMap;
+
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
@@ -272,14 +274,17 @@ public class AtlantisGameArea extends GameArea {
     }
 
     public void flood() {
+        this.terrainMapAndMiniMap.dispose();
         MapGenerator mg = terrainFactory.getMapGenerator();
         terrain = terrainFactory.createAtlantisTerrainComponent();
         ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         // allow access to minimap via UI for dynamic resizing/positioning
         this.dialogueBoxDisplay.setMinimap(minimapComponent);
-
-        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
+        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
+        spawnEntity(terrainMapAndMiniMap);
+//
+//        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
     }
 
     private void spawnTerrain() {
@@ -293,7 +298,8 @@ public class AtlantisGameArea extends GameArea {
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         // allow access to minimap via UI for dynamic resizing/positioning
         this.dialogueBoxDisplay.setMinimap(minimapComponent);
-        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
+        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
+        spawnEntity(terrainMapAndMiniMap);
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
