@@ -15,10 +15,10 @@ public class BuildingTest {
      */
     @Test
     public void getBuildingAttributesTest() {
-        Building testBuilding = new Building(2,3, "Coloseum", new GridPoint2(1,2));
+        Building testBuilding = new Building(2,3, "Colosseum", new GridPoint2(1,2));
         assertEquals(2, testBuilding.getWidth());
         assertEquals(3, testBuilding.getHeight());
-        assertEquals("Coloseum", testBuilding.getName());
+        assertEquals("Colosseum", testBuilding.getName());
         assertEquals(1, testBuilding.getDoor().x);
         assertEquals(2, testBuilding.getDoor().y);
     }
@@ -29,7 +29,7 @@ public class BuildingTest {
     @Test
     public void getSetBuildingPlacements() {
         Coordinate testPlacement = new Coordinate(2,23);
-        Building testBuilding = new Building(2,3, "Coloseum", new GridPoint2(1,2));
+        Building testBuilding = new Building(2,3, "Colosseum", new GridPoint2(1,2));
         testBuilding.setPlacement(testPlacement);
         assertEquals(testPlacement, testBuilding.getPlacement());
     }
