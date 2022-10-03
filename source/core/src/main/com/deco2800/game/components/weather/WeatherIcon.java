@@ -193,22 +193,32 @@ public class WeatherIcon extends Actor {
         elapsedTime+= Gdx.graphics.getDeltaTime();
         if (weatherIconProperties == WeatherIconProperties.SNOWY) {
             Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
-            temp.setScale(1, 1);
-            temp.setPosition(-100, -200);
+            for (int i=0 ; i < 3; i++){
+                for (int j=0; j < 2; j++) {
+                    temp.setScale(0.3f, 0.3f);
+                    temp.setPosition(i*500+50, j*500);
+                    temp.draw(batch, parentAlpha);
+                }
+            }
+
             this.weatherFilter = temp;
         }
-        if (weatherIconProperties == WeatherIconProperties.RAINY){
+        if (weatherIconProperties == WeatherIconProperties.RAINY || weatherIconProperties == WeatherIconProperties.STORMY){
             Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
-            temp.setScale(1.5f, 1);
-            temp.setPosition(200, 0);
-            this.weatherFilter = temp;
+            temp.setScale(0.5f, 0.2f);
+            for (int i=0 ; i < 5; i++){
+                for (int j=0; j < 7; j++) {
+                    temp.setPosition(300*i, j*200);
+                    temp.draw(batch, parentAlpha);
+                }
+            }
+            if (weatherIconProperties == WeatherIconProperties.RAINY){
+                this.weatherFilter = temp;
+                this.weatherFilter.setPosition(700,0);
+            }
+
         }
-        if (weatherIconProperties == WeatherIconProperties.STORMY){
-            Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
-            temp.setScale(1.5f, 1);
-            temp.setPosition(200, 0);
-            temp.draw(batch, parentAlpha);
-        }
+
 
         this.weatherFilter.draw(batch, parentAlpha);
         this.weatherImage.draw(batch, parentAlpha);
