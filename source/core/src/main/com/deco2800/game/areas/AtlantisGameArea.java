@@ -206,11 +206,14 @@ public class AtlantisGameArea extends GameArea {
     private void spawnBlueJokers() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+
             MapComponent mc = new MapComponent();
             mc.display();
             mc.setDisplayColour(Color.BLUE);
             Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(mc);
+
             blueJoker.setEntityName("blueJoker");
+
             spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
     }

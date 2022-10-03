@@ -16,7 +16,7 @@ public class Explosion {
         entity = new Entity();
         animator = new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset("images/spell.atlas", TextureAtlas.class));
         animator.addAnimation(RELEASE,0.1f, Animation.PlayMode.NORMAL);
-        entity.setScale(12f,12f);
+        entity.setScale(20f,12f);
         entity.addComponent(animator);
         entity.setEntityName("Explosion");
     }
