@@ -104,18 +104,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CityRow.html" title="class in com.deco2800.game.areas.MapGenerator.Buildings">CityRow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#chooseRow(int)" class="member-name-link">chooseRow</a><wbr>(int&nbsp;seed)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="BuildingSpecification.html" title="class in com.deco2800.game.areas.MapGenerator.Buildings">BuildingSpecification</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBuildings()" class="member-name-link">getBuildings</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="BuildingSpecification.html" title="class in com.deco2800.game.areas.MapGenerator.Buildings">BuildingSpecification</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBuildings()" class="member-name-link">getBuildings</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a copy of this BuildingGenerator's buildingspec list</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>char[][]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCharMap()" class="member-name-link">getCharMap</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>char[][]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCharMap()" class="member-name-link">getCharMap</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns char char array of the current city contents in the CityRows</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCityBuffer()" class="member-name-link">getCityBuffer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of tiles buildings are placed from each other.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCityHeight()" class="member-name-link">getCityHeight</a>()</code></div>
@@ -132,17 +134,39 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the city width.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#placeBuildings()" class="member-name-link">placeBuildings</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../pathBuilding/PathGenerator.html" title="class in com.deco2800.game.areas.MapGenerator.pathBuilding">PathGenerator</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathGenerator()" class="member-name-link">getPathGenerator</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Places each building in a row of the city</div>
+<div class="block">Returns the PathGenerator instance.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetBuildings()" class="member-name-link">resetBuildings</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRightWallBuffer()" class="member-name-link">getRightWallBuffer</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of tiles buildings are placed from the right wall.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRowBuffer()" class="member-name-link">getRowBuffer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of tiles buildings are placed from each other on the y axis.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWallBuffer()" class="member-name-link">getWallBuffer</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of tiles buildings are placed from the wall.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeCity(int,int)" class="member-name-link">writeCity</a><wbr>(int&nbsp;cityHeight,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetBuildings()" class="member-name-link">resetBuildings</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeCity(int,int)" class="member-name-link">writeCity</a><wbr>(int&nbsp;cityHeight,
  int&nbsp;cityWidth)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Writes the contents of the city to a human readable text file</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeCity(int,int,java.lang.String)" class="member-name-link">writeCity</a><wbr>(int&nbsp;cityHeight,
+ int&nbsp;cityWidth,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Writes the contents of the city to a human readable text file</div>
 </div>
@@ -177,6 +201,61 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getPathGenerator()">
+<h3>getPathGenerator</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../pathBuilding/PathGenerator.html" title="class in com.deco2800.game.areas.MapGenerator.pathBuilding">PathGenerator</a></span>&nbsp;<span class="element-name">getPathGenerator</span>()</div>
+<div class="block">Returns the PathGenerator instance.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>PathGenerator instance</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getWallBuffer()">
+<h3>getWallBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getWallBuffer</span>()</div>
+<div class="block">Returns the number of tiles buildings are placed from the wall.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>wall buffer amount</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRightWallBuffer()">
+<h3>getRightWallBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRightWallBuffer</span>()</div>
+<div class="block">Returns the number of tiles buildings are placed from the right wall.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>right wall buffer amount</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCityBuffer()">
+<h3>getCityBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getCityBuffer</span>()</div>
+<div class="block">Returns the number of tiles buildings are placed from each other.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>buidling buffer amount</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRowBuffer()">
+<h3>getRowBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRowBuffer</span>()</div>
+<div class="block">Returns the number of tiles buildings are placed from each other on the y axis.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>buidling buffer amount</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getCityHeight()">
 <h3>getCityHeight</h3>
@@ -224,6 +303,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="writeCity(int,int,java.lang.String)">
+<h3>writeCity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeCity</span><wbr><span class="parameters">(int&nbsp;cityHeight,
+ int&nbsp;cityWidth,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</span></div>
+<div class="block">Writes the contents of the city to a human readable text file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cityHeight</code> - height of the city in tiles</dd>
+<dd><code>cityWidth</code> - width of the city in tiles</dd>
+<dd><code>path</code> - path to output file</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getCharMap()">
 <h3>getCharMap</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">char[][]</span>&nbsp;<span class="element-name">getCharMap</span>()</div>
@@ -246,22 +340,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="placeBuildings()">
-<h3>placeBuildings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">placeBuildings</span>()</div>
-<div class="block">Places each building in a row of the city</div>
-</section>
-</li>
-<li>
 <section class="detail" id="resetBuildings()">
 <h3>resetBuildings</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetBuildings</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="chooseRow(int)">
-<h3>chooseRow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CityRow.html" title="class in com.deco2800.game.areas.MapGenerator.Buildings">CityRow</a></span>&nbsp;<span class="element-name">chooseRow</span><wbr><span class="parameters">(int&nbsp;seed)</span></div>
 </section>
 </li>
 </ul>

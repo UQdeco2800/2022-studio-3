@@ -138,6 +138,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw the renderable.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawTextureBox(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">drawTextureBox</a><wbr>(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws a square around the area enclosed by the texture - for debugging</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawTextureBox(java.util.List,java.util.List,com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">drawTextureBox</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.badlogic.gdx.math.Vector2&gt;&nbsp;positions,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.badlogic.gdx.math.Vector2&gt;&nbsp;linePos,
+ com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Debug function which draws a box around an entity with a TextureRenderComponent</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.graphics.Texture</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextureOG()" class="member-name-link">getTextureOG</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -226,6 +238,32 @@ loadScripts(document, 'script');</script>
 <h3>scaleEntity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">scaleEntity</span>()</div>
 <div class="block">Scale the entity to a width of 1 and a height matching the texture's ratio</div>
+</section>
+</li>
+<li>
+<section class="detail" id="drawTextureBox(com.badlogic.gdx.graphics.g2d.SpriteBatch)">
+<h3>drawTextureBox</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawTextureBox</span><wbr><span class="parameters">(com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
+<div class="block">Draws a square around the area enclosed by the texture - for debugging</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>batch</code> - SpriteBatch of game</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="drawTextureBox(java.util.List,java.util.List,com.badlogic.gdx.graphics.g2d.SpriteBatch)">
+<h3>drawTextureBox</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawTextureBox</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.badlogic.gdx.math.Vector2&gt;&nbsp;positions,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.badlogic.gdx.math.Vector2&gt;&nbsp;linePos,
+ com.badlogic.gdx.graphics.g2d.SpriteBatch&nbsp;batch)</span></div>
+<div class="block">Debug function which draws a box around an entity with a TextureRenderComponent</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>positions</code> - positions to draw a box around</dd>
+<dd><code>linePos</code> - list of points to draw lines between</dd>
+<dd><code>batch</code> - the SpriteBatch of the game</dd>
+</dl>
 </section>
 </li>
 <li>
