@@ -178,6 +178,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tileToWorldPosition(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">tileToWorldPosition</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePos)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#worldPositionToTile(com.badlogic.gdx.math.Vector2)" class="member-name-link">worldPositionToTile</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;worldPos)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Converts a vector2 into the closest game tile for placement purposes</div>
+</div>
 </div>
 </div>
 </div>
@@ -230,6 +235,19 @@ loadScripts(document, 'script');</script>
 <h3>tileToWorldPosition</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">tileToWorldPosition</span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="worldPositionToTile(com.badlogic.gdx.math.Vector2)">
+<h3>worldPositionToTile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">worldPositionToTile</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;worldPos)</span></div>
+<div class="block">Converts a vector2 into the closest game tile for placement purposes</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>worldPos</code> - the vector to convert</dd>
+<dt>Returns:</dt>
+<dd>Where this is in terms of map tiles</dd>
+</dl>
 </section>
 </li>
 <li>

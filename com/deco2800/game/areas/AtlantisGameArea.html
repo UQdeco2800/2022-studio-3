@@ -135,6 +135,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the entity(ies) in the area which match the given id.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOcean(com.badlogic.gdx.math.GridPoint2)" class="member-name-link">isOcean</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tile)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Lets us check whether a tile is in the ocean</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isRegionClear(com.badlogic.gdx.physics.box2d.PolygonShape)" class="member-name-link">isRegionClear</a><wbr>(com.badlogic.gdx.physics.box2d.PolygonShape&nbsp;shape)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Check that a shape would not collide with any placed entities</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spawnExplosion(com.deco2800.game.entities.Entity)" class="member-name-link">spawnExplosion</a><wbr>(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -190,6 +200,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="isOcean(com.badlogic.gdx.math.GridPoint2)">
+<h3>isOcean</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOcean</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;tile)</span></div>
+<div class="block">Lets us check whether a tile is in the ocean
+
+ <p> Will be useful if changes from cleanup branch are adopted</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>tile</code> - the tile to check</dd>
+<dt>Returns:</dt>
+<dd>whether it is ocean or not</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getEntityByID(int)">
 <h3>getEntityByID</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&gt;</span>&nbsp;<span class="element-name">getEntityByID</span><wbr><span class="parameters">(int&nbsp;id)</span></div>
@@ -215,6 +240,21 @@ loadScripts(document, 'script');</script>
 <dd><code>dispose</code>&nbsp;in interface&nbsp;<code>com.badlogic.gdx.utils.Disposable</code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="GameArea.html#dispose()">dispose</a></code>&nbsp;in class&nbsp;<code><a href="GameArea.html" title="class in com.deco2800.game.areas">GameArea</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isRegionClear(com.badlogic.gdx.physics.box2d.PolygonShape)">
+<h3>isRegionClear</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRegionClear</span><wbr><span class="parameters">(com.badlogic.gdx.physics.box2d.PolygonShape&nbsp;shape)</span></div>
+<div class="block">Check that a shape would not collide with any placed entities
+
+ <p>Assumes a convex polygon</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>shape</code> - the shape to test for collisions</dd>
+<dt>Returns:</dt>
+<dd>true if there are no colliders in region, false otherwise</dd>
 </dl>
 </section>
 </li>
