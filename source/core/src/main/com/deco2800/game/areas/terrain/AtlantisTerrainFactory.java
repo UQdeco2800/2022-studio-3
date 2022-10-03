@@ -133,6 +133,7 @@ public class AtlantisTerrainFactory {
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
         AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1f/2f, oceanFrames);
 
+
         //Set id for each tile - used for visualising minimap
         grassTile.setId(0);
         sandTile.setId(1);
