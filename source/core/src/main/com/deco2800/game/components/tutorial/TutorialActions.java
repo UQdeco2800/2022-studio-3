@@ -23,7 +23,7 @@ public class TutorialActions extends Component {
 
     /* Change this to change the dialogues within the tutorial*/
     private static final String[] tutorialDialogues = {
-            "Hello! My name is Fred, and I will be guiding you in the \ntutorial",
+            "Hello! My name is Fred, and I \nwill be guiding you in the tutorial",
             "If you know how to play, press skip!",
             "Navigate through the map using the 4 sides \n Zoom in and out using your mouse scroll",
             "Great! Now that we can navigate \n Lets talk about gameplay",
