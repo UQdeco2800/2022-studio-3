@@ -1,0 +1,153 @@
+barracks.png
+size: 5120, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+barracks_level_1.0-0_0
+  rotate: false
+  xy: 77, 117
+  size: 894, 639
+  orig: 894, 639
+  offset: 0, 0
+  index: 0
+barracks_level_1.0-0_1
+  rotate: false
+  xy: 1109, 239
+  size: 921, 639
+  orig: 921, 639
+  offset: 0, 0
+  index: 1
+barracks_level_1.0-0_2
+  rotate: false
+  xy: 2280, 239
+  size: 960, 639
+  orig: 960, 639
+  offset: 0, 0
+  index: 2
+barracks_level_1.0-0_3
+  rotate: false
+  xy: 3396, 253
+  size: 999, 625
+  orig: 999, 625
+  offset: 0, 0
+  index: 3
+barracks_level_1.0-0_4
+  rotate: false
+  xy: 60, 937
+  size: 1062, 615
+  orig: 1062, 615
+  offset: 0, 0
+  index: 4
+
+barracks_level_1.0-50_0
+  rotate: false
+  xy: 1374, 913
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 0
+barracks_level_1.0-50_1
+  rotate: false
+  xy: 2424, 913
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 1
+barracks_level_1.0-50_2
+  rotate: false
+  xy: 3642, 913
+  size: 894, 639
+  orig: 894, 639
+  offset: 0, 0
+  index: 2
+barracks_level_1.0-50_default
+  rotate: false
+  xy: 147, 1635
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 3
+
+
+barracks_level_2.0-0_0
+  rotate: false
+  xy: 1380, 1733
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 0
+barracks_level_2.0-0_1
+  rotate: fals
+  xy: 2436, 1733
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 1
+barracks_level_2.0-0_2
+  rotate: false
+  xy: 3798, 1733
+  size: 894, 639
+  orig: 894, 639
+  offset: 0, 0
+  index: 2
+barracks_level_2.0-0_3
+  rotate: false
+  xy: 129, 2503
+  size: 921, 639
+  orig: 921, 639
+  offset: 0, 0
+  index: 3
+barracks_level_2.0-0_4
+  rotate: false
+  xy: 1314, 2518
+  size: 999, 624
+  orig: 999, 624
+  offset: 0, 0
+  index: 4
+barracks_level_2.0-0_5
+  rotate: false
+  xy: 2484, 2587
+  size: 1062, 615
+  orig: 1062, 615
+  offset: 0, 0
+  index: 5
+
+
+barracks_level_2.0-50_0
+  rotate: false
+  xy: 3642, 2153
+  size: 1050, 1041
+  orig: 1050, 1041
+  offset: 0, 0
+  index: 0
+barracks_level_2.0-50_1
+  rotate: false
+  xy: 80, 3210
+  size: 894, 726
+  orig: 894, 726
+  offset: 0, 0
+  index: 1
+barracks_level_2.0-50_2
+  rotate: false
+  xy: 1370, 3244
+  size: 894, 693
+  orig: 894, 693
+  offset: 0, 0
+  index: 2
+barracks_level_2.0-50_3
+  rotate: false
+  xy: 2508, 3250
+  size: 894, 687
+  orig: 894, 687
+  offset: 0, 0
+  index: 3
+barracks_level_2.0-50_default
+  rotate: false
+  xy: 3642, 2973
+  size: 1050, 1041
+  orig: 1050, 1041
+  offset: 0, 0
+  index: 4
+
+
+
