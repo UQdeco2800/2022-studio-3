@@ -29,6 +29,8 @@ public class Entity {
   private static int nextId = 0;
   private static final String EVT_NAME_POS = "setPosition";
 
+  private String entityName;
+
   private final int id;
   private final IntMap<Component> components;
   private final EventHandler eventHandler;
@@ -273,6 +275,11 @@ public class Entity {
     return eventHandler;
   }
 
+  public void setEntityName(String name) {
+    this.entityName = name;
+  }
+  public String getEntityName() { return this.entityName; }
+
   @Override
   public boolean equals(Object obj) {
     return (obj instanceof Entity && ((Entity) obj).getId() == this.getId());
@@ -288,3 +295,4 @@ public class Entity {
     return String.format("Entity{id=%d}", id);
   }
 }
+

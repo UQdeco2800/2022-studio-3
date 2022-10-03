@@ -1,6 +1,7 @@
 package com.deco2800.game.worker;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputComponent;
@@ -26,7 +27,7 @@ public class WorkerFactory {
      */
     public static Entity createWorker() {
         InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForWorker();
+                ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit();
         AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
         Entity worker =
                 new Entity()
@@ -36,6 +37,7 @@ public class WorkerFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.metal))
                         .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
+                        .addComponent(new SelectableComponent())
                         .addComponent(aiComponent)
                         .addComponent(inputComponent);
 

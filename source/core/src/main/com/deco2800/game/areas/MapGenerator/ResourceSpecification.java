@@ -231,4 +231,10 @@ public class ResourceSpecification {
                 && this.preferredDistance == otherResourceSpec.getPreferredDistance());
     }
 
+    @Override
+    public int hashCode() {
+        return this.amount * this.height * this.maxAmount * this.minAmount * this.width *
+        this.preferredDistance * this.name.hashCode() * this.placements.hashCode() *
+        this.potentialPlacements.hashCode();
+    }
 }
