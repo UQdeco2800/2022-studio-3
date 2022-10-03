@@ -19,19 +19,18 @@ public class StoryActions extends Component {
     }
     @Override
     public void create() {
-        entity.getEvents().addListener("next", this::onNext);
+        //entity.getEvents().addListener("next", this::onNext);
         entity.getEvents().addListener("skip", this::onSkip);
+        //entity.getEvents().addListener("previous", this::onPrevious);
     }
 
-   private void onNext(){
-       logger.info("Load next");
-       game.setScreen(GdxGame.ScreenType.MAIN_GAME);
-   }
 
 
     private void onSkip() {
         logger.info("Skipping to game");
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
+
+
 
 }
