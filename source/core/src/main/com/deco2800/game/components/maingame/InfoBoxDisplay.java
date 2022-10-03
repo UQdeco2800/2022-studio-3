@@ -57,6 +57,8 @@ public class InfoBoxDisplay extends UIComponent {
 
     AnimationRenderComponent animator;
 
+    Array<Entity> enemyEntities;
+
     Entity spell;
 
     UserSettings.Settings settings = UserSettings.get();
@@ -177,11 +179,20 @@ public class InfoBoxDisplay extends UIComponent {
      */
     public void updateTables() {
         Array<Entity> selectedEntities = new Array<>();
+        enemyEntities = new Array<>();
+
+        String[] enemy = {"blueJoker","snake","titan","wolf"};
+        List enemyList = Arrays.asList(enemy);
+
         //Check for selected units
         for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
             SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
+            String name = entity.getEntityName();
             if (selectedComponent != null && selectedComponent.isSelected()) {
                 selectedEntities.add(entity);
+            }
+            if (name != null && enemyList.contains(name)) {
+                enemyEntities.add(entity);
             }
         }
 
@@ -310,14 +321,8 @@ public class InfoBoxDisplay extends UIComponent {
         spell.setEnabled(true);
         spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
 
-        String[] enemy = {"blueJoker","snake","titan","wolf"};
-        List enemyList = Arrays.asList(enemy);
-
-        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-            String name = entity.getEntityName();
-            if (name != null && enemyList.contains(name)) {
-                entity.dispose();
-            }
+        for (Entity entity : enemyEntities) {
+            entity.dispose();
         }
     }
 }
