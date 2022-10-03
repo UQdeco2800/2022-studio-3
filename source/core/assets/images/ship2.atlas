@@ -3,7 +3,13 @@ size: 2048, 4096
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-
+default
+  rotate: false
+  xy: 33, 2102
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
 ship_west_100_default
   rotate: false
   xy: 33, 2102
@@ -39,7 +45,6 @@ ship_west_50_04
   orig: 371, 359
   offset: 0, 0
   index: 3
-
 ship_west_0_01
   rotate: false
   xy: 33, 2569
@@ -61,7 +66,6 @@ ship_west_0_03
   orig: 371, 359
   offset: 0, 0
   index: 2
-
 ship_north_100_default
   rotate: false
   xy: 76, 3125
@@ -97,7 +101,6 @@ ship_north_50_04
   orig: 371, 359
   offset: 0, 0
   index: 3
-
 ship_north_0_01
   rotate: false
   xy: 76, 3627
@@ -119,7 +122,6 @@ ship_north_0_03
   orig: 371, 359
   offset: 0, 0
   index: 2
-
 ship_south_100_default
   rotate: false
   xy: 4, 1097
@@ -155,8 +157,6 @@ ship_south_50_04
   orig: 371, 359
   offset: 0, 0
   index: 3
-
-
 ship_south_0_01
   rotate: false
   xy: 33, 1536
@@ -178,8 +178,6 @@ ship_south_0_03
   orig: 371, 359
   offset: 0, 0
   index: 2
-
-
 ship_east_100_default
   rotate: false
   xy: 57, 56
@@ -215,7 +213,6 @@ ship_east_50_04
   orig: 371, 359
   offset: 0, 0
   index: 3
-
 ship_east_0_01
   rotate: false
   xy: 76, 558

@@ -7,13 +7,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.building.BuildingActions;
-import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
@@ -23,7 +21,6 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -221,26 +218,25 @@ public class BuildingFactory {
         Entity ship = createBaseBuilding();
         ShipConfig config = configs.ship;
 
-        // TODO: Change sprite to ship when its done.
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(ServiceLocator.getResourceService()
-                        .getAsset("images/titanshrine.atlas",
-                                TextureAtlas.class));
+                        .getAsset("images/ship2.atlas", TextureAtlas.class));
 
-        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         ship
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new PhysicsMovementComponent());
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(animator);
 
+        ship.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
 
         // TODO: Set isometric colliders
+
+
 
         return ship;
     }

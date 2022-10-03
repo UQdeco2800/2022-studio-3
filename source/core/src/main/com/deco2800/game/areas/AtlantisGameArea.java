@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -140,7 +141,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/titanshrine.atlas"
+            "images/newwolf.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -184,10 +185,11 @@ public class AtlantisGameArea extends GameArea {
 
         // Spawn Buildings in the city
         spawnTownHall();
-//        spawnBarracks();
+        spawnBarracks();
         spawnWalls();
         spawnTrebuchet(townHall, this);
         spawnTitanShrine();
+        spawnShip();
 //        spawnForager();
 //        spawnForager();
 
@@ -468,18 +470,45 @@ public class AtlantisGameArea extends GameArea {
      * Spawns a titan shrine
      */
     private void spawnTitanShrine() {
-        // Position offset from centre of city
         int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getIslandEdges().get("Left");
         // Two spawn-points for the barracks next ot TownHall located in the centre
-        GridPoint2 spawn1 = new GridPoint2(centre.getX()+1, centre.getY());
+        Random pointChoosed = new Random();
+        List<GridPoint2> islandTiles = ServiceLocator.getMapService().getIslandTiles();
+        GridPoint2 spawnPoint = new GridPoint2();
+        int numberOfTiles = islandTiles.size();
+        boolean notFound = true;
+        while (notFound) {
+            int point = pointChoosed.nextInt(numberOfTiles-1);
+            spawnPoint = islandTiles.get(point);
+            spawnPoint.add(offset, 0);
+            if (!ServiceLocator.getMapService().isOccupied(spawnPoint)) {
+                notFound = false;
+            }
+        }
 
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.DARK_GRAY);
 
-        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
+        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawnPoint, true, true);
+    }
+
+    /**
+     * Spawn Ship
+     */
+    private void spawnShip() {
+        int range = 10;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.CORAL);
+
+        GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInSea(terrainFactory, range);
+
+        Entity ship = BuildingFactory.createShip();
+        ship.addComponent(mc).addComponent(new UnitSpawningComponent(gameAreaEventHandle));
+        spawnEntityAt(ship, spawnPoint, false, false);
     }
 
     /**
@@ -535,8 +564,8 @@ public class AtlantisGameArea extends GameArea {
     private void spawnTrebuchet(Entity target, GameArea gameArea) {
         int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getCityDetails().get("Centre");
-        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
+        char[][] map = mg.getMap();
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
                 true, true);
