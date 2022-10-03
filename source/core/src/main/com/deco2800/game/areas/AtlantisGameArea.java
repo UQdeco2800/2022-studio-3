@@ -188,9 +188,9 @@ public class AtlantisGameArea extends GameArea {
         spawnTownHall();
         spawnBarracks();
         spawnWalls();
-        spawnTrebuchet(ship, this);
         spawnTitanShrine();
         spawnShip();
+        spawnTrebuchet(ship, this);
 //        spawnForager();
 //        spawnForager();
 
