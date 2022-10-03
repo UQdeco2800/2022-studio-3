@@ -208,17 +208,21 @@ public class RandomPointGenerator {
             int x = point.x;
             int y = (mg.getHeight()-1) - point.y;
 
-            for (int i = y; i < y+range; i++) {
-                for (int j = x; j < x+range; j++) {
-                    if (map[j][i] != mg.getOceanChar()) {
-                        notFound = true;
-                        break;
-                    } else {
-                        System.out.println("All good");
+            try {
+                for (int i = y; i < y + range; i++) {
+                    for (int j = x; j < x + range; j++) {
+                        if (map[j][i] != mg.getOceanChar()) {
+                            notFound = true;
+                            break;
+                        } else {
+                            System.out.println("All good");
+                        }
                     }
                 }
+                return point;
+            } catch (IndexOutOfBoundsException e) {
+                notFound = true;
             }
-            return point;
         }
         return new GridPoint2(0 , 0);
     }
