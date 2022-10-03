@@ -24,6 +24,7 @@ import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
+import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
@@ -136,7 +137,11 @@ public class AtlantisGameArea extends GameArea {
             "images/highlightedLeftFacingLibrary.png",
             "images/farm.png",
             "images/highlightedFarm.png",
-            "images/pathTile.png"
+            "images/pathTile.png",
+            "images/spellbox-zeus.png",
+            "images/spell-btn-unclickable.png",
+            "images/spell-btn.png"
+
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -152,7 +157,9 @@ public class AtlantisGameArea extends GameArea {
             "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas"
+            "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
+            "images/newwolf.atlas", "images/forager.atlas",
+            "images/spell.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -187,6 +194,8 @@ public class AtlantisGameArea extends GameArea {
         spawnMiner();
 
         //playMusic();
+        player = spawnPlayer();
+        centreCameraOnCity();
 
         // Spawn Buildings in the city
         //spawnTownHall();
@@ -217,6 +226,8 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+
+        spawnExplosion((new Explosion()).getEntity());
     }
 
     /**
@@ -225,10 +236,14 @@ public class AtlantisGameArea extends GameArea {
     private void spawnBlueJokers() {
         for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
+
             MapComponent mc = new MapComponent();
             mc.display();
             mc.setDisplayColour(Color.BLUE);
             Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(mc);
+
+            blueJoker.setEntityName("blueJoker");
+
             spawnEntityAt(blueJoker, spawnPoint, true, true);
         }
     }
@@ -243,8 +258,26 @@ public class AtlantisGameArea extends GameArea {
             mc.display();
             mc.setDisplayColour(Color.GREEN);
             Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(mc);
+            snake.setEntityName("snake");
             spawnEntityAt(snake, spawnPoint, true, true);
         }
+    }
+
+    public void spawnExplosion(Entity entity) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        //Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        //Spawn player at centre of city
+        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
+
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.PURPLE);
+        entity.addComponent(mapComponent);
+        entity.setEnabled(false);
+        spawnEntityAt(entity, spawn, true, true);
     }
 
     /**
@@ -257,6 +290,7 @@ public class AtlantisGameArea extends GameArea {
             mc.display();
             mc.setDisplayColour(Color.RED);
             Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(mc);
+            titan.setEntityName("titan");
             spawnEntityAt(titan, spawnPoint, true, true);
         }
     }
@@ -271,6 +305,7 @@ public class AtlantisGameArea extends GameArea {
             mc.display();
             mc.setDisplayColour(Color.WHITE);
             Entity wolf = EnemyFactory.createWolf(terrainFactory).addComponent(mc);
+            wolf.setEntityName("wolf");
             spawnEntityAt(wolf, spawnPoint, true, true);
         }
     }
