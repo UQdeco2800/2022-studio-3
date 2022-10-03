@@ -280,7 +280,7 @@ public class BuildingGenerator {
     /**
      * Places each building in a row of the city
      */
-    public void placeBuildings() {
+    private void placeBuildings() {
         //Add all buildings remaining to a list of BuildingSpecification to randomly select from
         List<BuildingSpecification> remainingBuildings = new ArrayList<>();
         for (BuildingSpecification b : buildings) {
@@ -376,7 +376,7 @@ public class BuildingGenerator {
         }
     }
 
-    public CityRow chooseRow(int seed) {
+    private CityRow chooseRow(int seed) {
         //Initialise new LinkedList of cityRows
         LinkedList<CityRow> cityRowsCopy = new LinkedList<>(cityRows);
 

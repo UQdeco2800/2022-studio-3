@@ -16,7 +16,7 @@ public class TextureScaler extends Component{
     private Vector2 rightPoint;
     private float initialScale = 0;
 
-    //testing
+    //Debug variables - accessed in function in TextureRenderComponent
     public List<Vector2> drawPoints = new ArrayList<>();
     public List<Vector2> linePoints = new ArrayList<>();
 
@@ -31,9 +31,10 @@ public class TextureScaler extends Component{
      * @return true if the entity was scaled, else false
      */
     public boolean setPreciseScale(float desiredScale) {
-        if (entity == null) {
+        if (entity == null || entity.getComponent(TextureRenderComponent.class) == null) {
             return false;
         }
+
         initialScale = desiredScale;
         Vector2 baseScale = new Vector2(1,1);
 
@@ -71,6 +72,7 @@ public class TextureScaler extends Component{
         Vector2 worldPos = terrain.tileToWorldPosition(tilePoint);
         Vector2 centrePosition = worldPos.cpy();
 
+        //Debug code to track the world position of the desired tile
         drawPoints.add(worldPos.cpy());
 
         float tileSize = terrain.getTileSize();
@@ -97,7 +99,7 @@ public class TextureScaler extends Component{
 
         //Test draw box around offset position, blue
         drawPoints.add(offsetPointPosition);
-
+        //Test - draw box starting from the Tile's bottom left point
         drawPoints.add(centrePosition);
 
         //Determine the distance between the offset point and the centre point
@@ -110,7 +112,7 @@ public class TextureScaler extends Component{
         worldPos.x += offsetDistance.x;
         worldPos.y += offsetDistance.y + constantOffset;
 
-        //Debug code - shows how the object was scaled
+        //Debug code - shows how the object was scaled - draws a line of initialScale tiles long on x and y axis
         linePoints.add(centrePosition.cpy().add(0, constantOffset));
         Vector2 lineShift = terrain.tileToWorldPosition(new GridPoint2(tilePoint.x + (int) initialScale, tilePoint.y))
                 .add(0,  constantOffset);

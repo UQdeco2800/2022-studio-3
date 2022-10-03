@@ -31,12 +31,12 @@ public class CityRow {
     private final int WALL_BUFFER;
 
     /**
-     * Space in tiles between the right edge of the city and the last building
+     * Space in tiles which must exist between the right edge of the city and the last (far right) building
      */
     private final int RIGHT_BUFFER;
 
     /**
-     * Denotes the space taken up from the left of the city row
+     * Denotes the space (in tiles) taken up from the left of the city row
      */
     private int leftSpaceTaken = 0;
 
@@ -65,6 +65,7 @@ public class CityRow {
         this.rowWidth = cityWidth;
         this.index = index;
 
+        //Initialise lists and variables to default values
         resetRow();
     }
 

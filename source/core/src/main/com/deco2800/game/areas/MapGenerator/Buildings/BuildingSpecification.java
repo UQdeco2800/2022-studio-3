@@ -1,6 +1,7 @@
 package com.deco2800.game.areas.MapGenerator.Buildings;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
 
 public class BuildingSpecification {
     /**
@@ -71,8 +72,30 @@ public class BuildingSpecification {
         this.numPlaced = 0;
     }
 
+    public int getNum() {
+        return this.num;
+    }
+
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof BuildingSpecification)) {
+            return false;
+        }
+
+        BuildingSpecification otherBS = (BuildingSpecification) other;
+
+        return (this.getName().equals(otherBS.getName())
+                && this.getWidth() == otherBS.getWidth()
+                && this.getHeight() == otherBS.getHeight()
+                && this.getDoor().equals(otherBS.getDoor())
+                && this.getNum() == otherBS.getNum());
     }
 }
