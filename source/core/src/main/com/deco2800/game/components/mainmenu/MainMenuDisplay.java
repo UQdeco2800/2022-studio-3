@@ -78,9 +78,9 @@ public class MainMenuDisplay extends UIComponent {
 
 
         table.left();
-        table.add(startBtn).left().width(800f);
+        table.add(startBtn).left().width(600f);
         table.row();
-        table.add(exitBtn).left().width(800f);
+        table.add(exitBtn).left().width(600f);
         table.pack();
 
 
