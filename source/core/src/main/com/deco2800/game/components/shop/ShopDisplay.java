@@ -19,8 +19,8 @@ public class ShopDisplay extends UIComponent {
     private Image backgroundShopImage;
     float initHeight, initWidth;
     private static final String image = "images/buildingSelectionMenu.png";
-    Table buildingTable;
-    Table costTable;
+    //Table buildingTable;
+    //Table costTable;
     private Label woodLabel;
     private Label stoneLabel;
     private Label metalLabel;
@@ -59,7 +59,7 @@ public class ShopDisplay extends UIComponent {
     public void dispose() {
         super.dispose();
         backgroundShopImage.remove();
-        buildingTable.remove();
-        costTable.remove();
+        //buildingTable.remove();
+        //costTable.remove();
     }
 }

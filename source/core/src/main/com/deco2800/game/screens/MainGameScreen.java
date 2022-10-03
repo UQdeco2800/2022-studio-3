@@ -150,23 +150,22 @@ public class MainGameScreen extends ScreenAdapter {
   private void createUI() {
     logger.debug("Creating ui");
     Stage stage = ServiceLocator.getRenderService().getStage();
-    InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForTerminal();
+    InputComponent inputComponent = ServiceLocator.getInputService().getInputFactory().createForTerminal();
     DialogueBoxDisplay dialogueBoxDisplay = new DialogueBoxDisplay(537f);
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new WeatherIconDisplay())
-        .addComponent(new PauseMenuDisplay(this.game))
-        .addComponent(new PauseMenuActions(this.game))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
-        .addComponent(new ShopDisplay())
-        .addComponent(new Terminal())
-        .addComponent(inputComponent)
-        .addComponent(new ResourceCountDisplay())
-        .addComponent(new TerminalDisplay());
+    ui.addComponent(new InputDecorator(stage, 11))
+            .addComponent(new WeatherIconDisplay())
+            .addComponent(new PauseMenuDisplay(this.game))
+            .addComponent(new PauseMenuActions(this.game))
+            .addComponent(new PerformanceDisplay())
+            .addComponent(new MainGameActions(this.game))
+            .addComponent(new MainGameExitDisplay())
+            .addComponent(new Terminal())
+            .addComponent(inputComponent)
+            .addComponent(new ResourceCountDisplay())
+            .addComponent(new ShopDisplay())
+            .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
   }
