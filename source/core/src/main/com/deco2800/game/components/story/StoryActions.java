@@ -25,10 +25,16 @@ public class StoryActions extends Component {
     }
 
 
+   private void onNext(){
+       logger.info("Load next");
+       game.setScreen(GdxGame.ScreenType.TUTORIAL);
+   }
+
+
 
     private void onSkip() {
         logger.info("Skipping to game");
-        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        game.setScreen(GdxGame.ScreenType.TUTORIAL);
     }
 
 
