@@ -148,31 +148,35 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSelected()" class="member-name-link">isSelected</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#multipleHover(int,int,int,int)" class="member-name-link">multipleHover</a><wbr>(int&nbsp;startX,
- int&nbsp;startY,
- int&nbsp;endX,
- int&nbsp;endY)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#moveLocation(int,int)" class="member-name-link">moveLocation</a><wbr>(int&nbsp;screenX,
+ int&nbsp;screenY)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#multipleSelect(int,int,int,int)" class="member-name-link">multipleSelect</a><wbr>(int&nbsp;startX,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#multipleHover(int,int,int,int)" class="member-name-link">multipleHover</a><wbr>(int&nbsp;startX,
  int&nbsp;startY,
  int&nbsp;endX,
  int&nbsp;endY)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#screenToWorldPosition(int,int)" class="member-name-link">screenToWorldPosition</a><wbr>(int&nbsp;screenX,
- int&nbsp;screenY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Turns a selected screen position to the world position</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#singleHover(int,int)" class="member-name-link">singleHover</a><wbr>(int&nbsp;xCoordinate,
- int&nbsp;yCoordinate)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#singleSelect(int,int)" class="member-name-link">singleSelect</a><wbr>(int&nbsp;xCoordinate,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#multipleSelect(int,int,int,int)" class="member-name-link">multipleSelect</a><wbr>(int&nbsp;startX,
+ int&nbsp;startY,
+ int&nbsp;endX,
+ int&nbsp;endY)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#screenToWorldPosition(int,int)" class="member-name-link">screenToWorldPosition</a><wbr>(int&nbsp;screenX,
+ int&nbsp;screenY)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Turns a selected screen position to the world position</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#singleHover(int,int)" class="member-name-link">singleHover</a><wbr>(int&nbsp;xCoordinate,
  int&nbsp;yCoordinate)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#singleSelect(int,int)" class="member-name-link">singleSelect</a><wbr>(int&nbsp;xCoordinate,
+ int&nbsp;yCoordinate)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -314,6 +318,13 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>(x,y) in vector form in the world</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="moveLocation(int,int)">
+<h3>moveLocation</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">moveLocation</span><wbr><span class="parameters">(int&nbsp;screenX,
+ int&nbsp;screenY)</span></div>
 </section>
 </li>
 <li>
