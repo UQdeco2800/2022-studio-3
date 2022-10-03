@@ -6,11 +6,11 @@ public enum WeatherIconProperties{
 
     // Affecting movement, affect lighting of the environment
     // "images/rainy.gif"
-    RAINY ("images/rainy.png","images/weather-filter/rainy-filter.png", 0.9f),
+    RAINY ("images/rainy.png","images/weather-filter/rainEffects.png", 0.9f),
 
     // Affect movement a lot, affect terrain and lighting of the environment, must not appear adjacently with sunny
     // "images/snowy.gif"
-    SNOWY ("images/snowy.png", "images/weather-filter/snowy-filter.png", 0.7f),
+    SNOWY ("images/snowy.png", "images/weather-filter/ice-frames.png", 0.7f),
 
     // Does not affect movement, does not affect terrain and lighting of the environment,
     // must not appear adjacently with snowy
