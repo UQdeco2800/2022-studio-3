@@ -300,7 +300,7 @@ public class InfoBoxDisplay extends UIComponent {
     private void onRelease() {
         logger.info("Releasing Spell");
         spellBtn.setVisible(false);
-        this.timer = new Timer(20000, 20001);
+        this.timer = new Timer(15000, 15001);
         for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
             if (entity.getEntityName() == "Explosion") {
                 spell = entity;
