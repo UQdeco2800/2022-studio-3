@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class HealthBarComponent extends RenderComponent {
     private float zIndex;
 
     private long lastUpdate;
-    private final long VISIBLE_TIME = 15 * 1000; // time(ms) that health bar is visible for after health is updated
+    private long visibleTime; // time(ms) that health bar is visible for after health is updated
 
     /**
      * Health bar will display health of entity in game. Buildings and Friendly entity types will display green health
@@ -38,6 +37,7 @@ public class HealthBarComponent extends RenderComponent {
      */
     public HealthBarComponent(EntityType entityType) {
         this.entityType = entityType;
+        visibleTime = 15 * 1000; // 15 seconds
     }
 
     @Override
@@ -116,7 +116,7 @@ public class HealthBarComponent extends RenderComponent {
     public void update() {
         if (ServiceLocator.getRenderService().getDebug().getActive()) {
             showing = true; // debug command sets health bar to be visible
-        } else if (ServiceLocator.getTimeSource().getTimeSince(lastUpdate) > VISIBLE_TIME) {
+        } else if (ServiceLocator.getTimeSource().getTimeSince(lastUpdate) > visibleTime) {
             showing = false; // hides health bar after time of inactivity
         }
     }
@@ -124,23 +124,37 @@ public class HealthBarComponent extends RenderComponent {
     /**
      * Event trigger by event listener. When the health is updated it causes the health bar to display if it is hidden
      * Also restarts the timer that automatically hides health bar
-     * @param newHealth
+     * @param newHealth new health
      */
     public void updateHealth(int newHealth) {
         lastUpdate = ServiceLocator.getTimeSource().getTime();
         showing = true;
     }
 
+    /**
+     * Hides health bar
+     */
     public void hideHealthBar() {
-        lastUpdate = ServiceLocator.getTimeSource().getTime() - VISIBLE_TIME;
+        lastUpdate = ServiceLocator.getTimeSource().getTime() - visibleTime;
     }
 
+    /**
+     * Makes health bar visible for an amount of time
+     * @param time time in milliseconds
+     */
     public void showHealthBar(long time) {
-        lastUpdate = ServiceLocator.getTimeSource().getTime() - VISIBLE_TIME + time;
+        lastUpdate = ServiceLocator.getTimeSource().getTime() - visibleTime + time;
     }
 
+    /**
+     * Makes health bar visible for default amount of time
+     */
     public void showHealthBar() {
-        showHealthBar(VISIBLE_TIME);
+        showHealthBar(visibleTime);
+    }
+
+    public boolean getVisible() {
+        return showing;
     }
 
     @Override
