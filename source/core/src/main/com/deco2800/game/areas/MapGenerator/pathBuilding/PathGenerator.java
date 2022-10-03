@@ -31,9 +31,9 @@ public class PathGenerator {
     /* Contains handy debug information to be written to a textfile */
     public static String debugInfo;
     /* Put the directory path to where you would like the debug info stored e.g. "/home/dir/" */
-    private String debugFilePath = "/../";
+    private String debugFilePath = "/home/r0m4n/Documents/deco2800/";
     /* Set to true if you would like the debug output */
-    private boolean debug = false;
+    private boolean debug = true;
 
     /**
      * Contructs a PathGenerator and generates paths between buildings.
@@ -68,7 +68,7 @@ public class PathGenerator {
                 int right = bg.getRightWallBuffer();
                 if (col < buff || col >= bg.getCityWidth() - right + 1 || row < buff || 
                     row >= bg.getCityHeight() - buff) {
-                    GridPoint2 p = new GridPoint2(col, row);
+                    GridPoint2 p = new GridPoint2(row, col);
                     if (!this.bufferPositions.contains(p)) {
                         this.bufferPositions.add(p);
                     }
@@ -150,6 +150,7 @@ public class PathGenerator {
             }
         }
 
+        debugInfo += "\nAdding missing connections\n";
         // check if paths form a connected graph
         List<GridPoint2> generated = cc.check(toGenerateFrom);
         List<GridPoint2> remaining = new ArrayList<>(toGenerateFrom);
@@ -163,7 +164,11 @@ public class PathGenerator {
                 break;
             }
             Random r = new Random();
-            List<GridPoint2> path = fp.findPathBetween(remaining.get(r.nextInt(remaining.size())), generated.get(r.nextInt(generated.size())));
+            GridPoint2 start = remaining.get(r.nextInt(remaining.size()));
+            GridPoint2 end = generated.get(r.nextInt(generated.size()));
+            debugInfo += "Trying start " + start + " end " + end + "\n";
+            List<GridPoint2> path = fp.findPathBetween(start, end);
+            debugInfo += "New path " + path.toString() + "\n";
             for (GridPoint2 p2 : path) {
                 this.city[p2.x][p2.y] = this.pathTile;
             }

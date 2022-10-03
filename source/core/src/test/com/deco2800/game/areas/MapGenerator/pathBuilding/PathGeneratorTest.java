@@ -1,5 +1,6 @@
 package com.deco2800.game.areas.MapGenerator.pathBuilding;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,4 +18,7 @@ public class PathGeneratorTest {
         this.bg = new BuildingGenerator(new MapGenerator(10, 10, 10, 10, 10));
         this.pg = new PathGenerator(bg);
     }
+
+    // @Test
+    // void 
 }

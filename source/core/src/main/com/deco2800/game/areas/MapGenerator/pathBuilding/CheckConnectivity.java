@@ -38,7 +38,12 @@ public class CheckConnectivity {
 
         fringe.add(new Node(start, null, this.pg));
 
-        while (fringe.size() > 0) {
+        // emergency stopping condition if something breaks
+        int stop = this.pg.getCity().length * this.pg.getCity()[0].length;
+        int i = 0;
+
+        while (fringe.size() > 0 || i == stop) {
+            i++;
 
             Node node = fringe.get(0);
             fringe.remove(0);
