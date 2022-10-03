@@ -20,17 +20,6 @@ public class ConstructionCommand implements Command{
     private Entity constructHighlight =
             new Entity();
 
-    private final String[] requisiteTextures = {
-            "images/barracks_highlight_red.png",
-            "images/barracks_highlight_green.png",
-            "images/wooden_wall_green.png",
-            "images/wooden_wall_red.png"
-    };
-
- public ConstructionCommand() {
-     ServiceLocator.getResourceService().loadTextures(requisiteTextures);
- }
-
     @Override
     public boolean action(ArrayList<String> args) {
         if (args.size() != 1) {

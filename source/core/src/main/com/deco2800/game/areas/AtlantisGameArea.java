@@ -119,6 +119,13 @@ public class AtlantisGameArea extends GameArea {
             "images/exit-button.PNG",
             "images/dialogue_box_background_Deep_Sea.png"
     };
+
+    private final String[] buildingPlacementTextures = {
+            "images/barracks_highlight_red.png",
+            "images/barracks_highlight_green.png",
+            "images/wooden_wall_green.png",
+            "images/wooden_wall_red.png"
+    };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
@@ -649,7 +656,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
-
+        resourceService.loadTextures(buildingPlacementTextures);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
