@@ -1,6 +1,7 @@
 package com.deco2800.game.worker;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.FileLoader;
@@ -39,7 +40,8 @@ public class WorkerFactory {
                         .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
                         .addComponent(new SelectableComponent())
                         .addComponent(aiComponent)
-                        .addComponent(inputComponent);
+                        .addComponent(inputComponent)
+                        .addComponent(new FriendlyComponent());
 
         PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);
