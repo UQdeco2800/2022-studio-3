@@ -214,6 +214,7 @@ public class BuildingFactory {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
 
+
         wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
@@ -241,7 +242,6 @@ public class BuildingFactory {
                 152f, 152f,
                 119, 138
         };
-
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
                 .addComponent(new TextureScaler(leftPoint, rightPoint));
 
