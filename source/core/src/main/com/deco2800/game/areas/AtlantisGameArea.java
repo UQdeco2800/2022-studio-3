@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
@@ -29,6 +31,7 @@ import com.deco2800.game.entities.factories.UnitFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -172,10 +175,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        //spawnBlueJokers();
+        //spawnWolf();
+        //spawnTitan();
+        //spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -184,6 +187,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+        ServiceLocator.registerGameArea(this);
     }
 
     /**
@@ -299,6 +303,18 @@ public class AtlantisGameArea extends GameArea {
                 }
             }
         }
+    }
+
+    /**
+     * Lets us check whether a tile is in the ocean
+     *
+     * <p> Will be useful if changes from cleanup branch are adopted
+     * @param tile the tile to check
+     * @return whether it is ocean or not
+     */
+    public boolean isOcean(GridPoint2 tile) {
+        return terrainFactory.getMapGenerator().getMap()[tile.y][tile.x]
+                == terrainFactory.getMapGenerator().getOceanChar();
     }
 
     /**
@@ -484,19 +500,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Creates an example unit for testing formations and actions
-     *
-     * Places the unit relative to the city centre for convenience
-     */
-    private void spawnExampleUnit() {
-        Entity exampleUnit = UnitFactory.createExampleUnit();
-        GridPoint2 location =
-                RandomPointGenerator.getRandomPointInRange(terrainFactory,
-                        0.75);
-        spawnEntityAt(exampleUnit, location, true, true);
-    }
-
-    /**
      * Creates units for demonstration purposes
      *
      * Spawns them relative to city centre for convenience
@@ -597,5 +600,26 @@ public class AtlantisGameArea extends GameArea {
         super.dispose();
         music.stop();
         this.unloadAssets();
+    }
+
+    /**
+     * Check that a shape would not collide with any placed entities
+     *
+     * <p>Assumes a convex polygon
+     * @param shape the shape to test for collisions
+     * @return true if there are no colliders in region, false otherwise
+     */
+    public boolean isRegionClear(PolygonShape shape) {
+        for (Entity entity: areaEntities) {
+            if(entity.getComponent(ColliderComponent.class) != null) {
+                for (int i = 0; i < shape.getVertexCount(); i++) {
+                    Vector2 vertex = new Vector2();
+                    shape.getVertex(i, vertex);
+                    if (entity.getComponent(ColliderComponent.class).getFixture().testPoint(vertex))
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 }
