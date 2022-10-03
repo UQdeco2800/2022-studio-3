@@ -193,10 +193,10 @@ public class WeatherIcon extends Actor {
         elapsedTime+= Gdx.graphics.getDeltaTime();
         if (weatherIconProperties == WeatherIconProperties.SNOWY) {
             Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
-            for (int i=0 ; i < 3; i++){
-                for (int j=0; j < 2; j++) {
+            for (int i=0 ; i < 4; i++){
+                for (int j=0; j < 3; j++) {
                     temp.setScale(0.3f, 0.3f);
-                    temp.setPosition(i*500+50, j*500);
+                    temp.setPosition(i*400, j*400-200);
                     temp.draw(batch, parentAlpha);
                 }
             }
