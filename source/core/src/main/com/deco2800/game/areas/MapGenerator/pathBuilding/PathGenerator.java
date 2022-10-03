@@ -178,8 +178,10 @@ public class PathGenerator {
             i++;
         }
 
-        MapGenerator.writeMap(this.city, this.debugFilePath + "cityMap.txt", bg.getCityWidth(), bg.getCityHeight());
-        if (debug) this.debugWrite();
+        if (debug) {
+            MapGenerator.writeMap(this.city, this.debugFilePath + "cityMap.txt", bg.getCityWidth(), bg.getCityHeight());
+            this.debugWrite();
+        }
     }
 
     /**

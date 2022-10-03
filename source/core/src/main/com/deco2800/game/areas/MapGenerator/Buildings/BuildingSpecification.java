@@ -37,6 +37,14 @@ public class BuildingSpecification {
     }
 
     /**
+     * Returns the number of buildings to place in the game.
+     * @return number of buildings to place
+     */
+    public int numToBuild() {
+        return this.num;
+    }
+
+    /**
      * Returns the number of buildings still to be placed
      * @return Number of buildings of this type to place
      */

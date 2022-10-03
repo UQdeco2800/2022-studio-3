@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.entities.Entity;
@@ -19,6 +20,8 @@ import com.deco2800.game.entities.configs.WallConfig;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.input.InputService;
+import com.deco2800.game.map.MapComponent;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -69,6 +72,12 @@ class BuildingFactoryTest {
                 "images/barracks_level_1.0.png",
                 // Walls
                 "images/wooden_wall.png",
+                // Farms
+                "images/farm.png",
+                // Library
+                "images/library.png",
+                // Blacksmiths
+                "images/blacksmith.png"
         };
         AssetManager assetManager = spy(AssetManager.class);
         ResourceService resourceService = new ResourceService(assetManager);
@@ -77,6 +86,7 @@ class BuildingFactoryTest {
 
         ServiceLocator.registerResourceService(resourceService);
         ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerMapService(new MapService());
     }
 
     /**
@@ -225,6 +235,143 @@ class BuildingFactoryTest {
         assertInstanceOf(BuildingActions.class, wall.getComponent(BuildingActions.class));
         assertInstanceOf(CombatStatsComponent.class, wall.getComponent(CombatStatsComponent.class));
 
+        assertEquals(4, boundingBox.getVertexCount());
+    }
+
+    /**
+     * Tests whether a farm building entity can be created.
+     */
+    @Test
+    void shouldCreateFarm() {
+        Entity farm = new Entity();
+        final float FARM_SCALE = 5f;
+
+        Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+
+        farm.addComponent(new TextureRenderComponent("images/farm.png"))
+            .addComponent(new MapComponent())
+            .addComponent(new TextureScaler(leftPoint, rightPoint))
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+        assertInstanceOf(ColliderComponent.class, farm.getComponent(ColliderComponent.class));
+        assertInstanceOf(MapComponent.class, farm.getComponent(MapComponent.class));
+        assertInstanceOf(TextureRenderComponent.class, farm.getComponent(TextureRenderComponent.class));
+        assertInstanceOf(TextureScaler.class, farm.getComponent(TextureScaler.class));
+
+        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
+
+        // Methodology sourced from BuildingFactory.java:createTownHall()
+        float[] points = new float[] {
+            33f, 199f,
+            113f, 240f,
+            253f, 173f,
+            169f, 137f
+        };
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/farm.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(FARM_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape();
+        boundingBox.set(vertices);
+        farm.getComponent(ColliderComponent.class).setShape(boundingBox);
+
+        assertEquals(4, boundingBox.getVertexCount());
+    }
+
+    /**
+     * Tests whether a library building entity can be created
+     */
+    @Test
+    void shouldCreateLibrary() {
+        Entity library = new Entity();
+        final float LIBRARY_SCALE = 5f;
+
+        Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
+
+        library.addComponent(new TextureRenderComponent("images/library.png"))
+               .addComponent(new MapComponent())
+               .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+               .addComponent(new TextureScaler(leftPoint, rightPoint));
+
+        assertInstanceOf(ColliderComponent.class, library.getComponent(ColliderComponent.class));
+        assertInstanceOf(MapComponent.class, library.getComponent(MapComponent.class));
+        assertInstanceOf(TextureRenderComponent.class, library.getComponent(TextureRenderComponent.class));
+        assertInstanceOf(TextureScaler.class, library.getComponent(TextureScaler.class));
+
+        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
+
+        // Methodology sourced from BuildingFactory.java:createTownHall()
+        float[] points = new float[] {      // Six vertices
+            81f, 354f,
+            191f, 411f,
+            276f, 370f,
+            361f, 420f,
+            446f, 375f,
+            247f, 273f
+        };
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/library.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(library.getScale().x);
+        }
+        PolygonShape boundingBox = new PolygonShape();
+        boundingBox.set(vertices);
+        library.getComponent(ColliderComponent.class).setShape(boundingBox);
+
+        assertEquals(5, boundingBox.getVertexCount());
+    }
+
+    /**
+     * Tests whether a blacksmith building entity can be created
+     */
+    @Test
+    void shouldCreateBlacksmith() {
+        Entity bs = new Entity();
+        final float BLACKSMITH_SCALE = 5f;
+
+        Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
+        Vector2 rightPoint = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
+
+        bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
+          .addComponent(new MapComponent())
+          .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+          .addComponent(new TextureScaler(leftPoint, rightPoint));
+
+        assertInstanceOf(ColliderComponent.class, bs.getComponent(ColliderComponent.class));
+        assertInstanceOf(MapComponent.class, bs.getComponent(MapComponent.class));
+        assertInstanceOf(TextureRenderComponent.class, bs.getComponent(TextureRenderComponent.class));
+        assertInstanceOf(TextureScaler.class, bs.getComponent(TextureScaler.class));
+
+        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
+
+        // Methodology sourced from BuildingFactory.java:createTownHall()
+        float[] points = new float[] {      // Four vertices
+            5f, 176f,
+            123f, 251f,
+            244f, 192f,
+            126f, 117f
+        };
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/blacksmith.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(bs.getScale().x);
+        }
+        PolygonShape boundingBox = new PolygonShape();
+        boundingBox.set(vertices);
+        bs.getComponent(ColliderComponent.class).setShape(boundingBox);
+        
         assertEquals(4, boundingBox.getVertexCount());
     }
 }

@@ -161,6 +161,10 @@ public class BuildingFactory {
         return barracks;
     }
 
+    /**
+     * Creates a farm building entity to be spawned in the game.
+     * @return farm entity
+     */
     public static Entity createFarm() {
         Entity farm = createBaseBuilding();
         final float FARM_SCALE = 5f;
@@ -178,16 +182,13 @@ public class BuildingFactory {
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
 
-        // Methodology sourced from BuildingFactory.java
-        // Setting Isometric Collider
-        // Points (in pixels) on the texture to set the collider to
+        // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
             33f, 199f,      // Vertex 0       3--2
             113f, 240f,     // Vertex 1      /  /
             253f, 173f,     // Vertex 2     /  /
             169f, 137f      // Vertex 3    0--1
         };
-        // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/farm.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
@@ -196,7 +197,7 @@ public class BuildingFactory {
         for (int i = 0; i < cords.length / 2; i++) {
             vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(FARM_SCALE);
         }
-        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        PolygonShape boundingBox = new PolygonShape();
         boundingBox.set(vertices);
         farm.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
@@ -283,8 +284,6 @@ public class BuildingFactory {
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
-        // Setting Isometric Collider
-        // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Six vertices
             81f, 354f,
             191f, 411f,
@@ -293,7 +292,6 @@ public class BuildingFactory {
             446f, 375f,
             247f, 273f
         };
-        // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/library.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
@@ -302,9 +300,9 @@ public class BuildingFactory {
         for (int i = 0; i < cords.length / 2; i++) {
             vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(library.getScale().x);
         }
-        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        PolygonShape boundingBox = new PolygonShape();
         boundingBox.set(vertices);
-        library.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+        library.getComponent(ColliderComponent.class).setShape(boundingBox);
 
         return library;
     }
@@ -330,17 +328,13 @@ public class BuildingFactory {
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
 
-        // Setting Isometric Collider
-
-        // Methodology sourced from BuildingFactory.java
-        // Points (in pixels) on the texture to set the collider to
+        // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
             5f, 176f,       // Vertex 0        3--2
             123f, 251f,     // Vertex 1      /  /
             244f, 192f,     // Vertex 2     /  /
             126f, 117f      // Vertex 3    0--1
         };
-        // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/blacksmith.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
@@ -349,9 +343,9 @@ public class BuildingFactory {
         for (int i = 0; i < cords.length / 2; i++) {
             vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(bs.getScale().x);
         }
-        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        PolygonShape boundingBox = new PolygonShape();
         boundingBox.set(vertices);
-        bs.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider'
+        bs.getComponent(ColliderComponent.class).setShape(boundingBox);
         
         return bs;
     }
