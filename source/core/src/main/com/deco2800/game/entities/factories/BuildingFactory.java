@@ -12,6 +12,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.damageAnimation;
 import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
@@ -169,10 +170,12 @@ public class BuildingFactory {
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         titanShrine
+                .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingUIDataComponent())
                 .addComponent(animator);
+
 
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
@@ -249,11 +252,11 @@ public class BuildingFactory {
      * @return Trebuchet building entity.
      */
     public static Entity createTrebuchet(Entity target, GameArea gameArea) {
-        final float Trebuchet_SCALE = 1f;
+        final float Trebuchet_SCALE = 3f;
         Entity trebuchet = createBaseBuilding();
         TrebuchetConfig config = configs.trebuchet;
         AITaskComponent aiComponent = new AITaskComponent()
-                .addTask(new rangedAttackTask(target, 2, 10, 20f));
+                .addTask(new rangedAttackTask(target, 4, 10, 2000f));
 
         trebuchet.addComponent(new TextureRenderComponent("images/Trebuchet-lv1-north.png"))
                 .addComponent(new BuildingActions(config.type, config.level))

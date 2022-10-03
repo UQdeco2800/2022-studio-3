@@ -6,6 +6,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 
 /**
  * When this entity touches a valid enemy's bullet, deal damage to them and destroy the bullet.
@@ -34,6 +35,7 @@ public class bulletHitShips extends Component {
         if(target == this.target) {
             bullet.getComponent(PhysicsComponent.class).getPhysics().addToDestroy(bullet);
             target.getComponent(CombatStatsComponent.class).decreaseHealth(20);
+            target.getComponent(AnimationRenderComponent.class).startAnimation("attacked");
         }
     }
 }

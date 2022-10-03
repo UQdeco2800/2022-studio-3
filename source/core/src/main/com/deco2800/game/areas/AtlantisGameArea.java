@@ -155,6 +155,7 @@ public class AtlantisGameArea extends GameArea {
 
     private Entity townHall;
     private Entity ship;
+    private Entity titan;
 
     private EventHandler gameAreaEventHandle;
 
@@ -190,7 +191,7 @@ public class AtlantisGameArea extends GameArea {
         spawnWalls();
         spawnTitanShrine();
         spawnShip();
-        spawnTrebuchet(ship, this);
+        spawnTrebuchet(titan, this);
 //        spawnForager();
 //        spawnForager();
 
@@ -479,9 +480,9 @@ public class AtlantisGameArea extends GameArea {
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.DARK_GRAY);
-
-        spawnEntityAt((BuildingFactory.createTitanShrine().addComponent(mc1))
-                                                          .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
+        titan = BuildingFactory.createTitanShrine();
+        spawnEntityAt((titan.addComponent(mc1))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
                        spawnPoint, false, false);
     }
 
