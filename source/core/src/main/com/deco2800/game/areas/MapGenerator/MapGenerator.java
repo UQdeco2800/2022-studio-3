@@ -598,7 +598,7 @@ public class MapGenerator {
      * @param x
      * @param y
      */
-    public void floodTile(int x, int y) throws IllegalArgumentException {
+    public void floodTile() throws IllegalArgumentException {
         //Check that the square to be flooded is a flood-able square
         //Return without crashing game if an error has been made
 

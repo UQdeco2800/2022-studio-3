@@ -94,8 +94,8 @@ public class AtlantisTerrainFactory {
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
-    public MapGenerator floodTiles(int height, int width) {
-        mapGenerator.floodTile(height, width);
+    public MapGenerator floodTiles() {
+        mapGenerator.floodTile();
         this.createAtlantisTerrainComponent();
 
         //TODO - re-Draw to the screen - (Jordan/Dito)

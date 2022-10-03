@@ -12,105 +12,75 @@ import java.util.Map;
 import java.util.Random;
 
 public class FloodingGenerator extends Component {
+    /**
+     * Terrain factory of the game to be updated as flooding occurs.
+     */
     private final AtlantisTerrainFactory atlantisTerrainFactory;
-    private MapService mapService;
-    private MapGenerator mapGenerator;
+    /**
+     * The game area for the main screen, re-renders tiles when flooding occurs.
+     */
     private AtlantisGameArea atlantisGameArea;
+    /**
+     * Flooding timer to signal flooding event.
+     */
     private Timer timer;
 
+    /**
+     * Creates the entity that manages flooding for the game.
+     * @param atlantisTerrainFactory Terrain factory for the game area.
+     * @param atlantisGameArea Main game area.
+     */
     public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory, AtlantisGameArea atlantisGameArea) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
         this.atlantisGameArea = atlantisGameArea;
-        this.timer = new Timer(30000, 30001);
-        this.timer.start();
+        this.startTimer();
+
         //TODO - How do we pause the timer when the game is paused?
         //TODO - IDEAS: Flash tile that is picked to be flooded next.
         //TODO - Visual Timer on the screen.
     }
 
+    /**
+     * Starts the countdown for flooding to occur.
+     */
+    private void startTimer() {
+        this.timer = new Timer(30, 31);
+        this.timer.start();
+    }
+
+    /**
+     * Create the component in the game.
+     */
     @Override
     public void create() {
         super.create();
     }
 
+    /**
+     * To be called each time update is called.
+     */
     @Override
     public void update() {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
-            this.atlantisGameArea.flood();
-            this.timer = new Timer(30000, 30001);
-            this.timer.start();
+            this.startTimer();
         }
     }
 
+    /**
+     * Remove the entity from the game.
+     */
     @Override
     public void dispose() {
         super.dispose();
     }
 
     /**
-     *
+     * Algorithm that determines which tiles to be flooded on the next flooding event.
+     * The call to atlantisTerrainFactory updates the structure of mapGenerator.
      */
     public void triggerFloodEvent() {
-        this.floodTile();
-    }
-
-    /**
-     * Algorithm that determines which tiles to be flooded on the next flooding event.
-     */
-    public void floodTile() {
-        //TODO - Pick tile/tiles to be flooded
-        int[] coords = pickTileToFlood();
-        int x = coords[0];
-        int y = coords[1];
-        //The call to atlantisTerrainFactory updates the structure of mapGenerator
-        this.mapGenerator = this.atlantisTerrainFactory.floodTiles(x, y);
-    }
-
-    public int[] pickTileToFlood() {
-        //TODO - Pick Tiles to be flooded (Dito/Jordan)
-        int[] coords = new int[2];
-//        int[][] listOfCoords = new int[2][];
-//        char[][] map = mapGenerator.getMap();
-//        for (int x = 0; x < mapGenerator.getWidth(); x++) {
-//            for (int y = 0; y < mapGenerator.getHeight(); y++) {
-//                int i = 0;
-//                if (map[y][x] == mapGenerator.getIslandChar() && (
-//                    map[y-1][x] == mapGenerator.getOceanChar() ||
-//                    map[y+1][x] == mapGenerator.getOceanChar() ||
-//                    map[y][x-1] == mapGenerator.getOceanChar() ||
-//                    map[y][x+1] == mapGenerator.getOceanChar())) {
-//                        listOfCoords[0][i] = x;
-//                        listOfCoords[1][i] = y;
-//                }
-//            }
-//        }
-        // Dummy code for initial test
-         coords[0] = PseudoRandom.seedRandomInt(1,89);
-         coords[1] = PseudoRandom.seedRandomInt(1,199);
-        return coords;
-
+        this.atlantisTerrainFactory.floodTiles();
+        this.atlantisGameArea.flood();
     }
 }
-
-//    private static void floodingEdges(TiledMapTileLayer layer) {
-//        ResourceService resourceService = ServiceLocator.getResourceService();
-//        TextureRegion isoOcean =
-//                new TextureRegion(resourceService.getAsset("images/Ocean.png", Texture.class));
-//        TerrainTile oceanTile = new TerrainTile(isoOcean);
-//        char[][] map = mapGenerator.getMap();
-//        char[][] mapOutline = new char[mapWidth][mapHeight];
-//        for (int x = 1; x < mapWidth-1; x++) {
-//            for (int y = 1; y < mapHeight-1; y++) {
-//                Cell cell = new Cell();
-//                if (map[y][x] == mapGenerator.getIslandChar()) {
-//                    if (map[y-1][x] == mapGenerator.getOceanChar() ||
-//                            map[y+1][x] == mapGenerator.getOceanChar() ||
-//                            map[y][x-1] == mapGenerator.getOceanChar() ||
-//                            map[y][x+1] == mapGenerator.getOceanChar())
-//                        cell.setTile(oceanTile);
-//                }
-//                layer.setCell(x, mapHeight - y, cell);
-//            }
-//        }
-//    }
