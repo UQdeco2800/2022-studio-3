@@ -137,10 +137,13 @@ public class ResourceCollectComponent extends Component {
 
         startCollecting(me, other);
         if (targetStats.isDead()) {
-            target.getComponent(AnimationRenderComponent.class).startAnimation("tree_damaged");
+            if(isTree!=null) {
+                target.getComponent(AnimationRenderComponent.class).startAnimation("tree_damaged");}
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
             ServiceLocator.getEntityService().unregister(target);
+            if(isStone!=null) {
+                target.dispose();}
             returnToBase(collector);
 
 
