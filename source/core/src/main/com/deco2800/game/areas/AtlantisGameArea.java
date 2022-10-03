@@ -154,6 +154,7 @@ public class AtlantisGameArea extends GameArea {
     private Entity player;
 
     private Entity townHall;
+    private Entity ship;
 
     private EventHandler gameAreaEventHandle;
 
@@ -187,7 +188,7 @@ public class AtlantisGameArea extends GameArea {
         spawnTownHall();
         spawnBarracks();
         spawnWalls();
-        spawnTrebuchet(townHall, this);
+        spawnTrebuchet(ship, this);
         spawnTitanShrine();
         spawnShip();
 //        spawnForager();
@@ -496,7 +497,7 @@ public class AtlantisGameArea extends GameArea {
 
         GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInSea(terrainFactory, range);
 
-        Entity ship = BuildingFactory.createShip();
+        ship = BuildingFactory.createShip();
         ship.addComponent(mc).addComponent(new UnitSpawningComponent(gameAreaEventHandle));
         spawnEntityAt(ship, spawnPoint, false, false);
     }
