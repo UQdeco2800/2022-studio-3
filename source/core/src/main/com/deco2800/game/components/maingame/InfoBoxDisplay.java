@@ -15,6 +15,7 @@ import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.random.Timer;
@@ -88,15 +89,8 @@ public class InfoBoxDisplay extends UIComponent {
      */
     private void addActors() {
         backgroundBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/Information_Box_Deepsea.png", Texture.class));
-
-        this.initialHeight = backgroundBoxImage.getHeight();
-        this.initialWidth = backgroundBoxImage.getWidth();
-
-        backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
-        backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
-        backgroundBoxImage.setPosition(0f, 0f);
-
         spellBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/spellbox-zeus.png", Texture.class));
+
         this.initialHeight = spellBoxImage.getHeight();
         this.initialWidth = spellBoxImage.getWidth();
         spellBoxImage.setWidth((float) (initialWidth * 0.7));
@@ -107,7 +101,6 @@ public class InfoBoxDisplay extends UIComponent {
         spellBtnImage.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
         spellBtnImage.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
         spellBtnImage.setHeight((float) (spellBoxImage.getHeight()/2.6));
-
 
         Texture spellBtnTexture = new Texture(Gdx.files.internal("images/spell-btn.png"));
         spellBtn = new ImageButton(new TextureRegionDrawable(spellBtnTexture));
@@ -122,6 +115,12 @@ public class InfoBoxDisplay extends UIComponent {
         spellBtn.setHeight((float) (spellBoxImage.getHeight()/2.6));
         spellBtn.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
         spellBtn.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
+
+        this.initialHeight = backgroundBoxImage.getHeight();
+        this.initialWidth = backgroundBoxImage.getWidth();
+        backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
+        backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
+        backgroundBoxImage.setPosition(0f, 0f);
 
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
@@ -195,18 +194,14 @@ public class InfoBoxDisplay extends UIComponent {
                 enemyEntities.add(entity);
             }
         }
-
         //clear old tables
-        if (selectedEntities.isEmpty()){
-            buildingTable.clear();
-        }
         pictureTable.clear();
         infoTable.clear();
+        buildingTable.clear();
 
         stage.addActor(spellBoxImage);
         stage.addActor(spellBtnImage);
         stage.addActor(spellBtn);
-
 
         String entityName = "";
         boolean buildingSelected = false;
@@ -222,8 +217,12 @@ public class InfoBoxDisplay extends UIComponent {
             int column = 0;
             int row = 1;
 
+
+            backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
+            backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
+
             for (Entity entity: selectedEntities) {
 
                 if (column == sideLength) {
@@ -243,13 +242,11 @@ public class InfoBoxDisplay extends UIComponent {
                             break;
 
                     }
-                } else {
-                    buildingTable.clear();
                 }
 
 
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset("images/heart.png", Texture.class));
+                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
@@ -290,6 +287,7 @@ public class InfoBoxDisplay extends UIComponent {
             backgroundBoxImage.remove();
         }
     }
+
 
     @Override
     public void draw(SpriteBatch batch)  {
