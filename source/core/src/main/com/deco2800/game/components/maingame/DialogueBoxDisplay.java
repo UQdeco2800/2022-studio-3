@@ -247,11 +247,13 @@ public class DialogueBoxDisplay extends UIComponent {
         this.dismissBtn.setPosition(dismissButtonPosition[0], dismissButtonPosition[1]);
 
         this.title.setPosition(titlePosition[0], titlePosition[1]);
+        this.title.setWrap(true);
         if (this.titleText != null)
             this.title.setText(this.titleText);
 
         this.dialogue.setSize(dialogueSize[0], dialogueSize[1]);
         this.dialogue.setPosition(dialoguePosition[0], dialoguePosition[1]);
+        this.dialogue.setWrap(true);
         if (this.dialogueText != null)
             this.dialogue.setText(this.dialogueText);
 
