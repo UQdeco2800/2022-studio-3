@@ -46,6 +46,8 @@ public class ObstacleFactory {
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     wall.setScale(width, height);
+    wall.getComponent(ColliderComponent.class).setAsCentredTile();
+
     return wall;
   }
 
