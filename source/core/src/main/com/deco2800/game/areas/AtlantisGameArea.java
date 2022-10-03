@@ -1,12 +1,12 @@
 package com.deco2800.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.areas.MapGenerator.Buildings.Building;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
@@ -14,39 +14,28 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
+import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
-import com.deco2800.game.entities.factories.BuildingFactory;
-import com.deco2800.game.entities.factories.EnemyFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.UnitFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.map.MapService;
-import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.Component;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,6 +119,13 @@ public class AtlantisGameArea extends GameArea {
             "images/exit-button.PNG",
             "images/dialogue_box_background_Deep_Sea.png"
     };
+
+    private final String[] buildingPlacementTextures = {
+            "images/barracks_highlight_red.png",
+            "images/barracks_highlight_green.png",
+            "images/wooden_wall_green.png",
+            "images/wooden_wall_red.png"
+    };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
@@ -184,10 +180,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
          spawnMiner();
         // spawnExampleUnit();
-        spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        //spawnBlueJokers();
+        //spawnWolf();
+        //spawnTitan();
+        //spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
@@ -196,8 +192,8 @@ public class AtlantisGameArea extends GameArea {
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
-
         spawnExplosion((new Explosion()).getEntity());
+        ServiceLocator.registerGameArea(this);
     }
 
     /**
@@ -341,13 +337,26 @@ public class AtlantisGameArea extends GameArea {
                 if (mg.getMap()[j][i] == mg.getOceanChar()) {
                     //Spawn collider entities at each ocean tile - scaled down by 0.7f arbitrarily
                     spawnEntityAt(
-                            ObstacleFactory.createWall(tileSize - 0.7f, tileSize - 0.7f),
-                            new GridPoint2(i, mg.getHeight() - j),
+                            ObstacleFactory.createWall(tileSize / 4f,
+                                    tileSize / 4f),
+                            new GridPoint2(i, mg.getHeight() - j - 1),
                             true,
                             false);
                 }
             }
         }
+    }
+
+    /**
+     * Lets us check whether a tile is in the ocean
+     *
+     * <p> Will be useful if changes from cleanup branch are adopted
+     * @param tile the tile to check
+     * @return whether it is ocean or not
+     */
+    public boolean isOcean(GridPoint2 tile) {
+        return terrainFactory.getMapGenerator().getMap()[tile.y][tile.x]
+                == terrainFactory.getMapGenerator().getOceanChar();
     }
 
     /**
@@ -564,19 +573,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Creates an example unit for testing formations and actions
-     *
-     * Places the unit relative to the city centre for convenience
-     */
-    private void spawnExampleUnit() {
-        Entity exampleUnit = UnitFactory.createExampleUnit();
-        GridPoint2 location =
-                RandomPointGenerator.getRandomPointInRange(terrainFactory,
-                        0.75);
-        spawnEntityAt(exampleUnit, location, true, true);
-    }
-
-    /**
      * Creates units for demonstration purposes
      *
      * Spawns them relative to city centre for convenience
@@ -660,7 +656,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
-
+        resourceService.loadTextures(buildingPlacementTextures);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
@@ -680,5 +676,26 @@ public class AtlantisGameArea extends GameArea {
         super.dispose();
         music.stop();
         this.unloadAssets();
+    }
+
+    /**
+     * Check that a shape would not collide with any placed entities
+     *
+     * <p>Assumes a convex polygon
+     * @param shape the shape to test for collisions
+     * @return true if there are no colliders in region, false otherwise
+     */
+    public boolean isRegionClear(PolygonShape shape) {
+        for (Entity entity: areaEntities) {
+            if(entity.getComponent(ColliderComponent.class) != null) {
+                for (int i = 0; i < shape.getVertexCount(); i++) {
+                    Vector2 vertex = new Vector2();
+                    shape.getVertex(i, vertex);
+                    if (entity.getComponent(ColliderComponent.class).getFixture().testPoint(vertex))
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 }

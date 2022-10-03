@@ -36,6 +36,11 @@ public class TextureRenderComponent extends RenderComponent {
   public void setTexture(Texture texture) {
     this.texture = texture;
   }
+
+  public void setTexturePath(String path) {
+    setTexture(ServiceLocator.getResourceService().getAsset(texturePath, Texture.class));
+    this.texturePath = path;
+  }
   public void setTextureOG() {
     this.textureOG = this.texture;
   }
