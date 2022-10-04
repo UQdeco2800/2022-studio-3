@@ -79,6 +79,11 @@ public class MapGenerator {
     private List<ResourceSpecification> resourcePlacements;
 
     /**
+     * Stores legal coordinates for players to move to.
+     */
+    public ArrayList<int[]> legalCoordinates;
+
+    /**
      * Map containing only the vertices around the island - used for testing purposes
      */
     private char[][] outlineMap;
@@ -696,5 +701,28 @@ public class MapGenerator {
                 }
             }
         }
+    }
+
+    /**
+     * Get array map of city.
+     */
+    public void createArrayMap() {
+        ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getCityChar()) {
+                    int[] coords = {i, j};
+                    legalMoveCoordinates.add(coords);
+                }
+            }
+        }
+        this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public ArrayList<int[]> getLegalCoordinates() {
+        if (this.legalCoordinates == null) {
+            createArrayMap();
+        }
+        return this.legalCoordinates;
     }
 }

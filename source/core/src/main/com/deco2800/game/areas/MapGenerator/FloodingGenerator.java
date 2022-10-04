@@ -44,7 +44,7 @@ public class FloodingGenerator extends Component {
      * Starts the countdown for flooding to occur.
      */
     private void startTimer() {
-        this.timer = new Timer(300, 301);
+        this.timer = new Timer(900, 901);
         this.timer.start();
     }
 

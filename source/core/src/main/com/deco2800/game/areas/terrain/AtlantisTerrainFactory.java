@@ -18,7 +18,9 @@ import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.random.PseudoRandom;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,6 +95,17 @@ public class AtlantisTerrainFactory {
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
         //Return the component
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
+    }
+
+    public GridPoint2 randomlySelectTileToMoveTo() {
+        while (true) {
+            ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
+            int size = legalMoves.size();
+            int randomSeed = PseudoRandom.seedRandomInt(0, size);
+            int[] coords = legalMoves.get(randomSeed);
+            System.out.println(new GridPoint2(coords[0], coords[1]));
+            return new GridPoint2(coords[0], coords[1]);
+        }
     }
 
     public MapGenerator floodTiles() {
