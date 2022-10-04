@@ -66,8 +66,6 @@ public class BuildingFactory {
         townHall.scaleWidth(TH_SCALE);
         // Setting Isometric Collider
 
-        townHall.setEntityName("TownHall");
-
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
                 31f, 607f,      // Vertex 0       3--2
