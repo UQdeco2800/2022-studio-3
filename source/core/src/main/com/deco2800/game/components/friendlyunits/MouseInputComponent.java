@@ -54,6 +54,8 @@ public class MouseInputComponent extends InputComponent {
         if (!this.leftPressed) {
             entity.getEvents().trigger("singleHover", screenX, screenY);
         }
+
+        entity.getEvents().trigger("update pointer", screenX, screenY);
         return false;
     }
 

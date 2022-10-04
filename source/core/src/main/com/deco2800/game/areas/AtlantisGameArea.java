@@ -25,10 +25,7 @@ import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
-import com.deco2800.game.components.maingame.DialogueBoxActions;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
-import com.deco2800.game.components.maingame.Explosion;
-import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.entities.Entity;
@@ -64,6 +61,7 @@ public class AtlantisGameArea extends GameArea {
     private static final int NUM_TREES = 5;
     private static final int NUM_STONE = 10;
     private static final String[] forestTextures = {
+            "images/sunny.png",
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
             "images/Ocean.png",
@@ -204,7 +202,6 @@ public class AtlantisGameArea extends GameArea {
         spawnMiner();
 
         //playMusic();
-        player = spawnPlayer();
         centreCameraOnCity();
 
         // Spawn Buildings in the city
@@ -327,7 +324,14 @@ public class AtlantisGameArea extends GameArea {
 
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
+//        infoUi.addComponent(new SpellUI());
         spawnEntity(infoUi);
+
+        Entity spellsUi = new Entity();
+        spellsUi.addComponent(new SpellUI());
+        spellsUi.addComponent(new MouseInputComponent());
+        spawnEntity(spellsUi);
+
 
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());
