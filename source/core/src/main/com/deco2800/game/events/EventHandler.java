@@ -191,4 +191,13 @@ public class EventHandler {
   private static void logTrigger(String eventName) {
     logger.debug("Triggering event {}", eventName);
   }
+
+  public boolean hasEvent(String eventName) {
+    for (String event : listeners.keySet()) {
+      if (event.equals(eventName)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

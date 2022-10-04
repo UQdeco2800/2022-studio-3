@@ -7,4 +7,7 @@ public class BuildingConfigs {
     public TownHallConfig townHall = new TownHallConfig();
     public BarracksConfig barracks = new BarracksConfig();
     public WallConfig wall = new WallConfig();
+    public ShipConfig ship = new ShipConfig();
+    public TitanShrineConfig titanShrine = new TitanShrineConfig();
+    public TrebuchetConfig trebuchet = new TrebuchetConfig();
 }

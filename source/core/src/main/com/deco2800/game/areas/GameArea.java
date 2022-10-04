@@ -40,7 +40,7 @@ public abstract class GameArea implements Disposable {
    *
    * @param entity Entity (not yet registered)
    */
-  protected void spawnEntity(Entity entity) {
+  public void spawnEntity(Entity entity) {
     areaEntities.add(entity);
     ServiceLocator.getEntityService().register(entity);
   }
@@ -56,6 +56,22 @@ public abstract class GameArea implements Disposable {
   public void spawnEntityAt(Entity entity, GridPoint2 tilePos, boolean centerX,
                        boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
+    float tileSize = terrain.getTileSize();
+
+    if (centerX) {
+      worldPos.x += (tileSize / 2) - entity.getCenterPosition().x;
+    }
+    if (centerY) {
+      worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
+    }
+
+    entity.setPosition(worldPos);
+    spawnEntity(entity);
+  }
+
+  public void spawnEntityAt(Entity entity, Vector2 worldPos, boolean centerX,
+                            boolean centerY) {
+
     float tileSize = terrain.getTileSize();
 
     if (centerX) {

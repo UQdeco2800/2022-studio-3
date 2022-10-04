@@ -14,6 +14,7 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int troops;
   private int health;
+  private int maxHealth;
   private int baseAttack;
   private int baseDefence;
   private float landSpeed;
@@ -30,6 +31,7 @@ public class CombatStatsComponent extends Component {
   public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed, int range) {
     setTroops(troops);
     setHealth(health);
+    setMaxHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
     setLandSpeed(landSpeed);
@@ -111,6 +113,10 @@ public class CombatStatsComponent extends Component {
     return health == 0;
   }
 
+  public Boolean isMaxHealth() {
+    return health == maxHealth;
+  }
+
   /**
    * Returns the entity's health.
    *
@@ -118,6 +124,14 @@ public class CombatStatsComponent extends Component {
    */
   public int getHealth() {
     return health;
+  }
+
+  /**
+   * Get's the entity's maximum health.
+   * @return entity's maximum health
+   */
+  public int getMaxHealth() {
+    return maxHealth;
   }
 
   /**
@@ -134,6 +148,15 @@ public class CombatStatsComponent extends Component {
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
     }
+  }
+
+  /**
+   * Sets the entity's maximum health. Health has a minimum bound of 0.
+   *
+   * @param maxHealth maximum health
+   */
+  public void setMaxHealth(int maxHealth) {
+    this.maxHealth = maxHealth;
   }
 
   /**
@@ -204,7 +227,16 @@ public class CombatStatsComponent extends Component {
     int newHealth = getHealth() - max(1,
             attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
+    checkDamageAnimation();
   }
 
+  private void checkDamageAnimation() {
+    if (entity.getEvents().hasEvent("Damaged")) {
+      entity.getEvents().trigger("Damaged");
+    }
+  }
 
+  public void decreaseHealth(int damage) {
+    setHealth(this.health - damage);
+  }
 }

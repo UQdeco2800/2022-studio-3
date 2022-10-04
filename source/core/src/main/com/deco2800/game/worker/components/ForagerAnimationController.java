@@ -11,34 +11,39 @@ public class ForagerAnimationController extends Component {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
-        entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
-        entity.getEvents().addListener("workerForagingAnimateRight", this::animateForagingRight);
-        entity.getEvents().addListener("workerForagingAnimateLeft", this::animateForagingLeft);
-        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
-        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
+        entity.getEvents().addListener("workerForwardLeftMove", this::animateForwardLeftMove);
+        entity.getEvents().addListener("workerForwardRightMove", this::animateForwardRightMove);
+        entity.getEvents().addListener("workerBackLeftMove", this::animateBackLeftMove);
+        entity.getEvents().addListener("workerBackRightMove", this::animateBackRightMove);
+        entity.getEvents().addListener("workerForwardLeftAction", this::animateForwardLeftAction);
+        entity.getEvents().addListener("workerForwardRightAction", this::animateForwardRightAction);
     }
 
     void animateIdle() {
-        animator.startAnimation("forager_forward_idle");
+        animator.startAnimation("forager_idle");
     }
 
-    void animateMove() {
-        animator.startAnimation("forager_forward_move");
+    void animateForwardLeftMove() {
+        animator.startAnimation("forager_forward_left_move");
     }
 
-    void animateForagingRight(){
-        animator.startAnimation("foragerActionRight");
+    void animateForwardRightMove() {
+        animator.startAnimation("forager_forward_right_move");
     }
 
-    void animateForagingLeft() {
-        animator.startAnimation("foragerActionLeft");
+    void animateBackLeftMove() {
+        animator.startAnimation("forager_back_left_move");
     }
 
-    void animateRightMove() {
-        animator.startAnimation("foragerRight");
+    void animateBackRightMove() {
+        animator.startAnimation("forager_back_right_move");
     }
 
-    void animateLeftMove() {
-        animator.startAnimation("foragerLeft");
+    void animateForwardLeftAction() {
+        animator.startAnimation("forager_forward_left_action");
+    }
+
+    void animateForwardRightAction() {
+        animator.startAnimation("forager_forward_right_action");
     }
 }
