@@ -169,7 +169,7 @@ public class AtlantisGameArea extends GameArea {
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
-            "images/newwolf.atlas", "images/forager.atlas", "images/tree_.atlas",
+            "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
@@ -214,6 +214,11 @@ public class AtlantisGameArea extends GameArea {
         //spawnWalls();
         spawnCityWalls();
 
+        // spawnBuildings();
+
+        spawnForager();
+        spawnMiner();
+        spawnBuilder();
         spawnCity();
 
         spawnResources();
@@ -223,6 +228,7 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnWorkerBase();
         // spawnMiner();
+
         // spawnExampleUnit();
         //spawnBlueJokers();
         //spawnWolf();
@@ -575,7 +581,6 @@ public class AtlantisGameArea extends GameArea {
         // Two spawn-points for the barracks next ot TownHall located in the centre
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
-<<<<<<< HEAD
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.BROWN);
@@ -585,11 +590,6 @@ public class AtlantisGameArea extends GameArea {
 
         spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc1), spawn1, true, true);
         spawnEntityAt(BuildingFactory.createBarracks().addComponent(mc2), spawn2, true, true);
-=======
-
-    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
->>>>>>> 6563a4c9151bf8cae59a3215ce31cf5721232edd
     }
 
     /**
@@ -619,17 +619,9 @@ public class AtlantisGameArea extends GameArea {
 
 
             // Absolute corner walls will have default wall texture (doesn't point in any direction)
-<<<<<<< HEAD
-            Entity wall = BuildingFactory.createWall();
-            wall.addComponent(new MapComponent());
-            wall.getComponent(BuildingActions.class).addLevel();
-            wall.getComponent(BuildingActions.class).setWallDefault();
-            spawnEntityAt(wall, position, true, true);
-=======
             Entity wall = BuildingFactory.createCornerWall();
             wall.getComponent(TextureScaler.class).setSpawnPoint(position, terrain);
             spawnEntity(wall);
->>>>>>> 6563a4c9151bf8cae59a3215ce31cf5721232edd
 
             for (int i = 0; i < xLength; i++) {
                 wall = BuildingFactory.createWall();
