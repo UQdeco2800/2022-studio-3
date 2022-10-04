@@ -1,0 +1,81 @@
+centre.png
+size: 2300, 5096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+centre_level_1-default
+  rotate: false
+  xy: 74, 139
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+centre_level_2-default
+  rotate: false
+  xy: 1283, 1143
+  size: 1043,948 
+  orig: 1043,948
+  offset: 0, 0
+  index: 0
+
+centre_leve2-0_0
+  rotate: false
+  xy: 74, 139
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+centre_leve2-0_1
+  rotate: false
+  xy: 1215, 139
+  size: 978, 955
+  orig: 978, 955
+  offset: 0, 0
+  index: 1
+centre_leve2-0_2
+  rotate: false
+  xy: 74, 1139
+  size: 978, 952
+  orig: 978, 952
+  offset: 0, 0
+  index: 2
+centre_leve2-0_3
+  rotate: false
+  xy: 1283, 1143
+  size: 1043,948 
+  orig: 1043,948
+  offset: 0, 0
+  index: 3
+
+centre_level_1_0_0
+  rotate: false
+  xy: 145, 2174
+  size: 1043, 948
+  orig: 1043, 948
+  offset: 0, 0
+  index: 0
+centre_level_1_0_1
+  rotate: false
+  xy: 1183, 2294
+  size: 978, 764
+  orig: 978, 764
+  offset: 0, 0
+  index: 1
+centre_level_1_0_2
+  rotate: false
+  xy: 178, 3166
+  size: 978, 764
+  orig: 978, 764
+  offset: 0, 0
+  index: 2
+centre_level_1_0_3
+  rotate: false
+  xy: 1216, 3441
+  size: 769, 488
+  orig: 769, 488
+  offset: 0, 0
+  index: 3
+
+
+
+
