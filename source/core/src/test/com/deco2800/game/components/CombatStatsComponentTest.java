@@ -38,7 +38,7 @@ class CombatStatsComponentTest {
     assertEquals(200, combat.getHealth());
 
     combat.setMaxHealth(-50);
-    assertEquals(1, combat.getMaxHealth());
+    assertEquals(0, combat.getMaxHealth());
   }
 
   @Test
