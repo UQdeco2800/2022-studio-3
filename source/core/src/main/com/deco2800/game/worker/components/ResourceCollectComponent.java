@@ -16,9 +16,20 @@ import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.worker.components.type.StoneComponent;
 import com.deco2800.game.worker.components.type.TreeComponent;
+import com.deco2800.game.worker.resources.TreeFactory;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.GameTime;
+
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 
 
 public class ResourceCollectComponent extends Component {
@@ -30,12 +41,10 @@ public class ResourceCollectComponent extends Component {
     private boolean colliding;
     private CollectStatsComponent collectStats;
     private HitboxComponent hitboxComponent;
-    private final GameTime gameTime;
     private long lastTimeMined;
-    private Entity durationBar;
-    private int initialWoodValue;
-    private int initialMetalValue;
-    private int initialStoneValue;
+    private GameTime gameTime;
+    private long at_time;
+    private static final long TIME_INTERVAL = 3000;
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -135,17 +144,28 @@ public class ResourceCollectComponent extends Component {
         } else {
             return;
         }
+
         startCollecting(me, other);
         if (targetStats.isDead()) {
+            if(isTree!=null) {
+                target.getComponent(AnimationRenderComponent.class).startAnimation("tree_damaged");}
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
-            
-            target.dispose();
-            durationBar.dispose();
-            ServiceLocator.getEntityService().unregister(durationBar);
             ServiceLocator.getEntityService().unregister(target);
-
+            if(isStone!=null) {
+                target.dispose();}
             returnToBase(collector);
+
+
+            // Idle the duration bar
+            /*
+            if(collectorIsMiner != null){
+                collectorIsMiner.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
+            }
+            if(collectorIsForager != null){
+                collectorIsForager.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
+            }
+            */
         }        
     }
 
