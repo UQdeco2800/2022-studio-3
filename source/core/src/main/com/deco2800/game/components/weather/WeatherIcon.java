@@ -144,7 +144,7 @@ public class WeatherIcon extends Actor {
         //  Layout for timer
         this.timerLabel.setAlignment(Align.left);
         this.timerLabel.setWrap(true);
-        this.timerLabel.setSize(3f,3f);
+        this.timerLabel.setSize(30f,3f);
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 15f, Gdx.graphics.getHeight()-50f);
     }
 
