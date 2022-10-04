@@ -8,6 +8,7 @@ com.deco2800.game.areas.MapGenerator.pathBuilding
 com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.building
+com.deco2800.game.components.enemy
 com.deco2800.game.components.friendly
 com.deco2800.game.components.friendlyunits
 com.deco2800.game.components.gamearea
