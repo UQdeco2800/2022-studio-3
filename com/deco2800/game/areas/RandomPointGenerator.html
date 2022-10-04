@@ -111,10 +111,26 @@ loadScripts(document, 'script');</script>
 <div class="block">Get the centre of the city as a GridPoint2</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.math.GridPoint2</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRandomPointInRange(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,double)" class="member-name-link">getRandomPointInRange</a><wbr>(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
- double&nbsp;scale)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRandomPointInIsland(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,int)" class="member-name-link">getRandomPointInIsland</a><wbr>(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
+ int&nbsp;range)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets a position to deploy entities on the island, the range value
+ is to choose a point such that the entity being placed fits
+ in only island tiles and doesn't end up being spawned at the edges.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRandomPointInRange(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,double)" class="member-name-link">getRandomPointInRange</a><wbr>(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
+ double&nbsp;scale)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Finds a random point within a certain range of the city centre, based on the scale used.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRandomPointInSea(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,int)" class="member-name-link">getRandomPointInSea</a><wbr>(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
+ int&nbsp;range)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets a position to deploy entities in the sea, the range value
+ is to choose a point such that the entity being placed fits
+ in only sea tiles and doesn't end up being spawned at the edges.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.badlogic.gdx.math.GridPoint2</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRescaledBottomRightCorner(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,double)" class="member-name-link">getRescaledBottomRightCorner</a><wbr>(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
@@ -273,6 +289,38 @@ loadScripts(document, 'script');</script>
 <dd>a random point in the range</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRandomPointInSea(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,int)">
+<h3>getRandomPointInSea</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getRandomPointInSea</span><wbr><span class="parameters">(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
+ int&nbsp;range)</span></div>
+<div class="block">Gets a position to deploy entities in the sea, the range value
+ is to choose a point such that the entity being placed fits
+ in only sea tiles and doesn't end up being spawned at the edges.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>terrainFactory</code> - the factory for the Atlantis map</dd>
+<dd><code>range</code> - points within this range must be ocean tiles.</dd>
+<dt>Returns:</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRandomPointInIsland(com.deco2800.game.areas.terrain.AtlantisTerrainFactory,int)">
+<h3>getRandomPointInIsland</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getRandomPointInIsland</span><wbr><span class="parameters">(<a href="terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory,
+ int&nbsp;range)</span></div>
+<div class="block">Gets a position to deploy entities on the island, the range value
+ is to choose a point such that the entity being placed fits
+ in only island tiles and doesn't end up being spawned at the edges.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>terrainFactory</code> - the factory for the Atlantis map</dd>
+<dd><code>range</code> - points within this range must be island tiles.</dd>
+<dt>Returns:</dt>
 </dl>
 </section>
 </li>

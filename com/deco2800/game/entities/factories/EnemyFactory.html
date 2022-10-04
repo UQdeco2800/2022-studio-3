@@ -105,18 +105,25 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a Blue Joker enemy entity</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSnake(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createSnake</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBullet(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)" class="member-name-link">createBullet</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;from,
+ <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a Snake entity</div>
+<div class="block">Creates the bullet for the Trebuchet.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTitan(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createTitan</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSnake(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createSnake</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a titan entity</div>
+<div class="block">Creates a Snake entity</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWolf(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createWolf</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTitan(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createTitan</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a titan entity</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWolf(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createWolf</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a wolf entity</div>
 </div>
 </div>
@@ -136,6 +143,23 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="createBullet(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)">
+<h3>createBullet</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createBullet</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;from,
+ <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+ <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</span></div>
+<div class="block">Creates the bullet for the Trebuchet.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>from</code> - the position of the Trebuchet that the bullet will be created from</dd>
+<dd><code>target</code> - the ships that the bullet aim to attack</dd>
+<dd><code>gameArea</code> - the game area</dd>
+<dt>Returns:</dt>
+<dd>the bullet entity of Trebuchet.</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="createBlueJoker(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)">
 <h3>createBlueJoker</h3>
