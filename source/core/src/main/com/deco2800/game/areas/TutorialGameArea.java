@@ -33,6 +33,8 @@ public class TutorialGameArea extends GameArea {
 
     /** textures needed to load */
     private String[] tutorialTextures = {
+            "images/spellbox-zeus.png",
+            "images/spell-btn-unclickable.png",
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
             "images/exit-button.PNG",
@@ -59,13 +61,13 @@ public class TutorialGameArea extends GameArea {
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
-            "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
             "images/Information_Box_Deepsea.png",
             "images/TransBox.png",
             "images/white.png",
             "images/stone.png",
+            "images/city_tile.png",
             /* Building assets */
             // TownHall
             "images/base.png",
@@ -76,8 +78,8 @@ public class TutorialGameArea extends GameArea {
             "images/barracks_level_1.2.png",
             "images/barracks_level_2.0.png",
             // Mine
-            "mining_levelone_sketch.png",
-            "mining_leveltwo_sketch.png",
+            "images/mining_levelone_sketch.png",
+            "images/mining_leveltwo_sketch.png",
             // Walls
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
@@ -92,7 +94,7 @@ public class TutorialGameArea extends GameArea {
             "images/SirFred.png",
             "images/hoplite.png",
             "images/spearman.png",
-            "images/simpleman.png"
+            "images/simpleman.png",
     };
 
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
