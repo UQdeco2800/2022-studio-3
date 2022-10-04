@@ -139,7 +139,7 @@ public class AtlantisGameArea extends GameArea {
             "images/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
-            "images/newwolf.atlas", "images/forager.atlas",
+            "images/newwolf.atlas", "images/forager.atlas", "images/tree_.atlas",
             "images/spell.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
@@ -192,10 +192,10 @@ public class AtlantisGameArea extends GameArea {
         // spawnTitan();
         // spawnSnakes();
 
-        // spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        // spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        // spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        // spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
