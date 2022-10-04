@@ -236,8 +236,8 @@ public class AtlantisGameArea extends GameArea {
         centreCameraOnCity();
 
         // Spawn Buildings in the city
-        spawnTownHall();
-        spawnBarracks();
+//        spawnTownHall();
+//        spawnBarracks();
         //spawnWalls();
         spawnCityWalls();
 
@@ -568,7 +568,7 @@ public class AtlantisGameArea extends GameArea {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createBlacksmith();
                 } else if (building.getName().equals("Barracks")) {
-                    buildingEntity = BuildingFactory.createBarracks();
+                    buildingEntity = BuildingFactory.createBarracks().addComponent(new UnitSpawningComponent(gameAreaEventHandle));
                 } else if (building.getName().equals("Farm")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createFarm();
@@ -601,8 +601,8 @@ public class AtlantisGameArea extends GameArea {
         mc2.display();
         mc2.setDisplayColour(Color.BROWN);
 
-        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
-        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc2)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2, true, true);
+//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
+//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc2)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2, true, true);
     }
 
     /**
@@ -884,7 +884,7 @@ public class AtlantisGameArea extends GameArea {
         int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
         char[][] map = mg.getMap();
-        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.75);
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 10);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
                 true, true);

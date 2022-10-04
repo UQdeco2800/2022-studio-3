@@ -57,7 +57,7 @@ public class UnitSpawningComponent extends Component {
 
         switch(buildingType) {
             case BARRACKS:
-                eventHandler.trigger("spawnHoplite", spawnPoint);
+                eventHandler.trigger("spawnSpearmint", spawnPoint);
                  break;
             case TITANSHRINE:
                 eventHandler.trigger("spawnTitan", spawnPoint);
