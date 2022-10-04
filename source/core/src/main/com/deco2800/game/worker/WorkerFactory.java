@@ -1,6 +1,8 @@
 package com.deco2800.game.worker;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.friendly.FriendlyComponent;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.EntityType;
 import com.deco2800.game.components.HealthBarComponent;
@@ -29,7 +31,7 @@ public class WorkerFactory {
      */
     public static Entity createWorker() {
         InputComponent inputComponent =
-                ServiceLocator.getInputService().getInputFactory().createForWorker();
+                ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit();
         AITaskComponent aiComponent = new AITaskComponent().addTask(new WorkerIdleTask());
         Entity worker =
                 new Entity()
@@ -39,11 +41,13 @@ public class WorkerFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
                         .addComponent(new WorkerInventoryComponent(stats.wood, stats.stone, stats.metal))
                         .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
+                        .addComponent(new SelectableComponent())
                         .addComponent(new CombatStatsComponent(stats.health, 0, 0))
                         .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
 
                         .addComponent(aiComponent)
-                        .addComponent(inputComponent);
+                        .addComponent(inputComponent)
+                        .addComponent(new FriendlyComponent());
 
         PhysicsUtils.setScaledCollider(worker, 0.6f, 0.3f);
         worker.getComponent(ColliderComponent.class).setDensity(1.5f);

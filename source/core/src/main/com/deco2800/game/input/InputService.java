@@ -17,6 +17,9 @@ import java.util.List;
  *
  * <p>When an input is received, it is passed to registered input handlers in descending priority
  * order and stops as soon as the input is handled.
+ *
+ * In order to manage conflicting input sources, an affordance to
+ * enable/disable segments has been provided</p>
  */
 public class InputService implements InputProcessor, GestureDetector.GestureListener {
   private static final Logger logger = LoggerFactory.getLogger(InputService.class);

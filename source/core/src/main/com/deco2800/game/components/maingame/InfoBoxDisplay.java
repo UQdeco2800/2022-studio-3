@@ -15,18 +15,22 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BuildingConfigs;
-import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.files.UserSettings;
-import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
-import org.slf4j.helpers.Util;
+import com.deco2800.game.utils.random.Timer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.security.Provider;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class InfoBoxDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
 
     //Table displayed for unit picture
     Table pictureTable;
@@ -35,11 +39,16 @@ public class InfoBoxDisplay extends UIComponent {
 
     Table buildingTable;
 
+    ImageButton spellBtn;
+
     //initial height and width of the box, can be imple
     float initialHeight;
     float initialWidth;
     //The image that is always in the background of our information
+    private Timer timer;
     private Image backgroundBoxImage;
+    private Image spellBoxImage;
+    private Image spellBtnImage;
 
     //Button used for leveling up buildings
     private TextButton levelUpBtn = new TextButton("Level Up", skin);
@@ -53,6 +62,10 @@ public class InfoBoxDisplay extends UIComponent {
     private ProgressBar healthBar;
     private Label health;
 
+    AnimationRenderComponent animator;
+
+    Entity spell;
+
     UserSettings.Settings settings = UserSettings.get();
 
 
@@ -60,6 +73,19 @@ public class InfoBoxDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+        entity.getEvents().addListener("release spell", this::onRelease);
+        this.timer = new Timer(10000, 10001);
+    }
+
+    @Override
+    public void update() {
+        if(timer.isTimerExpired()) {
+            spellBtn.setVisible(true);
+        }
+        if(spell != null && spell.getComponent(AnimationRenderComponent.class).isFinished()){
+            spell.getComponent(AnimationRenderComponent.class).stopAnimation();
+            spell.setEnabled(false);
+        }
     }
 
     /**
@@ -75,7 +101,32 @@ public class InfoBoxDisplay extends UIComponent {
         backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
         backgroundBoxImage.setPosition(0f, 0f);
 
+        spellBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/spellbox-zeus.png", Texture.class));
+        this.initialHeight = spellBoxImage.getHeight();
+        this.initialWidth = spellBoxImage.getWidth();
+        spellBoxImage.setWidth((float) (initialWidth * 0.7));
+        spellBoxImage.setHeight((float) (initialHeight * 0.7));
+        spellBoxImage.setPosition(0f, Gdx.graphics.getHeight() - spellBoxImage.getHeight());
 
+        spellBtnImage = new Image(ServiceLocator.getResourceService().getAsset("images/spell-btn-unclickable.png", Texture.class));
+        spellBtnImage.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
+        spellBtnImage.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
+        spellBtnImage.setHeight((float) (spellBoxImage.getHeight()/2.6));
+
+
+        Texture spellBtnTexture = new Texture(Gdx.files.internal("images/spell-btn.png"));
+        spellBtn = new ImageButton(new TextureRegionDrawable(spellBtnTexture));
+        spellBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Spell Release button clicked");
+                        entity.getEvents().trigger("release spell");
+                    }
+                });
+        spellBtn.setHeight((float) (spellBoxImage.getHeight()/2.6));
+        spellBtn.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
+        spellBtn.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
 
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
@@ -162,6 +213,11 @@ public class InfoBoxDisplay extends UIComponent {
         pictureTable.clear();
         infoTable.clear();
 
+        stage.addActor(spellBoxImage);
+        stage.addActor(spellBtnImage);
+        stage.addActor(spellBtn);
+
+
         String entityName = "";
         boolean buildingSelected = false;
         //If there are entities selected
@@ -170,14 +226,12 @@ public class InfoBoxDisplay extends UIComponent {
             stage.addActor(pictureTable);
             stage.addActor(infoTable);
             stage.addActor(buildingTable);
+
             int length = selectedEntities.size;
             int sideLength = (int) Math.ceil(Math.sqrt(length));
             int column = 0;
             int row = 1;
 
-
-            backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
-            backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
             for (Entity entity: selectedEntities) {
@@ -222,7 +276,7 @@ public class InfoBoxDisplay extends UIComponent {
 
 
                 Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+                        .getAsset("images/heart.png", Texture.class));
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
@@ -273,5 +327,33 @@ public class InfoBoxDisplay extends UIComponent {
         backgroundBoxImage.remove();
         pictureTable.remove();
         infoTable.remove();
+        spellBoxImage.remove();
+        spellBtnImage.remove();
+        spellBtn.remove();
+    }
+
+    private void onRelease() {
+        logger.info("Releasing Spell");
+        spellBtn.setVisible(false);
+        this.timer = new Timer(15000, 15001);
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            if (entity.getEntityName() == "Explosion") {
+                spell = entity;
+                break;
+            }
+        }
+        spell.setEnabled(true);
+        spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+
+        String[] enemy = {"blueJoker","snake","titan","wolf"};
+        List enemyList = Arrays.asList(enemy);
+
+        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+            String name = entity.getEntityName();
+            if (name != null && enemyList.contains(name)) {
+                entity.dispose();
+            }
+        }
     }
 }
+

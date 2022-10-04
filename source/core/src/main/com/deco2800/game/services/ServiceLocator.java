@@ -1,5 +1,6 @@
 package com.deco2800.game.services;
 
+import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
@@ -27,7 +28,7 @@ public class ServiceLocator {
   private static ResourceService resourceService;
   private static MapService mapService;
 
-  public static ForestGameArea gameArea;
+  public static AtlantisGameArea gameArea;
 
 
   public static EntityService getEntityService() {
@@ -58,7 +59,7 @@ public class ServiceLocator {
     return resourceService;
   }
 
-  public static ForestGameArea getGameArea(){
+  public static AtlantisGameArea getGameArea(){
     return gameArea;
   }
 
@@ -97,7 +98,7 @@ public class ServiceLocator {
     resourceService = source;
   }
 
-  public static void registerGameArea(ForestGameArea source){
+  public static void registerGameArea(AtlantisGameArea source){
     gameArea = source;
   }
 

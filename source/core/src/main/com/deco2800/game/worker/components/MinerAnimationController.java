@@ -12,35 +12,40 @@ public class MinerAnimationController extends Component {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
-        entity.getEvents().addListener("workerWalkAnimate", this::animateMove);
-        entity.getEvents().addListener("workerMiningAnimateRight", this::animateMiningRight);
-        entity.getEvents().addListener("workerWalkRightAnimate", this::animateRightMove);
-        entity.getEvents().addListener("workerWalkLeftAnimate", this::animateLeftMove);
-        entity.getEvents().addListener("workerMiningAnimateLeft", this::animateMiningLeft);
+        entity.getEvents().addListener("workerForwardLeftMove", this::animateForwardLeftMove);
+        entity.getEvents().addListener("workerForwardRightMove", this::animateForwardRightMove);
+        entity.getEvents().addListener("workerBackLeftMove", this::animateBackLeftMove);
+        entity.getEvents().addListener("workerBackRightMove", this::animateBackRightMove);
+        entity.getEvents().addListener("workerForwardLeftAction", this::animateForwardLeftAction);
+        entity.getEvents().addListener("workerForwardRightAction", this::animateForwardRightAction);
     }
 
     void animateIdle() {
-        animator.startAnimation("miner_forward_idle");
+        animator.startAnimation("miner_idle");
     }
 
-    void animateMove() {
-        animator.startAnimation("miner_forward_move");
+    void animateForwardLeftMove() {
+        animator.startAnimation("miner_forward_left_move");
     }
 
-    void animateMiningRight(){
-        animator.startAnimation("minerActionRight");
-    }
-    
-    void animateMiningLeft() {
-        animator.startAnimation("minerActionLeft");
+    void animateForwardRightMove() {
+        animator.startAnimation("miner_forward_right_move");
     }
 
-    void animateRightMove() {
-        animator.startAnimation("minerRight");
+    void animateBackLeftMove() {
+        animator.startAnimation("miner_back_left_move");
     }
 
-    void animateLeftMove() {
-        animator.startAnimation("minerLeft");
+    void animateBackRightMove() {
+        animator.startAnimation("miner_back_right_move");
+    }
+
+    void animateForwardLeftAction() {
+        animator.startAnimation("miner_forward_left_action");
+    }
+
+    void animateForwardRightAction() {
+        animator.startAnimation("miner_forward_right_action");
     }
 }
 
