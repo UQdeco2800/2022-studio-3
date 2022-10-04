@@ -99,8 +99,8 @@ public class MapService {
 		GridPoint2 topLeftCorner = worldToTile(vecPos.x + vecScale.x, vecPos.y + vecScale.y);
 
 		List<GridPoint2> occupied = new ArrayList<>();
-		for (int i = topLeftCorner.x; i <= bottomRightCorner.x; i++) {
-			for (int j = bottomRightCorner.y; j <= topLeftCorner.y; j++) {
+		for (int i = topLeftCorner.x + 1; i <= bottomRightCorner.x; i++) {
+			for (int j = bottomRightCorner.y; j < topLeftCorner.y; j++) {
 				GridPoint2 pos = new GridPoint2(i, j);
 				occupied.add(pos);
 			}
@@ -285,6 +285,15 @@ public class MapService {
 		}
 		
 		return comp.getEntity();
+	}
+
+	/**
+	 * Returns a map of all entities to the positions they occupy.
+	 * 
+	 * @return map of MapComponent to list of occupied positions
+	 */
+	public Map<MapComponent, List<GridPoint2>> getAllEntityPositions() {
+		return this.entityToPositions;
 	}
 
 	/**
