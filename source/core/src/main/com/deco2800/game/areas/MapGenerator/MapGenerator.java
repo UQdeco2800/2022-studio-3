@@ -710,7 +710,7 @@ public class MapGenerator {
         ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                if (this.map[i][j] == this.getCityChar()) {
+                if (this.map[i][j] != this.getOceanChar()) {
                     int[] coords = {i, j};
                     legalMoveCoordinates.add(coords);
                 }
