@@ -1,8 +1,5 @@
 package com.deco2800.game.areas.MapGenerator;
 
-import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
-import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -381,8 +378,6 @@ public class MapGenerator {
         this.outlineMap = copyMap(map, mapWidth, mapHeight);
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);
-        //Fill all edges around city to be island tiles
-        fillAroundCity();
     }
 
     /**
@@ -391,40 +386,6 @@ public class MapGenerator {
      */
     private void addPoint(Coordinate position) {
         map[position.getY()][position.getX()] = islandChar;
-    }
-
-    /**
-     * Adds tiles around the city to allow the entire map to be accessible
-     */
-    private void fillAroundCity() {
-        //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
-        //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
-        //Find min and max X values of city
-        int cityMinX = cityDetails.get("NW").getX();
-        int cityMinY = cityDetails.get("NW").getY();
-        int cityMaxX = cityDetails.get("SE").getX();
-        int cityMaxY = cityDetails.get("SE").getY();
-
-        //Fill left and right sides of city
-        for (int i = cityMinY - 1; i <= cityMaxY + 1; i++) {
-            if (map[i][cityMinX - 1] == oceanChar) {
-                map[i][cityMinX - 1] = islandChar;
-            }
-            if (map[i][cityMaxX + 1] == oceanChar) {
-                map[i][cityMaxX + 1] = islandChar;
-            }
-        }
-        //Fill top and bottom sides of city
-        for (int j = cityMinX - 1; j <= cityMaxX + 1; j++) {
-            if (map[cityMinY - 1][j] == oceanChar) {
-                map[cityMinY - 1][j]= islandChar;
-            }
-            if (map[cityMaxY + 1][j] == oceanChar) {
-                map[cityMaxY + 1][j]= islandChar;
-            }
-        }
     }
 
     /**
@@ -629,3 +590,4 @@ public class MapGenerator {
         return newMap;
     }
 }
+

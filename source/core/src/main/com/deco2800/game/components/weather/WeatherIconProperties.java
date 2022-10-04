@@ -1,4 +1,4 @@
-package com.deco2800.game.components.weather;
+package main.com.deco2800.game.components.weather;
 
 public enum WeatherIconProperties{
     // Does not affect movement, affect lighting of the environment

@@ -29,7 +29,6 @@ public class SelectableComponent extends Component {
         entity.getEvents().addListener("multipleSelect", this::multipleSelect);
         entity.getEvents().addListener("singleHover", this::singleHover);
         entity.getEvents().addListener("multipleHover", this::multipleHover);
-        entity.getEvents().addListener("moveLocation", this::moveLocation);
     }
 
 
@@ -111,14 +110,6 @@ public class SelectableComponent extends Component {
     public Vector2 screenToWorldPosition(int screenX, int screenY) {
         Vector3 worldPos = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
         return new Vector2(worldPos.x, worldPos.y);
-    }
-
-    public void moveLocation(int screenX, int screenY) {
-        if (this.selected) {
-            Vector2 entityDeltas = entity.getPosition().sub(entity.getCenterPosition());
-            Vector2 centerTarget = screenToWorldPosition(screenX, screenY).add(entityDeltas);
-            entity.getEvents().trigger("workerWalk", centerTarget);
-        }
     }
 
     /**
