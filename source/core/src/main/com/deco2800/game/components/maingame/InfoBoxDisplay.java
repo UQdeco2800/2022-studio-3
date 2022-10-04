@@ -1,14 +1,18 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-
+import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -56,6 +60,9 @@ public class InfoBoxDisplay extends UIComponent {
 
     //Button to create the magic bubble to save Atlantis
     private TextButton bubbleBtn = new TextButton("Create bubble", skin);
+    private Image healthFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png", Texture.class));
+    private ProgressBar healthBar;
+    private Label health;
 
 //    AnimationRenderComponent animator;
 
@@ -146,7 +153,7 @@ public class InfoBoxDisplay extends UIComponent {
 
         this.buildingTable = new Table();
         buildingTable.setWidth(100);
-        buildingTable.setHeight(100);
+        buildingTable.setHeight(200);
         buildingTable.setPosition(400, Gdx.graphics.getHeight()-680);
 
 
@@ -170,6 +177,20 @@ public class InfoBoxDisplay extends UIComponent {
             }
         });
 
+        // health bar
+
+        Pixmap pixmap = new Pixmap(1, (int) (healthFrame.getHeight() * 0.8f), Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(pixmap));
+        pixmap.dispose();
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+        style.knobBefore = drawable;
+
+        healthBar = new ProgressBar(0, 1, 1f, false, style);
+        healthBar.setRound(true);
+        health = new Label("", skin);
+        health.setFontScale(0.95f);
 
     }
 
@@ -233,17 +254,24 @@ public class InfoBoxDisplay extends UIComponent {
                 }
                 //crashes game when not selecting building
                 if (entity.getComponent(BuildingActions.class) != null){
-                    buildingTable.add(levelUpBtn);
-                    switch (entity.getComponent(BuildingActions.class).getType()){
-                        case TOWNHALL:
-                            buildingTable.add(bubbleBtn);
-                            break;
-                        case BARRACKS:
-                            buildingTable.add(troopBtn);
-                            break;
+                    buildingSelected = true;
 
-                    }
+                } else {
+                buildingTable.clear();
                 }
+
+
+//                    buildingTable.add(levelUpBtn);
+//                    switch (entity.getComponent(BuildingActions.class).getType()){
+//                        case TOWNHALL:
+//                            buildingTable.add(bubbleBtn);
+//                            break;
+//                        case BARRACKS:
+//                            buildingTable.add(troopBtn);
+//                            break;
+//
+//                    }
+
 
 
                 Image dummyImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
@@ -285,13 +313,10 @@ public class InfoBoxDisplay extends UIComponent {
 
 
             //Added functionality later because there is currently not enough information on the units we will have
-            Label dummyText = new Label("This is "+ entityName, skin, "large");
-            infoTable.add(dummyText);
-            infoTable.row();
-            if (buildingSelected){
-                Label boxBoyText = new Label(String.format("%s:   %d", entityName, length), skin, "large");
-                infoTable.add(boxBoyText);
-            } else {
+            if (!buildingSelected) {
+                Label dummyText = new Label("This is "+ entityName, skin, "large");
+                infoTable.add(dummyText);
+                infoTable.row();
                 Label boxBoyText = new Label(String.format("Boxboy:   %d", length), skin, "large");
                 infoTable.add(boxBoyText);
             }

@@ -6,15 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.EntityDirectionComponent;
-import com.deco2800.game.components.bulletHitShips;
-import com.deco2800.game.components.npc.EnemyAnimationController;
-import com.deco2800.game.components.npc.GhostAnimationController;
-import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.*;
 import com.deco2800.game.components.enemy.EnemySignal;
-//import com.deco2800.game.components.tasks.ChaseTask;
-import com.deco2800.game.components.tasks.*;
+import com.deco2800.game.components.npc.EnemyAnimationController;
+import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.entities.EnemyEntity;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
@@ -118,6 +113,7 @@ public class EnemyFactory {
     blueJoker
               .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                      config.baseDefence, config.landSpeed, config.range))
+              .addComponent(new HealthBarComponent(EntityType.ENEMY))
               .addComponent(animator)
               .addComponent(new EnemyAnimationController())
               .addComponent(new EnemySignal());
@@ -153,6 +149,7 @@ public class EnemyFactory {
     snake
         .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                config.baseDefence, config.landSpeed, config.range))
+        .addComponent(new HealthBarComponent(EntityType.ENEMY))
         .addComponent(animator)
         .addComponent(new EnemyAnimationController())
         .addComponent(new EnemySignal());
@@ -186,6 +183,7 @@ public class EnemyFactory {
     wolf
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
+            .addComponent(new HealthBarComponent(EntityType.ENEMY))
             .addComponent(animator)
             .addComponent(new EnemyAnimationController())
             .addComponent(new EnemySignal());
@@ -220,6 +218,7 @@ public class EnemyFactory {
     titan
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
+            .addComponent(new HealthBarComponent(EntityType.ENEMY))
             .addComponent(animator)
             .addComponent(new EnemyAnimationController())
             .addComponent(new EnemySignal());
