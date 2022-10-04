@@ -99,14 +99,12 @@ public class AtlantisTerrainFactory {
     }
 
     public GridPoint2 randomlySelectTileToMoveTo() {
-        while (true) {
-            int height = this.mapGenerator.getHeight();
-            ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
-            int size = legalMoves.size();
-            int randomSeed = PseudoRandom.seedRandomInt(0, size);
-            int[] coords = legalMoves.get(randomSeed);
-            return new GridPoint2(coords[1], height - coords[0]);
-        }
+        int height = this.mapGenerator.getHeight();
+        ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
+        int size = legalMoves.size();
+        int randomSeed = PseudoRandom.seedRandomInt(0, size);
+        int[] coords = legalMoves.get(randomSeed);
+        return new GridPoint2(coords[1], height - coords[0]);
     }
 
     public MapGenerator floodTiles() {
