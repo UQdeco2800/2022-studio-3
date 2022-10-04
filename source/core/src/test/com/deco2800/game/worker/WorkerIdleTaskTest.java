@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.when;
 class WorkerIdleTaskTest {
     @BeforeEach
     void beforeEach() {
+        ServiceLocator.registerMapService(new MapService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
         GameTime gameTime = mock(GameTime.class);
         when(gameTime.getTime()).thenReturn(0L);
