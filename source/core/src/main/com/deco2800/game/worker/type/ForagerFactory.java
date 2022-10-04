@@ -2,6 +2,7 @@ package com.deco2800.game.worker.type;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.worker.components.CollectStatsComponent;
@@ -30,6 +31,7 @@ public class ForagerFactory {
         animator.addAnimation("forager_forward_right_action", 0.1f, Animation.PlayMode.LOOP);
 
         Entity forager = WorkerFactory.createWorker()
+                .addComponent(new AvatarIconComponent("images/forager_avatar.png"))
                 .addComponent(new ForagerComponent())
                 .addComponent(new CollectStatsComponent(2))
                 .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))

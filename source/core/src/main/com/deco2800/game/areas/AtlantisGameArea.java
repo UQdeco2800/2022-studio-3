@@ -27,6 +27,9 @@ import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.maingame.*;
+import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
@@ -128,9 +131,12 @@ public class AtlantisGameArea extends GameArea {
             "mining_leveltwo_sketch.png",
             "images/mining_camp_level_one.png",
             // Walls
+            "images/forager_avatar.png",
+            "images/miner_avatar.png",
             "images/connector_ns.png",
             "images/connector_ew.png",
             "images/wall_pillar.png",
+            "images/SpellIndicator/spelliso.png",
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
             "images/wooden_wall_3.png",
@@ -224,7 +230,7 @@ public class AtlantisGameArea extends GameArea {
 //        loadAssets();
         displayUI();
         spawnTerrain();
-
+//        player = spawnPlayer();
         centreCameraOnCity();
 
         spawnForager();
@@ -321,10 +327,10 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
         MapComponent mapComponent = new MapComponent();
-        mapComponent.display();
-        mapComponent.setDisplayColour(Color.PURPLE);
-        entity.addComponent(mapComponent);
-        entity.setEnabled(false);
+//        mapComponent.display();
+//        mapComponent.setDisplayColour(Color.PURPLE);
+//        entity.addComponent(mapComponent);
+//        entity.setEnabled(false);
         spawnEntityAt(entity, spawn, true, true);
     }
 
@@ -360,9 +366,18 @@ public class AtlantisGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Atlantis' Legacy"));
         spawnEntity(ui);
 
-//        Entity infoUi = new Entity();
-//        infoUi.addComponent(new InfoBoxDisplay());
-//        spawnEntity(infoUi);
+
+        Entity infoUi = new Entity();
+        infoUi.addComponent(new InfoBoxDisplay());
+//        infoUi.addComponent(new SpellUI());
+        spawnEntity(infoUi);
+
+
+        Entity spellsUi = new Entity();
+        spellsUi.addComponent(new SpellUI());
+        spellsUi.addComponent(new MouseInputComponent());
+        spawnEntity(spellsUi);
+
 
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());
