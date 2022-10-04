@@ -45,6 +45,9 @@ public class ResourceCollectComponent extends Component {
     private GameTime gameTime;
     private long at_time;
     private static final long TIME_INTERVAL = 3000;
+    private int initialWoodValue;
+    private int initialMetalValue;
+    private int initialStoneValue;
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -111,17 +114,17 @@ public class ResourceCollectComponent extends Component {
         ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
 
         // Create the duration bar animation
-        if(durationBar == null){
-            durationBar = DurationBarFactory.createDurationBar();
-            durationBar.addComponent(new DurationBarComponent());
-            durationBar.setPosition(target.getPosition().x, target.getPosition().y + 1);
-            ServiceLocator.getEntityService().register(durationBar);
-        }
+        // if(durationBar == null){
+        //     durationBar = DurationBarFactory.createDurationBar();
+        //     durationBar.addComponent(new DurationBarComponent());
+        //     durationBar.setPosition(target.getPosition().x, target.getPosition().y + 1);
+        //     ServiceLocator.getEntityService().register(durationBar);
+        // }
 
         // Check the initial resource value
-        if(this.initialWoodValue == 0){
-            this.initialWoodValue = targetStats.getWood();
-        }
+        // if(this.initialWoodValue == 0){
+        //     this.initialWoodValue = targetStats.getWood();
+        // }
 
         if (collectorIsMiner != null && isStone != null) {
             // If the worker type is Miner
@@ -140,7 +143,7 @@ public class ResourceCollectComponent extends Component {
             } else {
                 collector.getEvents().trigger("workerForwardRightAction");
             }
-            this.triggerDurationBarAnimation(this.initialWoodValue, collectorInventory.getWood());
+            // this.triggerDurationBarAnimation(this.initialWoodValue, collectorInventory.getWood());
         } else {
             return;
         }
@@ -154,18 +157,11 @@ public class ResourceCollectComponent extends Component {
             ServiceLocator.getEntityService().unregister(target);
             if(isStone!=null) {
                 target.dispose();}
+
+            // durationBar.dispose();
+            // ServiceLocator.getEntityService().unregister(durationBar);
+
             returnToBase(collector);
-
-
-            // Idle the duration bar
-            /*
-            if(collectorIsMiner != null){
-                collectorIsMiner.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
-            }
-            if(collectorIsForager != null){
-                collectorIsForager.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
-            }
-            */
         }        
     }
 
@@ -271,17 +267,17 @@ public class ResourceCollectComponent extends Component {
         logger.info("[+] The base now has " + Integer.toString(baseStats.getWood()) + " wood and " + Integer.toString(baseStats.getStone()) + " stone");
     }
 
-    private void triggerDurationBarAnimation(int initialValue, int currentValue){
-        if(currentValue == 0){
-            durationBar.getEvents().trigger("duration-bar-25");
-        }else if(0 <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.25f){
-            durationBar.getEvents().trigger("duration-bar-25");
-        }else if(0.25f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.5f){
-            durationBar.getEvents().trigger("duration-bar-50");
-        }else if(0.50f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.75f){
-            durationBar.getEvents().trigger("duration-bar-75");
-        }else{
-            durationBar.getEvents().trigger("duration-bar-100");
-        }
-    }
+    // private void triggerDurationBarAnimation(int initialValue, int currentValue){
+    //     if(currentValue == 0){
+    //         durationBar.getEvents().trigger("duration-bar-25");
+    //     }else if(0 <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.25f){
+    //         durationBar.getEvents().trigger("duration-bar-25");
+    //     }else if(0.25f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.5f){
+    //         durationBar.getEvents().trigger("duration-bar-50");
+    //     }else if(0.50f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.75f){
+    //         durationBar.getEvents().trigger("duration-bar-75");
+    //     }else{
+    //         durationBar.getEvents().trigger("duration-bar-100");
+    //     }
+    // }
 }
