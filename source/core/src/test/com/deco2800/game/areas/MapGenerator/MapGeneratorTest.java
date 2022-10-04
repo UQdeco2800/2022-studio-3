@@ -15,7 +15,7 @@ public class MapGeneratorTest {
         int mapWidth = 200;
         int mapHeight = 90;
         int cityWidth = 50;
-        int cityHeight = 40;
+        int cityHeight = 44;
         int islandSize = 80;
         return new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
     }

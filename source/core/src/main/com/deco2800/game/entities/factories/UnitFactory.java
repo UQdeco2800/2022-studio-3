@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -56,7 +57,8 @@ public class UnitFactory {
                         stats.example.movementRadius))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER));
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
+                        .addComponent(new FriendlyComponent());
         PhysicsUtils.setRadiusCollider(unit, stats.example.movementRadius);
         return unit;
     }
@@ -166,7 +168,8 @@ public class UnitFactory {
             troop.addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
-                    .addComponent(animator);
+                    .addComponent(animator)
+                    .addComponent(new FriendlyComponent());
             PhysicsUtils.setScaledCollider(troop, 0.2f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.setScale(2f,2f); // make size more manageable
@@ -196,6 +199,8 @@ public class UnitFactory {
         PhysicsUtils.setRadiusCollider(unit, unitStats.movementRadius);
         // start us in an idle state
         unit.getEvents().trigger("forward_right_idle");
+        //Add FriendlyComponent, to indicate that this Entity should be allowed out of the City
+        unit.addComponent(new FriendlyComponent());
         return unit;
     }
 

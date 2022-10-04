@@ -94,7 +94,6 @@ public class ForestGameArea extends GameArea {
     spawnBarracks(new GridPoint2(3, 6));
     spawnWalls(0,3);
     player = spawnPlayer();
-    ServiceLocator.registerGameArea(this);
   }
 
 
