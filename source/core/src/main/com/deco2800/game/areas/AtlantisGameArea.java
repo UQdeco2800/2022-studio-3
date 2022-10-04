@@ -186,7 +186,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnWorkerBase();
         // spawnMiner();
         spawnMiner();
-        spawnExampleUnit();
+        // spawnExampleUnit();
         spawnBlueJokers();
         spawnWolf();
         spawnTitan();
@@ -477,7 +477,6 @@ public class AtlantisGameArea extends GameArea {
         // Two spawn-points for the barracks next ot TownHall located in the centre
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
-
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.BROWN);
