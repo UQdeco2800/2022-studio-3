@@ -2,16 +2,39 @@
   "townHall": {
     "health": 1000,
     "baseAttack": 0,
+    "baseDefence": 10,
     "level": 1
   },
   "barracks": {
     "health": 200,
     "baseAttack": 0,
+    "baseDefence": 10,
     "level": 1
   },
   "wall": {
     "health": 500,
     "baseAttack": 0,
+    "baseDefence": 10,
     "level": 1
+  },
+  "ship": {
+    "health": 500,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1
+  },
+  "titanShrine": {
+    "health": 500,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1
+  },
+  "trebuchet": {
+    "health": 500,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1,
+    "range": 10.0,
+    "sight": 10.0
   }
 }

@@ -1,0 +1,212 @@
+ship.png
+size: 2048, 4096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ship_west_50_01
+  rotate: false
+  xy: 33, 2102
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_west_50_02
+  rotate: false
+  xy: 578, 2058
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_west_50_03
+  rotate: false
+  xy: 1066, 2102
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+ship_west_50_04
+  rotate: false
+  xy: 1611, 2102
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 3
+ship_west_0_01
+  rotate: false
+  xy: 33, 2569
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_west_0_02
+  rotate: false
+  xy: 642, 2569
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_west_0_03
+  rotate: false
+  xy: 1137, 2727
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+
+ship_north_50_01
+  rotate: false
+  xy: 76, 3125
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_north_50_02
+  rotate: false
+  xy: 613, 3133
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_north_50_03
+  rotate: false
+  xy: 1105, 3125
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+ship_north_50_04
+  rotate: false
+  xy: 1623, 3125
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 3
+
+ship_north_0_01
+  rotate: false
+  xy: 76, 3627
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_north_0_02
+  rotate: false
+  xy: 649, 3627
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_north_0_03
+  rotate: false
+  xy: 1203, 3819
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+
+
+ship_south_50_01
+  rotate: false
+  xy: 4, 1097
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_south_50_02
+  rotate: false
+  xy: 535, 1044
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_south_50_03
+  rotate: false
+  xy: 1066, 1097
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+ship_south_50_04
+  rotate: false
+  xy: 1597, 1044
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 3
+
+
+ship_south_0_01
+  rotate: false
+  xy: 33, 1536
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_south_0_02
+  rotate: false
+  xy: 351, 1555
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_south_0_03
+  rotate: false
+  xy: 305, 1640
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+
+
+
+ship_east_50_01
+  rotate: false
+  xy: 57, 56
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_east_50_02
+  rotate: false
+  xy: 613, 47
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_east_50_03
+  rotate: false
+  xy: 1105, 47
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+ship_east_50_04
+  rotate: false
+  xy: 1677, 102
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 3
+
+ship_east_0_01
+  rotate: false
+  xy: 76, 558
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 0
+ship_east_0_02
+  rotate: false
+  xy: 649, 558
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 1
+ship_east_0_03
+  rotate: false
+  xy: 1216, 625
+  size: 371, 359
+  orig: 371, 359
+  offset: 0, 0
+  index: 2
+
