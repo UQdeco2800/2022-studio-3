@@ -57,13 +57,10 @@ import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.BuilderFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
-import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Text;
+
 import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Map;
@@ -200,17 +197,16 @@ public class AtlantisGameArea extends GameArea {
     private DialogueBoxDisplay dialogueBoxDisplay;
 
     private Entity player;
-    private FloodingGenerator floodingGenerator;
-    private Entity terrainMapAndMiniMap;
+
     private Entity townHall;
     private Entity ship;
     private Entity titan;
+
     private EventHandler gameAreaEventHandle;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.floodingGenerator = new FloodingGenerator(this.terrainFactory, this);
         gameAreaEventHandle = new EventHandler();
     }
 
@@ -269,7 +265,7 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnExampleUnit();
         //spawnBlueJokers();
-        spawnWolf();
+        //spawnWolf();
         //spawnTitan();
         //spawnSnakes();
 
@@ -282,13 +278,6 @@ public class AtlantisGameArea extends GameArea {
         //spawnMiner();
         spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
-        startFlooding();
-    }
-
-    public void startFlooding() {
-        Entity floodingEntity = new Entity();
-        floodingEntity.addComponent(new FloodingGenerator(this.terrainFactory, this));
-        ServiceLocator.getEntityService().register(floodingEntity);
     }
 
     /**
@@ -367,9 +356,6 @@ public class AtlantisGameArea extends GameArea {
 //        infoUi.addComponent(new InfoBoxDisplay());
 //        spawnEntity(infoUi);
 
-        //TODO - ADD FLOODING COMPONENT
-        //ui.addComponent(new FloodingComponent());
-
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());
         gestureDisplay.addComponent(new GestureDisplay());
@@ -386,20 +372,6 @@ public class AtlantisGameArea extends GameArea {
         //spawnEntity(dialogueBox);
     }
 
-    public void flood() {
-        this.terrainMapAndMiniMap.dispose();
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        terrain = terrainFactory.createAtlantisTerrainComponent();
-        ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
-        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
-        // allow access to minimap via UI for dynamic resizing/positioning
-        this.dialogueBoxDisplay.setMinimap(minimapComponent);
-        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
-        spawnEntity(terrainMapAndMiniMap);
-//
-//        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
-    }
-
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
 
@@ -411,8 +383,7 @@ public class AtlantisGameArea extends GameArea {
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         // allow access to minimap via UI for dynamic resizing/positioning
         this.dialogueBoxDisplay.setMinimap(minimapComponent);
-        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
-        spawnEntity(terrainMapAndMiniMap);
+        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
         //Set tile size for camera
         terrainFactory.getCameraComponent().getEntity().getComponent(CameraInputComponent.class)
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
