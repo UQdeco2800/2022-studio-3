@@ -79,11 +79,6 @@ public class MapGenerator {
     private List<ResourceSpecification> resourcePlacements;
 
     /**
-     * Stores legal coordinates for players to move to.
-     */
-    public ArrayList<int[]> legalCoordinates;
-
-    /**
      * Map containing only the vertices around the island - used for testing purposes
      */
     private char[][] outlineMap;
@@ -480,8 +475,6 @@ public class MapGenerator {
         }
     }
 
-
-
     /**
      * Chooses the two edge tiles for the island by spreading the length evenly across each side
      * of the city, if map space permits
@@ -660,69 +653,5 @@ public class MapGenerator {
             }
         }
         return newMap;
-    }
-
-    /**
-     * Given a coordinate (x, y), update the internal representation of the map
-     * to flood that tile.
-     */
-    public void floodTile() throws IllegalArgumentException {
-        //Check that the square to be flooded is a flood-able square
-        //Return without crashing game if an error has been made
-
-        // For debugging
-        // System.out.println("HEIGHT: " + mapHeight);
-        // System.out.println("WIDTH: " + mapWidth);
-        boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
-
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (this.map[i][j] == this.getIslandChar()) {
-                    try {
-                        if (this.map[i - 1][j] == this.getOceanChar() ||
-                            this.map[i + 1][j] == this.getOceanChar() ||
-                            this.map[i][j - 1] == this.getOceanChar() ||
-                            this.map[i][j + 1] == this.getOceanChar()) {
-                            mapEdges[i][j] = true;
-                        } else {
-                            mapEdges[i][j] = false;
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        //Do Nothing
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (mapEdges[i][j]) {
-                    this.map[i][j] = this.getOceanChar();
-                }
-            }
-        }
-    }
-
-    /**
-     * Get array map of city.
-     */
-    public void createArrayMap() {
-        ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (this.map[i][j] == this.getCityChar()) {
-                    int[] coords = {i, j};
-                    legalMoveCoordinates.add(coords);
-                }
-            }
-        }
-        this.legalCoordinates = legalMoveCoordinates;
-    }
-
-    public ArrayList<int[]> getLegalCoordinates() {
-        if (this.legalCoordinates == null) {
-            createArrayMap();
-        }
-        return this.legalCoordinates;
     }
 }

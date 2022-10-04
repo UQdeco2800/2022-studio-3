@@ -119,7 +119,7 @@ public class WorkerMovementTask extends DefaultTask {
         logger.debug("Stopping movement");
     }
 
-    public boolean isAtTarget() {
+    private boolean isAtTarget() {
         return owner.getEntity().getPosition().dst(target) <= stopDistance;
     }
 
