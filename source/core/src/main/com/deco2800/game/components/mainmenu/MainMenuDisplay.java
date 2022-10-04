@@ -9,11 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.services.ServiceLocator;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.deco2800.game.components.mainmenu.InsertButtons;
 
 /**
  * A ui component for displaying the Main menu.
@@ -43,15 +46,42 @@ public class MainMenuDisplay extends UIComponent {
         titleImage.setFillParent(true);
 
         /* Load textures to create image buttons */
-        Texture startTexture = new Texture(Gdx.files.internal("images/start-button.PNG"));
-        Texture startTextureHover = new Texture(Gdx.files.internal("images/start-button-hover.PNG"));
-        Texture exitTexture = new Texture(Gdx.files.internal("images/exit-button.PNG"));
-        Texture exitTextureHover = new Texture(Gdx.files.internal("images/exit-button-hover.PNG"));
+        InsertButtons bothButtons = new InsertButtons();
 
-        ImageButton startBtn = new ImageButton(new TextureRegionDrawable(startTexture));
-        ImageButton exitBtn = new ImageButton(new TextureRegionDrawable(exitTexture));
-        ImageButton startBtnHover = new ImageButton(new TextureRegionDrawable(startTextureHover));
-        ImageButton exitBtnHover = new ImageButton(new TextureRegionDrawable(exitTextureHover));
+        // start button
+        //Texture startTexture = new Texture(Gdx.files.internal("images/start-button.PNG"));
+        String startTexture = "images/start-button.PNG";
+        String startTextureHover = "images/start-button-hover.PNG";
+
+        //Texture startTextureHover = new Texture(Gdx.files.internal("images/start-button-hover.PNG"));
+
+        //ImageButton startBtn = new ImageButton(new TextureRegionDrawable(startTexture));
+
+
+        //ImageButton startBtnHover = new ImageButton(new TextureRegionDrawable(startTextureHover));
+
+        ImageButton startBtn;
+        // intialising all dimensions
+        // X
+
+
+        startBtn = bothButtons.draw(startTexture, startTextureHover);
+
+
+
+
+
+        // exit button
+        String exitTexture = "images/exit-button.PNG";
+        String exitTextureHover = "images/exit-button-hover.PNG";
+        ImageButton exitBtn;
+        exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
+
+
+
+        //ImageButton exitBtn = new ImageButton(new TextureRegionDrawable(exitTexture));
+
+        //ImageButton exitBtnHover = new ImageButton(new TextureRegionDrawable(exitTextureHover));
 
         // Triggers an event when the button is pressed
         startBtn.addListener(
@@ -82,7 +112,7 @@ public class MainMenuDisplay extends UIComponent {
         table.row();
         table.add(exitBtn).left().width(200f).padLeft(20f);
         //table.debug();
-      
+
 
 
         stage.addActor(titleImage);
