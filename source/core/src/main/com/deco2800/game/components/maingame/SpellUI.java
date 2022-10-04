@@ -3,6 +3,9 @@ package com.deco2800.game.components.maingame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -160,7 +163,10 @@ public class SpellUI extends UIComponent {
                     break;
                 }
             }
-            spell.setEnabled(true);
+//            spell.setEnabled(true);
+
+            spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
+
             spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
 
             for (Entity entity : enemyEntities) {
@@ -168,5 +174,10 @@ public class SpellUI extends UIComponent {
             }
             pseudoCast = false;
         }
+    }
+
+    public Vector2 screenToWorldPosition(int screenX, int screenY) {
+        Vector3 worldPos = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
+        return new Vector2(worldPos.x, worldPos.y);
     }
 }

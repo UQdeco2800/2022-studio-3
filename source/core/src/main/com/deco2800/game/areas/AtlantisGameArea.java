@@ -281,10 +281,10 @@ public class AtlantisGameArea extends GameArea {
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
 
         MapComponent mapComponent = new MapComponent();
-        mapComponent.display();
-        mapComponent.setDisplayColour(Color.PURPLE);
-        entity.addComponent(mapComponent);
-        entity.setEnabled(false);
+//        mapComponent.display();
+//        mapComponent.setDisplayColour(Color.PURPLE);
+//        entity.addComponent(mapComponent);
+//        entity.setEnabled(false);
         spawnEntityAt(entity, spawn, true, true);
     }
 
