@@ -104,6 +104,8 @@ public class AtlantisGameArea extends GameArea {
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
             // Walls
+            "images/forager_avatar.png",
+            "images/miner_avatar.png",
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
             "images/wooden_wall_3.png",
@@ -160,7 +162,7 @@ public class AtlantisGameArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        player = spawnPlayer();
+//        player = spawnPlayer();
         centreCameraOnCity();
 //        playMusic();
 

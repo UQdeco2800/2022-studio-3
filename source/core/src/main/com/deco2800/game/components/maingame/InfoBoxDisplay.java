@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
@@ -245,8 +246,18 @@ public class InfoBoxDisplay extends UIComponent {
                 }
 
 
-                Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+                Image dummyImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+
+
+                try {
+                    dummyImage = new Image(ServiceLocator.getResourceService()
+                            .getAsset(entity.getComponent(AvatarIconComponent.class).texturePath, Texture.class));
+                } catch(Exception e) {
+                }
+
+
+
+
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
