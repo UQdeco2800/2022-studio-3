@@ -103,10 +103,8 @@ public class AtlantisTerrainFactory {
             int height = this.mapGenerator.getHeight();
             ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
             int size = legalMoves.size();
-            System.out.println(size);
             int randomSeed = PseudoRandom.seedRandomInt(0, size);
             int[] coords = legalMoves.get(randomSeed);
-            System.out.println(new GridPoint2(coords[0], coords[1]));
             return new GridPoint2(coords[1], height - coords[0]);
         }
     }
