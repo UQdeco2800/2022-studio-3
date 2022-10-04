@@ -53,6 +53,7 @@ public class TutorialDisplay extends UIComponent {
         addActors();
     }
 
+
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
@@ -62,8 +63,8 @@ public class TutorialDisplay extends UIComponent {
         table.setFillParent(true);
         backTable.setFillParent(true);
 
-
-        TextButton skipBtn = new TextButton("Skip Tutorial", skin);
+        TextButton skipBtn = new TextButton("Skip", skin);
+        TextButton nextBtn = new TextButton("Next", skin);
 
         skipBtn.addListener(
                 new ChangeListener() {
@@ -75,7 +76,19 @@ public class TutorialDisplay extends UIComponent {
                     }
                 });
 
-        backTable.add(skipBtn).pad(25f);
+        nextBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("next button clicked");
+                        entity.getEvents().trigger("next");
+                    }
+                });
+
+        backTable.add(nextBtn).padBottom(150f).padRight(10f);
+        backTable.add(skipBtn).padBottom(150f).padRight(10f);
+
         stage.addActor(backTable);
         stage.addActor(table);
 
@@ -85,7 +98,6 @@ public class TutorialDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
-
 
     @Override
     public float getZIndex() {
