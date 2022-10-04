@@ -6,11 +6,18 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.GameArea;
+import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.UnitSpawningComponent;
+import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.EntityType;
 import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.damageAnimation;
+import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.building.GateCollider;
 import com.deco2800.game.entities.Entity;
@@ -20,6 +27,8 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.HighlightedTextureRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
@@ -40,6 +49,13 @@ public class BuildingFactory {
             FileLoader.readClass(BuildingConfigs.class, "configs/buildings.json");
     private static final ResourceConfig stats =
             FileLoader.readClass(ResourceConfig.class, "configs/base.json");
+
+    private static final String HALF_HEALTH = "50-idle";
+    private static final String HALF_HEALTH_TRANSITION = "50";
+    private static final String FULL_HEALTH = "100";
+    private static final String FULL_ATTACKED = "attacked";
+    private static final String COLLAPSE = "collapse";
+    private static final String REBUILD = "reconstruction";
 
     /**
      * Width in tiles of a wall pillar entity
@@ -70,6 +86,7 @@ public class BuildingFactory {
      * @return TownHall Entity
      */
     public static Entity createTownHall() {
+        // TODO: Replace town hall with new design.
         final float TH_SCALE = 7f;
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
@@ -85,7 +102,8 @@ public class BuildingFactory {
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
-                .addComponent(new HighlightedTextureRenderComponent("images/level_1_town_hall_Highlight.png"))
+                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"))
+                .addComponent(new BuildingUIDataComponent())
                 .addComponent(mp)
                 .addComponent(new TextureScaler(leftPoint, rightPoint));
 
@@ -132,12 +150,14 @@ public class BuildingFactory {
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.GOLDENROD);
+        // TODO: Change barracks from static texture to animation.
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(mp);
+                .addComponent(mp)
+                .addComponent(new BuildingUIDataComponent());
 
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE);
 
@@ -210,7 +230,127 @@ public class BuildingFactory {
     }
 
     /**
-     * Creates entity, adds and configures Wall components
+     * Creates a titan shrine entity, a titan shrine is an enemy building
+     * that spawns titan's.
+     * @return Titan Shrine Building Entity
+     */
+    public static Entity createTitanShrine() {
+        final float TITANSHRINE_SCALE = 10f;
+        Entity titanShrine = createBaseBuilding();
+        TitanShrineConfig config = configs.titanShrine;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                                                           .getAsset("images/titanshrine.atlas",
+                                                                        TextureAtlas.class));
+
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        titanShrine
+                .addComponent(new damageAnimation())
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(animator);
+
+
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1111,      // Vertex 0        3
+                1100f, 870f,     // Vertex 1    4 /   \ 2
+                1100f, 800f,     // Vertex 2     |     |
+                605f, 581f,      // Vertex 3    5 \   / 1
+                100f, 800f,      // Vertex 4        0
+                100f, 874f       // Vertex 5
+        };
+
+        Texture titanShrineTexture = ServiceLocator.getResourceService()
+                                                   .getAsset("images/titanshrine-default.png",
+                                                             Texture.class);
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(TITANSHRINE_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        titanShrine.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
+        titanShrine.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        titanShrine.getComponent(AnimationRenderComponent.class).scaleEntity();
+        titanShrine.scaleWidth(TITANSHRINE_SCALE);
+
+        return titanShrine;
+    }
+
+    /**
+     * Creates a ship entity, a ship shrine is an enemy building that transports
+     * enemy entities from sea to the shores of the island.
+     * that spawns titan's.
+     * @return Ship Building Entity
+     */
+    public static Entity createShip() {
+        final float SHIP_SCALE = 5f;
+        Entity ship = createBaseBuilding();
+        ShipConfig config = configs.ship;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/ship2.atlas", TextureAtlas.class));
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        ship
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(animator);
+
+        ship.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        ship.getComponent(AnimationRenderComponent.class).scaleEntity();
+        ship.scaleWidth(SHIP_SCALE);
+
+        //TODO: Set isometric colliders
+
+
+
+        return ship;
+    }
+
+    /**
+     * Creates a trebuchet entity, a trebuchet is a friendly building
+     * that defends the shores of atlantis, it primarily attacks enemy
+     * transport ships.
+     * that spawns titan's.
+     * @return Trebuchet building entity.
+     */
+    public static Entity createTrebuchet(Entity target, GameArea gameArea) {
+        final float Trebuchet_SCALE = 3f;
+        Entity trebuchet = createBaseBuilding();
+        TrebuchetConfig config = configs.trebuchet;
+        AITaskComponent aiComponent = new AITaskComponent()
+                .addTask(new rangedAttackTask(target, 4, 10, 2000f));
+
+        trebuchet.addComponent(new TextureRenderComponent("images/Trebuchet-lv1-north.png"))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(aiComponent)
+                .addComponent(new AttackListener(target, gameArea));
+        trebuchet.scaleHeight(Trebuchet_SCALE);
+        return trebuchet;
+    }
+
+    /**
+     * Creates a wall entity, adds and configures Wall components
      * @return Barracks Entity
      */
     public static Entity createWall() {
@@ -351,7 +491,7 @@ public class BuildingFactory {
         PolygonShape boundingBox = new PolygonShape();
         boundingBox.set(vertices);
         bs.getComponent(ColliderComponent.class).setShape(boundingBox);
-        
+
         return bs;
     }
 
@@ -473,7 +613,7 @@ public class BuildingFactory {
             .addComponent(gateARC)
             .addComponent(new TextureScaler(leftPoint, rightPoint))
             .addComponent(new BuildingActions(Building.GATE_NS, 1));
-        
+
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
 

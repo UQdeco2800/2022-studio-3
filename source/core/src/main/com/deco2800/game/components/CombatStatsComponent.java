@@ -232,7 +232,16 @@ public class CombatStatsComponent extends Component {
     int newHealth = getHealth() - max(1,
             attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
+    checkDamageAnimation();
   }
 
+  private void checkDamageAnimation() {
+    if (entity.getEvents().hasEvent("Damaged")) {
+      entity.getEvents().trigger("Damaged");
+    }
+  }
 
+  public void decreaseHealth(int damage) {
+    setHealth(this.health - damage);
+  }
 }
