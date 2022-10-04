@@ -1,4 +1,4 @@
-package main.com.deco2800.game.components.flooding;
+package com.deco2800.game.components.flooding;
 
 import com.deco2800.game.components.Component;
 import com.deco2800.game.utils.random.Timer;
