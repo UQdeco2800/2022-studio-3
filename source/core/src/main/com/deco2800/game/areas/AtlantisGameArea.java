@@ -186,11 +186,11 @@ public class AtlantisGameArea extends GameArea {
         // spawnWorkerBase();
         // spawnMiner();
         spawnMiner();
-        // spawnExampleUnit();
-        // spawnBlueJokers();
-        // spawnWolf();
-        // spawnTitan();
-        // spawnSnakes();
+        spawnExampleUnit();
+        spawnBlueJokers();
+        spawnWolf();
+        spawnTitan();
+        spawnSnakes();
 
         spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
