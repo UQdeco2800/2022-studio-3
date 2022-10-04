@@ -106,7 +106,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
         selectRandomTarget();
         createMovementTask();
       } else if (this.timer.isTimerExpired()) {
-        System.out.println(this.movementTask);
+//        System.out.println(this.movementTask);
         selectRandomTarget();
         createMovementTask();
         this.timer = new Timer(5000, 10000);
