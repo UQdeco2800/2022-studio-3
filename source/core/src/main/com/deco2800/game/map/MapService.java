@@ -265,13 +265,6 @@ public class MapService {
 	}
 
 	/**
-	 * TODO: Make changeIslandTile
-	 */
-	public void removeIslandTile(int x, int y) {
-		islandTiles.remove(new GridPoint2(x, y));
-
-	}
-	/**
 	 * Returns a list of island tile positions.
 	 * 
 	 * @return list of island tile positions
