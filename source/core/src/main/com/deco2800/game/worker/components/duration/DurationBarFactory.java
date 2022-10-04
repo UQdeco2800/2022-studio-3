@@ -11,10 +11,13 @@ public class DurationBarFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/duration_bar/duration-bar.atlas", TextureAtlas.class));
+                                .getAsset("images/duration-bar.atlas", TextureAtlas.class));
         
-        animator.addAnimation("durationBarIdle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("durationBar", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("duration-bar-25", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("duration-bar-50", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("duration-bar-75", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("duration-bar-100", 0.1f, Animation.PlayMode.LOOP);
+
         Entity newDurationBar = new Entity()
             .addComponent(animator)
             .addComponent(new DurationBarComponent());

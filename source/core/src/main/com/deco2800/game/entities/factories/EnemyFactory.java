@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.EntityDirectionComponent;
+import com.deco2800.game.components.bulletHitShips;
 import com.deco2800.game.components.npc.EnemyAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.enemy.EnemySignal;
 //import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.EnemyEntity;
@@ -24,6 +27,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -47,6 +51,45 @@ public class EnemyFactory {
   private static final String ATTACK_SOUTH = "attack-south";
   private static final String ATTACK_EAST = "attack-east";
   private static final String ATTACK_WEST = "attack-west";
+
+  /**
+   * Creates the bullet for the Trebuchet.
+   * @param from the position of the Trebuchet that the bullet will be created from
+   * @param target the ships that the bullet aim to attack
+   * @param gameArea the game area
+   * @return the bullet entity of Trebuchet.
+   */
+  public static Entity createBullet(Entity from, Entity target, GameArea gameArea) {
+
+    float x1 = from.getPosition().x;
+    float y1 = from.getPosition().y;
+    float x2 = target.getPosition().x;
+    float y2 = target.getPosition().y;
+
+    Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
+
+    newTarget = newTarget.scl(1000).add(from.getPosition());
+
+    Entity bullet1 =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/bullet1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new bulletHitShips(target, gameArea));
+
+    bullet1.getComponent(TextureRenderComponent.class).scaleEntity();
+    bullet1.scaleHeight(0.7f);
+    PhysicsUtils.setScaledCollider(bullet1, 0.5f, 0.3f);
+
+    bullet1.setPosition(x1 - bullet1.getScale().x / 2 + from.getScale().x / 2,
+            y1 - bullet1.getScale().y / 2 + from.getScale().y / 2);
+
+    bullet1.getComponent(PhysicsMovementComponent.class).setTarget(newTarget);
+    bullet1.getComponent(PhysicsMovementComponent.class).setMoving(true);
+    bullet1.getComponent(ColliderComponent.class).setSensor(true);
+    return bullet1;
+  }
 
   /**
    * Creates a Blue Joker enemy entity
@@ -76,7 +119,8 @@ public class EnemyFactory {
               .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                      config.baseDefence, config.landSpeed, config.range))
               .addComponent(animator)
-              .addComponent(new EnemyAnimationController());
+              .addComponent(new EnemyAnimationController())
+              .addComponent(new EnemySignal());
 
     blueJoker .getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -110,7 +154,8 @@ public class EnemyFactory {
         .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                config.baseDefence, config.landSpeed, config.range))
         .addComponent(animator)
-        .addComponent(new EnemyAnimationController());
+        .addComponent(new EnemyAnimationController())
+        .addComponent(new EnemySignal());
 
     snake.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -142,7 +187,8 @@ public class EnemyFactory {
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
-            .addComponent(new EnemyAnimationController());
+            .addComponent(new EnemyAnimationController())
+            .addComponent(new EnemySignal());
 
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
@@ -175,9 +221,11 @@ public class EnemyFactory {
             .addComponent(new CombatStatsComponent(config.troops, config.health, config.baseAttack,
                                                    config.baseDefence, config.landSpeed, config.range))
             .addComponent(animator)
-            .addComponent(new EnemyAnimationController());
+            .addComponent(new EnemyAnimationController())
+            .addComponent(new EnemySignal());
 
     titan.getComponent(AnimationRenderComponent.class).scaleEntity();
+    titan.scaleWidth(10f);
 
     return titan;
   }
