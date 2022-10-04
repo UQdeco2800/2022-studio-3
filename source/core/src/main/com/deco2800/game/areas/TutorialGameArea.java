@@ -162,7 +162,7 @@ public class TutorialGameArea extends GameArea {
         Vector2 centreWorld = this.terrain.tileToWorldPosition(spawn.x, spawn.y);
         this.terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
         this.dialogueBoxDisplay.setTitle("Welcome to Atlantis Sinks!");
-        this.dialogueBoxDisplay.setDialogue("Press next to get started or \nskip to play");
+        this.dialogueBoxDisplay.setDialogue("Press next to get \nstarted or skip to play");
         this.dialogueBoxDisplay.setImage("images/SirFred.png");
     }
 
