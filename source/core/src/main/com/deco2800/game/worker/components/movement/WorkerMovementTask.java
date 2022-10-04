@@ -2,8 +2,11 @@ package com.deco2800.game.worker.components.movement;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.ai.tasks.DefaultTask;
+import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -22,11 +25,13 @@ public class WorkerMovementTask extends DefaultTask {
 
     private final GameTime gameTime;
     private Vector2 target;
+    private Vector2 finalTarget;
     private float stopDistance = 0.01f;
     private long lastTimeMoved;
     private Vector2 lastPos;
     private PhysicsMovementComponent movementComponent;
     private List<GridPoint2> path;
+    private MapService mapService;
 
     public WorkerMovementTask(Vector2 target) {
         this.target = target;
@@ -37,17 +42,24 @@ public class WorkerMovementTask extends DefaultTask {
     public void start() {
         super.start();
         this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
-        // MapService ms = ServiceLocator.getMapService();
-        // path = ms.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
-        // movementComponent.setTarget(ms.tileToWorldPosition(path.get(1)));
-        // path.remove(0);
-        // path.remove(1);
-        movementComponent.setTarget(target);
-        movementComponent.setMoving(true);
-        logger.debug("Starting movement towards {}", target);
-        lastTimeMoved = gameTime.getTime();
-        lastPos = owner.getEntity().getPosition();
-        owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
+        this.mapService = ServiceLocator.getMapService();
+        this.mapService.unregister(owner.getEntity().getComponent(MapComponent.class));
+        this.path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
+        this.finalTarget = target;
+        logger.info("Path from {} to {}: {}", MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target), path);
+        if (!path.isEmpty()) {
+            this.setTarget(MapService.tileToWorldPosition(path.get(0)));
+            path.remove(0);
+            movementComponent.setMoving(true);
+            logger.info("Starting movement towards {}", MapService.worldToTile(target));
+            lastTimeMoved = gameTime.getTime();
+            lastPos = owner.getEntity().getPosition();
+            owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
+        } else {
+            this.setTarget(target);
+            movementComponent.setMoving(true);
+            logger.info("NO PATH FOUND USING DEFAULT MOVEMENT Starting movement towards {}", MapService.worldToTile(target));
+        }    
     }
 
     public void changeSpeed(float factor) {
@@ -57,25 +69,47 @@ public class WorkerMovementTask extends DefaultTask {
     @Override
     public void update() {
         if (isAtTarget()) {
-            movementComponent.setMoving(false);
-            status = Status.FINISHED;
-            logger.debug("Finished moving to {}", target);
-        // if (path.size() == 0) {
-        //     movementComponent.setMoving(false);
-        //     status = Status.FINISHED;
-        //     logger.debug("Finished moving to {}", target);
-        // } else if (isAtTarget()) {
-        //     MapService ms = ServiceLocator.getMapService();
-        //     movementComponent.setTarget(ms.tileToWorldPosition(path.get(0)));
-        //     path.remove(0);
+            if (path.isEmpty()) {
+                movementComponent.setMoving(false);
+                status = Status.FINISHED;
+                logger.info("Finished path");
+            } else {
+                setTarget(MapService.tileToWorldPosition(path.get(0)));
+                path.remove(0);
+                movementComponent.setMoving(true);
+                logger.info("Moving to the next target: {}", MapService.worldToTile(target));
+                lastTimeMoved = gameTime.getTime();
+                lastPos = owner.getEntity().getPosition();
+            }
         } else {
-            checkIfStuck();
+            //logger.info("Failed to move to {}", MapService.worldToTile(target));
+            if (gameTime.getTime() - lastTimeMoved > 1000) {
+                if (lastPos.epsilonEquals(owner.getEntity().getPosition(), 0.01f)) {
+                    logger.info("Stuck, moving to final target");
+                    PhysicsComponent physicsComponent = owner.getEntity().getComponent(PhysicsComponent.class);
+                    if (physicsComponent != null) {
+                        Body entityBody = physicsComponent.getBody();
+                        Vector2 direction = owner.getEntity().getCenterPosition().sub(owner.getEntity().getCenterPosition());
+                        Vector2 impulse = direction.setLength(0.2f);
+                        entityBody.applyLinearImpulse(impulse, entityBody.getWorldCenter(), true);
+                    }
+                    setTarget(finalTarget);
+                    movementComponent.setMoving(true);
+                    path.clear();
+                }
+                lastTimeMoved = gameTime.getTime();
+                lastPos = owner.getEntity().getPosition();
+            }
         }
     }
 
     public void setTarget(Vector2 target) {
         this.target = target;
         movementComponent.setTarget(target);
+    }
+    
+    public void setPath(List<GridPoint2> path) {
+        this.path = path;
     }
 
     @Override
@@ -96,7 +130,8 @@ public class WorkerMovementTask extends DefaultTask {
         } else if (gameTime.getTimeSince(lastTimeMoved) > 500L) {
             movementComponent.setMoving(false);
             status = Status.FAILED;
-            logger.debug("Got stuck! Failing movement task");
+            logger.info("Got stuck! Failing movement task");
+            //movementComponent.setTarget(finalTarget);
         }
     }
 

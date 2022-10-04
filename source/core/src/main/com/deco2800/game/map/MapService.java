@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Logger;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.map.util.IllegalEntityPlacementException;
 import com.deco2800.game.map.util.NoEntityException;
@@ -33,6 +34,8 @@ public class MapService {
     private int mapWidth;
     /* Height of game map */
     private int mapHeight;
+
+	private Logger logger = new Logger("MapService", Logger.DEBUG);
 
 	/**
 	 * Returns a map of positions to entities.
@@ -105,7 +108,7 @@ public class MapService {
 				occupied.add(pos);
 			}
 		}
-		return occupied;
+		return occupied;		
 	}
 	
 	/**
@@ -167,27 +170,34 @@ public class MapService {
 			return new ArrayList<>();
 		}
 		fringe.add(new Node(start, null));
+		
+		int tempCounter = 0;
+		ArrayList<MapComponent> temp = new ArrayList();
 
 		while (fringe.size() > 0) {
-
+			tempCounter++;
 			Node node = fringe.get(0);
 			fringe.remove(0);
 			if (goal.equals(node.position)) {
 				return node.backtrack();
 			}
-			
 			List<Node> children = node.getChildren();
 			for (Node child : children) {
-				if (!visited.contains(child) && !isOccupied(child.position)) {
-					fringe.add(child);
-					visited.add(child);
+				if (!visited.contains(child)) {
+					if (!isOccupied(child.position)) {
+						fringe.add(child);
+						visited.add(child);
+					} else {
+						temp.add(positionToEntity.get(child.position));
+					}
 				}
 			}
 		}
-
 		// no solution
+		logger.info("No path found after " + tempCounter + " iterations");
 		return new ArrayList<>();
 	}
+
 
 	private class Node {
 		public GridPoint2 position;
@@ -277,7 +287,7 @@ public class MapService {
 	 * @return true if occupied, else false
 	 */
 	public boolean isOccupied(GridPoint2 position) {
-		return positionToEntity.get(position) != null;
+		return positionToEntity.containsKey(position);
 	}
 	
 	/**
