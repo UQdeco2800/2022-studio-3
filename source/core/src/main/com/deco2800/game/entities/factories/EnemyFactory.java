@@ -252,7 +252,6 @@ public class EnemyFactory {
             .addComponent(new EntityDirectionComponent());
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-    System.out.println(npc.getClass());
     return npc;
   }
 

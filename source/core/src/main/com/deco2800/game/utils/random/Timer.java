@@ -19,13 +19,16 @@ public class Timer {
     /**
      * Setting up timer to the class variable.
      *
-     * @param lowerIntervalSeconds is for the lowest possible randomization value
-     * @param upperIntervalSeconds is for the highest possible randomization value
+     * @param lowerIntervalMiliSeconds is for the lowest possible randomization value
+     * @param upperIntervalMiliSeconds is for the highest possible randomization value
      */
-    public Timer(int lowerIntervalSeconds, int upperIntervalSeconds) {
-        int randomIntervalInt = PseudoRandom.seedRandomInt(lowerIntervalSeconds, upperIntervalSeconds);
-        long delay = Long.valueOf(randomIntervalInt);
-        this.delay = delay;
+    public Timer(int lowerIntervalMiliSeconds, int upperIntervalMiliSeconds) {
+        int randomIntervalInt = PseudoRandom.seedRandomInt(lowerIntervalMiliSeconds, upperIntervalMiliSeconds);
+        if (lowerIntervalMiliSeconds == upperIntervalMiliSeconds) {
+            this.delay = (long)lowerIntervalMiliSeconds;
+        } else {
+            this.delay = Long.valueOf(randomIntervalInt);
+        }
     }
 
     /**
