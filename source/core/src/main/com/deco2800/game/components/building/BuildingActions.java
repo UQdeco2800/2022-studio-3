@@ -116,6 +116,7 @@ public class BuildingActions extends Component {
         }
     }
 
+
     /**
      * Called upon creation. Used to define events for event listener to trigger.
      */

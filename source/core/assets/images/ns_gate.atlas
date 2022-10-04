@@ -1,0 +1,90 @@
+
+ns_gate.png
+size: 2048, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+open_gate
+  rotate: false
+  xy: 2, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 1
+open_gate
+  rotate: false
+  xy: 245, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 6
+open_gate
+  rotate: false
+  xy: 488, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 3
+open_gate
+  rotate: false
+  xy: 731, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 5
+open_gate
+  rotate: false
+  xy: 974, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 2
+open_gate
+  rotate: false
+  xy: 1217, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 4
+close_gate
+  rotate: false
+  xy: 2, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 6
+close_gate
+  rotate: false
+  xy: 245, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 1
+close_gate
+  rotate: false
+  xy: 488, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 4
+close_gate
+  rotate: false
+  xy: 731, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 2
+close_gate
+  rotate: false
+  xy: 974, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 5
+close_gate
+  rotate: false
+  xy: 1217, 2
+  size: 241, 215
+  orig: 241, 215
+  offset: 0, 0
+  index: 3

@@ -1,6 +1,7 @@
 package com.deco2800.game.areas.MapGenerator.Buildings;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
@@ -29,7 +30,14 @@ public class BuildingGenerator {
     /**
      * Distance (in tiles) to allow for the walls around the city
      */
-    private final int WALL_BUFFER = 1;
+    private final int WALL_BUFFER = 3;
+
+    /**
+     * Distance in tiles between the right edge of the city and the last building
+     */
+    private final int RIGHT_BUFFER = 4;
+
+
     /**
      * Attempts to place each building in the city
      */
@@ -66,6 +74,14 @@ public class BuildingGenerator {
      * The width of the city in tiles.
      */
     private int cityWidth;
+    /**
+     * Character that symbolises a door position in the char map.
+     */
+    private char doorSymbol = 'D';
+    /**
+     * PathGenerator instance used for paths
+     */
+    private PathGenerator pg;
 
     public BuildingGenerator(MapGenerator mg) {
         //Get MapGenerator details
@@ -85,7 +101,7 @@ public class BuildingGenerator {
         for (JsonValue b : buildingsJson.iterator()) {
             //Define object
             BuildingSpecification building = new BuildingSpecification(b.getString("name"),
-                    b.getInt("width"),b.getInt("height"),b.getInt("num"));
+                    b.getInt("width"),b.getInt("height"),b.getString("door"),b.getInt("num"));
 
             //Add object to list
             buildings.add(building);
@@ -109,17 +125,57 @@ public class BuildingGenerator {
         //Allocate a list of CityRow based on numRows
         cityRows = new LinkedList<>();
         for (int i = 0; i < numRows; i++) {
-            cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, i));
+            cityRows.add(new CityRow(cityWidth, CITY_BUFFER, WALL_BUFFER, RIGHT_BUFFER, i));
         }
 
         //Place buildings in their rows
         placeBuildings();
 
         //Add Paths
-        PathGenerator pg = new PathGenerator(this);
+        this.pg = new PathGenerator(this);
 
         //Test output
         //writeCity(cityHeight, cityWidth);
+    }
+
+    /**
+     * Returns the PathGenerator instance.
+     * @return PathGenerator instance
+     */
+    public PathGenerator getPathGenerator() {
+        return this.pg;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from the wall.
+     * @return wall buffer amount
+     */
+    public int getWallBuffer() {
+        return this.WALL_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from the right wall.
+     * @return right wall buffer amount
+     */
+    public int getRightWallBuffer() {
+        return this.RIGHT_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from each other.
+     * @return buidling buffer amount
+     */
+    public int getCityBuffer() {
+        return this.CITY_BUFFER;
+    }
+
+    /**
+     * Returns the number of tiles buildings are placed from each other on the y axis.
+     * @return buidling buffer amount
+     */
+    public int getRowBuffer() {
+        return this.ROW_BUFFER;
     }
 
     /**
@@ -161,6 +217,19 @@ public class BuildingGenerator {
     }
 
     /**
+     * Writes the contents of the city to a human readable text file
+     * @param cityHeight height of the city in tiles
+     * @param cityWidth width of the city in tiles
+     * @param path path to output file
+     */
+    public void writeCity(int cityHeight, int cityWidth, String path) {
+        //Test - write to output file
+        char[][] city = getCharMap();
+        //Change or comment path as needed to test
+        MapGenerator.writeMap(city, path, cityWidth, cityHeight);
+    }
+
+    /**
      * Returns char char array of the current city contents in the CityRows
      * @return 2d char array denoting the current position of each building
      */
@@ -193,6 +262,8 @@ public class BuildingGenerator {
                         city[translatedY][translatedX] = buildingChar;
                     }
                 }
+                GridPoint2 door = b.getDoor();
+                city[placement.getY() - cityMinY + door.y][placement.getX() - cityMinX + door.x] = this.doorSymbol;
             }
         }
         return city;
@@ -209,7 +280,7 @@ public class BuildingGenerator {
     /**
      * Places each building in a row of the city
      */
-    public void placeBuildings() {
+    private void placeBuildings() {
         //Add all buildings remaining to a list of BuildingSpecification to randomly select from
         List<BuildingSpecification> remainingBuildings = new ArrayList<>();
         for (BuildingSpecification b : buildings) {
@@ -223,7 +294,7 @@ public class BuildingGenerator {
             BuildingSpecification currentBuilding = remainingBuildings.get(new Random().nextInt(remainingBuildings.size()));
 
             //Make a building object to mirror this
-            Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName());
+            Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName(), currentBuilding.getDoor());
 
             //While a row can't be found or until the max rows have been exhausted
             int seed = 0;
@@ -271,6 +342,7 @@ public class BuildingGenerator {
         int cityMinY = cityDetails.get("NW").getY();
         int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
 
+
         int spaceRemaining = (cityHeight - (2 * WALL_BUFFER)) - ((maxHeight + ROW_BUFFER) * numRows);
         int baseOffset = spaceRemaining / (numRows - 1);
         int conditionalOffset = spaceRemaining % (numRows - 1);
@@ -304,7 +376,7 @@ public class BuildingGenerator {
         }
     }
 
-    public CityRow chooseRow(int seed) {
+    private CityRow chooseRow(int seed) {
         //Initialise new LinkedList of cityRows
         LinkedList<CityRow> cityRowsCopy = new LinkedList<>(cityRows);
 
