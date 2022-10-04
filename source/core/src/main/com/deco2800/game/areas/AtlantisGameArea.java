@@ -14,13 +14,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.areas.MapGenerator.Buildings.Building;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.Buildings.CityRow;
-import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
+import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
+import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
@@ -30,8 +31,6 @@ import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.areas.terrain.MinimapComponent;
-import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -43,27 +42,18 @@ import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.services.ResourceService;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.MiningCampFactory;
-import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
 import com.deco2800.game.worker.type.BuilderFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
-import com.deco2800.game.worker.components.duration.DurationBarFactory;
-import com.deco2800.game.worker.components.type.ForagerComponent;
-import com.deco2800.game.worker.components.type.MinerComponent;
-import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
+
 import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Map;
@@ -77,21 +67,21 @@ public class AtlantisGameArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
     private static final int NUM_TREES = 5;
     private static final int NUM_STONE = 10;
-    private static final String[] forestTextures = {
+    public static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
             "images/city_tile.png",
-            "images/box_boy_leaf.png",
-            "images/box_boy.png",
-            "images/Base_Highlight.png",
-            "images/box_boy_highlight.png",
+//            "images/box_boy_leaf.png",
+//            "images/box_boy.png",
+//            "images/Base_Highlight.png",
+//            "images/box_boy_highlight.png",
             "images/tree.png",
             "images/iso_grass_1.png",
-            "images/ghost_king.png",
-            "images/ghost_1.png",
+//            "images/ghost_king.png",
+//            "images/ghost_1.png",
             "images/grass_1.png",
             "images/grass_2.png",
             "images/grass_3.png",
@@ -99,6 +89,10 @@ public class AtlantisGameArea extends GameArea {
             "images/sea_2.png",
             "images/sea_3.png",
             "images/sea_4.png",
+            "images/Waves tile/wave_1.png",
+            "images/Waves tile/wave_2.png",
+            "images/Waves tile/wave_3.png",
+            "images/Waves tile/wave_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -113,6 +107,7 @@ public class AtlantisGameArea extends GameArea {
             /* Building assets */
             // TownHall
             "images/base.png",
+            "images/level 1 town hall.png",
             // Barracks
             "images/barracks_level_1.0.png",
             "images/barracks_level_1.0_Highlight.png",
@@ -143,6 +138,7 @@ public class AtlantisGameArea extends GameArea {
             "images/stone_wall_2_.png",
             "images/stone_wall_3.png",
             "images/Base_Highlight",
+            "images/level_1_town_hall_Highlight.png",
             "images/stone.png",
             "images/archer.png",
             "images/swordsman.png",
@@ -163,25 +159,25 @@ public class AtlantisGameArea extends GameArea {
             "images/pathTile.png",
             "images/spellbox-zeus.png",
             "images/spell-btn-unclickable.png",
-            "images/spell-btn.png"
-
+            "images/spell-btn.png",
+            "images/health bar_6.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
-    private static final String[] uiTextures = {
+    public static final String[] uiTextures = {
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
             "images/exit-button.PNG",
             "images/dialogue_box_background_Deep_Sea.png"
     };
 
-    private final String[] buildingPlacementTextures = {
+    public static final String[] buildingPlacementTextures = {
             "images/barracks_highlight_red.png",
             "images/barracks_highlight_green.png",
             "images/wooden_wall_green.png",
             "images/wooden_wall_red.png"
     };
-    private static final String[] forestTextureAtlases = {
+    public static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager.atlas", "images/miner.atlas", "images/builder.atlas",
             "images/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
@@ -191,7 +187,7 @@ public class AtlantisGameArea extends GameArea {
             "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
-    private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
@@ -200,18 +196,19 @@ public class AtlantisGameArea extends GameArea {
     private DialogueBoxDisplay dialogueBoxDisplay;
 
     private Entity player;
-    private FloodingGenerator floodingGenerator;
-    private Entity terrainMapAndMiniMap;
+
     private Entity townHall;
     private Entity ship;
     private Entity titan;
+    private FloodingGenerator floodingGenerator;
     private EventHandler gameAreaEventHandle;
+    private Entity terrainMapAndMiniMap;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
-        this.floodingGenerator = new FloodingGenerator(this.terrainFactory, this);
         gameAreaEventHandle = new EventHandler();
+        this.floodingGenerator = new FloodingGenerator(this.terrainFactory, this);
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
@@ -224,7 +221,7 @@ public class AtlantisGameArea extends GameArea {
         gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
-        loadAssets();
+//        loadAssets();
         displayUI();
         spawnTerrain();
 
@@ -239,7 +236,7 @@ public class AtlantisGameArea extends GameArea {
         spawnMiner();
 
         //playMusic();
-        player = spawnPlayer();
+//        player = spawnPlayer();
         centreCameraOnCity();
 
         // Spawn Buildings in the city
@@ -269,7 +266,7 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnExampleUnit();
         //spawnBlueJokers();
-        spawnWolf();
+        //spawnWolf();
         //spawnTitan();
         //spawnSnakes();
 
@@ -367,37 +364,17 @@ public class AtlantisGameArea extends GameArea {
 //        infoUi.addComponent(new InfoBoxDisplay());
 //        spawnEntity(infoUi);
 
-        //TODO - ADD FLOODING COMPONENT
-        //ui.addComponent(new FloodingComponent());
-
         Entity gestureDisplay = new Entity();
         gestureDisplay.addComponent(new MouseInputComponent());
         gestureDisplay.addComponent(new GestureDisplay());
         spawnEntity(gestureDisplay);
 
         Entity dialogueBox = new Entity();
-        /* FIXME: temporary infobox width value */
-        this.dialogueBoxDisplay = new DialogueBoxDisplay(537f);
-        dialogueBoxDisplay.setDialogue("This is example dialogue text");
-        dialogueBoxDisplay.setTitle("example title");
-        dialogueBox.addComponent(dialogueBoxDisplay);
-        dialogueBox.addComponent(new DialogueBoxActions(dialogueBoxDisplay));
+        this.dialogueBoxDisplay = new DialogueBoxDisplay();
+        dialogueBox.addComponent(this.dialogueBoxDisplay);
+        dialogueBox.addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
         //spawnEntity(dialogueBox);
-    }
-
-    public void flood() {
-        this.terrainMapAndMiniMap.dispose();
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        terrain = terrainFactory.createAtlantisTerrainComponent();
-        ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
-        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
-        // allow access to minimap via UI for dynamic resizing/positioning
-        this.dialogueBoxDisplay.setMinimap(minimapComponent);
-        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
-        spawnEntity(terrainMapAndMiniMap);
-//
-//        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
     }
 
     private void spawnTerrain() {
@@ -1121,5 +1098,19 @@ public class AtlantisGameArea extends GameArea {
             }
         }
         return true;
+    }
+
+    public void flood() {
+        this.terrainMapAndMiniMap.dispose();
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        terrain = terrainFactory.createAtlantisTerrainComponent();
+        ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
+        MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
+        // allow access to minimap via UI for dynamic resizing/positioning
+        this.dialogueBoxDisplay.setMinimap(minimapComponent);
+        this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
+        spawnEntity(terrainMapAndMiniMap);
+//
+//        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
     }
 }

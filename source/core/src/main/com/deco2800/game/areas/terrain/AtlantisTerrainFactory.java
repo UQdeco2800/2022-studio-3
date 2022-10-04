@@ -25,6 +25,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
+import com.deco2800.game.areas.MapGenerator.MapGenerator;
+import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
+import com.deco2800.game.components.CameraComponent;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.random.PseudoRandom;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /** Factory for creating game terrain. */
 public class AtlantisTerrainFactory {
@@ -52,7 +78,7 @@ public class AtlantisTerrainFactory {
     /**
      * Instantiate a new MapGenerator for this terrain factory
      */
-    private MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
+    private static MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
     /**
      * Create a terrain factory with Isometric orientation
@@ -164,14 +190,14 @@ public class AtlantisTerrainFactory {
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
-        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1f/2f, oceanFrames);
 
         //Set id for each tile - used for visualising minimap
         cityTile.setId(0);
         sandTile.setId(1);
 
         //Load the map from the map generator
-        char[][] map = this.mapGenerator.getMap();
+        char[][] map = mapGenerator.getMap();
         //Iterate through the map and set cells according to their type
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight; y++) {
@@ -213,7 +239,7 @@ public class AtlantisTerrainFactory {
             for (int y = 0; y < mapHeight; y++) {
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getIslandChar()) {
-                    ServiceLocator.getMapService().removeIslandTile(x, mapHeight - 1 - y);
+                    //ServiceLocator.getMapService().removeIslandTile(x, mapHeight - 1 - y);
                     cell.setTile(animatedOceanTile);
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }

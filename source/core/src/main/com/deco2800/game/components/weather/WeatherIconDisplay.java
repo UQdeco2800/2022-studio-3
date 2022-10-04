@@ -34,7 +34,7 @@ public class WeatherIconDisplay extends UIComponent {
 
     public WeatherIconDisplay() {
         Skin countdownSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-        this.timer = new Timer(30000, 30001);
+        this.timer = new Timer(10000, 20000);
         this.timerCountdown = new Label(String.valueOf(this.timer.timeLeft()), countdownSkin);
         this.weatherIcon = new WeatherIcon(this.timerCountdown);
     }
@@ -56,10 +56,10 @@ public class WeatherIconDisplay extends UIComponent {
         ServiceLocator.getEntityService().trigger("changeWeather", this.weatherIcon.getMovementSpeed());
         if (timer.isTimerExpired()) {
             this.weatherIcon.changeWeatherImage();
-            this.timer = new Timer(30000, 30001);
+            this.timer = new Timer(10000, 20000);
         }
         int timeLeft = (int) timer.timeLeft() / 1000;
-        CharSequence text = String.format("%d", timeLeft);
+        CharSequence text = String.format("%02d", timeLeft);
         this.timerCountdown.setText(text);
     }
 

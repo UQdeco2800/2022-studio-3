@@ -79,11 +79,6 @@ public class MapGenerator {
     private List<ResourceSpecification> resourcePlacements;
 
     /**
-     * Stores legal coordinates for players to move to.
-     */
-    public ArrayList<int[]> legalCoordinates;
-
-    /**
      * Map containing only the vertices around the island - used for testing purposes
      */
     private char[][] outlineMap;
@@ -93,6 +88,11 @@ public class MapGenerator {
      * @return list containing the two edge points of the island (x co-ords wise)
      */
     private Map<String, Coordinate> islandEdges;
+
+    /**
+     * Stores legal coordinates for players to move to.
+     */
+    public ArrayList<int[]> legalCoordinates;
 
 
     /**
@@ -480,8 +480,6 @@ public class MapGenerator {
         }
     }
 
-
-
     /**
      * Chooses the two edge tiles for the island by spreading the length evenly across each side
      * of the city, if map space permits
@@ -680,9 +678,9 @@ public class MapGenerator {
                 if (this.map[i][j] == this.getIslandChar()) {
                     try {
                         if (this.map[i - 1][j] == this.getOceanChar() ||
-                            this.map[i + 1][j] == this.getOceanChar() ||
-                            this.map[i][j - 1] == this.getOceanChar() ||
-                            this.map[i][j + 1] == this.getOceanChar()) {
+                                this.map[i + 1][j] == this.getOceanChar() ||
+                                this.map[i][j - 1] == this.getOceanChar() ||
+                                this.map[i][j + 1] == this.getOceanChar()) {
                             mapEdges[i][j] = true;
                         } else {
                             mapEdges[i][j] = false;

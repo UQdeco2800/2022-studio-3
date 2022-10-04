@@ -2,7 +2,10 @@ package com.deco2800.game.components.weather;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -49,6 +52,18 @@ public class WeatherIcon extends Actor {
      */
     private WeatherIconProperties weatherIconProperties;
 
+    private TextureRegion iceFrames[];
+
+    private Animation<TextureRegion> iceAnimation;
+
+    private TextureRegion rainFrames[];
+
+    private Animation<TextureRegion> rainAnimation;
+
+    private SpriteBatch batch;
+
+    private float elapsedTime;
+
     /**
      * Stores possible weather types.
      */
@@ -85,6 +100,25 @@ public class WeatherIcon extends Actor {
 
         // Initiate speedFactor
         this.speedFactor = this.weatherIconProperties.getSpeedFactor();
+
+        Texture img = new Texture("images/weather-filter/ice-frames.png");
+        Texture rainEffects = new Texture("images/Rain.png");
+        TextureRegion[][] tmpFrames = TextureRegion.split(img,200,200);
+        TextureRegion[][] rainImages = TextureRegion.split(rainEffects, 1000, 1000);
+        this.iceFrames = new TextureRegion[3];
+        this.iceFrames[0] = new TextureRegion(new Texture("images/weather-filter/snowfall_1.png"));
+        this.iceFrames[1] = new TextureRegion(new Texture("images/weather-filter/snowfall_2.png"));
+        this.iceFrames[2] = new TextureRegion(new Texture("images/weather-filter/snowfall_3.png"));
+        this.rainFrames = new TextureRegion[4];
+        int frame=0;
+        for (int i=0; i<2; i++){
+            for (int j=0; j<2; j++) {
+                rainFrames[frame++] = rainImages[j][i];
+
+            }
+        }
+        iceAnimation = new Animation(0.5f, iceFrames);
+        rainAnimation = new Animation(0.5f, rainFrames);
         layout();
     }
 
@@ -143,8 +177,8 @@ public class WeatherIcon extends Actor {
 
         //  Layout for timer
         this.timerLabel.setAlignment(Align.left);
-        this.timerLabel.setWrap(true);
-        this.timerLabel.setSize(30f,3f);
+        this.timerLabel.setWrap(false);
+        this.timerLabel.setSize(3f,3f);
         this.timerLabel.setPosition(Gdx.graphics.getWidth()/2f + weatherImage.getWidth()/2f + 15f, Gdx.graphics.getHeight()-50f);
     }
 
@@ -156,6 +190,36 @@ public class WeatherIcon extends Actor {
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        elapsedTime+= Gdx.graphics.getDeltaTime();
+        if (weatherIconProperties == WeatherIconProperties.SNOWY) {
+            Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
+            for (int i=0 ; i < 4; i++){
+                for (int j=0; j < 3; j++) {
+                    temp.setScale(0.3f, 0.3f);
+                    temp.setPosition(i*400, j*400-200);
+                    temp.draw(batch, parentAlpha);
+                }
+            }
+
+            this.weatherFilter = temp;
+        }
+        if (weatherIconProperties == WeatherIconProperties.RAINY || weatherIconProperties == WeatherIconProperties.STORMY){
+            Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
+            temp.setScale(0.5f, 0.2f);
+            for (int i=0 ; i < 5; i++){
+                for (int j=0; j < 7; j++) {
+                    temp.setPosition(300*i, j*200);
+                    temp.draw(batch, parentAlpha);
+                }
+            }
+            if (weatherIconProperties == WeatherIconProperties.RAINY){
+                this.weatherFilter = temp;
+                this.weatherFilter.setPosition(700,0);
+            }
+
+        }
+
+
         this.weatherFilter.draw(batch, parentAlpha);
         this.weatherImage.draw(batch, parentAlpha);
         this.timerLabel.draw(batch, parentAlpha);

@@ -71,7 +71,6 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
    */
   private Timer timer;
 
-
   public EnemyMovement(AtlantisTerrainFactory terrainFactory) {
     this.terrainFactory = terrainFactory;
     this.terrain = terrainFactory.createAtlantisTerrainComponent();
