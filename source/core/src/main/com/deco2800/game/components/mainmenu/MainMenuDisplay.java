@@ -41,7 +41,7 @@ public class MainMenuDisplay extends UIComponent {
         Image titleImage =
                 new Image(
                         ServiceLocator.getResourceService()
-                                .getAsset("images/title-atlantis.png", Texture.class));
+                                .getAsset("images/title-atlantis.PNG", Texture.class));
 
         titleImage.setFillParent(true);
 
