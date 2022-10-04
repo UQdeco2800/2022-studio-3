@@ -99,7 +99,6 @@ public class SpellUI extends UIComponent {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("Spell Release button clicked");
-                        onRelease();
                         pseudoCast = true;
                     }
                 });
@@ -107,14 +106,14 @@ public class SpellUI extends UIComponent {
         spellBtn.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
         spellBtn.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
 
-        castImage = new Image(ServiceLocator.getResourceService().getAsset("images/sunny.png", Texture.class));
-        castImage.setHeight(150);
-        castImage.setWidth(150);
-        stage.addActor(castImage);
+        castImage = new Image(ServiceLocator.getResourceService().getAsset("images/SpellIndicator/spelliso.png", Texture.class));
+        castImage.setHeight(1000);
+        castImage.setWidth(1000);
 
         stage.addActor(spellBoxImage);
         stage.addActor(spellBtnImage);
         stage.addActor(spellBtn);
+
     }
 
     public void updateTables() {
@@ -131,10 +130,10 @@ public class SpellUI extends UIComponent {
         }
 
         if (pseudoCast) {
-            castImage.setPosition(screenX, Gdx.graphics.getHeight() - screenY);
-            System.out.println(screenX);
-            System.out.println(screenY);
-
+            stage.addActor(castImage);
+            castImage.setPosition(screenX - castImage.getImageWidth()/2, Gdx.graphics.getHeight() - screenY - castImage.getImageHeight()/2);
+        } else {
+            castImage.remove();
         }
     }
 
@@ -151,23 +150,23 @@ public class SpellUI extends UIComponent {
     }
 
     private void onRelease() {
-
-
-
-        logger.info("Releasing Spell");
-        spellBtn.setVisible(false);
-        this.timer = new Timer(15000, 15001);
-        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-            if (entity.getEntityName() == "Explosion") {
-                spell = entity;
-                break;
+        if (pseudoCast) {
+            logger.info("Releasing Spell");
+            spellBtn.setVisible(false);
+            this.timer = new Timer(15000, 15001);
+            for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+                if (entity.getEntityName() == "Explosion") {
+                    spell = entity;
+                    break;
+                }
             }
-        }
-        spell.setEnabled(true);
-        spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+            spell.setEnabled(true);
+            spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
 
-        for (Entity entity : enemyEntities) {
-            entity.dispose();
+            for (Entity entity : enemyEntities) {
+                entity.dispose();
+            }
+            pseudoCast = false;
         }
     }
 }

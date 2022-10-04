@@ -116,6 +116,7 @@ public class AtlantisGameArea extends GameArea {
             "images/connector_ns.png",
             "images/connector_ew.png",
             "images/wall_pillar.png",
+            "images/SpellIndicator/spelliso.png",
             "images/wooden_wall.png",
             "images/wooden_wall_2.png",
             "images/wooden_wall_3.png",
