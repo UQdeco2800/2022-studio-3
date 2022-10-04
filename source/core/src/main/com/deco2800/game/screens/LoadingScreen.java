@@ -26,6 +26,7 @@ public class LoadingScreen extends ScreenAdapter {
     public static final String[] uiTextures = AtlantisGameArea.uiTextures;
     public static final String[] forestTextureAtlases = AtlantisGameArea.forestTextureAtlases;
     public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    public static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
 
     private static final String[] assets = {
             "images/title-atlantis.png",
@@ -100,6 +101,7 @@ public class LoadingScreen extends ScreenAdapter {
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
+        resourceService.loadTextures(buildingPlacementTextures);
     }
 
     public void dispose() {

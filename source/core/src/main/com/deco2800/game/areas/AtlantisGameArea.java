@@ -154,7 +154,7 @@ public class AtlantisGameArea extends GameArea {
             "images/dialogue_box_background_Deep_Sea.png"
     };
 
-    public final String[] buildingPlacementTextures = {
+    public static final String[] buildingPlacementTextures = {
             "images/barracks_highlight_red.png",
             "images/barracks_highlight_green.png",
             "images/wooden_wall_green.png",
