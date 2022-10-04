@@ -3,12 +3,14 @@ package com.deco2800.game.worker.components;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.worker.components.duration.DurationBarComponent;
+import com.deco2800.game.worker.components.duration.DurationBarFactory;
+import com.deco2800.game.worker.components.duration.DurationBarUiComponent;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
@@ -18,7 +20,6 @@ import com.deco2800.game.worker.components.type.TreeComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
 
 public class ResourceCollectComponent extends Component {
     private static final Logger logger = LoggerFactory.getLogger(ResourceCollectComponent.class);
@@ -31,6 +32,10 @@ public class ResourceCollectComponent extends Component {
     private HitboxComponent hitboxComponent;
     private final GameTime gameTime;
     private long lastTimeMined;
+    private Entity durationBar;
+    private int initialWoodValue;
+    private int initialMetalValue;
+    private int initialStoneValue;
 
     /**
      * Create a component which collects resources from entity on collision.
@@ -92,8 +97,23 @@ public class ResourceCollectComponent extends Component {
             return;
         }
         Entity collector = ((BodyUserData) me.getBody().getUserData()).entity;
+        WorkerInventoryComponent collectorInventory = collector.getComponent(WorkerInventoryComponent.class);
         MinerComponent collectorIsMiner = collector.getComponent(MinerComponent.class);
         ForagerComponent collectorIsForager = collector.getComponent(ForagerComponent.class);
+
+        // Create the duration bar animation
+        if(durationBar == null){
+            durationBar = DurationBarFactory.createDurationBar();
+            durationBar.addComponent(new DurationBarComponent());
+            durationBar.setPosition(target.getPosition().x, target.getPosition().y + 1);
+            ServiceLocator.getEntityService().register(durationBar);
+        }
+
+        // Check the initial resource value
+        if(this.initialWoodValue == 0){
+            this.initialWoodValue = targetStats.getWood();
+        }
+
         if (collectorIsMiner != null && isStone != null) {
             // If the worker type is Miner
             collectStone(targetStats);
@@ -103,9 +123,6 @@ public class ResourceCollectComponent extends Component {
             } else {
                 collector.getEvents().trigger("workerForwardRightAction");
             }
-            //Entity durationBar = collectorIsMiner.getDurationBarEntity();
-            //durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);
-            //durationBar.getEvents().trigger("durationBarAnimate");
         } else if (collectorIsForager != null && isTree != null) {
             // If the worker type is Forager
             collectWood(targetStats);
@@ -114,9 +131,7 @@ public class ResourceCollectComponent extends Component {
             } else {
                 collector.getEvents().trigger("workerForwardRightAction");
             }
-            //Entity durationBar = collectorIsForager.getDurationBarEntity();
-            //durationBar.setPosition(collector.getPosition().x, collector.getPosition().y + 1);
-            //durationBar.getEvents().trigger("durationBarAnimate");
+            this.triggerDurationBarAnimation(this.initialWoodValue, collectorInventory.getWood());
         } else {
             return;
         }
@@ -124,20 +139,13 @@ public class ResourceCollectComponent extends Component {
         if (targetStats.isDead()) {
             stopCollecting();
             collector.getEvents().trigger("workerIdleAnimate");
-            target.dispose();
-
-            ServiceLocator.getEntityService().unregister(target);
-            returnToBase(collector);
             
-            // Idle the duration bar
-            /*
-            if(collectorIsMiner != null){
-                collectorIsMiner.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
-            }
-            if(collectorIsForager != null){
-                collectorIsForager.getDurationBarEntity().getEvents().trigger("durationBarIdleAnimate");
-            }
-            */
+            target.dispose();
+            durationBar.dispose();
+            ServiceLocator.getEntityService().unregister(durationBar);
+            ServiceLocator.getEntityService().unregister(target);
+
+            returnToBase(collector);
         }        
     }
 
@@ -241,5 +249,19 @@ public class ResourceCollectComponent extends Component {
         baseStats.addWood(inventory.unloadWood());
         logger.info("[+] The worker now has " + Integer.toString(inventory.getWood()) + " wood and " + Integer.toString(inventory.getStone()) + " stone");
         logger.info("[+] The base now has " + Integer.toString(baseStats.getWood()) + " wood and " + Integer.toString(baseStats.getStone()) + " stone");
+    }
+
+    private void triggerDurationBarAnimation(int initialValue, int currentValue){
+        if(currentValue == 0){
+            durationBar.getEvents().trigger("duration-bar-25");
+        }else if(0 <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.25f){
+            durationBar.getEvents().trigger("duration-bar-25");
+        }else if(0.25f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.5f){
+            durationBar.getEvents().trigger("duration-bar-50");
+        }else if(0.50f <= ((float) currentValue / initialValue) && ((float) currentValue / initialValue) <= 0.75f){
+            durationBar.getEvents().trigger("duration-bar-75");
+        }else{
+            durationBar.getEvents().trigger("duration-bar-100");
+        }
     }
 }

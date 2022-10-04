@@ -129,7 +129,7 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
             "images/forager.atlas", "images/miner.atlas", "images/builder.atlas",
-            "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
+            "images/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas"
@@ -178,15 +178,15 @@ public class AtlantisGameArea extends GameArea {
         // spawnMiner();
         spawnMiner();
         // spawnExampleUnit();
-        /*spawnBlueJokers();
-        spawnWolf();
-        spawnTitan();
-        spawnSnakes();
+        // spawnBlueJokers();
+        // spawnWolf();
+        // spawnTitan();
+        // spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));*/
+        // spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        // spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        // spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        // spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();

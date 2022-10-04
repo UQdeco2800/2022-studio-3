@@ -3,28 +3,33 @@ package com.deco2800.game.worker.components.duration;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class DurationBarComponent extends Component{
-
-    private static final Logger logger = LoggerFactory.getLogger(DurationBarComponent.class);
     AnimationRenderComponent animator;
 
     @Override
     public void create() {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
-        entity.getEvents().addListener("durationBarIdleAnimate", this::animateIdleDurationBar);
-        entity.getEvents().addListener("durationBarAnimate", this::animateDurationBar);
+        entity.getEvents().addListener("duration-bar-25", this::durationBar25);
+        entity.getEvents().addListener("duration-bar-50", this::durationBar50);
+        entity.getEvents().addListener("duration-bar-75", this::durationBar75);
+        entity.getEvents().addListener("duration-bar-100", this::durationBar100);
     }
 
-    void animateIdleDurationBar(){
-        animator.startAnimation("durationBarIdle");
+    void durationBar25(){
+        animator.startAnimation("duration-bar-25");
     }
 
-    void animateDurationBar() {
-        animator.startAnimation("durationBar");
+    void durationBar50(){
+        animator.startAnimation("duration-bar-50");
+    }
+
+    void durationBar75(){
+        animator.startAnimation("duration-bar-75");
+    }
+
+    void durationBar100(){
+        animator.startAnimation("duration-bar-100");
     }
 
 }

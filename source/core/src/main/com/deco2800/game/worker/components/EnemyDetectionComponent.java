@@ -1,9 +1,7 @@
 package com.deco2800.game.worker.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.enemy.EnemySignal;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.BodyUserData;
@@ -11,11 +9,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.type.BaseComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class EnemyDetectionComponent extends Component {
-    private static final Logger logger = LoggerFactory.getLogger(EnemyDetectionComponent.class);
     private HitboxComponent hitboxComponent;
 
     public EnemyDetectionComponent() {}
