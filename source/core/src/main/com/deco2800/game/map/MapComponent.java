@@ -26,7 +26,6 @@ public class MapComponent extends Component {
 	
 	@Override
     public void dispose() {
-		super.dispose();
 		ServiceLocator.getMapService().unregister(this);
     }
 

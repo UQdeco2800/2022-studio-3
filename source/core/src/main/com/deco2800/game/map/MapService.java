@@ -96,16 +96,19 @@ public class MapService {
 	 * @return list of occupied positions.
 	 */
 	private List<GridPoint2> getAllOccupiedPositions(MapComponent comp) {
-		List<GridPoint2> positions = new ArrayList<>();
-		Vector2 position = comp.getEntity().getPosition();
-		float width = comp.getEntity().getScale().x;
-		float height = comp.getEntity().getScale().y;
-		for (float x = position.x; x < position.x + width; x += tileSize) {
-			for (float y = position.y; y < position.y + height; y += tileSize) {
-				positions.add(new GridPoint2((int) (x / tileSize), (int) (y / tileSize)));
+		Vector2 vecPos = comp.getEntity().getPosition();
+		Vector2 vecScale = comp.getEntity().getScale();
+		GridPoint2 bottomRightCorner = worldToTile(vecPos);
+		GridPoint2 topLeftCorner = worldToTile(vecPos.x + vecScale.x, vecPos.y + vecScale.y);
+
+		List<GridPoint2> occupied = new ArrayList<>();
+		for (int i = topLeftCorner.x + 1; i <= bottomRightCorner.x; i++) {
+			for (int j = bottomRightCorner.y; j < topLeftCorner.y; j++) {
+				GridPoint2 pos = new GridPoint2(i, j);
+				occupied.add(pos);
 			}
 		}
-		return positions;		
+		return occupied;		
 	}
 	
 	/**
@@ -292,6 +295,15 @@ public class MapService {
 		}
 		
 		return comp.getEntity();
+	}
+
+	/**
+	 * Returns a map of all entities to the positions they occupy.
+	 * 
+	 * @return map of MapComponent to list of occupied positions
+	 */
+	public Map<MapComponent, List<GridPoint2>> getAllEntityPositions() {
+		return this.entityToPositions;
 	}
 
 	/**
