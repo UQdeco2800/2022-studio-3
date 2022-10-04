@@ -220,14 +220,15 @@ public class DialogueBoxDisplay extends UIComponent {
         float availableSpace = screenWidth - (infoWidth + mapWidth);
         float[] backgroundPosition = {infoWidth + ((availableSpace - backgroundSize[0]) / 2f), 0f};
 
-        float[] titlePosition = {backgroundPosition[0] + 50f, backgroundSize[1] - 50f};
-
         float[] imageSize = {128f, 128f};
         float[] imagePosition = {backgroundSize[0] + backgroundPosition[0] - this.image.getWidth() - 30f,
                 ((backgroundSize[1] - this.image.getHeight()) / 2f) + 20f};
 
-        float[] dialogueSize = {backgroundSize[0] - 60f - imageSize[0], backgroundSize[1] - 50f};
-        float[] dialoguePosition = {backgroundPosition[0] + 50f, 20f};
+        float titleWidth = backgroundSize[0] - imageSize[1] - 70f;
+        float[] titlePosition = {backgroundPosition[0] + 60f, backgroundSize[1] - 60f};
+
+        float[] dialogueSize = {backgroundSize[0] - 70f - imageSize[0], backgroundSize[1] - 50f};
+        float[] dialoguePosition = {backgroundPosition[0] + 60f, 30f};
 
         float[] dismissButtonSize = {45f, 25f};
         float[] dismissButtonPosition = {backgroundSize[0] + backgroundPosition[0] - this.dismissBtn.getWidth(),
@@ -240,6 +241,7 @@ public class DialogueBoxDisplay extends UIComponent {
         this.dismissBtn.setSize(dismissButtonSize[0], dismissButtonSize[1]);
         this.dismissBtn.setPosition(dismissButtonPosition[0], dismissButtonPosition[1]);
 
+        this.title.setWidth(titleWidth);
         this.title.setPosition(titlePosition[0], titlePosition[1]);
         this.title.setWrap(true);
         if (this.titleText != null)
