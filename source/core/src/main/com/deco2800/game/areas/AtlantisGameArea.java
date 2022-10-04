@@ -51,8 +51,10 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerBaseFactory;
+import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
+import com.deco2800.game.worker.type.BuilderFactory;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.worker.type.MinerFactory;
 import org.slf4j.Logger;
@@ -126,6 +128,7 @@ public class AtlantisGameArea extends GameArea {
             // Mine
             "mining_levelone_sketch.png",
             "mining_leveltwo_sketch.png",
+            "images/mining_camp_level_one.png",
             // Walls
             "images/connector_ns.png",
             "images/connector_ew.png",
@@ -177,12 +180,12 @@ public class AtlantisGameArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
-            "images/forager_forward.atlas", "images/miner_forward.atlas", "images/miner_action_right.atlas",
-            "images/duration_bar/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
+            "images/forager.atlas", "images/miner.atlas", "images/builder.atlas",
+            "images/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
-            "images/newwolf.atlas", "images/forager.atlas",
+            "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
@@ -241,6 +244,11 @@ public class AtlantisGameArea extends GameArea {
         //spawnWalls();
         spawnCityWalls();
 
+        // spawnBuildings();
+
+        spawnForager();
+        spawnMiner();
+        spawnBuilder();
         spawnCity();
 
         spawnResources();
@@ -504,6 +512,7 @@ public class AtlantisGameArea extends GameArea {
         // Get GridPoint for the city centre
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
         MapComponent mapComponent = new MapComponent();
+        mapComponent.setName("Town Hall");
         mapComponent.display();
         mapComponent.setDisplayColour(Color.BROWN);
         townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
@@ -593,7 +602,6 @@ public class AtlantisGameArea extends GameArea {
         // Two spawn-points for the barracks next ot TownHall located in the centre
         GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
         GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
-
         MapComponent mc1 = new MapComponent();
         mc1.display();
         mc1.setDisplayColour(Color.BROWN);
@@ -675,6 +683,7 @@ public class AtlantisGameArea extends GameArea {
 
             for (int i = 0; i < xLength; i++) {
                 wall = BuildingFactory.createWall();
+                wall.addComponent(new MapComponent());
                 // Sets wall texture which points in positive x direction
                 wall.getComponent(BuildingActions.class).addLevel();
                 wall.getComponent(BuildingActions.class).setWallNE();
@@ -918,6 +927,16 @@ public class AtlantisGameArea extends GameArea {
         return newMiner;
     }
 
+    private Entity spawnBuilder() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.BLUE);
+        Entity newBuilder = BuilderFactory.createBuilder().addComponent(mapComponent);
+        spawnEntityAt(newBuilder, spawn, true, true);
+        return newBuilder;
+    }
+
     /**
      * Creates units for demonstration purposes
      *
@@ -999,7 +1018,8 @@ public class AtlantisGameArea extends GameArea {
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     mapComponent.setDisplayColour(Color.DARK_GRAY);
-                    spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
+                    spawnEntityAt(MiningCampFactory.createMiningCamp().addComponent(mapComponent), spawn, false, false);
                 }
             }
         }
