@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.areas.terrain.MinimapComponent;
@@ -17,43 +18,58 @@ import org.slf4j.LoggerFactory;
  */
 public class DialogueBoxDisplay extends UIComponent {
 
-    /** logger for debugging purposes */
+    /**
+     * logger for debugging purposes
+     */
     private static final Logger logger = LoggerFactory.getLogger(DialogueBoxDisplay.class);
 
-    /** current dialogue text to be displayed */
+    /**
+     * current dialogue text to be displayed
+     */
     private Label dialogue;
+    private String dialogueText;
 
-    /** current dialogue title to be displayed */
+    /**
+     * current dialogue title to be displayed
+     */
     private Label title;
+    private String titleText;
 
-    /** current background texture to be displayed */
+    /**
+     * current background texture to be displayed
+     */
     private Image backgroundTexture;
 
-    /** current image to be displayed */
+    /**
+     * current image to be displayed
+     */
     private Image image;
 
-    /** current dismiss button to be displayed */
+    /**
+     * current dismiss button to be displayed
+     */
     private TextButton dismissBtn;
 
-    /** stores dialogue box's current state of visibility */
+    /**
+     * stores dialogue box's current state of visibility
+     */
     private boolean hidden;
 
     /* external values */
 
-    /** current width of infoBox being displayed */
-    private float infoWidth;
+    /**
+     * current width of infoBox being displayed
+     */
+    private float infoWidth = 537f;
 
-    /** reference to current minimap being displayed */
+    /**
+     * reference to current minimap being displayed
+     */
     private MinimapComponent minimap;
-
-    public DialogueBoxDisplay(float infoWidth) {
-
-        logger.debug("Creating DialogueBoxDisplay");
-        this.infoWidth = infoWidth;
-    }
 
     /**
      * Set current minimap for reference
+     *
      * @param minimap - current minimap
      */
     public void setMinimap(MinimapComponent minimap) {
@@ -80,9 +96,11 @@ public class DialogueBoxDisplay extends UIComponent {
                         .getAsset("images/dialogue_box_background_Deep_Sea.png", Texture.class)
         );
 
-        this.title = new Label("EXAMPLE TITLE", skin);
+        this.titleText = "EXAMPLE TITLE";
+        this.title = new Label(this.titleText, skin);
 
-        this.dialogue = new Label("EXAMPLE DIALOGUE TEXT", skin);
+        this.dialogueText = "EXAMPLE DIALOGUE TEXT";
+        this.dialogue = new Label(this.dialogueText, skin);
 
         this.dismissBtn = new TextButton("", new Skin(Gdx.files.internal("atlantis/exitButtonSkin.json")));
         this.dismissBtn.addListener(new ChangeListener() {
@@ -116,7 +134,11 @@ public class DialogueBoxDisplay extends UIComponent {
     // TODO: update render to display new text
     public void setDialogue(String dialogue) {
 
-        this.dialogue = new Label(dialogue, skin);
+        if (this.dialogueText != null &&
+                !this.dialogueText.equals(dialogue)) {
+
+            this.dialogueText = dialogue;
+        }
     }
 
     /**
@@ -127,7 +149,11 @@ public class DialogueBoxDisplay extends UIComponent {
     // TODO: update render to display new text
     public void setTitle(String title) {
 
-        this.title = new Label(title, skin);
+        if (this.titleText != null &&
+                !this.titleText.equals(title)) {
+
+            this.titleText = title;
+        }
     }
 
     /**
@@ -136,8 +162,10 @@ public class DialogueBoxDisplay extends UIComponent {
      * @param imagePath - image to be displayed
      */
     public void setImage(String imagePath) {
-
+        // this remove and addActor() methods allow image to be updated - pretty jank, maybe a better way to do this
+        this.image.remove();
         this.image = new Image(new Texture(Gdx.files.internal(imagePath)));
+        stage.addActor(this.image);
     }
 
     /**
@@ -169,7 +197,7 @@ public class DialogueBoxDisplay extends UIComponent {
         if (!this.isHidden())
             return;
 
-        this.hidden = true;
+        this.hidden = false;
     }
 
     /**
@@ -192,14 +220,15 @@ public class DialogueBoxDisplay extends UIComponent {
         float availableSpace = screenWidth - (infoWidth + mapWidth);
         float[] backgroundPosition = {infoWidth + ((availableSpace - backgroundSize[0]) / 2f), 0f};
 
-        float[] titlePosition = {backgroundPosition[0] + 50f, backgroundSize[1] - 50f};
-
         float[] imageSize = {128f, 128f};
         float[] imagePosition = {backgroundSize[0] + backgroundPosition[0] - this.image.getWidth() - 30f,
                 ((backgroundSize[1] - this.image.getHeight()) / 2f) + 20f};
 
-        float[] dialogueSize = {backgroundSize[0] - 60f - imageSize[0], backgroundSize[1] - 50f};
-        float[] dialoguePosition = {backgroundPosition[0] + 50f, 20f};
+        float titleWidth = backgroundSize[0] - imageSize[1] - 70f;
+        float[] titlePosition = {backgroundPosition[0] + 60f, backgroundSize[1] - 60f};
+
+        float[] dialogueSize = {backgroundSize[0] - 70f - imageSize[0], backgroundSize[1] - 50f};
+        float[] dialoguePosition = {backgroundPosition[0] + 60f, 30f};
 
         float[] dismissButtonSize = {45f, 25f};
         float[] dismissButtonPosition = {backgroundSize[0] + backgroundPosition[0] - this.dismissBtn.getWidth(),
@@ -212,10 +241,17 @@ public class DialogueBoxDisplay extends UIComponent {
         this.dismissBtn.setSize(dismissButtonSize[0], dismissButtonSize[1]);
         this.dismissBtn.setPosition(dismissButtonPosition[0], dismissButtonPosition[1]);
 
+        this.title.setWidth(titleWidth);
         this.title.setPosition(titlePosition[0], titlePosition[1]);
+        this.title.setWrap(true);
+        if (this.titleText != null)
+            this.title.setText(this.titleText);
 
         this.dialogue.setSize(dialogueSize[0], dialogueSize[1]);
         this.dialogue.setPosition(dialoguePosition[0], dialoguePosition[1]);
+        this.dialogue.setWrap(true);
+        if (this.dialogueText != null)
+            this.dialogue.setText(this.dialogueText);
 
         this.image.setSize(imageSize[0], imageSize[1]);
         this.image.setPosition(imagePosition[0], imagePosition[1]);

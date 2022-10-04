@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.services.ServiceLocator;
@@ -32,8 +33,11 @@ import org.slf4j.LoggerFactory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
+import java.util.ArrayList;
 
 /**
  * A ui component for displaying the Main menu.
@@ -42,15 +46,10 @@ public class StoryDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(StoryDisplay.class);
     private static final float Z_INDEX = 2f;
     private Table table;
-    private Table backTable;
-    //private Stack stack;
 
-    private Texture texture;
-    private Image storyImage1;
-    private Image storyImage2;
-    private Image storyImage3;
-    private Image storyImage4;
-    private Image storyImage5;
+    private ArrayList<String> storyImages;
+    private int start;
+    private int end;
 
 
 
@@ -59,46 +58,49 @@ public class StoryDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+        entity.getEvents().addListener("next", this::nextScene);
+        entity.getEvents().addListener("previous", this::prevScene);
     }
 
     private void addActors() {
         table = new Table();
         table.setFillParent(true);
-        backTable = new Table();
 
-        backTable.bottom().right();
-        table.setFillParent(true);
-        backTable.setFillParent(true);
+        table.bottom().right();
 
-        Image storyImage1 =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/cutscene-3.png", Texture.class));
+        storyImages = new ArrayList<>();
+        storyImages.add("images/cut1.png");
+        storyImages.add("images/cut2.png");
+        storyImages.add("images/cut3.png");
+        storyImages.add("images/cut4.png");
+        storyImages.add("images/cut5.png");
+        storyImages.add("images/cut6.png");
+        start = 0;
+        end = 6;
 
-        Image storyImage2 =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/cutscene-3.png", Texture.class));
-        Image storyImage3 =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/cutscene-3.png", Texture.class));
-        Image storyImage4 =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/cutscene-3.png", Texture.class));
-        Image storyImage5 =
-                new Image(
-                        ServiceLocator.getResourceService()
-                                .getAsset("images/cutscene-3.png", Texture.class));
+        Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
+        TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
+        table.setBackground(storyBackground);
 
-        storyImage1.setFillParent(true);
+        start += 1;
+        stage.addActor(table);
 
 
         TextButton nextBtn = new TextButton("Next", skin);
         TextButton skipBtn = new TextButton("Skip", skin);
+        TextButton prevBtn = new TextButton("Previous", skin);
+        if (start == 0){
+            prevBtn.setVisible(false);
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+            //Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        } else{
+            prevBtn.setVisible(true);
+
+        }
 
         // Triggers an event when the button is pressed
+
+
         nextBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -107,6 +109,10 @@ public class StoryDisplay extends UIComponent {
                         entity.getEvents().trigger("next");
                     }
                 });
+
+
+
+
 
 
 
@@ -120,10 +126,24 @@ public class StoryDisplay extends UIComponent {
                     }
                 });
 
-        backTable.add(nextBtn).pad(25f);
-        backTable.add(skipBtn).pad(25f);
-        stage.addActor(storyImage1);
-        stage.addActor(backTable);
+        prevBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("Previous button clicked");
+                        entity.getEvents().trigger("previous");
+                    }
+                });
+
+
+
+        table.add(skipBtn).expand().top().right().pad(25f).width(100);
+        table.row();
+        table.add(prevBtn).pad(25f).left();
+        table.add(nextBtn).pad(25f).right();
+
+
         stage.addActor(table);
 
     }
@@ -136,13 +156,26 @@ public class StoryDisplay extends UIComponent {
 
 
 
-    //public void skipScene(){
-    //  Gdxgame.setScreen(GdxGame.ScreenType.MAIN_GAME);
-    //}
+    private void nextScene() {
+        if (start < end) {
+            Drawable next = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start))));
+            table.setBackground(next);
+            start += 1;
+        } else {
+            entity.getEvents().trigger("skip");
+        }}
+
+    private void prevScene(){
+        if (end - start > 0){
+            Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start-1))));
+            table.setBackground(prev);
+            start -=1;
+        }
+    }
 
 
-        @Override
 
+    @Override
     public float getZIndex() {
         return Z_INDEX;
     }
@@ -150,6 +183,7 @@ public class StoryDisplay extends UIComponent {
     @Override
     public void dispose() {
         table.clear();
+        stage.clear();
         super.dispose();
     }
 }
