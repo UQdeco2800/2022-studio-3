@@ -19,14 +19,15 @@ public class ForagerAnimationControllerTest {
     @BeforeAll
     static void BeforeAll(){
         forager = new Entity();
-        animator = new AnimationRenderComponent(new TextureAtlas("images/forager_forward.atlas"));
+        animator = new AnimationRenderComponent(new TextureAtlas("images/forager.atlas"));
 
-        animator.addAnimation("forager_forward_idle", 0.1f);
-        animator.addAnimation("forager_forward_move", 0.1f);
-        animator.addAnimation("foragerActionLeft", 0.1f);
-        animator.addAnimation("foragerActionRight", 0.1f);
-        animator.addAnimation("foragerRight", 0.1f);
-        animator.addAnimation("foragerLeft", 0.1f);
+        animator.addAnimation("forager_idle", 0.1f);
+        animator.addAnimation("forager_forward_left_move", 0.1f);
+        animator.addAnimation("forager_forward_right_move", 0.1f);
+        animator.addAnimation("forager_back_left_move", 0.1f);
+        animator.addAnimation("forager_back_right_move", 0.1f);
+        animator.addAnimation("forager_forward_left_action", 0.1f);
+        animator.addAnimation("forager_forward_right_action", 0.1f);
 
         forager.addComponent(animator);
     }
@@ -38,31 +39,37 @@ public class ForagerAnimationControllerTest {
 
     @Test
     void hasForagerForwardIdle(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_idle"), true);
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_idle"), true);
     }
 
     @Test
-    void hasForagerForwardMove(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_move"), true);
+    void hasForagerForwardLeftMove(){
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_left_move"), true);
+    }
+
+    @Test
+    void hasForagerForwardRightMove(){
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_right_move"), true);
+    }
+
+    @Test
+    void hasForagerBackLeftMove(){
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_back_left_move"), true);
+    }
+
+    @Test
+    void hasForagerBackRightMove(){
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_back_right_move"), true);
     }
 
     @Test
     void hasForagerActionLeft(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("foragerActionLeft"), true);
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_left_action"), true);
     }
 
     @Test
     void hasForagerActionRight(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("foragerActionRight"), true);
+        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("forager_forward_right_action"), true);
     }
 
-    @Test
-    void hasForagerRight(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("foragerRight"), true);
-    }
-    
-    @Test
-    void hasForagerLeft(){
-        assertEquals(forager.getComponent(AnimationRenderComponent.class).hasAnimation("foragerLeft"), true);
-    }
 }

@@ -1,0 +1,39 @@
+{
+buildings: [
+    { 
+        "name": "Town Hall",
+        "width": 7,
+        "height": 7,
+        "door": "2,6",
+        "num": 1,
+    },
+    {
+        "name": "Library",
+        "width": 5,
+        "height": 5,
+        "door": "1,4",
+        "num": 2,
+    },
+    {
+        "name": "Smith",
+        "width": 5,
+        "height": 5,
+        "door": "1,4",
+        "num": 2,
+    },
+    {
+        "name": "Barracks",
+        "width": 5,
+        "height": 5,
+        "door": "2,4",
+        "num": 2,
+    },
+    {
+        "name": "Farm",
+        "width": 5,
+        "height": 5,
+        "door": "4,2",
+        "num": 2,
+    }
+]
+}
