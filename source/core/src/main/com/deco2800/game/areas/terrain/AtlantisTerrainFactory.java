@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
@@ -99,13 +100,14 @@ public class AtlantisTerrainFactory {
 
     public GridPoint2 randomlySelectTileToMoveTo() {
         while (true) {
+            int height = this.mapGenerator.getHeight();
             ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
             int size = legalMoves.size();
             System.out.println(size);
             int randomSeed = PseudoRandom.seedRandomInt(0, size);
             int[] coords = legalMoves.get(randomSeed);
             System.out.println(new GridPoint2(coords[0], coords[1]));
-            return new GridPoint2(coords[0], coords[1]);
+            return new GridPoint2(coords[1], height - coords[0]);
         }
     }
 

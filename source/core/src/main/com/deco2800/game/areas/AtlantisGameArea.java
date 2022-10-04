@@ -213,7 +213,7 @@ public class AtlantisGameArea extends GameArea {
         //spawnMiner();
 
         //playMusic();
-        player = spawnPlayer();
+        //player = spawnPlayer();
         centreCameraOnCity();
 
         // Spawn Buildings in the city
@@ -224,9 +224,9 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnBuildings();
 
-        spawnForager();
-        spawnMiner();
-        spawnBuilder();
+        //spawnForager();
+        //spawnMiner();
+        //spawnBuilder();
         spawnCity();
 
         spawnResources();

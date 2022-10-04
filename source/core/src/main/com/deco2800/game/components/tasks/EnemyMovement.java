@@ -26,7 +26,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 import com.deco2800.game.utils.random.Timer;
 import org.slf4j.LoggerFactory;
-import com.deco2800.game.worker.components.movement.WorkerMovementTask;
 import java.util.List;
 import java.util.logging.Logger;
 
