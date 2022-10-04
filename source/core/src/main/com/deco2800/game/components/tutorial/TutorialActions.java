@@ -11,26 +11,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A ui component for handling tutorial actions
+ * TODO: integrate with actions
  */
 public class TutorialActions extends Component {
+
     private static final Logger logger = LoggerFactory.getLogger(TutorialActions.class);
     private int count;
 
     private GdxGame game;
     private DialogueBoxDisplay display;
-    private static final String[] mainGameTextures = {
-            "Hello! My name is Fred, and I will be guiding you in the \ntutorial",
+
+    /* Change this to change the dialogues within the tutorial*/
+    private static final String[] tutorialDialogues = {
+            "Hello! My name is Fred, and I \nwill be guiding you in the tutorial",
             "If you know how to play, press skip!",
             "Navigate through the map using the 4 sides \n Zoom in and out using your mouse scroll",
             "Great! Now that we can navigate \n Lets talk about gameplay",
-            "The top right hand corner shows your resources,\n the bottom right shows where you are on the map",
-            "If you want to skip any character dialogues, press exit",
+            "The top right corner shows your resources,\n the bottom right shows where you are on the map",
+            "If you want to skip any character dialogues,\n press exit",
             "The town hall is where the Atlanteans live, and\n must be protected at all costs!",
             "The barracks is where you can train troops \nto defend Atlantis!",
             "Mining camps are used to gather resources to \nupgrade the city",
+            "Start protecting Atlantis by clicking the\n town hall and creating the bubble!",
+            "Great! Now save Atlantis!"
 
     };
-
 
 
     public TutorialActions(GdxGame game, DialogueBoxDisplay display) {
@@ -53,15 +58,15 @@ public class TutorialActions extends Component {
     private void onNext() {
         logger.info("change dialogue");
 
-        if (this.count < mainGameTextures.length) {
-            display.setDialogue(mainGameTextures[count]);
+        if (this.count < tutorialDialogues.length) {
+            display.setDialogue(tutorialDialogues[count]);
+            // go to next dialogue
             this.count++;
         }
 
-
-
+        if (this.count >= tutorialDialogues.length) {
+            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        }
 
     }
-
-
 }

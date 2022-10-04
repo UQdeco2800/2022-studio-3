@@ -8,6 +8,7 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
@@ -29,8 +30,6 @@ public class TutorialGameArea extends GameArea {
     public DialogueBoxDisplay dialogueBoxDisplay;
 
     private final AtlantisTerrainFactory terrainFactory;
-
-    private Entity player;
 
     /** textures needed to load */
     private String[] tutorialTextures = {
@@ -90,6 +89,7 @@ public class TutorialGameArea extends GameArea {
             "images/stone.png",
             "images/archer.png",
             "images/swordsman.png",
+            "images/SirFred.png",
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png"
@@ -100,8 +100,6 @@ public class TutorialGameArea extends GameArea {
         this.terrainFactory = terrainFactory;
         this.dialogueBoxDisplay = display;
     }
-
-
 
 
     /**
@@ -132,9 +130,6 @@ public class TutorialGameArea extends GameArea {
         dialogueBox.addComponent(this.dialogueBoxDisplay)
                 .addComponent(new DialogueBoxActions(this.dialogueBoxDisplay));
 
-
-
-
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("tutorial area"));
 
@@ -146,6 +141,9 @@ public class TutorialGameArea extends GameArea {
         spawnEntity(infoUi);
     }
 
+    /**
+     * spawn tutorial area - needs mining camp
+     */
     private void spawnBuildings() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
@@ -164,13 +162,13 @@ public class TutorialGameArea extends GameArea {
         Vector2 centreWorld = this.terrain.tileToWorldPosition(spawn.x, spawn.y);
         this.terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
         this.dialogueBoxDisplay.setTitle("Welcome to Atlantis Sinks!");
-        this.dialogueBoxDisplay.setDialogue("Press next to get started or \nskip to play");
+        this.dialogueBoxDisplay.setDialogue("Press next to get \nstarted or skip to play");
+        this.dialogueBoxDisplay.setImage("images/SirFred.png");
     }
 
-    public void changeDialogue(String string) {
-        this.dialogueBoxDisplay.setDialogue(string);
-    }
-
+    /**
+     * spawn map terrain
+     */
     private void spawnTerrain() {
         MapGenerator mg = terrainFactory.getMapGenerator();
         terrainFactory.createAtlantisTerrainComponent();
