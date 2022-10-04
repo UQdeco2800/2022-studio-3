@@ -45,7 +45,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   /**
    * Instant of a movementTask
    */
-  private WorkerMovementTask workerMovementTask;
+  private MovementTask movementTask;
   /**
    * Current movement task.
    */
@@ -97,12 +97,12 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     if (this.targetLock == false) {
       if (isFriendlyUnitInVicinity()) {
         return;
-      } else if (this.workerMovementTask.isAtTarget()) {
+      } else if (this.movementTask.isAtTarget()) {
         System.out.println("DONEEEEE");
         selectRandomTarget();
         createMovementTask();
       } else if (this.timer.isTimerExpired()) {
-        System.out.println(this.workerMovementTask);
+        System.out.println(this.movementTask);
         System.out.println("TIMERRR");
         selectRandomTarget();
         createMovementTask();
@@ -190,10 +190,10 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
    * Creates a movement task.
    */
   public void createMovementTask() {
-    setMovementTask(new WorkerMovementTask(destinationPoint));
-    this.workerMovementTask.create(owner);
-    this.workerMovementTask.start();
-    setCurrentTask(this.workerMovementTask);
+    setMovementTask(new MovementTask(destinationPoint));
+    this.movementTask.create(owner);
+    this.movementTask.start();
+    setCurrentTask(this.movementTask);
   }
 
   /**
@@ -201,8 +201,8 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
    *
    * @param movementTask movement task to be set
    */
-  public void setMovementTask(WorkerMovementTask workerMovementTask) {
-    this.workerMovementTask = workerMovementTask;
+  public void setMovementTask(MovementTask movementTask) {
+    this.movementTask = movementTask;
   }
 
   /**

@@ -101,6 +101,7 @@ public class AtlantisTerrainFactory {
         while (true) {
             ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
             int size = legalMoves.size();
+            System.out.println(size);
             int randomSeed = PseudoRandom.seedRandomInt(0, size);
             int[] coords = legalMoves.get(randomSeed);
             System.out.println(new GridPoint2(coords[0], coords[1]));
