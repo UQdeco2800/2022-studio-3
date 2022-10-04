@@ -8,6 +8,7 @@ import com.deco2800.game.worker.components.WorkerInventoryComponent;
 import com.deco2800.game.worker.components.type.ForagerComponent;
 import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.worker.resources.ResourceConfig;
+import com.deco2800.game.worker.type.MinerFactory;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.files.FileLoader;
@@ -24,12 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(GameExtension.class)
-public class Miner {
+public class MinerFactoryTest {
+
+    private static Entity miner;
 
     @Test
-    void minerComponentDetected(){
-        Entity miner = new Entity();
-        miner.addComponent(new MinerComponent());
+    static void minerComponentDetected(){
+        miner = MinerFactory.createMiner();
         MinerComponent miner_type = miner.getComponent(MinerComponent.class);
         ForagerComponent forager_type = miner.getComponent(ForagerComponent.class);
         if(miner_type.getIsMiner() == 1){
@@ -41,20 +43,18 @@ public class Miner {
     }
 
     @Test
-    void minerCollectStatsDetected(){
-        Entity miner = new Entity();
-        miner.addComponent(new MinerComponent());
-        miner.addComponent(new CollectStatsComponent(2));
+    static void minerCollectStatsDetected(){
+        miner = MinerFactory.createMiner();
         CollectStatsComponent miner_collect_stats = miner.getComponent(CollectStatsComponent.class);
         assertEquals(miner_collect_stats.getCollectionAmount(), 2);
     }
 
     @Test
-    void minerResourceStatsDetected(){
+    static void minerResourceStatsDetected(){
         ResourceConfig stats = FileLoader.readClass(ResourceConfig.class, "configs/stone.json");
         Entity stone_entity = new Entity().addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal));
 
-        Entity miner = new Entity();
+        miner = MinerFactory.createMiner();
         miner.addComponent(new CollectStatsComponent(2));
         miner.addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE));
 
@@ -66,12 +66,8 @@ public class Miner {
     }
 
     @Test
-    void minerAnimationControllerDetected(){
-        Entity miner = new Entity()
-            .addComponent(new CollectStatsComponent(2))
-            .addComponent(new ResourceCollectComponent(PhysicsLayer.WORKER))
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
-            .addComponent(new MinerAnimationController());
+    static void minerAnimationControllerDetected(){
+        miner = MinerFactory.createMiner();
 
         try {
             Class[] param = null;
@@ -90,8 +86,8 @@ public class Miner {
     }
 
     @Test
-    void inventoryCouldBeAttachedToMiner(){
-        Entity miner = new Entity()
+    static void inventoryCouldBeAttachedToMiner(){
+        miner = new Entity()
             .addComponent(new CollectStatsComponent(2))
             .addComponent(new ResourceCollectComponent(PhysicsLayer.WORKER))
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
