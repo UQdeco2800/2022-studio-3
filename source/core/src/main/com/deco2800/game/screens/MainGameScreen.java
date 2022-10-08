@@ -50,7 +50,7 @@ public class MainGameScreen extends ScreenAdapter {
           "images/gainstone.png",
           "images/gain10wood.png",
           "images/gainmetal.png",
-          "images/building-selection-menu.png"
+          "images/character-selection-menu.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 

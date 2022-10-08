@@ -195,7 +195,7 @@ public class AtlantisGameArea extends GameArea {
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
     public static final String[] soldierMenuTextures = {
-            "images/building-selection-menu.png"
+            "images/character-selection-menu.png"
     };
     public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 

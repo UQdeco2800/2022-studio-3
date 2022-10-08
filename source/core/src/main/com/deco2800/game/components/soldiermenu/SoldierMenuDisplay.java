@@ -19,7 +19,7 @@ public class SoldierMenuDisplay extends UIComponent {
 
     private void addActors() {
         Texture texture = ServiceLocator.
-                getResourceService().getAsset("images/building-selection-menu.png", Texture.class);
+                getResourceService().getAsset("images/character-selection-menu.png", Texture.class);
 
         backgroundTexture = new Image(texture);
         this.initHeight = backgroundTexture.getHeight();
