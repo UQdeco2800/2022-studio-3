@@ -34,6 +34,7 @@ import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -193,6 +194,9 @@ public class AtlantisGameArea extends GameArea {
             "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
+    public static final String[] soldierMenuTextures = {
+            "images/building-selection-menu.png"
+    };
     public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
@@ -286,6 +290,14 @@ public class AtlantisGameArea extends GameArea {
         spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
         startFlooding();
+
+        spawnSoldierMenu();
+    }
+
+    private void spawnSoldierMenu() {
+        Entity shopBox = new Entity();
+        shopBox.addComponent(new SoldierMenuDisplay());
+        spawnEntity(shopBox);
     }
 
     public void startFlooding() {
@@ -1073,6 +1085,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
         resourceService.loadTextures(buildingPlacementTextures);
+        resourceService.loadTextures(soldierMenuTextures);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
@@ -1085,6 +1098,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(atlantisSounds);
+        resourceService.unloadAssets(soldierMenuTextures);
     }
 
     @Override
