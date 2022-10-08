@@ -24,6 +24,7 @@ import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
+import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -197,6 +198,10 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] soldierMenuTextures = {
             "images/character-selection-menu.png"
     };
+
+    public static final String[] buildingMenuTextures = {
+            "images/building-selection-menu.png"
+    };
     public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
@@ -291,13 +296,20 @@ public class AtlantisGameArea extends GameArea {
         ServiceLocator.registerGameArea(this);
         startFlooding();
 
-        spawnSoldierMenu();
+//        spawnSoldierMenu();
+//        spawnBuildingMenu();
     }
 
     private void spawnSoldierMenu() {
         Entity shopBox = new Entity();
         shopBox.addComponent(new SoldierMenuDisplay());
         spawnEntity(shopBox);
+    }
+
+    private void spawnBuildingMenu() {
+        Entity buildingBox = new Entity();
+        buildingBox.addComponent(new BuildingMenuDisplay());
+        spawnEntity(buildingBox);
     }
 
     public void startFlooding() {

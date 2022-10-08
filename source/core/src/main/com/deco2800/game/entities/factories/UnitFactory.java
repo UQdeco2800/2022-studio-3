@@ -7,12 +7,14 @@ import com.deco2800.game.components.EntityType;
 import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.friendly.FriendlyComponent;
+import com.deco2800.game.components.friendly.FriendlyUnitInputComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.configs.BaseUnitConfig;
 import com.deco2800.game.entities.configs.UnitConfigs;
 import com.deco2800.game.files.FileLoader;
+import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -166,11 +168,15 @@ public class UnitFactory {
             } else {
                 troop = createMeleeTroop(type);
             }
+
+            InputComponent friendlyUnitInputComponent = ServiceLocator.getInputService().getInputFactory().createForSoldierDisplay();
+
             troop.addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
                     .addComponent(animator)
-                    .addComponent(new FriendlyComponent());
+                    .addComponent(new FriendlyComponent())
+                    .addComponent(friendlyUnitInputComponent);
             PhysicsUtils.setScaledCollider(troop, 0.2f, 1f);
             troop.getComponent(ColliderComponent.class).setDensity(1f);
             troop.setScale(2f,2f); // make size more manageable

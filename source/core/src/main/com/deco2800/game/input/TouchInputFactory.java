@@ -1,5 +1,6 @@
 package com.deco2800.game.input;
 
+import com.deco2800.game.components.friendly.FriendlyUnitInputComponent;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.player.TouchPlayerInputComponent;
 import com.deco2800.game.ui.terminal.TouchTerminalInputComponent;
@@ -57,5 +58,10 @@ public class TouchInputFactory extends InputFactory{
   public InputComponent createForCamera() {
     logger.debug("Creating camera input handler");
     return new CameraInputComponent();
+  }
+
+  @Override
+  public InputComponent createForSoldierDisplay(){
+    return  new FriendlyUnitInputComponent();
   }
 }

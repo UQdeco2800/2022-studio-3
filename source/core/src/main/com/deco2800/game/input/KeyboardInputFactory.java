@@ -1,4 +1,6 @@
 package com.deco2800.game.input;
+import com.badlogic.gdx.Input;
+import com.deco2800.game.components.friendly.FriendlyUnitInputComponent;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.ui.terminal.KeyboardTerminalInputComponent;
@@ -57,5 +59,9 @@ public class KeyboardInputFactory extends InputFactory {
     public InputComponent createForCamera() {
         logger.debug("Creating camera input handler");
         return new CameraInputComponent();
+    }
+
+    public InputComponent createForSoldierDisplay(){
+        return new FriendlyUnitInputComponent();
     }
 }
