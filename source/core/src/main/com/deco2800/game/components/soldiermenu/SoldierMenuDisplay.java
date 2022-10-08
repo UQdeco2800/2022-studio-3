@@ -25,6 +25,8 @@ public class SoldierMenuDisplay extends UIComponent {
         this.initHeight = backgroundTexture.getHeight();
         this.initWidth = backgroundTexture.getWidth();
         backgroundTexture.setSize(663, 330);
+
+        stage.addActor(backgroundTexture);
         /*
         backgroundShopImage = new Image(texture);
         this.initHeight = backgroundShopImage.getHeight();

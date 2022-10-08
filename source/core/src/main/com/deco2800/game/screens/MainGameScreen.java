@@ -157,7 +157,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
+    ui.addComponent(new InputDecorator(stage, 11))
         .addComponent(new WeatherIconDisplay())
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new PauseMenuActions(this.game))
