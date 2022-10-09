@@ -74,5 +74,4 @@ public abstract class InputFactory {
    */
   public abstract InputComponent createForCamera();
 
-  public abstract InputComponent createForSoldierDisplay();
 }

@@ -169,6 +169,7 @@ public class AtlantisGameArea extends GameArea {
             "images/spell-btn-unclickable.png",
             "images/spell-btn.png",
             "images/health bar_6.png",
+            // Soldier display
             "images/archer_avatar.png",
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",

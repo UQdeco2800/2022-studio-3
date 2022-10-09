@@ -169,8 +169,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())
-//        .addComponent(new SoldierMenuDisplay())
-//        .addComponent(new BuildingMenuDisplay())
+        .addComponent(new SoldierMenuDisplay())
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
