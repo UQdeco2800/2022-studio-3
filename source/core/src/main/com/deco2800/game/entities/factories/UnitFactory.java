@@ -174,9 +174,9 @@ public class UnitFactory {
                 troop = createRangedTroop(UnitType.ARCHER);
             } else {
                 troop = createMeleeTroop(type);
+
                 // Add animation controller based on the unit type
                 if(type == UnitType.SPEARMAN){
-
                     animator.addAnimation("spearman_forward_left_idle", framePeriod, loop);
                     animator.addAnimation("spearman_forward_left_idle_highlighted", framePeriod, loop);
                     animator.addAnimation("spearman_forward_left_move", framePeriod, loop);
@@ -190,6 +190,7 @@ public class UnitFactory {
 
                     troop.addComponent(animator);
                     troop.addComponent(new SpearmanAnimationController());
+                    
                 }else if(type == UnitType.SWORDSMAN){
                     animator.addAnimation("swordsman_forward_left_idle", framePeriod, loop);
                     animator.addAnimation("swordsman_forward_left_idle_highlight", framePeriod, loop);
