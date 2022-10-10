@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -77,19 +78,18 @@ public class HealthBarComponent extends RenderComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
-        if (!showing) {
-            return;
-        }
-        Texture health = green;
-        if (entityType == EntityType.ENEMY) {
-            health = red; // enemy entity health is red
-        }
+        // Always showing
+//        if (!showing) {
+//            return;
+//        }
+        // friendly health is green enemy entity health is red
+        Texture health = entityType == EntityType.FRIENDLY ? green : red;
 
         // Constants for health bar size
-        float xdist = 0.4f; // x scaled distance for health bar from centre of entity (0.5 = whole entity
+        float xdist = 0.5f; // x scaled distance for health bar from centre of entity (0.5 = whole entity
         float ydist = 0.3f; // y offset for health bar from centre of entity
-        float height = 0.15f; // height of health bar
-        float line_size = 0.03f; // segment line width
+        float height = 0.2f; // height of health bar
+        float line_size = 0.06f; // segment line width
         float segment_health = 25f; // amount of health to display per segment
 
         Vector2 position = entity.getCenterPosition();
@@ -155,6 +155,10 @@ public class HealthBarComponent extends RenderComponent {
 
     public boolean getVisible() {
         return showing;
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
     }
 
     @Override
