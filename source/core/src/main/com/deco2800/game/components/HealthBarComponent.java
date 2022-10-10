@@ -37,8 +37,9 @@ public class HealthBarComponent extends RenderComponent {
      * @param entityType Type of entity. e.g. Friendly, Enemy, Building
      */
     public HealthBarComponent(EntityType entityType) {
+        logger.debug("Creating {} Health Bar", entityType);
         this.entityType = entityType;
-        visibleTime = 15 * 1000; // 15 seconds
+        visibleTime = 15 * 1000L; // 15 seconds
     }
 
     @Override
@@ -78,7 +79,7 @@ public class HealthBarComponent extends RenderComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
-        // Always showing
+        // Uncomment to allow hidden feature
 //        if (!showing) {
 //            return;
 //        }
