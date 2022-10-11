@@ -32,7 +32,7 @@ public class TutorialActions extends Component {
             "The town hall is where the Atlanteans live, and\n must be protected at all costs!",
             "The barracks is where you can train troops \nto defend Atlantis!",
             "Mining camps are used to gather resources to \nupgrade the city",
-            "Oh no!, you're being attacked by a Titan! \n Release the spell over the Titan to defeat it"
+            "Oh no!, you're being attacked by a Titan!\n Release the spell over the Titan to defeat it"
 
     };
 

@@ -282,7 +282,11 @@ public class TutorialGameArea extends GameArea {
     }
 
     private void spawnTitan(Vector2 spawnPoint) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
         MapComponent mc = new MapComponent();
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
         mc.display();
         mc.setDisplayColour(Color.RED);
         Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(mc);
