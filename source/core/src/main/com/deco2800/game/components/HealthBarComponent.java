@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.building.TextureScaler;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -80,9 +81,9 @@ public class HealthBarComponent extends RenderComponent {
     @Override
     protected void draw(SpriteBatch batch) {
         // Uncomment to allow hidden feature
-//        if (!showing) {
-//            return;
-//        }
+        if (!showing) {
+            return;
+        }
         // friendly health is green enemy entity health is red
         Texture health = entityType == EntityType.FRIENDLY ? green : red;
 
@@ -115,6 +116,10 @@ public class HealthBarComponent extends RenderComponent {
 
     @Override
     public void update() {
+        if (entity.getComponent(SelectableComponent.class) != null && entity.getComponent(SelectableComponent.class).isSelected()) {
+            showing = true;
+            return;
+        }
         if (ServiceLocator.getRenderService().getDebug().getActive()) {
             showing = true; // debug command sets health bar to be visible
         } else if (ServiceLocator.getTimeSource().getTimeSince(lastUpdate) > visibleTime) {
