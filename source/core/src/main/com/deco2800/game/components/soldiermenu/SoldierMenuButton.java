@@ -33,7 +33,7 @@ public class SoldierMenuButton extends UIComponent {
 
     private void addActors(){
         buildingButton = new TextButton("Building",skin);
-        buildingButton.setPosition(100f,100f);
+        buildingButton.setPosition(1150f,300f);
 
         buildingButton.addListener(
             new ChangeListener() {
