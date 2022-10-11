@@ -13,6 +13,7 @@ import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuButton;
 import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -171,6 +172,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new ResourceCountDisplay())
 //        .addComponent(new SoldierMenuDisplay())
 //        .addComponent(new BuildingMenuDisplay())
+        .addComponent(new SoldierMenuButton())
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
