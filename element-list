@@ -8,6 +8,7 @@ com.deco2800.game.areas.MapGenerator.pathBuilding
 com.deco2800.game.areas.terrain
 com.deco2800.game.components
 com.deco2800.game.components.building
+com.deco2800.game.components.buildingmenu
 com.deco2800.game.components.enemy
 com.deco2800.game.components.friendly
 com.deco2800.game.components.friendlyunits
@@ -19,6 +20,7 @@ com.deco2800.game.components.pausemenu
 com.deco2800.game.components.player
 com.deco2800.game.components.resources
 com.deco2800.game.components.settingsmenu
+com.deco2800.game.components.soldiermenu
 com.deco2800.game.components.story
 com.deco2800.game.components.tasks
 com.deco2800.game.components.tutorial
