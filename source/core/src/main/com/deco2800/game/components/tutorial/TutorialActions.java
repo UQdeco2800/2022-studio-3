@@ -32,8 +32,7 @@ public class TutorialActions extends Component {
             "The town hall is where the Atlanteans live, and\n must be protected at all costs!",
             "The barracks is where you can train troops \nto defend Atlantis!",
             "Mining camps are used to gather resources to \nupgrade the city",
-            "Start protecting Atlantis by clicking the\n town hall and creating the bubble!",
-            "Great! Now save Atlantis!"
+            "Oh no!, you're being attacked by a Titan! \n Release the spell over the Titan to defeat it"
 
     };
 
@@ -57,11 +56,12 @@ public class TutorialActions extends Component {
 
     private void onNext() {
         logger.info("change dialogue");
+        this.count++;
 
         if (this.count < tutorialDialogues.length) {
             display.setDialogue(tutorialDialogues[count]);
             // go to next dialogue
-            this.count++;
+
         }
 
         if (this.count >= tutorialDialogues.length) {
