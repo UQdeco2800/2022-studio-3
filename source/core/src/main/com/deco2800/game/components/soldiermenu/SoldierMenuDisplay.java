@@ -7,12 +7,12 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+//import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class SoldierMenuDisplay extends UIComponent {
 
-    private TextButton soldierDisplayButton;
+//    private TextButton soldierDisplayButton;
     private Image backgroundTexture;
     private Image archerTexture;
     private Image swordsmanTexture;
@@ -127,7 +127,7 @@ public class SoldierMenuDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        soldierDisplayButton.remove();
+//        soldierDisplayButton.remove();
 //        removeDisplay();
     }
 }
