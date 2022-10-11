@@ -136,16 +136,6 @@ public class AtlantisTerrainFactory {
     public MapGenerator floodTiles() {
         mapGenerator.floodTile();
         this.createAtlantisTerrainComponent();
-
-        //TODO - re-Draw to the screen - (Jordan/Dito)
-
-//        TextureRegion grass = textures.get("Grass");
-//        GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-//        TiledMap tiledMap = this.createMapTiles(tilePixelSize);
-
-//        this.fillTiles(tiledMap);
-
-        //Return new mapGenerator
         return mapGenerator;
     }
 

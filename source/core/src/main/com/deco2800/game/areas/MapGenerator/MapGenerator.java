@@ -667,12 +667,7 @@ public class MapGenerator {
     public void floodTile() throws IllegalArgumentException {
         //Check that the square to be flooded is a flood-able square
         //Return without crashing game if an error has been made
-
-        // For debugging
-        // System.out.println("HEIGHT: " + mapHeight);
-        // System.out.println("WIDTH: " + mapWidth);
         boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
-
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
                 if (this.map[i][j] == this.getIslandChar()) {

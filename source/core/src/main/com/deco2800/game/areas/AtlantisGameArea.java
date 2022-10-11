@@ -233,13 +233,13 @@ public class AtlantisGameArea extends GameArea {
 //        player = spawnPlayer();
         centreCameraOnCity();
 
-        spawnForager();
-        spawnForager();
+//        spawnForager();
+//        spawnForager();
 
 
-        spawnMiner();
-        spawnMiner();
-        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
 
         //playMusic();
 //        player = spawnPlayer();
@@ -253,16 +253,16 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnBuildings();
 
-        spawnForager();
-        spawnMiner();
-        spawnBuilder();
+//        spawnForager();
+//        spawnMiner();
+//        spawnBuilder();
         spawnCity();
 
         spawnResources();
 
-        spawnTitanShrine();
-        spawnShip();
-        spawnTrebuchet(titan, this);
+//        spawnTitanShrine();
+//        spawnShip();
+//        spawnTrebuchet(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -272,14 +272,17 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnExampleUnit();
         //spawnBlueJokers();
-        //spawnWolf();
+
+        spawnWolf();
+
+
         //spawnTitan();
         //spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
@@ -350,7 +353,7 @@ public class AtlantisGameArea extends GameArea {
      * Spawns Wolf enemy entities
      */
     private void spawnWolf() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             MapComponent mc = new MapComponent();
             mc.display();

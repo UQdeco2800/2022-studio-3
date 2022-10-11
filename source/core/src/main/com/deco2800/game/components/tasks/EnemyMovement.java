@@ -83,8 +83,8 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    selectRandomTarget();
-    createMovementTask();
+    this.selectRandomTarget();
+    this.createMovementTask();
   }
 
   /**
@@ -96,23 +96,17 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
       if (isFriendlyUnitInVicinity()) {
         return;
       } else if (this.movementTask.isAtTarget()) {
-//        System.out.println("DONEEEEE");
-        selectRandomTarget();
-        createMovementTask();
+        this.updateMovementTask();
       } else if (this.timer.isTimerExpired()) {
-//        System.out.println(this.movementTask);
-//        System.out.println("TIMERRR");
-        selectRandomTarget();
-        createMovementTask();
-      } else if (this.timer.isTimerExpired()) {
-//        System.out.println(this.movementTask);
-        selectRandomTarget();
-        createMovementTask();
-        this.timer = new Timer(5000, 10000);
+        this.updateMovementTask();
       }
-    } else {
-      //TODO - Check if target still in range.
     }
+  }
+
+  private void updateMovementTask() {
+    selectRandomTarget();
+    createMovementTask();
+    this.timer = new Timer(5000, 10000);
   }
 
   private Boolean isFriendlyUnitInVicinity() {
@@ -181,8 +175,11 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   }
 
   public void selectRandomTarget() {
-    setStartPos(owner.getEntity().getPosition());
-    startPos = this.owner.getEntity().getCenterPosition();
+    //setStartPos(owner.getEntity().getPosition());
+
+    //
+    this.startPos = this.owner.getEntity().getCenterPosition();
+    System.out.println("Start" + startPos.toString());
     this.target = this.terrainFactory.randomlySelectTileToMoveTo();
     this.targetLock = false;
     destinationPoint = terrain.tileToWorldPosition(this.target);
