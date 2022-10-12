@@ -97,14 +97,26 @@ public class TextureScaler extends Component{
         return true;
     }
 
+    /**
+     * Returns the width of this entity in tiles
+     * @return tile width
+     */
     public int getTileWidth() {
         return this.tileWidth;
     }
 
+    /**
+     * Returns the height of this entity in tiles
+     * @return tile height
+     */
     public int getTileHeight() {
         return this.tileHeight;
     }
 
+    /**
+     * Returns the Gridpoint2 (x,y) position of this entity tile wise
+     * @return tile position of Entity
+     */
     public GridPoint2 getPosition() {
         return this.spawn;
     }
