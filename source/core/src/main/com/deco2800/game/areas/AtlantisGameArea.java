@@ -247,13 +247,13 @@ public class AtlantisGameArea extends GameArea {
 //        player = spawnPlayer();
         centreCameraOnCity();
 
-        spawnForager();
-        spawnForager();
+//        spawnForager();
+//        spawnForager();
 
 
-        spawnMiner();
-        spawnMiner();
-        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
 
         //playMusic();
 //        player = spawnPlayer();
@@ -267,16 +267,16 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnBuildings();
 
-        spawnForager();
-        spawnMiner();
-        spawnBuilder();
+//        spawnForager();
+//        spawnMiner();
+//        spawnBuilder();
         spawnCity();
 
         spawnResources();
 
-        spawnTitanShrine();
-        spawnShip();
-        spawnTrebuchet(titan, this);
+//        spawnTitanShrine();
+//        spawnShip();
+//        spawnTrebuchet(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -286,14 +286,17 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnExampleUnit();
         //spawnBlueJokers();
-        //spawnWolf();
+
+        spawnWolf();
+
+
         //spawnTitan();
         //spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();

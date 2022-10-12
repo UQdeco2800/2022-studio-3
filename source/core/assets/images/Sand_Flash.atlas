@@ -1,0 +1,34 @@
+
+Sand_Flash.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Sand_Flash_1
+  rotate: false
+  xy: 2, 4
+  size: 501, 269
+  orig: 501, 269
+  offset: 0, 0
+  index: 1
+Sand_Flash_2
+  rotate: false
+  xy: 505, 4
+  size: 501, 269
+  orig: 501, 269
+  offset: 0, 0
+  index: 2
+Sand_Flash_3
+  rotate: false
+  xy: 1008, 4
+  size: 501, 269
+  orig: 501, 269
+  offset: 0, 0
+  index: 3
+Sand_Flash_4
+  rotate: false
+  xy: 1511, 4
+  size: 501, 269
+  orig: 501, 269
+  offset: 0, 0
+  index: 4
