@@ -93,7 +93,14 @@ public class MapGenerator {
      * Stores legal coordinates for players to move to.
      */
     public ArrayList<int[]> legalCoordinates;
-
+    /**
+     *
+     */
+    private int bottomLeftX;
+    /**
+     *
+     */
+    private int bottomLeftY;
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -124,6 +131,7 @@ public class MapGenerator {
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
+        this.getLegalCoordinates();
     }
 
     /**
@@ -700,16 +708,42 @@ public class MapGenerator {
      * Get array map of city.
      */
     public void createArrayMap() {
+        int bottomLeftI = mapHeight;
+        int bottomLeftJ = mapWidth;
         ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
                 if (this.map[i][j] == this.getCityChar()) {
+                    if (i < bottomLeftI) {
+                        bottomLeftI = i;
+                    }
+                    if (j < bottomLeftJ) {
+                        bottomLeftJ = j;
+                    }
                     int[] coords = {i, j};
                     legalMoveCoordinates.add(coords);
                 }
             }
         }
+        this.bottomLeftX = bottomLeftI;
+        this.bottomLeftY = bottomLeftJ;
         this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public int getBottomLeftX() {
+        return this.bottomLeftX;
+    }
+
+    public int getBottomLeftY() {
+        return this.bottomLeftY;
+    }
+
+    public int getCityWidth() {
+        return this.cityWidth;
+    }
+
+    public int getCityHeight() {
+        return this.cityHeight;
     }
 
     public ArrayList<int[]> getLegalCoordinates() {
