@@ -247,11 +247,12 @@ class BuildingFactoryTest {
         final float FARM_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(215f, 107f); //NW edge
 
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
             .addComponent(new MapComponent())
-            .addComponent(new TextureScaler(leftPoint, rightPoint))
+            .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
         assertInstanceOf(ColliderComponent.class, farm.getComponent(ColliderComponent.class));
@@ -259,7 +260,7 @@ class BuildingFactoryTest {
         assertInstanceOf(TextureRenderComponent.class, farm.getComponent(TextureRenderComponent.class));
         assertInstanceOf(TextureScaler.class, farm.getComponent(TextureScaler.class));
 
-        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
+        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {
@@ -292,19 +293,21 @@ class BuildingFactoryTest {
         final float LIBRARY_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(281f, 260f); //NW edge
+
 
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(new MapComponent())
                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-               .addComponent(new TextureScaler(leftPoint, rightPoint));
+               .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         assertInstanceOf(ColliderComponent.class, library.getComponent(ColliderComponent.class));
         assertInstanceOf(MapComponent.class, library.getComponent(MapComponent.class));
         assertInstanceOf(TextureRenderComponent.class, library.getComponent(TextureRenderComponent.class));
         assertInstanceOf(TextureScaler.class, library.getComponent(TextureScaler.class));
 
-        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
+        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Six vertices
@@ -339,19 +342,20 @@ class BuildingFactoryTest {
         final float BLACKSMITH_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(115f, 143f); //NW edge
 
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
           .addComponent(new MapComponent())
           .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-          .addComponent(new TextureScaler(leftPoint, rightPoint));
+          .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         assertInstanceOf(ColliderComponent.class, bs.getComponent(ColliderComponent.class));
         assertInstanceOf(MapComponent.class, bs.getComponent(MapComponent.class));
         assertInstanceOf(TextureRenderComponent.class, bs.getComponent(TextureRenderComponent.class));
         assertInstanceOf(TextureScaler.class, bs.getComponent(TextureScaler.class));
 
-        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
+        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
