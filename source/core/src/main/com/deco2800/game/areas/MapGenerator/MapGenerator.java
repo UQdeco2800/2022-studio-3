@@ -704,6 +704,9 @@ public class MapGenerator {
         }
     }
 
+    // TODO: Make a flashing tile for warning the players which tiles will be flooded.
+    // TODO:    Choose the tile to be flashed
+    // TODO:    Flash the tile
     /**
      * Get array map of city.
      */
