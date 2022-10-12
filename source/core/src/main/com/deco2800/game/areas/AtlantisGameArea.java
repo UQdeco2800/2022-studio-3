@@ -382,7 +382,7 @@ public class AtlantisGameArea extends GameArea {
      * Spawns Wolf enemy entities
      */
     private void spawnWolf() {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.9);
             MapComponent mc = new MapComponent();
             mc.display();

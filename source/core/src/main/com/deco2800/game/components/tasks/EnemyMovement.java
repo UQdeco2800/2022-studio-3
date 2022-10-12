@@ -198,8 +198,6 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     this.target = this.terrainFactory.randomlySelectTileToMoveTo(terrain.worldPositionToTile(this.initStartPos));
     this.targetLock = false;
     destinationPoint = terrain.tileToWorldPosition(this.target);
-    System.out.println("START POS: " + "(" + this.startPos.x + ", " + this.startPos.y + ")");
-    System.out.println("FINISH POS: " + "(" + destinationPoint.x + ", " + destinationPoint.y + ")");
   }
 
   /**
