@@ -200,7 +200,8 @@ public class BuildingFactory {
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint))
-               .addComponent(new BuildingUIDataComponent());
+               .addComponent(new BuildingUIDataComponent())
+               .addComponent(new BuildingActions(Building.FARM, 1));
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
 
@@ -385,7 +386,8 @@ public class BuildingFactory {
 
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
                 .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new BuildingActions(Building.WALL, 1));
 
         //Scale edge wall precisely
         cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE);
@@ -424,7 +426,8 @@ public class BuildingFactory {
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
                .addComponent(new TextureScaler(leftPoint, rightPoint))
-               .addComponent(new BuildingUIDataComponent());
+               .addComponent(new BuildingUIDataComponent())
+               .addComponent(new BuildingActions(Building.LIBRARY, 1));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
 
@@ -470,7 +473,8 @@ public class BuildingFactory {
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
           .addComponent(mp)
           .addComponent(new TextureScaler(leftPoint, rightPoint))
-          .addComponent(new BuildingUIDataComponent());
+          .addComponent(new BuildingUIDataComponent())
+          .addComponent(new BuildingActions(Building.BLACKSMITH, 1));
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
 
@@ -518,7 +522,8 @@ public class BuildingFactory {
 
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
                 .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new BuildingActions(Building.CONNECTOR_NS, 1));
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
@@ -561,7 +566,9 @@ public class BuildingFactory {
 
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
                 .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new BuildingActions(Building.WALL, 1))
+                .addComponent(new BuildingActions(Building.CONNECTOR_EW, 1));
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);

@@ -87,9 +87,12 @@ public class BuildingUIDataComponent extends UIComponent {
                 switch (buildingInfo.getType()) {
                     case BARRACKS -> buildingName = "Barracks";
                     case TOWNHALL -> buildingName = "Town Hall";
-                    case WALL, WALL_NE, WALL_SE -> buildingName = "Wall";
-                    case GATE_EW -> buildingName = "Gate";
+                    case WALL, CONNECTOR_EW, CONNECTOR_NS -> buildingName = "Wall";
+                    case GATE_EW, GATE_NS -> buildingName = "Gate";
                     case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getType() + ")";
+                    case LIBRARY -> buildingName = "Library";
+                    case FARM -> buildingName = "Farm";
+                    case BLACKSMITH -> buildingName = "Blacksmith";
                 }
             } catch (NullPointerException nullPointerException) {
                 System.out.println(nullPointerException.getMessage());

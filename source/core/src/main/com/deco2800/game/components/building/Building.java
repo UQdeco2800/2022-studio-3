@@ -10,5 +10,10 @@ public enum Building {
     WALL_NE,
     GATE_EW,
     GATE_NS,
-    WALL_SE
+    WALL_SE,
+    CONNECTOR_NS,
+    CONNECTOR_EW,
+    BLACKSMITH,
+    LIBRARY,
+    FARM
 }
