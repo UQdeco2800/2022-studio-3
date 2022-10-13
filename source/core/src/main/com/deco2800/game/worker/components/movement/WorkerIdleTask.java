@@ -1,8 +1,16 @@
 package com.deco2800.game.worker.components.movement;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import java.util.List;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.map.MapService;
+import com.deco2800.game.services.ServiceLocator;
+
+import java.security.Provider.Service;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +22,7 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     private boolean idling = false;
     private WorkerMovementTask movementTask;
     private Vector2 startPos;
+    private List<GridPoint2> path;
 
     public WorkerIdleTask() {}
 
@@ -53,18 +62,20 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
         movementTask.stop();
         movementTask.setTarget(target);
         movementTask.start();
-        // Trigger movement animation
-        //owner.getEntity().getEvents().trigger("workerWalkAnimate");
-
+        
         // Get the vector of the target and the worker
-        // If target's X point is bigger than the worker's X point, call the right animation
-        // If target's X point is smaller than the worker's X point, call the left animation
-        if (target.x > owner.getEntity().getPosition().x){
-            owner.getEntity().getEvents().trigger("workerWalkRightAnimate");
+        // If target's X & Y point is bigger than the worker's X point, call the back right animation
+        // If target's X point is smaller than the worker's X point but target's Y > worker's Y point, call the left animation
+        if (target.x > owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y){
+            owner.getEntity().getEvents().trigger("workerBackRightMove");
         } else if (target.x < owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("workerWalkLeftAnimate");
+            owner.getEntity().getEvents().trigger("workerBackLeftMove");
+        } else if (target.x < owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
+            owner.getEntity().getEvents().trigger("workerForwardLeftMove");
+        } else if (target.x > owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
+            owner.getEntity().getEvents().trigger("workerForwardRightMove");
         } else {
-            owner.getEntity().getEvents().trigger("workerWalkAnimate");
+            owner.getEntity().getEvents().trigger("workerIdleAnimate");
         }
         idling = false;
     }

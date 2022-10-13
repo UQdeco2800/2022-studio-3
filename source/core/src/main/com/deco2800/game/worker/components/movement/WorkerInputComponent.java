@@ -1,12 +1,10 @@
 package com.deco2800.game.worker.components.movement;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.input.InputComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**

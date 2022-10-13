@@ -1,5 +1,9 @@
 package com.deco2800.game.areas.MapGenerator;
 
+import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
+import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
+import com.deco2800.game.entities.factories.BuildingFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -85,6 +89,11 @@ public class MapGenerator {
      */
     private Map<String, Coordinate> islandEdges;
 
+    /**
+     * Stores legal coordinates for players to move to.
+     */
+    public ArrayList<int[]> legalCoordinates;
+
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -103,8 +112,8 @@ public class MapGenerator {
         //Set variables
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.cityWidth = cityWidth;
-        this.cityHeight = cityHeight;
+        this.cityWidth = setValidCityDimension(cityWidth);
+        this.cityHeight = setValidCityDimension(cityHeight);
         this.islandSize = islandSize;
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
@@ -131,6 +140,31 @@ public class MapGenerator {
         placeCity();
         //Add island to map
         makeIsland();
+    }
+
+    /**
+     * Returns the valid dimensions of the city to fit an aligned wall around the outsides
+     * @param dimension width or height of the city in tiles
+     * @return the minimum closest dimension necessary to fit a wall around the outskirts of the city
+     */
+    public int setValidCityDimension(int dimension) {
+        //Minimum side length of a city
+        float minDimension =  (2 * BuildingFactory.CORNER_SCALE) + 2 * (BuildingFactory.CONNECTOR_SCALE) + BuildingFactory.GATE_SCALE;
+        if (dimension <= minDimension) {
+            return (int) minDimension;
+        }
+        //Remaining distance for connectors
+        int remainingTiles = (int) (dimension - minDimension);
+        //Distance occupied by one wall pillar and one connecting wall
+        int wallConnectorDistance =  (int) (BuildingFactory.CORNER_SCALE + BuildingFactory.CONNECTOR_SCALE);
+        int tileDifference = remainingTiles % (2 * wallConnectorDistance);
+        if (tileDifference == 0) {
+            //Perfect size
+            return dimension;
+        } else {
+            //Add on the necessary difference to complete wall around city
+            return dimension + (2 * wallConnectorDistance - tileDifference);
+        }
     }
 
     /**
@@ -378,6 +412,8 @@ public class MapGenerator {
         this.outlineMap = copyMap(map, mapWidth, mapHeight);
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);
+        //Fill all edges around city to be island tiles
+        fillAroundCity();
     }
 
     /**
@@ -386,6 +422,40 @@ public class MapGenerator {
      */
     private void addPoint(Coordinate position) {
         map[position.getY()][position.getX()] = islandChar;
+    }
+
+    /**
+     * Adds tiles around the city to allow the entire map to be accessible
+     */
+    private void fillAroundCity() {
+        //Find city height in tiles
+        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        //Find city width in tiles
+        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+        //Find min and max X values of city
+        int cityMinX = cityDetails.get("NW").getX();
+        int cityMinY = cityDetails.get("NW").getY();
+        int cityMaxX = cityDetails.get("SE").getX();
+        int cityMaxY = cityDetails.get("SE").getY();
+
+        //Fill left and right sides of city
+        for (int i = cityMinY - 1; i <= cityMaxY + 1; i++) {
+            if (map[i][cityMinX - 1] == oceanChar) {
+                map[i][cityMinX - 1] = islandChar;
+            }
+            if (map[i][cityMaxX + 1] == oceanChar) {
+                map[i][cityMaxX + 1] = islandChar;
+            }
+        }
+        //Fill top and bottom sides of city
+        for (int j = cityMinX - 1; j <= cityMaxX + 1; j++) {
+            if (map[cityMinY - 1][j] == oceanChar) {
+                map[cityMinY - 1][j]= islandChar;
+            }
+            if (map[cityMaxY + 1][j] == oceanChar) {
+                map[cityMaxY + 1][j]= islandChar;
+            }
+        }
     }
 
     /**
@@ -417,7 +487,7 @@ public class MapGenerator {
      */
     private void defineIslandEdges() throws IllegalArgumentException {
         if (mapWidth < islandSize + cityWidth + 2 * islandBuffer) {
-            throw new IllegalArgumentException("Map too small for island of size " + islandSize);
+            throw new IllegalArgumentException("Map too small for island of size " + islandSize + " and city of width " + cityWidth);
         }
         Coordinate centre = cityDetails.get("Centre");
 
@@ -589,5 +659,68 @@ public class MapGenerator {
         }
         return newMap;
     }
-}
 
+    /**
+     * Given a coordinate (x, y), update the internal representation of the map
+     * to flood that tile.
+     */
+    public void floodTile() throws IllegalArgumentException {
+        //Check that the square to be flooded is a flood-able square
+        //Return without crashing game if an error has been made
+
+        // For debugging
+        // System.out.println("HEIGHT: " + mapHeight);
+        // System.out.println("WIDTH: " + mapWidth);
+        boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
+
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getIslandChar()) {
+                    try {
+                        if (this.map[i - 1][j] == this.getOceanChar() ||
+                                this.map[i + 1][j] == this.getOceanChar() ||
+                                this.map[i][j - 1] == this.getOceanChar() ||
+                                this.map[i][j + 1] == this.getOceanChar()) {
+                            mapEdges[i][j] = true;
+                        } else {
+                            mapEdges[i][j] = false;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //Do Nothing
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (mapEdges[i][j]) {
+                    this.map[i][j] = this.getOceanChar();
+                }
+            }
+        }
+    }
+
+    /**
+     * Get array map of city.
+     */
+    public void createArrayMap() {
+        ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getCityChar()) {
+                    int[] coords = {i, j};
+                    legalMoveCoordinates.add(coords);
+                }
+            }
+        }
+        this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public ArrayList<int[]> getLegalCoordinates() {
+        if (this.legalCoordinates == null) {
+            createArrayMap();
+        }
+        return this.legalCoordinates;
+    }
+}

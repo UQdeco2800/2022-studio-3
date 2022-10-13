@@ -1,28 +1,38 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.configs.BuildingConfigs;
-import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.files.UserSettings;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
-import org.slf4j.helpers.Util;
+import com.deco2800.game.utils.random.Timer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.security.Provider;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class InfoBoxDisplay extends UIComponent {
+    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
 
     //Table displayed for unit picture
     Table pictureTable;
@@ -31,11 +41,16 @@ public class InfoBoxDisplay extends UIComponent {
 
     Table buildingTable;
 
+//    ImageButton spellBtn;
+
     //initial height and width of the box, can be imple
     float initialHeight;
     float initialWidth;
     //The image that is always in the background of our information
+    private Timer timer;
     private Image backgroundBoxImage;
+//    private Image spellBoxImage;
+//    private Image spellBtnImage;
 
     //Button used for leveling up buildings
     private TextButton levelUpBtn = new TextButton("Level Up", skin);
@@ -45,6 +60,15 @@ public class InfoBoxDisplay extends UIComponent {
 
     //Button to create the magic bubble to save Atlantis
     private TextButton bubbleBtn = new TextButton("Create bubble", skin);
+    private Image healthFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png", Texture.class));
+    private ProgressBar healthBar;
+    private Label health;
+
+//    AnimationRenderComponent animator;
+
+    Array<Entity> enemyEntities;
+
+    Entity spell;
 
     UserSettings.Settings settings = UserSettings.get();
 
@@ -53,6 +77,19 @@ public class InfoBoxDisplay extends UIComponent {
     public void create() {
         super.create();
         addActors();
+//        entity.getEvents().addListener("release spell", this::onRelease);
+        this.timer = new Timer(10000, 10001);
+    }
+
+    @Override
+    public void update() {
+//        if(timer.isTimerExpired()) {
+//            spellBtn.setVisible(true);
+//        }
+//        if(spell != null && spell.getComponent(AnimationRenderComponent.class).isFinished()){
+//            spell.getComponent(AnimationRenderComponent.class).stopAnimation();
+//            spell.setEnabled(false);
+//        }
     }
 
     /**
@@ -60,15 +97,38 @@ public class InfoBoxDisplay extends UIComponent {
      */
     private void addActors() {
         backgroundBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/Information_Box_Deepsea.png", Texture.class));
+//        spellBoxImage = new Image(ServiceLocator.getResourceService().getAsset("images/spellbox-zeus.png", Texture.class));
+//
+//        this.initialHeight = spellBoxImage.getHeight();
+//        this.initialWidth = spellBoxImage.getWidth();
+//        spellBoxImage.setWidth((float) (initialWidth * 0.7));
+//        spellBoxImage.setHeight((float) (initialHeight * 0.7));
+//        spellBoxImage.setPosition(0f, Gdx.graphics.getHeight() - spellBoxImage.getHeight());
+//
+//        spellBtnImage = new Image(ServiceLocator.getResourceService().getAsset("images/spell-btn-unclickable.png", Texture.class));
+//        spellBtnImage.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
+//        spellBtnImage.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
+//        spellBtnImage.setHeight((float) (spellBoxImage.getHeight()/2.6));
+//
+//        Texture spellBtnTexture = new Texture(Gdx.files.internal("images/spell-btn.png"));
+//        spellBtn = new ImageButton(new TextureRegionDrawable(spellBtnTexture));
+//        spellBtn.addListener(
+//                new ChangeListener() {
+//                    @Override
+//                    public void changed(ChangeEvent changeEvent, Actor actor) {
+//                        logger.debug("Spell Release button clicked");
+//                        entity.getEvents().trigger("release spell");
+//                    }
+//                });
+//        spellBtn.setHeight((float) (spellBoxImage.getHeight()/2.6));
+//        spellBtn.setWidth(spellBoxImage.getWidth() - (float) (initialWidth/2.24));
+//        spellBtn.setPosition((int) (initialWidth/2.24), Gdx.graphics.getHeight() - spellBoxImage.getHeight());
 
         this.initialHeight = backgroundBoxImage.getHeight();
         this.initialWidth = backgroundBoxImage.getWidth();
-
         backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
         backgroundBoxImage.setHeight((float) (initialHeight * 1.5));
         backgroundBoxImage.setPosition(0f, 0f);
-
-
 
         this.pictureTable = new Table();
         pictureTable.setWidth(135);
@@ -93,7 +153,7 @@ public class InfoBoxDisplay extends UIComponent {
 
         this.buildingTable = new Table();
         buildingTable.setWidth(100);
-        buildingTable.setHeight(100);
+        buildingTable.setHeight(200);
         buildingTable.setPosition(400, Gdx.graphics.getHeight()-680);
 
 
@@ -117,6 +177,20 @@ public class InfoBoxDisplay extends UIComponent {
             }
         });
 
+        // health bar
+
+        Pixmap pixmap = new Pixmap(1, (int) (healthFrame.getHeight() * 0.8f), Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(pixmap));
+        pixmap.dispose();
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+        style.knobBefore = drawable;
+
+        healthBar = new ProgressBar(0, 1, 1f, false, style);
+        healthBar.setRound(true);
+        health = new Label("", skin);
+        health.setFontScale(0.95f);
 
     }
 
@@ -126,20 +200,30 @@ public class InfoBoxDisplay extends UIComponent {
      */
     public void updateTables() {
         Array<Entity> selectedEntities = new Array<>();
+        enemyEntities = new Array<>();
+
+//        String[] enemy = {"blueJoker","snake","titan","wolf"};
+//        List enemyList = Arrays.asList(enemy);
+
         //Check for selected units
         for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
             SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
+            String name = entity.getEntityName();
             if (selectedComponent != null && selectedComponent.isSelected()) {
                 selectedEntities.add(entity);
             }
+//            if (name != null && enemyList.contains(name)) {
+//                enemyEntities.add(entity);
+//            }
         }
-
         //clear old tables
-        if (selectedEntities.isEmpty()){
-            buildingTable.clear();
-        }
         pictureTable.clear();
         infoTable.clear();
+        buildingTable.clear();
+
+//        stage.addActor(spellBoxImage);
+//        stage.addActor(spellBtnImage);
+//        stage.addActor(spellBtn);
 
         String entityName = "";
         boolean buildingSelected = false;
@@ -149,6 +233,7 @@ public class InfoBoxDisplay extends UIComponent {
             stage.addActor(pictureTable);
             stage.addActor(infoTable);
             stage.addActor(buildingTable);
+
             int length = selectedEntities.size;
             int sideLength = (int) Math.ceil(Math.sqrt(length));
             int column = 0;
@@ -159,6 +244,7 @@ public class InfoBoxDisplay extends UIComponent {
             backgroundBoxImage.setWidth((float) (initialWidth * 1.5));
             // add pictures to the table. Pictures right now are just hearts but can be updated later on
             // to represent the entity
+
             for (Entity entity: selectedEntities) {
 
                 if (column == sideLength) {
@@ -168,23 +254,43 @@ public class InfoBoxDisplay extends UIComponent {
                 }
                 //crashes game when not selecting building
                 if (entity.getComponent(BuildingActions.class) != null){
-                    buildingTable.add(levelUpBtn);
-                    switch (entity.getComponent(BuildingActions.class).getType()){
-                        case TOWNHALL:
-                            buildingTable.add(bubbleBtn);
-                            break;
-                        case BARRACKS:
-                            buildingTable.add(troopBtn);
-                            break;
+                    buildingSelected = true;
 
-                    }
                 } else {
-                    buildingTable.clear();
+                buildingTable.clear();
                 }
 
 
-                Image dummyImage = new Image(ServiceLocator.getResourceService()
-                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+//                    buildingTable.add(levelUpBtn);
+//                    switch (entity.getComponent(BuildingActions.class).getType()){
+//                        case TOWNHALL:
+//                            buildingTable.add(bubbleBtn);
+//                            break;
+//                        case BARRACKS:
+//                            buildingTable.add(troopBtn);
+//                            break;
+//
+//                    }
+
+
+
+                Image dummyImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
+
+                try {
+                    dummyImage = new Image(ServiceLocator.getResourceService().getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+                } catch(Exception e) {
+
+                }
+
+                try {
+                    dummyImage = new Image(ServiceLocator.getResourceService()
+                            .getAsset(entity.getComponent(AvatarIconComponent.class).texturePath, Texture.class));
+                } catch(Exception e) {
+                }
+
+
+
+
                 pictureTable.add(dummyImage);
                 dummyImage.setWidth(135/sideLength);
                 dummyImage.setHeight(135/sideLength);
@@ -207,13 +313,10 @@ public class InfoBoxDisplay extends UIComponent {
 
 
             //Added functionality later because there is currently not enough information on the units we will have
-            Label dummyText = new Label("This is "+ entityName, skin, "large");
-            infoTable.add(dummyText);
-            infoTable.row();
-            if (buildingSelected){
-                Label boxBoyText = new Label(String.format("%s:   %d", entityName, length), skin, "large");
-                infoTable.add(boxBoyText);
-            } else {
+            if (!buildingSelected) {
+                Label dummyText = new Label("This is "+ entityName, skin, "large");
+                infoTable.add(dummyText);
+                infoTable.row();
                 Label boxBoyText = new Label(String.format("Boxboy:   %d", length), skin, "large");
                 infoTable.add(boxBoyText);
             }
@@ -225,6 +328,7 @@ public class InfoBoxDisplay extends UIComponent {
             backgroundBoxImage.remove();
         }
     }
+
 
     @Override
     public void draw(SpriteBatch batch)  {
@@ -238,5 +342,27 @@ public class InfoBoxDisplay extends UIComponent {
         backgroundBoxImage.remove();
         pictureTable.remove();
         infoTable.remove();
+//        spellBoxImage.remove();
+//        spellBtnImage.remove();
+//        spellBtn.remove();
     }
+
+//    private void onRelease() {
+//        logger.info("Releasing Spell");
+//        spellBtn.setVisible(false);
+//        this.timer = new Timer(15000, 15001);
+//        for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+//            if (entity.getEntityName() == "Explosion") {
+//                spell = entity;
+//                break;
+//            }
+//        }
+//        spell.setEnabled(true);
+//        spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+//
+//        for (Entity entity : enemyEntities) {
+//            entity.dispose();
+//        }
+//    }
 }
+

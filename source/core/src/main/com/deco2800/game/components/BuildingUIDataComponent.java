@@ -99,6 +99,7 @@ public class BuildingUIDataComponent extends UIComponent {
             contextBoxItems.addActor(contextBoxSprite);
 
             stage.addActor(contextBoxItems);
+
         } else {
 
             contextBoxItems.remove();

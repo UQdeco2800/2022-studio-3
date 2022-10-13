@@ -1,24 +1,24 @@
-package main.com.deco2800.game.components.weather;
+package com.deco2800.game.components.weather;
 
 public enum WeatherIconProperties{
     // Does not affect movement, affect lighting of the environment
-    CLOUDY ("images/cloudy.png", "images/weather-filter/cloudy-filter.png", 1.1f),
+    CLOUDY ("images/cloudy.png", "images/weather-filter/cloudy-filter.png", 1.2f),
 
     // Affecting movement, affect lighting of the environment
     // "images/rainy.gif"
-    RAINY ("images/rainy.png","images/weather-filter/rainy-filter.png", 0.7f),
+    RAINY ("images/rainy.png","images/weather-filter/rainEffects.png", 0.9f),
 
     // Affect movement a lot, affect terrain and lighting of the environment, must not appear adjacently with sunny
     // "images/snowy.gif"
-    SNOWY ("images/snowy.png", "images/weather-filter/snowy-filter.png", 0.6f),
+    SNOWY ("images/snowy.png", "images/weather-filter/ice-frames.png", 0.7f),
 
     // Does not affect movement, does not affect terrain and lighting of the environment,
     // must not appear adjacently with snowy
-    SUNNY ("images/sunny.png", "images/weather-filter/sunny-filter.png", 1.3f),
+    SUNNY ("images/sunny.png", "images/weather-filter/sunny-filter.png", 1.7f),
 
     // Affecting movement a bit, affect lighting of the environment
     //"images/thunderstorm.gif"
-    STORMY ("images/thunderstorm.png", "images/weather-filter/thunderstorm-filter.png", 0.6f);
+    STORMY ("images/thunderstorm.png", "images/weather-filter/thunderstorm-filter.png", 0.8f);
 
     /**
      * Location of weather image.
