@@ -24,24 +24,24 @@ class BaseComponentTest {
 
     @Test
     void getWoodDefined(){
-        assertEquals(0, baseComponent.getWood());
+        assertEquals(60, baseComponent.getWood());
     }
 
     @Test
     void getMetalDefined(){
-        assertEquals(0, baseComponent.getMetal());
+        assertEquals(60, baseComponent.getMetal());
     }
 
     @Test
     void getStoneDefined(){
-        assertEquals(0, baseComponent.getStone());
+        assertEquals(60, baseComponent.getStone());
     }
 
     @Test
     void updateBaseStatsDefined(){
         baseComponent.updateBaseStats(1, 1, 1);
-        assertEquals(1, baseComponent.getWood());
-        assertEquals(1, baseComponent.getMetal());
-        assertEquals(1, baseComponent.getStone());
+        assertEquals(61, baseComponent.getWood());
+        assertEquals(61, baseComponent.getMetal());
+        assertEquals(61, baseComponent.getStone());
     }
 }
