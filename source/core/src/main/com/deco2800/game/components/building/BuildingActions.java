@@ -43,7 +43,7 @@ public class BuildingActions extends Component {
      */
     public void addLevel() {
         CombatStatsComponent csc;
-        if ((csc = entity.getComponent(CombatStatsComponent.class)) != null) {
+        if (entity != null && (csc = entity.getComponent(CombatStatsComponent.class)) != null) {
             //Level up its stats: health and defence increased
             csc.setHealth(csc.getHealth() + 100);
             csc.setBaseDefence(csc.getBaseDefence() + 20);
