@@ -614,20 +614,17 @@ public class BuildingFactory {
                 63f, 109f
         };
 
-
         //Add all components
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-            .addComponent(new BuildingActions(Building.GATE_NS, 1))
             .addComponent(new SelectionCollider())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
             .addComponent(new BuildingActions(config.type, config.level));
-        
+
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, true);
-
 
         //Add Selection hitbox
         gate.getComponent(SelectionCollider.class).setPoints(selectionPoints);
@@ -692,7 +689,6 @@ public class BuildingFactory {
                 .addComponent(new GateCollider())
                 .addComponent(gateARC)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(new BuildingActions(Building.GATE_EW, 1))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingActions(config.type, config.level));
