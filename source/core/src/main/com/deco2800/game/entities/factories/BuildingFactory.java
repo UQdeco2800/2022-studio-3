@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -228,7 +229,6 @@ public class BuildingFactory {
     }
 
     /**
-<<<<<<< HEAD
      * Creates a titan shrine entity, a titan shrine is an enemy building
      * that spawns titan's.
      * @return Titan Shrine Building Entity
@@ -250,11 +250,15 @@ public class BuildingFactory {
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.CORAL);
         titanShrine
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc)
                 .addComponent(animator);
 
 
@@ -351,10 +355,8 @@ public class BuildingFactory {
     /**
      * Creates a wall entity, adds and configures Wall components
      * @return Barracks Entity
-=======
      * Creates entity, adds and configures Wall components
      * @return wall Entity
->>>>>>> origin/team-6-ryan
      */
     public static Entity createWall() {
         Entity wall = createBaseBuilding();
@@ -389,7 +391,11 @@ public class BuildingFactory {
                 152f, 152f,
                 119, 138
         };
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
+                .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale edge wall precisely
@@ -522,7 +528,11 @@ public class BuildingFactory {
                 86f, 126f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
+                .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale connector precisely
@@ -567,7 +577,11 @@ public class BuildingFactory {
                 138f, 124f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
+                .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale connector precisely
@@ -619,9 +633,13 @@ public class BuildingFactory {
 
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
+            .addComponent(mc)
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new BuildingActions(Building.GATE_NS, 1));
 
@@ -673,9 +691,13 @@ public class BuildingFactory {
         };
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ew_closed.png"))
                 .addComponent(new GateCollider())
                 .addComponent(gateARC)
+                .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new BuildingActions(Building.GATE_EW, 1));
 
