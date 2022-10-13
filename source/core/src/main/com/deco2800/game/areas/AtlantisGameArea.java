@@ -69,6 +69,8 @@ public class AtlantisGameArea extends GameArea {
             "test/files/cityMinimap.png",
             "images/Ocean.png",
             "images/Sand.png",
+            "images/sand_shell.png",
+            "images/sand_starfish.png",
             "images/Grass.png",
             "images/city_tile.png",
             "images/box_boy_leaf.png",

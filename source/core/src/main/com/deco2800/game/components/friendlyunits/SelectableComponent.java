@@ -48,12 +48,6 @@ public class SelectableComponent extends Component {
     }
 
     public void multipleSelect(int startX, int startY, int endX, int endY) {
-        //Buildings - as identified by SelectionCollider, cannot be multi selected
-        if (entity.getComponent(SelectionCollider.class) != null) {
-            this.selected = false;
-            this.hovered = false;
-            return;
-        }
         this.selected = containsUs(startX, startY, endX, endY);
         this.hovered = false;
     }

@@ -132,6 +132,7 @@ public class BuildingFactory {
     public static Entity createBarracks() {
         final float BARRACKS_SCALE = 4f;
         Entity barracks = createBaseBuilding();
+        barracks.setEntityName("Barracks");
         BarracksConfig config = configs.barracks;
 
         Vector2 leftPoint = new Vector2(155f, 858f); //Bottom leftmost edge in pixels
@@ -186,7 +187,7 @@ public class BuildingFactory {
     public static Entity createFarm() {
         Entity farm = createBaseBuilding();
         final float FARM_SCALE = 5f;
-
+        farm.setEntityName("Farm");
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(247f, 95f); //NW edge
@@ -245,7 +246,7 @@ public class BuildingFactory {
     public static Entity createWall() {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
-
+        wall.setEntityName("Wall");
 
         wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
@@ -263,6 +264,7 @@ public class BuildingFactory {
 
     public static Entity createCornerWall() {
         Entity cornerWall = createBaseBuilding();
+        cornerWall.setEntityName("City Wall");
         //Set up building points for texture scaling
         Vector2 leftPoint = new Vector2(88f, 153f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(120f, 134f); //Bottom rightmost edge in pixels
@@ -318,7 +320,7 @@ public class BuildingFactory {
     public static Entity createLibrary() {
         Entity library = createBaseBuilding();
         final float LIBRARY_SCALE = 5f;
-
+        library.setEntityName("Library");
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(281f, 260f); //NW edge
@@ -380,7 +382,7 @@ public class BuildingFactory {
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
         final float BLACKSMITH_SCALE = 5f;
-
+        bs.setEntityName("Blacksmith");
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(115f, 143f); //NW edge
@@ -438,7 +440,7 @@ public class BuildingFactory {
      */
     public static Entity createNSConnector() {
         Entity connector = createBaseBuilding();
-
+        connector.setEntityName("City Wall");
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         Vector2 leftPoint = new Vector2(78f, 131f); //Bottom leftmost edge in pixels
@@ -496,7 +498,7 @@ public class BuildingFactory {
      */
     public static Entity createEWConnector() {
         Entity connector = createBaseBuilding();
-
+        connector.setEntityName("City Wall");
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         //-6 in x, -5 in y
@@ -555,7 +557,7 @@ public class BuildingFactory {
      */
     public static Entity createNSGate() {
         Entity gate = createBaseBuilding();
-
+        gate.setEntityName("City Gate");
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -624,7 +626,7 @@ public class BuildingFactory {
      */
     public static Entity createEWGate() {
         Entity gate = createBaseBuilding();
-
+        gate.setEntityName("City Gate");
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ew_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -664,7 +666,7 @@ public class BuildingFactory {
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, false);
-        
+
         //Add selection hitbox
         gate.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 

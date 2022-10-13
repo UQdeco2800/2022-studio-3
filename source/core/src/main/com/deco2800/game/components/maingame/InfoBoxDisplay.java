@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.SelectionCollider;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
@@ -180,7 +181,9 @@ public class InfoBoxDisplay extends UIComponent {
         //Check for selected units
         for (Entity entity: ServiceLocator.getEntityService().getEntities()) {
             SelectableComponent selectedComponent = entity.getComponent(SelectableComponent.class);
-            if (selectedComponent != null && selectedComponent.isSelected()) {
+            if (selectedComponent != null && selectedComponent.isSelected()
+                && !(entity.getComponent(SelectionCollider.class) != null && selectedEntities.size > 0)) {
+                //Add unless the unit has a selection collider (i.e. a building, and there is already a selected entity
                 selectedEntities.add(entity);
             }
         }
@@ -262,6 +265,7 @@ public class InfoBoxDisplay extends UIComponent {
 
             //Added functionality later because there is currently not enough information on the units we will have
             Label dummyText = new Label("This is "+ entityName, skin, "large");
+            System.out.println("Label: " + dummyText);
             infoTable.add(dummyText);
             infoTable.row();
             if (buildingSelected){
