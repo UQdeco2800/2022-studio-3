@@ -1,4 +1,4 @@
-package com.deco2800.game.soldiers;
+package com.deco2800.game.soldiers.factories;
 
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -24,7 +24,7 @@ public class SoldierFactory {
 
     private static final UnitConfigs stats = FileLoader.readClass(UnitConfigs.class, "configs/units.json");
 
-    public static Entity creatSoldier() {
+    public static Entity createSoldier() {
         InputComponent inputComponent =
                 ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit();
         AITaskComponent aiComponent = new AITaskComponent().addTask(new SoldierIdleTask());
@@ -36,7 +36,6 @@ public class SoldierFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.SOLDIER))
                         .addComponent(new FriendlyComponent())
                         .addComponent(new SelectableComponent())
-                        //.addComponent(new CombatStatsComponent(stats.example.health, stats.example.baseAttack, stats.example.baseDefence))
                         .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
                         .addComponent(aiComponent)
                         .addComponent(inputComponent)

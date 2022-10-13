@@ -50,6 +50,9 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.factories.HopliteFactory;
+import com.deco2800.game.soldiers.factories.SpearmanFactory;
+import com.deco2800.game.soldiers.factories.SwordsmanFactory;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -270,7 +273,13 @@ public class AtlantisGameArea extends GameArea {
 //        spawnForager();
 //        spawnMiner();
 //        spawnBuilder();
+        spawnBuilder(); 
+        spawnForager();
+        spawnMiner();
         spawnCity();
+        spawnHoplite();
+        spawnSpearman();
+        spawnSwordsman();
 
         spawnResources();
 
@@ -1028,16 +1037,28 @@ public class AtlantisGameArea extends GameArea {
         spawnUnit(UnitType.ARCHER, location);
     }
 
-    private void spawnSwordsman(Vector2 location) {
-        spawnUnit(UnitType.SWORDSMAN, location);
+    private void spawnSwordsman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSwordsman = SwordsmanFactory.createSwordsman().addComponent(mapComponent);
+        spawnEntityAt(newSwordsman, spawn, true, true);
     }
 
-    private void spawnSpearman(Vector2 location) {
-        spawnUnit(UnitType.SPEARMAN, location);
+    private void spawnSpearman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSpearman = SpearmanFactory.createSpearman().addComponent(mapComponent);
+        spawnEntityAt(newSpearman, spawn, true, true);
     }
 
-    private void spawnHoplite(Vector2 location) {
-        spawnUnit(UnitType.HOPLITE, location);
+    private void spawnHoplite() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newHoplite = HopliteFactory.createHoplite().addComponent(mapComponent);
+        spawnEntityAt(newHoplite, spawn, true, true);
     }
 
     /**
