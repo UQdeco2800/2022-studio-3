@@ -104,7 +104,7 @@ public class MapService {
 			GridPoint2 pos = ts.getPosition();
 
 			if (pos != null) {
-				for (int x = pos.x - ts.getTileWidth(); x < pos.x; x++) {
+				for (int x = pos.x; x < pos.x + ts.getTileWidth(); x++) {
 					for (int y = pos.y; y < pos.y + ts.getTileHeight(); y++) {
 						occupied.add(new GridPoint2(x, y));
 					}
