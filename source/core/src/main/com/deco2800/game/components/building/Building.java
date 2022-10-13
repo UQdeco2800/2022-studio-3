@@ -8,4 +8,7 @@ public enum Building {
     GATE_EW,
     GATE_NS,
     WALL_SE,
+    LIBRARY,
+    BLACKSMITH,
+    FARM
 }

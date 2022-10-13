@@ -13,5 +13,20 @@
     "health": 500,
     "baseAttack": 0,
     "level": 1
+  },
+  "library": {
+    "health": 200,
+    "baseAttack": 0,
+    "level": 1
+  },
+  "blacksmith": {
+    "health": 200,
+    "baseAttack": 0,
+    "level": 1
+  },
+  "farm": {
+    "health": 100,
+    "baseAttack": 0,
+    "level": 1
   }
 }

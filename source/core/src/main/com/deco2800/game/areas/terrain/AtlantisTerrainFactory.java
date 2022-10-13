@@ -125,7 +125,7 @@ public class AtlantisTerrainFactory {
      * @param layer the layer with which to be filled with cells
      */
     private void fillTiles(TiledMapTileLayer layer) {
-        //Set terrainTiles based on textures stored in textures
+        //Set terrainTiles based on textures stored in textures list
         TerrainTile cityTile = new TerrainTile(textures.get("City"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
         TerrainTile sandStarTile = new TerrainTile(textures.get("Sand Starfish"));

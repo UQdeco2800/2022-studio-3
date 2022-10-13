@@ -188,6 +188,9 @@ public class BuildingFactory {
         Entity farm = createBaseBuilding();
         final float FARM_SCALE = 5f;
         farm.setEntityName("Farm");
+        FarmConfig config = configs.farm;
+
+        //Set TextureScaler points
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(247f, 95f); //NW edge
@@ -210,7 +213,9 @@ public class BuildingFactory {
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-               .addComponent(new SelectionCollider());
+               .addComponent(new SelectionCollider())
+               .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+               .addComponent(new BuildingActions(config.type, config.level));
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE, true);
 
@@ -265,6 +270,8 @@ public class BuildingFactory {
     public static Entity createCornerWall() {
         Entity cornerWall = createBaseBuilding();
         cornerWall.setEntityName("City Wall");
+        WallConfig config = configs.wall;
+
         //Set up building points for texture scaling
         Vector2 leftPoint = new Vector2(88f, 153f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(120f, 134f); //Bottom rightmost edge in pixels
@@ -289,7 +296,9 @@ public class BuildingFactory {
         };
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(new SelectionCollider());
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level));
 
         //Scale edge wall precisely
         cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE, true);
@@ -321,6 +330,8 @@ public class BuildingFactory {
         Entity library = createBaseBuilding();
         final float LIBRARY_SCALE = 5f;
         library.setEntityName("Library");
+        LibraryConfig config = configs.library;
+
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(281f, 260f); //NW edge
@@ -344,7 +355,9 @@ public class BuildingFactory {
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-               .addComponent(new SelectionCollider());
+               .addComponent(new SelectionCollider())
+               .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+               .addComponent(new BuildingActions(config.type, config.level));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
 
@@ -383,6 +396,8 @@ public class BuildingFactory {
         Entity bs = createBaseBuilding();
         final float BLACKSMITH_SCALE = 5f;
         bs.setEntityName("Blacksmith");
+        BlacksmithConfig config = configs.blacksmith;
+
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(115f, 143f); //NW edge
@@ -405,7 +420,9 @@ public class BuildingFactory {
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
           .addComponent(mp)
           .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-          .addComponent(new SelectionCollider());
+          .addComponent(new SelectionCollider())
+          .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+          .addComponent(new BuildingActions(config.type, config.level));
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);
 
@@ -441,6 +458,8 @@ public class BuildingFactory {
     public static Entity createNSConnector() {
         Entity connector = createBaseBuilding();
         connector.setEntityName("City Wall");
+        WallConfig config = configs.wall;
+
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         Vector2 leftPoint = new Vector2(78f, 131f); //Bottom leftmost edge in pixels
@@ -467,7 +486,9 @@ public class BuildingFactory {
 
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(new SelectionCollider());
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level));
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, true);
@@ -499,6 +520,8 @@ public class BuildingFactory {
     public static Entity createEWConnector() {
         Entity connector = createBaseBuilding();
         connector.setEntityName("City Wall");
+        WallConfig config = configs.wall;
+
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         //-6 in x, -5 in y
@@ -525,7 +548,9 @@ public class BuildingFactory {
 
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(new SelectionCollider());
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level));
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, false);
@@ -558,6 +583,8 @@ public class BuildingFactory {
     public static Entity createNSGate() {
         Entity gate = createBaseBuilding();
         gate.setEntityName("City Gate");
+        WallConfig config = configs.wall;
+
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -594,7 +621,9 @@ public class BuildingFactory {
             .addComponent(gateARC)
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new BuildingActions(Building.GATE_NS, 1))
-            .addComponent(new SelectionCollider());
+            .addComponent(new SelectionCollider())
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new BuildingActions(config.type, config.level));
         
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, true);
@@ -627,6 +656,8 @@ public class BuildingFactory {
     public static Entity createEWGate() {
         Entity gate = createBaseBuilding();
         gate.setEntityName("City Gate");
+        WallConfig config = configs.wall;
+
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ew_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -662,7 +693,9 @@ public class BuildingFactory {
                 .addComponent(gateARC)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new BuildingActions(Building.GATE_EW, 1))
-                .addComponent(new SelectionCollider());
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level));
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, false);
