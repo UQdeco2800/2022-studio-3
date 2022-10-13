@@ -2,6 +2,7 @@ package com.deco2800.game.areas.MapGenerator;
 
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.utils.random.Timer;
@@ -53,6 +54,10 @@ public class FloodingGenerator extends Component {
      */
     private byte progress;
 
+
+    private FloodTimerDisplay floodTimerDisplay;
+
+
     /**
      * Creates the entity that manages flooding for the game.
      * @param atlantisTerrainFactory Terrain factory for the game area.
@@ -63,6 +68,7 @@ public class FloodingGenerator extends Component {
         this.atlantisGameArea = atlantisGameArea;
         this.resetFlags();
         this.startTimer();
+        this.floodTimerDisplay = new FloodTimerDisplay(this);
 
         //TODO - How do we pause the timer when the game is paused?
         //TODO - IDEAS: Flash tile that is picked to be flooded next.

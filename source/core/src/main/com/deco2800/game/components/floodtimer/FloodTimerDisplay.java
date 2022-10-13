@@ -11,9 +11,9 @@ public class FloodTimerDisplay extends UIComponent {
     private final FloodingGenerator floodingGenerator;
     private final FloodTimer floodTimer;
 
-    public FloodTimerDisplay(FloodingGenerator floodingGenerator, FloodTimer floodTimer) {
+    public FloodTimerDisplay(FloodingGenerator floodingGenerator) {
         this.floodingGenerator = floodingGenerator;
-        this.floodTimer = floodTimer;
+        this.floodTimer = new FloodTimer();
     }
 
     /**
