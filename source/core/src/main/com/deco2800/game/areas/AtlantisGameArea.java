@@ -24,6 +24,7 @@ import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
+import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -34,6 +35,7 @@ import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -167,6 +169,11 @@ public class AtlantisGameArea extends GameArea {
             "images/spell-btn-unclickable.png",
             "images/spell-btn.png",
             "images/health bar_6.png",
+            // Soldier display
+            "images/archer_avatar.png",
+            "images/swordsman_avatar.png",
+            "images/spearman_avatar.png",
+            "images/hoplite_avatar.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -192,6 +199,13 @@ public class AtlantisGameArea extends GameArea {
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
             "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
+    };
+    public static final String[] soldierMenuTextures = {
+            "images/character-selection-menu.png"
+    };
+
+    public static final String[] buildingMenuTextures = {
+            "images/building-selection-menu.png"
     };
     public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -233,13 +247,13 @@ public class AtlantisGameArea extends GameArea {
 //        player = spawnPlayer();
         centreCameraOnCity();
 
-        spawnForager();
-        spawnForager();
+//        spawnForager();
+//        spawnForager();
 
 
-        spawnMiner();
-        spawnMiner();
-        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
+//        spawnMiner();
 
         //playMusic();
 //        player = spawnPlayer();
@@ -253,16 +267,16 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnBuildings();
 
-        spawnForager();
-        spawnMiner();
-        spawnBuilder();
+//        spawnForager();
+//        spawnMiner();
+//        spawnBuilder();
         spawnCity();
 
         spawnResources();
 
-        spawnTitanShrine();
-        spawnShip();
-        spawnTrebuchet(titan, this);
+//        spawnTitanShrine();
+//        spawnShip();
+//        spawnTrebuchet(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -272,20 +286,39 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnExampleUnit();
         //spawnBlueJokers();
-        //spawnWolf();
+
+        spawnWolf();
+
+
         //spawnTitan();
         //spawnSnakes();
 
-        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
+
         spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
         startFlooding();
+
+//        spawnSoldierMenu();
+//        spawnBuildingMenu();
+    }
+
+    private void spawnSoldierMenu() {
+        Entity shopBox = new Entity();
+        shopBox.addComponent(new SoldierMenuDisplay());
+        spawnEntity(shopBox);
+    }
+
+    private void spawnBuildingMenu() {
+        Entity buildingBox = new Entity();
+        buildingBox.addComponent(new BuildingMenuDisplay());
+        spawnEntity(buildingBox);
     }
 
     public void startFlooding() {
@@ -1073,6 +1106,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(atlantisSounds);
         resourceService.loadTextures(buildingPlacementTextures);
+        resourceService.loadTextures(soldierMenuTextures);
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             logger.info("Loading... {}%", resourceService.getProgress());
@@ -1085,6 +1119,7 @@ public class AtlantisGameArea extends GameArea {
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
         resourceService.unloadAssets(atlantisSounds);
+        resourceService.unloadAssets(soldierMenuTextures);
     }
 
     @Override

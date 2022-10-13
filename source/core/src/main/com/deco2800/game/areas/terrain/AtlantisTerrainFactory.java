@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
@@ -124,28 +125,54 @@ public class AtlantisTerrainFactory {
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
-    public GridPoint2 randomlySelectTileToMoveTo() {
-        int height = this.mapGenerator.getHeight();
-        ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
-        int size = legalMoves.size();
-        int randomSeed = PseudoRandom.seedRandomInt(0, size);
-        int[] coords = legalMoves.get(randomSeed);
-        return new GridPoint2(coords[1], height - coords[0]);
+    /**
+     * Randomly selects a tile for a unit to roam to.
+     * @param startPos Starting position, bounding the exploration.
+     * @return A GridPoint2 coordinate to move to.
+     */
+    public GridPoint2 randomlySelectTileToMoveTo(GridPoint2 startPos) {
+        //Get relevant details
+        int mapHeight = mapGenerator.getHeight();
+        int cityHeight = mapGenerator.getCityHeight();
+        int cityWidth = mapGenerator.getCityWidth();
+        int x = startPos.x/2;
+        int y = startPos.y/2;
+
+        //Set bounds
+        int minX = mapGenerator.getBottomLeftY();
+        int maxX = minX + cityWidth;
+        int minY = mapGenerator.getBottomLeftX();
+        int maxY = minY + cityHeight;
+
+        //New Bounds for x and y
+        int lowerX = x - 5;
+        int upperX = x + 5;
+        int lowerY = y - 5;
+        int upperY = y + 5;
+
+        //Keep within bounds
+        if (lowerX < minX) {
+            lowerX = minX;
+        }
+        if (upperX > maxX) {
+            upperX = maxX;
+        }
+        if (lowerY < minY) {
+            lowerY = minY;
+        }
+        if (upperY > maxY) {
+            upperY = maxY;
+        }
+
+        //Generate New Coords
+        int newX = (lowerX >= upperX) ? lowerX : PseudoRandom.seedRandomInt(lowerX, upperX);
+        int newY = (lowerY >= upperY) ? lowerY : PseudoRandom.seedRandomInt(lowerY, upperY);
+        return new GridPoint2(newX, newY);
     }
 
     public MapGenerator floodTiles() {
         mapGenerator.floodTile();
         this.createAtlantisTerrainComponent();
-
-        //TODO - re-Draw to the screen - (Jordan/Dito)
-
-//        TextureRegion grass = textures.get("Grass");
-//        GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-//        TiledMap tiledMap = this.createMapTiles(tilePixelSize);
-
-//        this.fillTiles(tiledMap);
-
-        //Return new mapGenerator
         return mapGenerator;
     }
 

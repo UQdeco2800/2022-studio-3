@@ -7,11 +7,14 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.LoadingBar;
+import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuButton;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -49,6 +52,8 @@ public class MainGameScreen extends ScreenAdapter {
           "images/gainstone.png",
           "images/gain10wood.png",
           "images/gainmetal.png",
+          "images/character-selection-menu.png",
+          "images/building-selection-menu.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
@@ -155,7 +160,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
+    ui.addComponent(new InputDecorator(stage, 11))
         .addComponent(new WeatherIconDisplay())
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new PauseMenuActions(this.game))
@@ -165,6 +170,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())
+        //.addComponent(new SoldierMenuButton())
+        .addComponent(new SoldierMenuDisplay())
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
