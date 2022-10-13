@@ -74,6 +74,7 @@ public class BuildingUIDataComponent extends UIComponent {
         if (isSelected) {
             stage.addActor(contextBoxItems);
             String statsString = "";
+
             try {
                 statsString = "Health: " + combatStats.getHealth() +
                               " Attack: " + combatStats.getBaseAttack() +
@@ -88,8 +89,10 @@ public class BuildingUIDataComponent extends UIComponent {
                     case TOWNHALL -> buildingName = "Town Hall";
                     case WALL, WALL_NE, WALL_SE -> buildingName = "Wall";
                     case GATE_EW -> buildingName = "Gate";
+                    case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getType() + ")";
                 }
             } catch (NullPointerException nullPointerException) {
+                System.out.println(nullPointerException.getMessage());
                 // pass
             }
             buildingNameLabel = new Label(buildingName, skin);

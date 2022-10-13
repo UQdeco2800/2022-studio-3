@@ -368,13 +368,6 @@ public class AtlantisGameArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Atlantis' Legacy"));
         spawnEntity(ui);
 
-
-//        Entity infoUi = new Entity();
-//        infoUi.addComponent(new InfoBoxDisplay());
-//        infoUi.addComponent(new SpellUI());
-//        spawnEntity(infoUi);
-
-
         Entity spellsUi = new Entity();
         spellsUi.addComponent(new SpellUI());
         spellsUi.addComponent(new MouseInputComponent());
@@ -488,28 +481,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Spawns player at the centre of the Atlantean city
-     *
-     * @return Entity corresponding to the spawned player
-     */
-    private Entity spawnPlayer() {
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        //Get details of where the city is located
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        //Store centre of city
-        Coordinate centre = cityDetails.get("Centre");
-        //Spawn player at centre of city
-        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-
-        MapComponent mapComponent = new MapComponent();
-        mapComponent.display();
-        mapComponent.setDisplayColour(Color.BLACK);
-        Entity newPlayer = PlayerFactory.createPlayer().addComponent(mapComponent);
-        spawnEntityAt(newPlayer, spawn, true, true);
-        return newPlayer;
-    }
-
-    /**
      * Moves the camera to the centre of the city on game startup
      */
     private void centreCameraOnCity() {
@@ -524,22 +495,6 @@ public class AtlantisGameArea extends GameArea {
         Vector2 centreWorld = terrain.tileToWorldPosition(centrePoint.x, centrePoint.y);
         //Move  camera
         terrainFactory.getCameraComponent().getEntity().setPosition(centreWorld);
-    }
-
-    /**
-     * Spawns TownHall in city center
-     */
-    private void spawnTownHall() {
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getCityDetails().get("Centre");
-        // Get GridPoint for the city centre
-        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        MapComponent mapComponent = new MapComponent();
-        mapComponent.setName("Town Hall");
-        mapComponent.display();
-        mapComponent.setDisplayColour(Color.BROWN);
-        townHall = BuildingFactory.createTownHall().addComponent(mapComponent);
-        spawnEntityAt(townHall, spawn.add(0, 2), true, true);
     }
 
     /**
@@ -615,28 +570,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Spawns two Barracks in locations next to the TownHall
-     */
-    private void spawnBarracks() {
-        // Position offset from centre of city
-        int offset = 10;
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate centre = mg.getCityDetails().get("Centre");
-        // Two spawn-points for the barracks next ot TownHall located in the centre
-        GridPoint2 spawn1 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).add(offset, 0);
-        GridPoint2 spawn2 = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY()).sub(offset, 0);
-        MapComponent mc1 = new MapComponent();
-        mc1.display();
-        mc1.setDisplayColour(Color.BROWN);
-        MapComponent mc2 = new MapComponent();
-        mc2.display();
-        mc2.setDisplayColour(Color.BROWN);
-
-//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
-//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc2)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2, true, true);
-    }
-
-    /**
      * Spawns a titan shrine
      */
     private void spawnTitanShrine() {
@@ -671,82 +604,6 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(ship, spawnPoint, false, false);
     //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
     //     spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
-    }
-
-    /**
-     * Spawns corner bounding walls for the city
-     * Sets texture accordingly to which direction (positive x or y) the wall should be pointing
-     */
-    private void spawnWalls() {
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate corner;
-        GridPoint2 position;
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        //Find city height in tiles
-        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
-        //Find city width in tiles
-        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
-
-        int yLength = (cityHeight / 2) - 5; // Amount of walls to spawn in y direction
-        int xLength = (cityWidth / 2) - 5; // Amount of walls to spawn in x direction
-        String[] cityCorners = {"NW", "NE", "SW", "SE"}; // Four corner locations to spawn walls in
-        int direction = 1; // Spawning direction
-
-        // Spawns walls in positive x direction from 2 left corners, and negative x direction from 2 right corners
-        for (int n = 0; n < 4; n++) {
-            corner = mg.getCityDetails().get(cityCorners[n]); // nth corner
-            position = new GridPoint2(corner.getX(), mg.getHeight() - corner.getY() - 1); // position of nth corner
-
-
-
-            // Absolute corner walls will have default wall texture (doesn't point in any direction)
-            Entity wall = BuildingFactory.createCornerWall();
-            wall.getComponent(TextureScaler.class).setSpawnPoint(position, terrain);
-            spawnEntity(wall);
-
-            for (int i = 0; i < xLength; i++) {
-                wall = BuildingFactory.createWall();
-                wall.addComponent(new MapComponent());
-                // Sets wall texture which points in positive x direction
-                wall.getComponent(BuildingActions.class).addLevel();
-                wall.getComponent(BuildingActions.class).setWallNE();
-                spawnEntityAt(wall, position.add(direction, 0), true, true);
-            }
-            if (direction == 1) {
-                //Spawn gate in the middle of the city edge - North/South orientation
-                Entity gate = BuildingFactory.createNSGate();
-                //Determine tile point to spawn gate
-                GridPoint2 tileSpawn = position.add(direction, 0);
-                //Set the spawn point of the gate
-                gate.getComponent(TextureScaler.class).setSpawnPoint(tileSpawn, terrain);
-                //Spawn the gate
-                spawnEntity(gate);
-            }
-            direction *= -1;
-        }
-        // Spawns walls in positive y direction from 2 bottom corners, and negative y direction from 2 top corners
-        for (int n = 0; n < 4; n++) {
-            direction = n<2 ? -1 : 1;
-            corner = mg.getCityDetails().get(cityCorners[n]);
-            position = new GridPoint2(corner.getX(), mg.getHeight() - corner.getY() - 1);
-
-            for (int i = 0; i < yLength; i++) {
-                Entity wall = BuildingFactory.createWall();
-                // Sets wall texture which points in negative y direction
-                wall.getComponent(BuildingActions.class).addLevel();
-                wall.getComponent(BuildingActions.class).setWallSE();
-                spawnEntityAt(wall, position.add(0, direction), true, true);
-            }
-
-            if (direction == 1) {
-                //Spawn east/west Gate
-                Entity gate = BuildingFactory.createEWGate();
-                GridPoint2 tileSpawn = position.add(0, direction);
-                gate.getComponent(TextureScaler.class).setSpawnPoint(tileSpawn, terrain);
-                spawnEntity(gate);
-            }
-
-        }
     }
 
     /**
