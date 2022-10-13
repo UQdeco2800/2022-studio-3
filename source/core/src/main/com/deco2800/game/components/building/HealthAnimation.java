@@ -3,7 +3,8 @@ import com.deco2800.game.components.Component;
 
 enum Health {
     NORMAL, // 100 - 50 Health
-    HALF // 50 - 0 Health
+    HALF, // 50 - 0 Health
+    DEAD
 }
 
 public class HealthAnimation extends Component {
@@ -18,7 +19,9 @@ public class HealthAnimation extends Component {
         if (health == Health.NORMAL) {
             return "default";
         } else if (health == Health.HALF) {
-            return "50-idle";
+            return "50";
+        } else if (health == Health.DEAD) {
+            return "collapse";
         }
         return null;
     }

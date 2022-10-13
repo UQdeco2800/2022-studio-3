@@ -243,10 +243,10 @@ public class BuildingFactory {
         animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(COLLAPSE, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         titanShrine
                 .addComponent(new damageAnimation())
