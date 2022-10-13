@@ -66,6 +66,7 @@ public class AtlantisGameArea extends GameArea {
     private static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
+            "test/files/cityMinimap.png",
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
@@ -557,8 +558,6 @@ public class AtlantisGameArea extends GameArea {
                 }
                 buildingEntity.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
                 TextureScaler ts = buildingEntity.getComponent(TextureScaler.class);
-                System.out.println("Building: " + building.getName() + " tileWidth: "
-                        + ts.getTileWidth() + " tileHeight: " + ts.getTileHeight());
                 spawnEntity(buildingEntity);
             }
         }
