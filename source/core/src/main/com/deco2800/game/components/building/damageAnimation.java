@@ -16,9 +16,14 @@ public class damageAnimation extends Component {
 
     public void addEvents() {
         this.entity.getEvents().addListener("Damaged", this::Damaged);
+        this.entity.getEvents().addListener("collapsed", this::collapse);
     }
+
 
     public void Damaged() {
         Animation.startAnimation("attacked");
+    }
+    public void collapse() {
+        Animation.startAnimation("collapse");
     }
 }

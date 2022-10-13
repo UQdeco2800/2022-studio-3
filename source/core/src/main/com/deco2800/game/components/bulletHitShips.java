@@ -34,8 +34,8 @@ public class bulletHitShips extends Component {
         Entity target = ((BodyUserData) ship.getBody().getUserData()).entity;
         if(target == this.target) {
             bullet.getComponent(PhysicsComponent.class).getPhysics().addToDestroy(bullet);
-            target.getComponent(CombatStatsComponent.class).decreaseHealth(20);
-            target.getComponent(AnimationRenderComponent.class).startAnimation("attacked");
+            target.getComponent(CombatStatsComponent.class).decreaseHealth(100);
+            //target.getComponent(AnimationRenderComponent.class).startAnimation("attacked");
         }
     }
 }
