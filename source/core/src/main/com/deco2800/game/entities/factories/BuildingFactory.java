@@ -103,12 +103,13 @@ public class BuildingFactory {
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.BROWN);
-        townHall.addComponent(new TextureRenderComponent("images/base.png"))
+        townHall.addComponent(new TextureRenderComponent("images/level 1 town hall.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
                 .addComponent(new BaseComponent())
-                .addComponent(new HighlightedTextureRenderComponent("images/Base_Highlight.png"))
+                .addComponent(new HighlightedTextureRenderComponent("images/level_1_town_hall_Highlight.png"))
+                .addComponent(new BuildingUIDataComponent())
                 .addComponent(mp)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())

@@ -89,7 +89,7 @@ public class BuildingUIDataComponent extends UIComponent {
                     case TOWNHALL -> buildingName = "Town Hall";
                     case WALL, CONNECTOR_EW, CONNECTOR_NS -> buildingName = "Wall";
                     case GATE_EW, GATE_NS -> buildingName = "Gate";
-                    case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getType() + ")";
+                    case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getLevel() + ")";
                     case LIBRARY -> buildingName = "Library";
                     case FARM -> buildingName = "Farm";
                     case BLACKSMITH -> buildingName = "Blacksmith";
@@ -118,15 +118,14 @@ public class BuildingUIDataComponent extends UIComponent {
             inventoryLabel.setPosition(184f, 68f);
             inventoryLabel.setSize(208f, 85f);
             inventoryLabel.setWrap(true);
-            buildingImage.setPosition(183f, 166f);
-            buildingImage.setSize(209f, 96f);
+            buildingImage.setPosition(183f, 60f);
+            buildingImage.setSize(209f, 209f);
 
             contextBoxItems.addActor(contextBoxSprite);
             contextBoxItems.addActor(buildingNameLabel);
             contextBoxItems.addActor(statsLabel);
             contextBoxItems.addActor(attributesLabel);
             contextBoxItems.addActor(buildingImage);
-            contextBoxItems.addActor(inventoryLabel);
         } else {
             contextBoxItems.remove();
         }

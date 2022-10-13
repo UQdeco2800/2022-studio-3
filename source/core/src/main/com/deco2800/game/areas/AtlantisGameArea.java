@@ -83,7 +83,7 @@ public class AtlantisGameArea extends GameArea {
             "images/city_tile.png",
 //            "images/box_boy_leaf.png",
 //            "images/box_boy.png",
-//            "images/Base_Highlight.png",
+            "images/Base_Highlight.png",
 //            "images/box_boy_highlight.png",
             "images/tree.png",
             "images/iso_grass_1.png",
@@ -170,7 +170,7 @@ public class AtlantisGameArea extends GameArea {
             "images/spellbox-zeus.png",
             "images/spell-btn-unclickable.png",
             "images/spell-btn.png",
-            "images/health bar_6.png",
+            "images/health bar_6.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
