@@ -20,6 +20,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
@@ -368,10 +369,10 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(ui);
 
 
-        Entity infoUi = new Entity();
-        infoUi.addComponent(new InfoBoxDisplay());
+//        Entity infoUi = new Entity();
+//        infoUi.addComponent(new InfoBoxDisplay());
 //        infoUi.addComponent(new SpellUI());
-        spawnEntity(infoUi);
+//        spawnEntity(infoUi);
 
 
         Entity spellsUi = new Entity();

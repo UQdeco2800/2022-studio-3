@@ -199,7 +199,8 @@ public class BuildingFactory {
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
-               .addComponent(new TextureScaler(leftPoint, rightPoint));
+               .addComponent(new TextureScaler(leftPoint, rightPoint))
+               .addComponent(new BuildingUIDataComponent());
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
 
@@ -251,7 +252,6 @@ public class BuildingFactory {
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingUIDataComponent())
                 .addComponent(animator);
 
 
@@ -340,7 +340,8 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(aiComponent)
-                .addComponent(new AttackListener(target, gameArea));
+                .addComponent(new AttackListener(target, gameArea))
+                .addComponent(new BuildingUIDataComponent());
         trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;
     }
@@ -355,7 +356,8 @@ public class BuildingFactory {
 
         wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new BuildingUIDataComponent());
 
         wall.scaleWidth(2.2f);
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
@@ -382,7 +384,8 @@ public class BuildingFactory {
         };
 
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(new TextureScaler(leftPoint, rightPoint))
+                .addComponent(new BuildingUIDataComponent());
 
         //Scale edge wall precisely
         cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE);
@@ -420,7 +423,8 @@ public class BuildingFactory {
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
-               .addComponent(new TextureScaler(leftPoint, rightPoint));
+               .addComponent(new TextureScaler(leftPoint, rightPoint))
+               .addComponent(new BuildingUIDataComponent());
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
 
@@ -465,7 +469,8 @@ public class BuildingFactory {
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
           .addComponent(mp)
-          .addComponent(new TextureScaler(leftPoint, rightPoint));
+          .addComponent(new TextureScaler(leftPoint, rightPoint))
+          .addComponent(new BuildingUIDataComponent());
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
 
@@ -512,7 +517,8 @@ public class BuildingFactory {
         };
 
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(new TextureScaler(leftPoint, rightPoint))
+                .addComponent(new BuildingUIDataComponent());
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
@@ -554,7 +560,8 @@ public class BuildingFactory {
         };
 
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(new TextureScaler(leftPoint, rightPoint))
+                .addComponent(new BuildingUIDataComponent());
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
@@ -608,7 +615,8 @@ public class BuildingFactory {
             .addComponent(new GateCollider())
             .addComponent(gateARC)
             .addComponent(new TextureScaler(leftPoint, rightPoint))
-            .addComponent(new BuildingActions(Building.GATE_NS, 1));
+            .addComponent(new BuildingActions(Building.GATE_NS, 1))
+            .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
@@ -661,7 +669,8 @@ public class BuildingFactory {
                 .addComponent(new GateCollider())
                 .addComponent(gateARC)
                 .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(new BuildingActions(Building.GATE_EW, 1));
+                .addComponent(new BuildingActions(Building.GATE_EW, 1))
+                .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
