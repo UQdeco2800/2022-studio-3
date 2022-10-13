@@ -280,6 +280,7 @@ public class AtlantisGameArea extends GameArea {
         spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
         spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
         spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
