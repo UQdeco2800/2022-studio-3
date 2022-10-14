@@ -16,10 +16,13 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class CityFeatureFactory {
+    /**
+     * Creates a base feature entity, with components necessary for colliders
+     * @return base feature entity
+     */
     private static Entity createBaseFeature() {
         Entity feature = new Entity();
         feature.addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
@@ -27,6 +30,10 @@ public class CityFeatureFactory {
         return feature;
     }
 
+    /**
+     * Creates a lamp entity
+     * @return lamp entity
+     */
     public static Entity createLamp() {
         Entity lamp = createBaseFeature();
         final float LAMP_SCALE = 1f;
@@ -80,6 +87,10 @@ public class CityFeatureFactory {
         return lamp;
     }
 
+    /**
+     * Creates a water feature entity
+     * @return water feature entity
+     */
     public static Entity createWaterFeature() {
         Entity wf = createBaseFeature();
         final float FEATURE_SCALE = 1f;
