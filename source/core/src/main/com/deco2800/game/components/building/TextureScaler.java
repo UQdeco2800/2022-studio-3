@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class TextureScaler extends Component{
     private Vector2 maxX;
     private Vector2 maxY;
     private float initialScale = 0;
+    private Texture baseTexture = null;
 
     //Variables which should be accessed after scaling
     private int tileWidth = -1;
@@ -34,13 +36,29 @@ public class TextureScaler extends Component{
     }
 
     /**
+     * Used to construct a TextureScaler with an existing texture - used for entities
+     * without a TextureRenderComponent. For example, an Entity with an AnimationRenderComponent
+     * @param leftPoint bottom left point of entity
+     * @param maxX bottom right point of entity (max x value)
+     * @param maxY max y point of entity
+     * @param baseTexture default texture of entity
+     */
+    public TextureScaler(Vector2 leftPoint, Vector2 maxX, Vector2 maxY, Texture baseTexture) {
+        this.leftPoint = leftPoint;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.baseTexture = baseTexture;
+    }
+
+    /**
      * Scales an entity with a TextureRenderComponent such that it occupies the desired number of tiles
      * @param desiredScale desired number of tiles to occupy (potentially float, but preferably integer input)
      * @param scaleWidth scale the Entity's width if true, else scale Entitie's height
      * @return true if the entity was scaled, else false
      */
     public boolean setPreciseScale(float desiredScale, boolean scaleWidth) {
-        if (entity == null || entity.getComponent(TextureRenderComponent.class) == null) {
+        if (entity == null ||
+                (entity.getComponent(TextureRenderComponent.class) == null && baseTexture == null)) {
             return false;
         }
 
@@ -50,8 +68,9 @@ public class TextureScaler extends Component{
         float[] points = new float[] {
                 leftPoint.x, leftPoint.y, maxX.x, maxX.y, maxY.x, maxY.y
         };
-
-        Texture buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
+        //Set building Texture to baseTexture if it has been set, else use TRC
+        Texture buildingTexture = baseTexture == null
+                ? entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         //Determine the positions of both points of the image in world coordinates
@@ -146,7 +165,8 @@ public class TextureScaler extends Component{
         };
 
         //Find world position of the edge of the building relative to its spawn point
-        Texture buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
+        Texture buildingTexture = baseTexture == null ?
+                entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         Vector2 offsetPointPosition = new Vector2(translatedCoords[0], translatedCoords[1])
@@ -206,7 +226,8 @@ public class TextureScaler extends Component{
         };
 
         //Find world position of the edge of the building relative to its spawn point
-        Texture buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
+        Texture buildingTexture = baseTexture == null ?
+                entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         Vector2 offsetPointPosition = new Vector2(translatedCoords[0], translatedCoords[1])
