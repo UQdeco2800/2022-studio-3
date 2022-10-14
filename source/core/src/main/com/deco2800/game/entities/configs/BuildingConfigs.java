@@ -10,4 +10,7 @@ public class BuildingConfigs {
     public ShipConfig ship = new ShipConfig();
     public TitanShrineConfig titanShrine = new TitanShrineConfig();
     public TrebuchetConfig trebuchet = new TrebuchetConfig();
+    public FarmConfig farm = new FarmConfig();
+    public BlacksmithConfig blacksmith = new BlacksmithConfig();
+    public LibraryConfig library = new LibraryConfig();
 }

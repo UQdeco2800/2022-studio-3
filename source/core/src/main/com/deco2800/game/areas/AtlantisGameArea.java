@@ -74,8 +74,11 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
+            "test/files/cityMinimap.png",
             "images/Ocean.png",
             "images/Sand.png",
+            "images/sand_shell.png",
+            "images/sand_starfish.png",
             "images/Grass.png",
             "images/city_tile.png",
 //            "images/box_boy_leaf.png",
@@ -549,7 +552,7 @@ public class AtlantisGameArea extends GameArea {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createTownHall();
                 } else if (building.getName().equals("Library")) {
-                    // System.out.print("\n\nTH position: " + spawn + "\n\n");
+                    //System.out.print("\n\nLibrary position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createLibrary();
                 } else if (building.getName().equals("Smith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
@@ -564,6 +567,7 @@ public class AtlantisGameArea extends GameArea {
                     continue;
                 }
                 buildingEntity.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                TextureScaler ts = buildingEntity.getComponent(TextureScaler.class);
                 spawnEntity(buildingEntity);
             }
         }
@@ -660,17 +664,18 @@ public class AtlantisGameArea extends GameArea {
                 nwPillarSpawn = nwSpawn.cpy().add(wallLength, 0);
                 nwConnectorSpawn = nwSpawn.cpy();
             }
+            Vector2 connectorOffset = new Vector2(0.3f, 0.1f);
 
             pillarSW.getComponent(TextureScaler.class).setSpawnPoint(swPillarSpawn, terrain);
             spawnEntity(pillarSW);
 
-            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swConnectorSpawn, terrain);
+            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorSW);
 
             pillarNW.getComponent(TextureScaler.class).setSpawnPoint(nwPillarSpawn, terrain);
             spawnEntity(pillarNW);
 
-            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain);
+            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNW);
 
             swSpawn.add(pillarLength + wallLength, 0);
@@ -736,10 +741,11 @@ public class AtlantisGameArea extends GameArea {
                 spawnEntity(pillarNW);
             }
 
-            connectorNE.getComponent(TextureScaler.class).setSpawnPoint(neConnectorSpawn, terrain);
+            Vector2 connectorOffset = new Vector2(0.3f, -0.3f);
+            connectorNE.getComponent(TextureScaler.class).setSpawnPoint(neConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNE);
 
-            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain);
+            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNW);
 
             neSpawn.add(0, - (pillarLength + wallLength));

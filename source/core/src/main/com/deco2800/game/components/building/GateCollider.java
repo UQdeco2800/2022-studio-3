@@ -21,6 +21,7 @@ public class GateCollider extends Component {
      * if it is empty, then the gate is closed
      */
     private List<Integer> alliedUnitsCollided = new ArrayList<>();
+    public boolean gateOpen = false;
 
     /**
      * On create, listen for the events "collisionStart" and "collisionEnd" initiated by the
@@ -66,6 +67,7 @@ public class GateCollider extends Component {
                     ColliderComponent gateCollider = gateEntity.getComponent(ColliderComponent.class);
                     //Turn off collision for this collider
                     gateCollider.setSensor(true);
+                    gateOpen = true;
                     //Play opening animation
                     AnimationRenderComponent gateARC = gateEntity.getComponent(AnimationRenderComponent.class);
                     gateARC.startAnimation("open_gate");
@@ -110,10 +112,11 @@ public class GateCollider extends Component {
                     ColliderComponent gateCollider = gateEntity.getComponent(ColliderComponent.class);
                     //Turn on collision for this collider
                     gateCollider.setSensor(false);
+                    gateOpen = false;
                     //Play closing animation
                     AnimationRenderComponent gateARC = gateEntity.getComponent(AnimationRenderComponent.class);
                     gateARC.startAnimation("close_gate");
-                    //Update asset image to closed - removed due to issues with animation
+                    //Update asset image to closed - REMOVED due to issues with animation
                     //ResourceService resourceService = ServiceLocator.getResourceService();
                     //Texture closedTexture = resourceService.getAsset("images/gate_ns_closed.png", Texture.class);
                     //gateEntity.getComponent(TextureRenderComponent.class).setTexture(closedTexture);
@@ -121,6 +124,22 @@ public class GateCollider extends Component {
             }
         }
 
+    }
+
+    /**
+     * Returns a copy of the collided allies list - used for unit testing
+     * @return copy of allies collided list
+     */
+    public List<Integer> getCollidedIds() {
+        return new ArrayList<>(alliedUnitsCollided);
+    }
+
+    /**
+     * Returns the status of the gate
+     * @return true if it is open, else false
+     */
+    public boolean isGateOpen() {
+        return this.gateOpen;
     }
 }
 
