@@ -173,6 +173,7 @@ public class BuildingFactory {
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.GOLDENROD);
+
         // TODO: Change barracks from static texture to animation.
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))

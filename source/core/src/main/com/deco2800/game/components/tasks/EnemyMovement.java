@@ -42,6 +42,10 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
    */
   private Vector2 startPos;
   /**
+   * Initial starting position for bounding the instance.
+   */
+  private Vector2 initStartPos;
+  /**
    * Instant of a movementTask
    */
   private MovementTask movementTask;
@@ -71,10 +75,14 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
    */
   private Timer timer;
 
+  /**
+   * Creates an EnemyMovement instance.
+   * @param terrainFactory The terrain factory representing the game area.
+   */
   public EnemyMovement(AtlantisTerrainFactory terrainFactory) {
     this.terrainFactory = terrainFactory;
     this.terrain = terrainFactory.createAtlantisTerrainComponent();
-    this.timer = new Timer(5000, 10000);
+    this.timer = new Timer(50000, 100000);
   }
 
   /**
@@ -83,8 +91,9 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   @Override
   public void start() {
     super.start();
-    selectRandomTarget();
-    createMovementTask();
+    this.initStartPos = this.owner.getEntity().getCenterPosition();
+    this.selectRandomTarget();
+    this.createMovementTask();
   }
 
   /**
@@ -96,25 +105,28 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
       if (isFriendlyUnitInVicinity()) {
         return;
       } else if (this.movementTask.isAtTarget()) {
-//        System.out.println("DONEEEEE");
-        selectRandomTarget();
-        createMovementTask();
+        this.updateMovementTask();
       } else if (this.timer.isTimerExpired()) {
-//        System.out.println(this.movementTask);
-//        System.out.println("TIMERRR");
-        selectRandomTarget();
-        createMovementTask();
-      } else if (this.timer.isTimerExpired()) {
-//        System.out.println(this.movementTask);
-        selectRandomTarget();
-        createMovementTask();
-        this.timer = new Timer(5000, 10000);
+        this.updateMovementTask();
       }
-    } else {
-      //TODO - Check if target still in range.
     }
   }
 
+  /**
+   * Updates movement task by selecting a target, creating a movement object
+   * and restarting the timer.
+   */
+  private void updateMovementTask() {
+    this.currentTask.stop();
+    selectRandomTarget();
+    createMovementTask();
+    this.timer = new Timer(5000, 10000);
+  }
+
+  /**
+   * Returns True/False depending on if their is a friendly unit in LOS.
+   * @return Boolean representing whether a friendly unit is within the LOS.
+   */
   private Boolean isFriendlyUnitInVicinity() {
     return false;
   }
@@ -127,6 +139,7 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   public int getPriority() {
     return 1;
   }
+
 
   private void swapTask(Task newTask) {
     if (currentTask != null) {
@@ -181,9 +194,8 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
   }
 
   public void selectRandomTarget() {
-    setStartPos(owner.getEntity().getPosition());
-    startPos = this.owner.getEntity().getCenterPosition();
-    this.target = this.terrainFactory.randomlySelectTileToMoveTo();
+    this.startPos = this.owner.getEntity().getCenterPosition();
+    this.target = this.terrainFactory.randomlySelectTileToMoveTo(terrain.worldPositionToTile(this.initStartPos));
     this.targetLock = false;
     destinationPoint = terrain.tileToWorldPosition(this.target);
   }
@@ -216,44 +228,3 @@ public class EnemyMovement extends DefaultTask implements PriorityTask {
     this.currentTask = currentTask;
   }
 }
-
-//    float destination = this.owner.getEntity().getCenterPosition().dst2(destinationPoint);
-//    MapGenerator mg = terrainFactory.getMapGenerator();
-
-//    if (destination <= 2f) {
-//      System.out.println(destination);
-//      if (currentTask == movementTask) {
-//        this.owner.getEntity().getEvents().trigger("default");
-//        currentTask.stop();
-//      }
-//
-//    }
-
-//    if (position.x >= 0 && position.y >= 0) {
-//      System.out.println("North: " + position);
-//      this.owner.getEntity().getEvents().trigger("goNorth");
-//    } else if (position.x <= 0 && position.y <= 0) {
-//      System.out.println("South: " + position);
-//      this.owner.getEntity().getEvents().trigger("goSouth");
-//    } else if (position.x <= 0 && position.y >= 0) {
-//      System.out.println("West: " + position);
-//      this.owner.getEntity().getEvents().trigger("goWest");
-//    } else if (position.x >= 0 && position.y <= 0) {
-//      System.out.println("East: " + position);
-//      this.owner.getEntity().getEvents().trigger("goEast");
-//    }
-//    if (!foundPath) {
-//      try {
-//        List<GridPoint2> path = ServiceLocator.getMapService().findPathForEntity(this.owner.getEntity()
-//            .getComponent(MapComponent.class), RandomPointGenerator.getCityCenter(terrainFactory));
-//        foundPath = true;
-//      } catch (OutOfBoundsException e) {
-//        System.out.println("Out of bounds");
-//      } catch (OccupiedTileException e) {
-//        System.out.println("Occupied tile exception");
-//      }
-//    }
-
-//    System.out.println(destinationPoint.toString() + "::" + position);
-////    System.out.println("Map Width: " + mg.getWidth() + ":: Map Height: "+ mg.getHeight());
-////    System.out.println("<" + position.x + ", " + position.y + ">");

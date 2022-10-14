@@ -166,6 +166,8 @@ public class UnitFactory {
             } else {
                 troop = createMeleeTroop(type);
             }
+
+
             troop.addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
