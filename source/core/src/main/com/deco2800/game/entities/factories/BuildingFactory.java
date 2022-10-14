@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -88,7 +89,8 @@ public class BuildingFactory {
         TownHallConfig config = configs.townHall;
 
         Vector2 leftPoint = new Vector2(21f, 632f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(507f, 359f); //NW edge
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -101,9 +103,9 @@ public class BuildingFactory {
                 .addComponent(new HighlightedTextureRenderComponent("images/level_1_town_hall_Highlight.png"))
                 .addComponent(new BuildingUIDataComponent())
                 .addComponent(mp)
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
-        townHall.getComponent(TextureScaler.class).setPreciseScale(TH_SCALE);
+        townHall.getComponent(TextureScaler.class).setPreciseScale(TH_SCALE, true);
         // Setting Isometric Collider
 
         townHall.setEntityName("TownHall");
@@ -140,8 +142,9 @@ public class BuildingFactory {
         Entity barracks = createBaseBuilding();
         BarracksConfig config = configs.barracks;
 
-        Vector2 leftPoint = new Vector2(154f, 854f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(596f, 1040f); //Bottom rightmost edge in pixels
+        Vector2 leftPoint = new Vector2(155f, 858f); //Bottom leftmost edge in pixels
+        Vector2 maxX = new Vector2(591f, 1037f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(605f, 675f); //NW edge
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -152,11 +155,10 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new TextureScaler(leftPoint, rightPoint))
-                .addComponent(mp)
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(mp);
 
-        barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE);
+        barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
 
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
@@ -192,7 +194,8 @@ public class BuildingFactory {
         final float FARM_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(247f, 95f); //NW edge
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -200,9 +203,9 @@ public class BuildingFactory {
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
-               .addComponent(new TextureScaler(leftPoint, rightPoint));
+               .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
-        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE);
+        farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
@@ -248,11 +251,15 @@ public class BuildingFactory {
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.CORAL);
         titanShrine
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc)
                 .addComponent(animator);
 
 
@@ -349,10 +356,13 @@ public class BuildingFactory {
     /**
      * Creates a wall entity, adds and configures Wall components
      * @return Barracks Entity
+     * Creates entity, adds and configures Wall components
+     * @return wall Entity
      */
     public static Entity createWall() {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
+
 
         wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
@@ -372,7 +382,8 @@ public class BuildingFactory {
         Entity cornerWall = createBaseBuilding();
         //Set up building points for texture scaling
         Vector2 leftPoint = new Vector2(88f, 153f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(120f, 134f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(120f, 134f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(120f, 139f); //NW edge
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -381,12 +392,15 @@ public class BuildingFactory {
                 152f, 152f,
                 119, 138
         };
-
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(mc)
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale edge wall precisely
-        cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE);
+        cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE, true);
 
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/wall_pillar.png", Texture.class)), points, null);
@@ -413,7 +427,8 @@ public class BuildingFactory {
         final float LIBRARY_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(281f, 260f); //NW edge
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -421,9 +436,9 @@ public class BuildingFactory {
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
-               .addComponent(new TextureScaler(leftPoint, rightPoint));
+               .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
-        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE);
+        library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Six vertices
@@ -458,7 +473,8 @@ public class BuildingFactory {
         final float BLACKSMITH_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(115f, 143f); //NW edge
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -466,9 +482,9 @@ public class BuildingFactory {
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
           .addComponent(mp)
-          .addComponent(new TextureScaler(leftPoint, rightPoint));
+          .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
-        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE);
+        bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
@@ -500,9 +516,10 @@ public class BuildingFactory {
         Entity connector = createBaseBuilding();
 
         //Set up building points for texture scaling
-        //Vector2 leftPoint = new Vector2(79f, 131f); //Bottom leftmost edge in pixels - precise point, no offset
-        Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
-        Vector2 rightPoint = new Vector2(138f, 162f); //Bottom rightmost edge in pixels
+        //Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
+        Vector2 leftPoint = new Vector2(78f, 131f); //Bottom leftmost edge in pixels
+        Vector2 maxX= new Vector2(138f, 162f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(88f, 123f);  //NW edge
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -512,11 +529,15 @@ public class BuildingFactory {
                 86f, 126f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(mc)
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale connector precisely
-        connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
+        connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, true);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -543,8 +564,11 @@ public class BuildingFactory {
         Entity connector = createBaseBuilding();
 
         //Set up building points for texture scaling
-        Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
-        Vector2 rightPoint = new Vector2(138f, 124f); //Bottom rightmost edge in pixels
+        //Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
+        //-6 in x, -5 in y
+        Vector2 leftPoint = new Vector2(79f, 152f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
+        Vector2 maxY = new Vector2(138f, 124f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(87f, 158f);  //NW edge
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -554,11 +578,15 @@ public class BuildingFactory {
                 138f, 124f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
-                .addComponent(new TextureScaler(leftPoint, rightPoint));
+                .addComponent(mc)
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         //Scale connector precisely
-        connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE);
+        connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, false);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -593,7 +621,8 @@ public class BuildingFactory {
 
         //Set up building points
         Vector2 leftPoint = new Vector2(37f, 125f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(170f, 196f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(170f, 196f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(68f, 107f);  //NW edge
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -605,14 +634,18 @@ public class BuildingFactory {
 
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
-            .addComponent(new TextureScaler(leftPoint, rightPoint))
+            .addComponent(mc)
+            .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new BuildingActions(Building.GATE_NS, 1));
 
         //Scale building precisely
-        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
+        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, true);
 
 
         //Set isometric collider
@@ -647,7 +680,8 @@ public class BuildingFactory {
 
         //Set up building points
         Vector2 leftPoint = new Vector2(37f, 178f); //Bottom leftmost edge in pixels
-        Vector2 rightPoint = new Vector2(170f, 113f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(170f, 113f); //Bottom rightmost edge in pixels
+        Vector2 maxX = new Vector2(70f, 196f);
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -658,14 +692,18 @@ public class BuildingFactory {
         };
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ew_closed.png"))
                 .addComponent(new GateCollider())
                 .addComponent(gateARC)
-                .addComponent(new TextureScaler(leftPoint, rightPoint))
+                .addComponent(mc)
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new BuildingActions(Building.GATE_EW, 1));
 
         //Scale building precisely
-        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE);
+        gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, false);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
