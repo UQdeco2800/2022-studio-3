@@ -3,6 +3,9 @@ package com.deco2800.game.components.building;
 public enum Building {
     TOWNHALL,
     BARRACKS,
+    FARM,
+    LIBRARY,
+    BLACKSMITH,
     SHIP,
     TITANSHRINE,
     TREBUCHET,
@@ -10,5 +13,7 @@ public enum Building {
     WALL_NE,
     GATE_EW,
     GATE_NS,
-    WALL_SE
+    WALL_SE,
+    CONNECTOR_NS,
+    CONNECTOR_EW
 }

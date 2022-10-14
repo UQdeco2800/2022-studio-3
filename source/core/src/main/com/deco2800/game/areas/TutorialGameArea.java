@@ -44,6 +44,8 @@ public class TutorialGameArea extends GameArea {
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
+            "images/sand_starfish.png",
+            "images/sand_shell.png",
             "images/box_boy_leaf.png",
             "images/box_boy.png",
             "images/Base_Highlight.png",
@@ -95,6 +97,7 @@ public class TutorialGameArea extends GameArea {
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png",
+            "test/files/cityMinimap.png"
     };
 
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {

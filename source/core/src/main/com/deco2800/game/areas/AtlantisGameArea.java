@@ -20,6 +20,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
@@ -75,13 +76,16 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
+            "test/files/cityMinimap.png",
             "images/Ocean.png",
             "images/Sand.png",
+            "images/sand_shell.png",
+            "images/sand_starfish.png",
             "images/Grass.png",
             "images/city_tile.png",
 //            "images/box_boy_leaf.png",
 //            "images/box_boy.png",
-//            "images/Base_Highlight.png",
+            "images/Base_Highlight.png",
 //            "images/box_boy_highlight.png",
             "images/tree.png",
             "images/iso_grass_1.png",
@@ -400,10 +404,10 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(ui);
 
 
-        Entity infoUi = new Entity();
-        infoUi.addComponent(new InfoBoxDisplay());
-//        infoUi.addComponent(new SpellUI());
-        spawnEntity(infoUi);
+//        Entity infoUi = new Entity();
+//        infoUi.addComponent(new InfoBoxDisplay());
+////        infoUi.addComponent(new SpellUI());
+//        spawnEntity(infoUi);
 
 
         Entity spellsUi = new Entity();
@@ -641,8 +645,6 @@ public class AtlantisGameArea extends GameArea {
                 }
                 buildingEntity.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
                 TextureScaler ts = buildingEntity.getComponent(TextureScaler.class);
-                System.out.println("Building: " + building.getName() + " tileWidth: "
-                        + ts.getTileWidth() + " tileHeight: " + ts.getTileHeight());
                 spawnEntity(buildingEntity);
             }
         }

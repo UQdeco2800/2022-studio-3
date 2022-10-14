@@ -88,6 +88,7 @@ public class MinimapComponent extends RenderComponent {
         //Define textures for drawing the map
         Texture dummyTile = ServiceLocator.getResourceService().getAsset("test/files/dummyTexture.png", Texture.class);
         Texture dummyOcean = ServiceLocator.getResourceService().getAsset("test/files/dummyOcean.png", Texture.class);
+        Texture cityTile = ServiceLocator.getResourceService().getAsset("test/files/cityMinimap.png", Texture.class);
 
         //Determine width and height in pixels of each rendered tile
         GridPoint2 tileSize = worldToPixelLength(new Vector2(tileWidth, tileHeight));
@@ -99,7 +100,11 @@ public class MinimapComponent extends RenderComponent {
                 //Take the tile and get its id to determine colour
                 //If the cell is a TerrainTile, it is an island tile, else animated ocean tile
                 if (cell.getTile() instanceof  TerrainTile) {
-                    currentTexture = dummyTile;
+                    if (cell.getTile().getId() == 0) {
+                        currentTexture = cityTile;
+                    } else {
+                        currentTexture = dummyTile;
+                    }
                 } else {
                     currentTexture = dummyOcean;
                 }
