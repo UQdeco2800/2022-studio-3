@@ -58,4 +58,5 @@ public class TouchInputFactory extends InputFactory{
     logger.debug("Creating camera input handler");
     return new CameraInputComponent();
   }
+
 }

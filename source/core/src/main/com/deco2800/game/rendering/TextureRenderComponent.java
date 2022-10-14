@@ -70,7 +70,9 @@ public class TextureRenderComponent extends RenderComponent {
       sr.setProjectionMatrix(batch.getProjectionMatrix());
       batch.end();
       //Set hollow fill for black rectangle outline
+
       sr.begin(ShapeRenderer.ShapeType.Line);
+      /*
       if (positions.indexOf(position) % 4 == 1) {
         sr.setColor(Color.RED); //Colour of second index - initial position
       } else if (positions.indexOf(position) % 4 == 2) {
@@ -84,16 +86,17 @@ public class TextureRenderComponent extends RenderComponent {
       //Get size of texture in world coordinates
       Vector2 entityScale = entity.getScale();
       sr.rect(position.x, position.y, entityScale.x, entityScale.y);
+       */
 
       //Draw lines
-      sr.setColor(Color.VIOLET);
-      for (int i = 0; i < linePos.size(); i+=2) {
-        if (i + 1 > linePos.size() - 1) {
-          //Incorrect input, should always be two pairs of coordinates to draw a line between
-          break;
-        }
-        sr.line(linePos.get(i), linePos.get(i+1));
-      }
+      // sr.setColor(Color.VIOLET);
+      // for (int i = 0; i < linePos.size(); i+=2) {
+      //   if (i + 1 > linePos.size() - 1) {
+      //     //Incorrect input, should always be two pairs of coordinates to draw a line between
+      //     break;
+      //   }
+      //   sr.line(linePos.get(i), linePos.get(i+1));
+      // }
 
       sr.end();
       sr.dispose();
@@ -125,12 +128,12 @@ public class TextureRenderComponent extends RenderComponent {
     batch.draw(texture, position.x, position.y, scale.x, scale.y);
 
     //Debug - draw hitboxes around TextureScaled Entities
-    /*
+
     if (entity.getComponent(TextureScaler.class) !=  null) {
-      drawTextureBox(batch);
+      //drawTextureBox(batch);
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
     }
-     */
+
   }
 }
