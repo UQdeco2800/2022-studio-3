@@ -89,14 +89,14 @@ public class TextureRenderComponent extends RenderComponent {
        */
 
       //Draw lines
-      // sr.setColor(Color.VIOLET);
-      // for (int i = 0; i < linePos.size(); i+=2) {
-      //   if (i + 1 > linePos.size() - 1) {
-      //     //Incorrect input, should always be two pairs of coordinates to draw a line between
-      //     break;
-      //   }
-      //   sr.line(linePos.get(i), linePos.get(i+1));
-      // }
+      sr.setColor(Color.VIOLET);
+      for (int i = 0; i < linePos.size(); i+=2) {
+        if (i + 1 > linePos.size() - 1) {
+          //Incorrect input, should always be two pairs of coordinates to draw a line between
+          break;
+        }
+        sr.line(linePos.get(i), linePos.get(i + 1));
+      }
 
       sr.end();
       sr.dispose();
@@ -134,6 +134,6 @@ public class TextureRenderComponent extends RenderComponent {
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
     }
-    */
+     */
   }
 }
