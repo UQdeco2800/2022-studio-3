@@ -313,20 +313,10 @@ public class InfoBoxDisplay extends UIComponent {
 
 
             //Added functionality later because there is currently not enough information on the units we will have
-<<<<<<< HEAD
-            Label dummyText = new Label("This is "+ entityName, skin, "large");
-            infoTable.add(dummyText);
-            infoTable.row();
-            if (buildingSelected){
-                Label boxBoyText = new Label(String.format("%s:   %d", entityName, length), skin, "large");
-                infoTable.add(boxBoyText);
-            } else {
-=======
             if (!buildingSelected) {
                 Label dummyText = new Label("This is "+ entityName, skin, "large");
                 infoTable.add(dummyText);
                 infoTable.row();
->>>>>>> 14629130659b1138b1ace14fecc904052cc935ae
                 Label boxBoyText = new Label(String.format("Boxboy:   %d", length), skin, "large");
                 infoTable.add(boxBoyText);
             }
