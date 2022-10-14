@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -476,7 +475,7 @@ public class BuildingFactory {
      */
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
-        BlackSmithConfig config = configs.blackSmith;
+        BlacksmithConfig config = configs.blacksmith;
         final float BLACKSMITH_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels

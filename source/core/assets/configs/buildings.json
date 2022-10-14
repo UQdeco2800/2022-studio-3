@@ -23,7 +23,7 @@
     "baseDefence": 10,
     "level": 1
   },
-  "blackSmith": {
+  "blacksmith": {
     "health": 300,
     "baseAttack": 0,
     "baseDefence": 10,

@@ -9,7 +9,7 @@ public class BuildingConfigs {
     public WallConfig wall = new WallConfig();
     public FarmConfig farm = new FarmConfig();
     public LibraryConfig library = new LibraryConfig();
-    public BlackSmithConfig blackSmith = new BlackSmithConfig();
+    public BlacksmithConfig blacksmith = new BlacksmithConfig();
     public ShipConfig ship = new ShipConfig();
     public TitanShrineConfig titanShrine = new TitanShrineConfig();
     public TrebuchetConfig trebuchet = new TrebuchetConfig();
