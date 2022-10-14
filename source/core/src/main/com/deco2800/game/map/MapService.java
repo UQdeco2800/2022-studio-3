@@ -9,6 +9,7 @@ import java.util.Map;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.map.util.IllegalEntityPlacementException;
 import com.deco2800.game.map.util.NoEntityException;
@@ -96,19 +97,21 @@ public class MapService {
 	 * @return list of occupied positions.
 	 */
 	private List<GridPoint2> getAllOccupiedPositions(MapComponent comp) {
-		Vector2 vecPos = comp.getEntity().getPosition();
-		Vector2 vecScale = comp.getEntity().getScale();
-		GridPoint2 bottomRightCorner = worldToTile(vecPos);
-		GridPoint2 topLeftCorner = worldToTile(vecPos.x + vecScale.x, vecPos.y + vecScale.y);
-
+		Entity e = comp.getEntity();
+		TextureScaler ts = e.getComponent(TextureScaler.class);
 		List<GridPoint2> occupied = new ArrayList<>();
-		for (int i = topLeftCorner.x + 1; i <= bottomRightCorner.x; i++) {
-			for (int j = bottomRightCorner.y; j < topLeftCorner.y; j++) {
-				GridPoint2 pos = new GridPoint2(i, j);
-				occupied.add(pos);
+		if (ts != null) {
+			GridPoint2 pos = ts.getPosition();
+
+			if (pos != null) {
+				for (int x = pos.x; x < pos.x + ts.getTileWidth(); x++) {
+					for (int y = pos.y; y < pos.y + ts.getTileHeight(); y++) {
+						occupied.add(new GridPoint2(x, y));
+					}
+				}
 			}
 		}
-		return occupied;		
+		return occupied;
 	}
 	
 	/**

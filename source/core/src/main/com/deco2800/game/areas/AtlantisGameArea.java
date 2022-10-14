@@ -625,7 +625,7 @@ public class AtlantisGameArea extends GameArea {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createTownHall();
                 } else if (building.getName().equals("Library")) {
-                    // System.out.print("\n\nTH position: " + spawn + "\n\n");
+                    //System.out.print("\n\nLibrary position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createLibrary();
                 } else if (building.getName().equals("Smith")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
@@ -640,6 +640,9 @@ public class AtlantisGameArea extends GameArea {
                     continue;
                 }
                 buildingEntity.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                TextureScaler ts = buildingEntity.getComponent(TextureScaler.class);
+                System.out.println("Building: " + building.getName() + " tileWidth: "
+                        + ts.getTileWidth() + " tileHeight: " + ts.getTileHeight());
                 spawnEntity(buildingEntity);
             }
         }
@@ -834,17 +837,18 @@ public class AtlantisGameArea extends GameArea {
                 nwPillarSpawn = nwSpawn.cpy().add(wallLength, 0);
                 nwConnectorSpawn = nwSpawn.cpy();
             }
+            Vector2 connectorOffset = new Vector2(0.3f, 0.1f);
 
             pillarSW.getComponent(TextureScaler.class).setSpawnPoint(swPillarSpawn, terrain);
             spawnEntity(pillarSW);
 
-            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swConnectorSpawn, terrain);
+            connectorSW.getComponent(TextureScaler.class).setSpawnPoint(swConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorSW);
 
             pillarNW.getComponent(TextureScaler.class).setSpawnPoint(nwPillarSpawn, terrain);
             spawnEntity(pillarNW);
 
-            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain);
+            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNW);
 
             swSpawn.add(pillarLength + wallLength, 0);
@@ -910,10 +914,11 @@ public class AtlantisGameArea extends GameArea {
                 spawnEntity(pillarNW);
             }
 
-            connectorNE.getComponent(TextureScaler.class).setSpawnPoint(neConnectorSpawn, terrain);
+            Vector2 connectorOffset = new Vector2(0.3f, -0.3f);
+            connectorNE.getComponent(TextureScaler.class).setSpawnPoint(neConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNE);
 
-            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain);
+            connectorNW.getComponent(TextureScaler.class).setSpawnPoint(nwConnectorSpawn, terrain, connectorOffset);
             spawnEntity(connectorNW);
 
             neSpawn.add(0, - (pillarLength + wallLength));
@@ -1067,8 +1072,11 @@ public class AtlantisGameArea extends GameArea {
                 GridPoint2 spawn = new GridPoint2(placement.getX(), mg.getHeight() - 1 - placement.getY());
                 if (rs.getName().equals("Tree")) {
                     //Spawn a Tree entity
-                    mapComponent.setDisplayColour(Color.FOREST);
-                    spawnEntityAt(TreeFactory.createTree().addComponent(mapComponent), spawn, false, false);
+                    // Entity tree = TreeFactory.createTree();
+                    // tree.getComponent(TextureScaler.class).setPreciseScale(1, false);
+                    // tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    // spawnEntity(tree);
+                    spawnEntityAt(TreeFactory.createTree(), spawn, false, false);
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     mapComponent.setDisplayColour(Color.DARK_GRAY);
