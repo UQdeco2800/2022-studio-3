@@ -99,6 +99,9 @@ public class AtlantisGameArea extends GameArea {
             "images/white.png",
             "images/stone.png",
             /* Building assets */
+            //Features
+            "images/waterFeatureDefault.png",
+            "images/lampDefault.png",
             // TownHall
             "images/base.png",
             // Barracks
@@ -170,7 +173,7 @@ public class AtlantisGameArea extends GameArea {
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
             "images/newwolf.atlas", "images/forager.atlas",
-            "images/spell.atlas"
+            "images/spell.atlas", "images/waterfeature.atlas", "images/lamp.atlas"
     };
     private static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
 
@@ -363,10 +366,10 @@ public class AtlantisGameArea extends GameArea {
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
 
         //Spawn boundaries where each ocean tile is
-        spawnIslandBounds();
+        //spawnIslandBounds();
 
         //Spawn boundaries around the map itself
-        spawnMapBounds();
+        //spawnMapBounds();
     }
 
     /**
@@ -500,6 +503,7 @@ public class AtlantisGameArea extends GameArea {
         BuildingGenerator bg = new BuildingGenerator(mg);
         spawnBuildings(bg,mg.getHeight());
         spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
+        spawnFeatures(bg);
     }
 
     /**
@@ -563,6 +567,20 @@ public class AtlantisGameArea extends GameArea {
                 spawnEntity(buildingEntity);
             }
         }
+    }
+
+    /**
+     * Randomly spawns a number of city features around the map
+     */
+    private void spawnFeatures(BuildingGenerator bg) {
+        Entity wf = CityFeatureFactory.createWaterFeature();
+        GridPoint2 spawn = new GridPoint2(0,0);
+        wf.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+        //spawnEntity(wf);
+
+        Entity lamp = CityFeatureFactory.createLamp();
+        lamp.getComponent(TextureScaler.class).setSpawnPoint(spawn.add(1,0), terrain);
+        //spawnEntity(lamp);
     }
 
     /**

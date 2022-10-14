@@ -265,7 +265,6 @@ public class InfoBoxDisplay extends UIComponent {
 
             //Added functionality later because there is currently not enough information on the units we will have
             Label dummyText = new Label("This is "+ entityName, skin, "large");
-            System.out.println("Label: " + dummyText);
             infoTable.add(dummyText);
             infoTable.row();
             if (buildingSelected){
