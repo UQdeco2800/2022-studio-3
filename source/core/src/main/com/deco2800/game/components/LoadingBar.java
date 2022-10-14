@@ -33,7 +33,7 @@ public class LoadingBar extends UIComponent {
     }
 
     public void addActors() {
-        background = new Image(ServiceLocator.getResourceService().getAsset("images/title-atlantis.png", Texture.class));
+        background = new Image(ServiceLocator.getResourceService().getAsset("images/loading_screen.png", Texture.class));
         background.setTouchable(Touchable.disabled);
 
         frame = new Image(ServiceLocator.getResourceService().getAsset("images/loading bar_4.png", Texture.class));

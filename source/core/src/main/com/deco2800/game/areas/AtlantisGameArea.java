@@ -1074,8 +1074,11 @@ public class AtlantisGameArea extends GameArea {
                 GridPoint2 spawn = new GridPoint2(placement.getX(), mg.getHeight() - 1 - placement.getY());
                 if (rs.getName().equals("Tree")) {
                     //Spawn a Tree entity
-                    mapComponent.setDisplayColour(Color.FOREST);
-                    spawnEntityAt(TreeFactory.createTree().addComponent(mapComponent), spawn, false, false);
+                    // Entity tree = TreeFactory.createTree();
+                    // tree.getComponent(TextureScaler.class).setPreciseScale(1, false);
+                    // tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    // spawnEntity(tree);
+                    spawnEntityAt(TreeFactory.createTree(), spawn, false, false);
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     mapComponent.setDisplayColour(Color.DARK_GRAY);

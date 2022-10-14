@@ -132,7 +132,7 @@ public class BuildingFactory {
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
-                .getAsset("images/base.png", Texture.class)), points, null);
+                .getAsset("images/level 1 town hall.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
 
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
@@ -277,6 +277,7 @@ public class BuildingFactory {
     public static Entity createTitanShrine() {
         final float TITANSHRINE_SCALE = 10f;
         Entity titanShrine = createBaseBuilding();
+        titanShrine.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         TitanShrineConfig config = configs.titanShrine;
 
         AnimationRenderComponent animator =
@@ -291,10 +292,14 @@ public class BuildingFactory {
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.CORAL);
         titanShrine
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(mc)
                 .addComponent(animator);
 
 
@@ -340,6 +345,7 @@ public class BuildingFactory {
     public static Entity createShip() {
         final float SHIP_SCALE = 5f;
         Entity ship = createBaseBuilding();
+        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         ShipConfig config = configs.ship;
 
         AnimationRenderComponent animator =
@@ -440,12 +446,16 @@ public class BuildingFactory {
                 152f, 152f,
                 119, 138
         };
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale edge wall precisely
         cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE, true);
@@ -633,12 +643,16 @@ public class BuildingFactory {
                 86f, 126f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, true);
@@ -696,12 +710,16 @@ public class BuildingFactory {
                 138f, 124f
         };
 
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, false);
@@ -766,9 +784,13 @@ public class BuildingFactory {
         };
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ns_closed.png"))
             .addComponent(new GateCollider())
             .addComponent(gateARC)
+            .addComponent(mc)
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new SelectionCollider())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
@@ -837,9 +859,13 @@ public class BuildingFactory {
         };
 
         //Add all components
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
         gate.addComponent(new TextureRenderComponent("images/gate_ew_closed.png"))
                 .addComponent(new GateCollider())
                 .addComponent(gateARC)
+                .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))

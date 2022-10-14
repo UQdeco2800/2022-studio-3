@@ -29,7 +29,7 @@ public class LoadingScreen extends ScreenAdapter {
     public static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
 
     private static final String[] assets = {
-            "images/title-atlantis.png",
+            "images/loading_screen.png",
             "images/loading bar_4.png",
             "images/loading bar_5.png",
     };
