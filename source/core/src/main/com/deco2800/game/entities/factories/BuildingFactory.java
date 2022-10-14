@@ -97,8 +97,8 @@ public class BuildingFactory {
                 1091f, 814f,
                 1015f, 403f,
                 469f, 229f,
-                389, 247f,
-                145, 407
+                389f, 247f,
+                145f, 407f
         };
 
         MapComponent mp = new MapComponent();
@@ -126,10 +126,10 @@ public class BuildingFactory {
 
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-                31f, 607f,      // Vertex 0       3--2
-                499f, 835f,     // Vertex 1      /  /
-                958f, 515f,     // Vertex 2     /  /
-                486f, 289f      // Vertex 3    0--1
+                111f, 840f,      // Vertex 0       3--2
+                540f, 1043f,     // Vertex 1      /  /
+                1089f, 817f,     // Vertex 2     /  /
+                645f, 625f       // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
