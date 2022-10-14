@@ -87,17 +87,18 @@ public class BuildingFactory {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
-        Vector2 leftPoint = new Vector2(21f, 632f); //Bottom leftmost edge in pixels
-        Vector2 maxX = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
-        Vector2 maxY = new Vector2(507f, 359f); //NW edge
+        Vector2 leftPoint = new Vector2(111f, 840f); //Bottom leftmost edge in pixels
+        Vector2 maxX = new Vector2(540f, 1043f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(645f, 625f); //NW edge
 
         float[] selectionPoints = new float[] {
-                2f, 608f,
-                505f, 855f,
-                962f, 507f,
-                941f, 154f,
-                506f, 108f,
-                179f, 346f
+                111f, 840f,
+                540f, 1043f,
+                1091f, 814f,
+                1015f, 403f,
+                469f, 229f,
+                389, 247f,
+                145, 407
         };
 
         MapComponent mp = new MapComponent();
