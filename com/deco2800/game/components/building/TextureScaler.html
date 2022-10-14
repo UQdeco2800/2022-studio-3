@@ -115,6 +115,14 @@ loadScripts(document, 'script');</script>
  com.badlogic.gdx.math.Vector2&nbsp;maxX,
  com.badlogic.gdx.math.Vector2&nbsp;maxY)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.graphics.Texture)" class="member-name-link">TextureScaler</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
+ com.badlogic.gdx.math.Vector2&nbsp;maxX,
+ com.badlogic.gdx.math.Vector2&nbsp;maxY,
+ com.badlogic.gdx.graphics.Texture&nbsp;baseTexture)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Used to construct a TextureScaler with an existing texture - used for entities
+ without a TextureRenderComponent.</div>
+</div>
 </div>
 </section>
 </li>
@@ -205,6 +213,24 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TextureScaler</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
  com.badlogic.gdx.math.Vector2&nbsp;maxX,
  com.badlogic.gdx.math.Vector2&nbsp;maxY)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.graphics.Texture)">
+<h3>TextureScaler</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TextureScaler</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
+ com.badlogic.gdx.math.Vector2&nbsp;maxX,
+ com.badlogic.gdx.math.Vector2&nbsp;maxY,
+ com.badlogic.gdx.graphics.Texture&nbsp;baseTexture)</span></div>
+<div class="block">Used to construct a TextureScaler with an existing texture - used for entities
+ without a TextureRenderComponent. For example, an Entity with an AnimationRenderComponent</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>leftPoint</code> - bottom left point of entity</dd>
+<dd><code>maxX</code> - bottom right point of entity (max x value)</dd>
+<dd><code>maxY</code> - max y point of entity</dd>
+<dd><code>baseTexture</code> - default texture of entity</dd>
+</dl>
 </section>
 </li>
 </ul>
