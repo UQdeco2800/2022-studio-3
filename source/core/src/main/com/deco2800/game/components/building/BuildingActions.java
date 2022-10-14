@@ -1,6 +1,7 @@
 package com.deco2800.game.components.building;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -41,6 +42,12 @@ public class BuildingActions extends Component {
      * Increments level by 1
      */
     public void addLevel() {
+        CombatStatsComponent csc;
+        if (entity != null && (csc = entity.getComponent(CombatStatsComponent.class)) != null) {
+            //Level up its stats: health and defence increased
+            csc.setHealth(csc.getHealth() + 100);
+            csc.setBaseDefence(csc.getBaseDefence() + 20);
+        }
         this.level++;
     }
 
