@@ -54,6 +54,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -366,10 +367,10 @@ public class AtlantisGameArea extends GameArea {
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
 
         //Spawn boundaries where each ocean tile is
-        //spawnIslandBounds();
+        spawnIslandBounds();
 
         //Spawn boundaries around the map itself
-        //spawnMapBounds();
+        spawnMapBounds();
     }
 
     /**
@@ -573,14 +574,53 @@ public class AtlantisGameArea extends GameArea {
      * Randomly spawns a number of city features around the map
      */
     private void spawnFeatures(BuildingGenerator bg) {
-        Entity wf = CityFeatureFactory.createWaterFeature();
-        GridPoint2 spawn = new GridPoint2(0,0);
-        wf.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
-        //spawnEntity(wf);
+        int numFeatures = 2; //Total number of features in game
+        int currentFeature = 0; //Int corresponding to the next feature to be placed
+        int featureOffset = 2; //Space to leave between building and feature
+        MapGenerator mg = terrainFactory.getMapGenerator();
 
-        Entity lamp = CityFeatureFactory.createLamp();
-        lamp.getComponent(TextureScaler.class).setSpawnPoint(spawn.add(1,0), terrain);
-        //spawnEntity(lamp);
+        List<CityRow> cityRows = bg.getCityRows();
+        for (CityRow cr : cityRows) {
+            List<Building> buildings = cr.getBuildings();
+            for (int i = 0; i < buildings.size(); i++) {
+                //Iterate through row of buildings, excluding the last entry
+                //Roll to see if a feature is being placed
+
+                if (new Random().nextInt(100) <= 30) {
+                    //Skip last building in row, as features will be difficult to see
+                    if (i == 0) {
+                        i++;
+                    }
+                    continue;
+                }
+                //A feature is being placed - determine where
+                Building building = buildings.get(i);
+                Coordinate placement = building.getPlacement();
+                GridPoint2 spawn = new GridPoint2(placement.getX() + building.getWidth()
+                        + featureOffset, mg.getHeight() - 1 - placement.getY() - (building.getHeight() / 2));
+                Entity feature;
+                //Ensures feature distribution is even
+                switch (currentFeature % numFeatures) {
+                    case 0:
+                        //Place a water feature
+                        feature = CityFeatureFactory.createWaterFeature();
+                        break;
+                    default:
+                        //Place a lamp
+                        feature = CityFeatureFactory.createLamp();
+                }
+                currentFeature++;
+                //Set spawn point and spawn feature
+                feature.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                spawnEntity(feature);
+
+                //Skip last building in row, as features will be difficult to see
+                if (i == 0) {
+                    i++;
+                }
+            }
+        }
+
     }
 
     /**
