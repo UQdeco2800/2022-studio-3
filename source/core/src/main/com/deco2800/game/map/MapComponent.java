@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 public class MapComponent extends Component {
 	private boolean display;
 	private Color colour;
+	private String name;
 
 	public MapComponent() {
 		this.display = false;
@@ -52,4 +53,12 @@ public class MapComponent extends Component {
 	public Color getColour() {
 		return this.colour;
 	} 
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
+	}
 }

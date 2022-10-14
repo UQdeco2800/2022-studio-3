@@ -14,6 +14,7 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int troops;
   private int health;
+  private int maxHealth;
   private int baseAttack;
   private int baseDefence;
   private float landSpeed;
@@ -29,6 +30,7 @@ public class CombatStatsComponent extends Component {
 
   public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed, int range) {
     setTroops(troops);
+    setMaxHealth(health);
     setHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
@@ -111,6 +113,10 @@ public class CombatStatsComponent extends Component {
     return health == 0;
   }
 
+  public Boolean isMaxHealth() {
+    return health == maxHealth;
+  }
+
   /**
    * Returns the entity's health.
    *
@@ -121,6 +127,14 @@ public class CombatStatsComponent extends Component {
   }
 
   /**
+   * Get's the entity's maximum health.
+   * @return entity's maximum health
+   */
+  public int getMaxHealth() {
+    return maxHealth;
+  }
+
+  /**
    * Sets the entity's health. Health has a minimum bound of 0.
    *
    * @param health health
@@ -128,11 +142,25 @@ public class CombatStatsComponent extends Component {
   public void setHealth(int health) {
     if (health >= 0) {
       this.health = health;
+      if (health > maxHealth) {
+        this.health = maxHealth;
+      }
     } else {
       this.health = 0;
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+    }
+  }
+
+  /**
+   * Sets the entity's maximum health. Maximum Health must be greater than or equal to 0.
+   * @param maxHealth Maximum health an entity can have
+   */
+  public void setMaxHealth(int maxHealth) {
+    this.maxHealth = maxHealth;
+    if (this.maxHealth < 0) {
+      this.maxHealth = 0;
     }
   }
 
@@ -204,7 +232,16 @@ public class CombatStatsComponent extends Component {
     int newHealth = getHealth() - max(1,
             attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
+    checkDamageAnimation();
   }
 
+  private void checkDamageAnimation() {
+    if (entity.getEvents().hasEvent("Damaged")) {
+      entity.getEvents().trigger("Damaged");
+    }
+  }
 
+  public void decreaseHealth(int damage) {
+    setHealth(this.health - damage);
+  }
 }

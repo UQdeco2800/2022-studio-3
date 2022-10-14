@@ -8,6 +8,8 @@ import java.util.Map;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Logger;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.map.util.IllegalEntityPlacementException;
 import com.deco2800.game.map.util.NoEntityException;
@@ -33,6 +35,8 @@ public class MapService {
     private int mapWidth;
     /* Height of game map */
     private int mapHeight;
+
+	private Logger logger = new Logger("MapService", Logger.DEBUG);
 
 	/**
 	 * Returns a map of positions to entities.
@@ -93,16 +97,18 @@ public class MapService {
 	 * @return list of occupied positions.
 	 */
 	private List<GridPoint2> getAllOccupiedPositions(MapComponent comp) {
-		Vector2 vecPos = comp.getEntity().getPosition();
-		Vector2 vecScale = comp.getEntity().getScale();
-		GridPoint2 bottomRightCorner = worldToTile(vecPos);
-		GridPoint2 topLeftCorner = worldToTile(vecPos.x + vecScale.x, vecPos.y + vecScale.y);
-
+		Entity e = comp.getEntity();
+		TextureScaler ts = e.getComponent(TextureScaler.class);
 		List<GridPoint2> occupied = new ArrayList<>();
-		for (int i = topLeftCorner.x + 1; i <= bottomRightCorner.x; i++) {
-			for (int j = bottomRightCorner.y; j < topLeftCorner.y; j++) {
-				GridPoint2 pos = new GridPoint2(i, j);
-				occupied.add(pos);
+		if (ts != null) {
+			GridPoint2 pos = ts.getPosition();
+
+			if (pos != null) {
+				for (int x = pos.x; x < pos.x + ts.getTileWidth(); x++) {
+					for (int y = pos.y; y < pos.y + ts.getTileHeight(); y++) {
+						occupied.add(new GridPoint2(x, y));
+					}
+				}
 			}
 		}
 		return occupied;
@@ -167,27 +173,34 @@ public class MapService {
 			return new ArrayList<>();
 		}
 		fringe.add(new Node(start, null));
+		
+		int tempCounter = 0;
+		ArrayList<MapComponent> temp = new ArrayList();
 
 		while (fringe.size() > 0) {
-
+			tempCounter++;
 			Node node = fringe.get(0);
 			fringe.remove(0);
 			if (goal.equals(node.position)) {
 				return node.backtrack();
 			}
-			
 			List<Node> children = node.getChildren();
 			for (Node child : children) {
-				if (!visited.contains(child) && !isOccupied(child.position)) {
-					fringe.add(child);
-					visited.add(child);
+				if (!visited.contains(child)) {
+					if (!isOccupied(child.position)) {
+						fringe.add(child);
+						visited.add(child);
+					} else {
+						temp.add(positionToEntity.get(child.position));
+					}
 				}
 			}
 		}
-
 		// no solution
+		logger.info("No path found after " + tempCounter + " iterations");
 		return new ArrayList<>();
 	}
+
 
 	private class Node {
 		public GridPoint2 position;
@@ -270,7 +283,7 @@ public class MapService {
 	 * @return true if occupied, else false
 	 */
 	public boolean isOccupied(GridPoint2 position) {
-		return positionToEntity.get(position) != null;
+		return positionToEntity.containsKey(position);
 	}
 	
 	/**

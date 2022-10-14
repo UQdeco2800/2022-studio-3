@@ -37,7 +37,7 @@ public class GateColliderTest {
         ServiceLocator.clear();
         //Store required textures and texture atlases
         TextureAtlas gateAtlas = new TextureAtlas(Gdx.files.internal("images/ew_gate.atlas"));
-        TextureAtlas foragerAtlas = new TextureAtlas(Gdx.files.internal("images/forager_forward.atlas"));
+        TextureAtlas foragerAtlas = new TextureAtlas(Gdx.files.internal("images/forager.atlas"));
         Texture gateClosed = new Texture(Gdx.files.internal("images/gate_ew_closed.png"));
         Texture gateOpen = new Texture(Gdx.files.internal("images/gate_ew_open.png"));
         //Mock resource service to return desired textures

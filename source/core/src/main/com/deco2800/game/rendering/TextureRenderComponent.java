@@ -95,7 +95,7 @@ public class TextureRenderComponent extends RenderComponent {
           //Incorrect input, should always be two pairs of coordinates to draw a line between
           break;
         }
-        sr.line(linePos.get(i), linePos.get(i+1));
+        sr.line(linePos.get(i), linePos.get(i + 1));
       }
 
       sr.end();
@@ -134,6 +134,6 @@ public class TextureRenderComponent extends RenderComponent {
       TextureScaler bo = entity.getComponent(TextureScaler.class);
       drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
     }
-    */
+     */
   }
 }

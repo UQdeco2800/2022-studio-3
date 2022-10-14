@@ -89,6 +89,18 @@ public class MapGenerator {
      */
     private Map<String, Coordinate> islandEdges;
 
+    /**
+     * Stores legal coordinates for players to move to.
+     */
+    public ArrayList<int[]> legalCoordinates;
+    /**
+     *
+     */
+    private int bottomLeftX;
+    /**
+     *
+     */
+    private int bottomLeftY;
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -119,6 +131,7 @@ public class MapGenerator {
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
+        this.getLegalCoordinates();
     }
 
     /**
@@ -653,5 +666,93 @@ public class MapGenerator {
             }
         }
         return newMap;
+    }
+
+    /**
+     * Given a coordinate (x, y), update the internal representation of the map
+     * to flood that tile.
+     */
+    public void floodTile() throws IllegalArgumentException {
+        //Check that the square to be flooded is a flood-able square
+        //Return without crashing game if an error has been made
+        boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getIslandChar()) {
+                    try {
+                        if (this.map[i - 1][j] == this.getOceanChar() ||
+                                this.map[i + 1][j] == this.getOceanChar() ||
+                                this.map[i][j - 1] == this.getOceanChar() ||
+                                this.map[i][j + 1] == this.getOceanChar()) {
+                            mapEdges[i][j] = true;
+                        } else {
+                            mapEdges[i][j] = false;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //Do Nothing
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (mapEdges[i][j]) {
+                    this.map[i][j] = this.getOceanChar();
+                }
+            }
+        }
+    }
+
+    // TODO: Make a flashing tile for warning the players which tiles will be flooded.
+    // TODO:    Choose the tile to be flashed
+    // TODO:    Flash the tile
+    /**
+     * Get array map of city.
+     */
+    public void createArrayMap() {
+        int bottomLeftI = mapHeight;
+        int bottomLeftJ = mapWidth;
+        ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getCityChar()) {
+                    if (i < bottomLeftI) {
+                        bottomLeftI = i;
+                    }
+                    if (j < bottomLeftJ) {
+                        bottomLeftJ = j;
+                    }
+                    int[] coords = {i, j};
+                    legalMoveCoordinates.add(coords);
+                }
+            }
+        }
+        this.bottomLeftX = bottomLeftI;
+        this.bottomLeftY = bottomLeftJ;
+        this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public int getBottomLeftX() {
+        return this.bottomLeftX;
+    }
+
+    public int getBottomLeftY() {
+        return this.bottomLeftY;
+    }
+
+    public int getCityWidth() {
+        return this.cityWidth;
+    }
+
+    public int getCityHeight() {
+        return this.cityHeight;
+    }
+
+    public ArrayList<int[]> getLegalCoordinates() {
+        if (this.legalCoordinates == null) {
+            createArrayMap();
+        }
+        return this.legalCoordinates;
     }
 }

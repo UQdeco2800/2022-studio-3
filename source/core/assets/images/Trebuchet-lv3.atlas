@@ -1,0 +1,495 @@
+Trebuchet-lv3.png
+size: 1806, 2322
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Trebuchet-lv3-east-50%
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-east-50%
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-east-50%
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-east-50%
+  rotate: false
+  xy: 775, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-east-100%
+  rotate: false
+  xy: 775, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-east-100%
+  rotate: false
+  xy: 1033, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-east-100%
+  rotate: false
+  xy: 1291, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-east-100%
+  rotate: false
+  xy: 1549, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-east-attack-50%
+  rotate: false
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-east-attack-50%
+  rotate: false
+  xy: 259, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-east-attack-50%
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-east-attack-50%
+  rotate: false
+  xy: 775, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-east-attack-50%
+  rotate: false
+  xy: 1033, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-east-attack
+  rotate: false
+  xy: 1291, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-east-attack
+  rotate: false
+  xy: 1549, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-east-attack
+  rotate: false
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-east-attack
+  rotate: false
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-east-attack
+  rotate: false
+  xy: 517, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-north-50%
+  rotate: false
+  xy: 775, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-north-50%
+  rotate: false
+  xy: 1033, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-north-50%
+  rotate: false
+  xy: 1291, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-north-50%
+  rotate: false
+  xy: 1549, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-north-100%
+  rotate: false
+  xy: 1549, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-north-100%
+  rotate: false
+  xy: 1, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-north-100%
+  rotate: false
+  xy: 259, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-north-100%
+  rotate: false
+  xy: 1549, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-north-attack-50%
+  rotate: false
+  xy: 517, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-north-attack-50%
+  rotate: false
+  xy: 775, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-north-attack-50%
+  rotate: false
+  xy: 1033, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-north-attack-50%
+  rotate: false
+  xy: 1291, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-north-attack-50%
+  rotate: false
+  xy: 1549, 775
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-north-attack
+  rotate: false
+  xy: 1, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-north-attack
+  rotate: false
+  xy: 259, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-north-attack
+  rotate: false
+  xy: 517, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-north-attack
+  rotate: false
+  xy: 775, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-north-attack
+  rotate: false
+  xy: 1033, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-south-50%
+  rotate: false
+  xy: 1291, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-south-50%
+  rotate: false
+  xy: 1549, 1033
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-south-50%
+  rotate: false
+  xy: 1, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-south-100%
+  rotate: false
+  xy: 1, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-south-100%
+  rotate: false
+  xy: 259, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-south-100%
+  rotate: false
+  xy: 517, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-south-100%
+  rotate: false
+  xy: 1549, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-south-attack-50%
+  rotate: false
+  xy: 775, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-south-attack-50%
+  rotate: false
+  xy: 1033, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-south-attack-50%
+  rotate: false
+  xy: 1291, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-south-attack-50%
+  rotate: false
+  xy: 1549, 1291
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-south-attack-50%
+  rotate: false
+  xy: 1, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-south-attack
+  rotate: false
+  xy: 259, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-south-attack
+  rotate: false
+  xy: 517, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-south-attack
+  rotate: false
+  xy: 775, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-south-attack
+  rotate: false
+  xy: 1033, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-south-attack
+  rotate: false
+  xy: 1291, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-west-50%
+  rotate: false
+  xy: 1549, 1549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-west-50%
+  rotate: false
+  xy: 1, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-west-50%
+  rotate: false
+  xy: 259, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-west-100%
+  rotate: false
+  xy: 259, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-west-100%
+  rotate: false
+  xy: 517, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-west-100%
+  rotate: false
+  xy: 775, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-west-100%
+  rotate: false
+  xy: 1549, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-west-attack-50%
+  rotate: false
+  xy: 1033, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-west-attack-50%
+  rotate: false
+  xy: 1291, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-west-attack-50%
+  rotate: false
+  xy: 1549, 1807
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-west-attack-50%
+  rotate: false
+  xy: 1, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-west-attack-50%
+  rotate: false
+  xy: 259, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+Trebuchet-lv3-west-attack
+  rotate: false
+  xy: 517, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
+Trebuchet-lv3-west-attack
+  rotate: false
+  xy: 775, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
+Trebuchet-lv3-west-attack
+  rotate: false
+  xy: 1033, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
+Trebuchet-lv3-west-attack
+  rotate: false
+  xy: 1291, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 3
+Trebuchet-lv3-west-attack
+  rotate: false
+  xy: 1549, 2065
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4

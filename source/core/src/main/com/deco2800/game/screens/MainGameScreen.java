@@ -6,11 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.LoadingBar;
+import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuButton;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -41,7 +45,16 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png","images/bigblack.png", "images/resource_display.png", "images/gainstone.png", "images/gain10wood.png", "images/gainmetal.png"};
+  private static final String[] mainGameTextures = {
+          "images/heart.png",
+          "images/bigblack.png",
+          "images/resource_display.png",
+          "images/gainstone.png",
+          "images/gain10wood.png",
+          "images/gainmetal.png",
+          "images/character-selection-menu.png",
+          "images/building-selection-menu.png"
+  };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
   private final GdxGame game;
@@ -59,7 +72,8 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine = physicsService.getPhysics();
 
     ServiceLocator.registerInputService(new InputService());
-    ServiceLocator.registerResourceService(new ResourceService());
+//    ServiceLocator.registerResourceService(new ResourceService());
+    // Resource Service created in Loading Screen
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
@@ -79,7 +93,6 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-
     // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
     AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
     AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
@@ -145,10 +158,9 @@ public class MainGameScreen extends ScreenAdapter {
     Stage stage = ServiceLocator.getRenderService().getStage();
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
-    DialogueBoxDisplay dialogueBoxDisplay = new DialogueBoxDisplay(537f);
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
+    ui.addComponent(new InputDecorator(stage, 11))
         .addComponent(new WeatherIconDisplay())
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new PauseMenuActions(this.game))
@@ -158,6 +170,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())
+        //.addComponent(new SoldierMenuButton())
+        .addComponent(new SoldierMenuDisplay())
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);

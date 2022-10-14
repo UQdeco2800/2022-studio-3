@@ -20,14 +20,15 @@ public class MinerAnimationControllerTest {
     @BeforeAll
     static void BeforeAll(){
         miner = new Entity();
-        animator = new AnimationRenderComponent(new TextureAtlas("images/miner_forward.atlas"));
+        animator = new AnimationRenderComponent(new TextureAtlas("images/miner.atlas"));
 
-        animator.addAnimation("miner_forward_idle", 0.1f);
-        animator.addAnimation("miner_forward_move", 0.1f);
-        animator.addAnimation("minerActionLeft", 0.1f);
-        animator.addAnimation("minerActionRight", 0.1f);
-        animator.addAnimation("minerRight", 0.1f);
-        animator.addAnimation("minerLeft", 0.1f);
+        animator.addAnimation("miner_idle", 0.1f);
+        animator.addAnimation("miner_forward_left_move", 0.1f);
+        animator.addAnimation("miner_forward_right_move", 0.1f);
+        animator.addAnimation("miner_back_left_move", 0.1f);
+        animator.addAnimation("miner_back_right_move", 0.1f);
+        animator.addAnimation("miner_forward_left_action", 0.1f);
+        animator.addAnimation("miner_forward_right_action", 0.1f);
 
         miner.addComponent(animator);
     }
@@ -39,31 +40,36 @@ public class MinerAnimationControllerTest {
 
     @Test
     void hasMinerForwardIdle(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_idle"), true);
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_idle"), true);
     }
 
     @Test
-    void hasMinerForwardMove(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_move"), true);
+    void hasMinerForwardLeftMove(){
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_left_move"), true);
+    }
+
+    @Test
+    void hasMinerForwardRightMove(){
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_right_move"), true);
+    }
+
+    @Test
+    void hasMinerBackLeftMove(){
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_back_left_move"), true);
+    }
+
+    @Test
+    void hasMinerBackRightMove(){
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_back_right_move"), true);
     }
 
     @Test
     void hasMinerActionLeft(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("minerActionLeft"), true);
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_left_action"), true);
     }
 
     @Test
     void hasMinerActionRight(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("minerActionRight"), true);
-    }
-
-    @Test
-    void hasMinerRight(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("minerRight"), true);
-    }
-    
-    @Test
-    void hasMinerLeft(){
-        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("minerLeft"), true);
+        assertEquals(miner.getComponent(AnimationRenderComponent.class).hasAnimation("miner_forward_right_action"), true);
     }
 }

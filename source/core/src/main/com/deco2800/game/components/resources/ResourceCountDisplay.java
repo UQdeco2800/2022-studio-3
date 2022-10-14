@@ -29,16 +29,32 @@ public class ResourceCountDisplay extends UIComponent {
     private Image metalImageLabel;
 
     /* Modify these to update the resource count */
-    private int woodCount = 100;
-    private int stoneCount = 22;
-    private int metalCount = 50;
+    private int woodCount = 0;
+    private int stoneCount = 0;
+    private int metalCount = 0;
 
 
     @Override
     public void create() {
         super.create();
         addActors();
+    }
 
+    @Override
+    public void update(){
+        // Remove old actors and create a new one
+        woodLabel.remove();
+        stoneLabel.remove();
+        metalLabel.remove();
+        woodLabel = new Label(String.format(" %d", woodCount), skin);
+        stoneLabel = new Label(String.format(" %d", stoneCount), skin);
+        metalLabel = new Label(String.format(" %d", metalCount), skin);
+        woodLabel.setFontScale(1.5f);
+        stoneLabel.setFontScale(1.5f);
+        metalLabel.setFontScale(1.5f);
+        stage.addActor(woodLabel);
+        stage.addActor(stoneLabel);
+        stage.addActor(metalLabel);
     }
 
     private void addActors() {
