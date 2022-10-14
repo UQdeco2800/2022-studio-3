@@ -671,6 +671,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Internal type system for components.</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#CONNECTOR_EW" class="member-name-link">CONNECTOR_EW</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/Building.html#CONNECTOR_NS" class="member-name-link">CONNECTOR_NS</a> - Enum constant in enum class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/Building.html" title="enum class in com.deco2800.game.components.building">Building</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/factories/BuildingFactory.html#CONNECTOR_SCALE" class="member-name-link">CONNECTOR_SCALE</a> - Static variable in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/BuildingFactory.html" title="class in com.deco2800.game.entities.factories">BuildingFactory</a></dt>
 <dd>
 <div class="block">Width in tiles of wall connectors and gates - do not change as they are contingent on CORNER_SCALE</div>
@@ -1299,7 +1303,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/BuildingUIDataComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/BuildingUIDataComponent.html" title="class in com.deco2800.game.components">BuildingUIDataComponent</a></dt>
 <dd>
-<div class="block">Draw the renderable.</div>
+<div class="block">Draw the render-able.</div>
 </dd>
 <dt><a href="com/deco2800/game/components/floodtimer/FloodTimerDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)" class="member-name-link">draw(SpriteBatch)</a> - Method in class com.deco2800.game.components.floodtimer.<a href="com/deco2800/game/components/floodtimer/FloodTimerDisplay.html" title="class in com.deco2800.game.components.floodtimer">FloodTimerDisplay</a></dt>
 <dd>
@@ -1755,6 +1759,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/building/GateCollider.html#%3Cinit%3E()" class="member-name-link">GateCollider()</a> - Constructor for class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/building/GateCollider.html#gateOpen" class="member-name-link">gateOpen</a> - Variable in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/GdxGame.html" class="type-name-link" title="class in com.deco2800.game">GdxGame</a> - Class in <a href="com/deco2800/game/package-summary.html">com.deco2800.game</a></dt>
 <dd>
 <div class="block">Entry point of the non-platform-specific game logic.</div>
@@ -1896,6 +1902,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/deco2800/game/worker/components/CollectStatsComponent.html#getCollectionAmount()" class="member-name-link">getCollectionAmount()</a> - Method in class com.deco2800.game.worker.components.<a href="com/deco2800/game/worker/components/CollectStatsComponent.html" title="class in com.deco2800.game.worker.components">CollectStatsComponent</a></dt>
 <dd>
 <div class="block">Returns the amount which entity can collect.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/GateCollider.html#getCollidedIds()" class="member-name-link">getCollidedIds()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></dt>
+<dd>
+<div class="block">Returns a copy of the collided allies list - used for unit testing</div>
 </dd>
 <dt><a href="com/deco2800/game/map/MapComponent.html#getColour()" class="member-name-link">getColour()</a> - Method in class com.deco2800.game.map.<a href="com/deco2800/game/map/MapComponent.html" title="class in com.deco2800.game.map">MapComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2703,6 +2713,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/deco2800/game/rendering/AnimationRenderComponent.html#isFinished()" class="member-name-link">isFinished()</a> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
 <div class="block">Has the playing animation finished? This will always be false for looping animations.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/GateCollider.html#isGateOpen()" class="member-name-link">isGateOpen()</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></dt>
+<dd>
+<div class="block">Returns the status of the gate</div>
 </dd>
 <dt><a href="com/deco2800/game/components/maingame/DialogueBoxDisplay.html#isHidden()" class="member-name-link">isHidden()</a> - Method in class com.deco2800.game.components.maingame.<a href="com/deco2800/game/components/maingame/DialogueBoxDisplay.html" title="class in com.deco2800.game.components.maingame">DialogueBoxDisplay</a></dt>
 <dd>
@@ -3715,6 +3729,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">initializes component with unit not being selected</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/SelectionCollider.html" class="type-name-link" title="class in com.deco2800.game.components.building">SelectionCollider</a> - Class in <a href="com/deco2800/game/components/building/package-summary.html">com.deco2800.game.components.building</a></dt>
+<dd>
+<div class="block">Used to set a precise selection hitbox on an Entity with a TextureRenderComponent</div>
+</dd>
+<dt><a href="com/deco2800/game/components/building/SelectionCollider.html#%3Cinit%3E()" class="member-name-link">SelectionCollider()</a> - Constructor for class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/SelectionCollider.html" title="class in com.deco2800.game.components.building">SelectionCollider</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/tasks/EnemyMovement.html#selectRandomTarget()" class="member-name-link">selectRandomTarget()</a> - Method in class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/EnemyMovement.html" title="class in com.deco2800.game.components.tasks">EnemyMovement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/services/ServiceLocator.html" class="type-name-link" title="class in com.deco2800.game.services">ServiceLocator</a> - Class in <a href="com/deco2800/game/services/package-summary.html">com.deco2800.game.services</a></dt>
@@ -3908,6 +3928,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets this building's placement to a desired coordinate</div>
 </dd>
+<dt><a href="com/deco2800/game/components/building/SelectionCollider.html#setPoints(float%5B%5D)" class="member-name-link">setPoints(float[])</a> - Method in class com.deco2800.game.components.building.<a href="com/deco2800/game/components/building/SelectionCollider.html" title="class in com.deco2800.game.components.building">SelectionCollider</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/Entity.html#setPosition(float,float)" class="member-name-link">setPosition(float, float)</a> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Set the entity's game position.</div>

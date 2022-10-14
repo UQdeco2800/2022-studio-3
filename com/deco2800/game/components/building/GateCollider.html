@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -86,6 +86,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#gateOpen" class="member-name-link">gateOpen</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.deco2800.game.components.Component">Fields inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <code><a href="../Component.html#enabled">enabled</a>, <a href="../Component.html#entity">entity</a></code></div>
@@ -121,6 +130,16 @@ loadScripts(document, 'script');</script>
 <div class="block">On create, listen for the events "collisionStart" and "collisionEnd" initiated by the
  PhysicsContactListener, which will execute the functions "onCollisionStart" and "onCollisionEnd"</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCollidedIds()" class="member-name-link">getCollidedIds</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a copy of the collided allies list - used for unit testing</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isGateOpen()" class="member-name-link">isGateOpen</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the status of the gate</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCollisionEnd(com.badlogic.gdx.physics.box2d.Fixture,com.badlogic.gdx.physics.box2d.Fixture)" class="member-name-link">onCollisionEnd</a><wbr>(com.badlogic.gdx.physics.box2d.Fixture&nbsp;gate,
  com.badlogic.gdx.physics.box2d.Fixture&nbsp;other)</code></div>
@@ -150,6 +169,20 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="gateOpen">
+<h3>gateOpen</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">gateOpen</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -208,6 +241,28 @@ loadScripts(document, 'script');</script>
 <dd><code>gate</code> - the fixture related to the ColliderComponent attached to the Gate entity</dd>
 <dd><code>other</code> - the fixture related to the ColliderComponent of an entity that has come
               into contact with the Gate's fixture</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCollidedIds()">
+<h3>getCollidedIds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getCollidedIds</span>()</div>
+<div class="block">Returns a copy of the collided allies list - used for unit testing</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>copy of allies collided list</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isGateOpen()">
+<h3>isGateOpen</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isGateOpen</span>()</div>
+<div class="block">Returns the status of the gate</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if it is open, else false</dd>
 </dl>
 </section>
 </li>
