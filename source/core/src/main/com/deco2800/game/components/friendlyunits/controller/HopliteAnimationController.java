@@ -3,7 +3,7 @@ package com.deco2800.game.components.friendlyunits.controller;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
-public class ArcherAnimationController extends Component{
+public class HopliteAnimationController extends Component{
     AnimationRenderComponent animator;
 
     @Override
@@ -23,42 +23,42 @@ public class ArcherAnimationController extends Component{
     }
 
     void animateIdle(){
-        animator.startAnimation("archer_forward_left_idle");
+        animator.startAnimation("hoplite_forward_left_idle");
     }
 
     void animateHighlightedIdle(){
-        animator.startAnimation("archer_forward_left_idle_highlight");
+        animator.startAnimation("hoplite_forward_left_idle_highlighted");
     }
 
     void animateLeftMove(){
-        animator.startAnimation("archer_forward_left_move");
+        animator.startAnimation("hoplite_forward_left_move");
     }
 
     void animateRightMove(){
-        animator.startAnimation("archer_forward_right_move");
+        animator.startAnimation("hoplite_forward_right_move");
     }
 
     void animateHighlightedLeftMove(){
-        animator.startAnimation("archer_forward_left_move_highlight");
+        animator.startAnimation("hoplite_forward_left_move_highlighted");
     }
 
     void animateHighlightedRightMove(){
-        animator.startAnimation("archer_forward_right_move_highlight");
+        animator.startAnimation("hoplite_forward_right_move_highlighted");
     }
 
     void animateLeftAttack(){
-        animator.startAnimation("archer_forward_left_attack");
+        animator.startAnimation("hoplite_forward_left_attack");
     }
 
     void animateRightAttack(){
-        animator.startAnimation("archer_forward_right_attack");
+        animator.startAnimation("hoplite_forward_right_attack");
     }
 
     void animateHighlightedLeftAttack(){
-        animator.startAnimation("archer_forward_left_attack_highlight");
+        animator.startAnimation("hoplite_forward_left_attack_highlighted");
     }
 
     void animateHighlightedRightAttack(){
-        animator.startAnimation("archer_forward_right_attack_highlight");
+        animator.startAnimation("hoplite_forward_right_attack_highlighted");
     }
 }

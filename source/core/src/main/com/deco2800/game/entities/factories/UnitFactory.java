@@ -10,6 +10,8 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendly.TroopContainerComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.friendlyunits.controller.ArcherAnimationController;
+import com.deco2800.game.components.friendlyunits.controller.HopliteAnimationController;
 import com.deco2800.game.components.friendlyunits.controller.SpearmanAnimationController;
 import com.deco2800.game.components.friendlyunits.controller.SwordsmanAnimationController;
 import com.deco2800.game.components.friendlyunits.task.UnitIdleTask;
@@ -70,8 +72,22 @@ public class UnitFactory {
     }
 
     private static Entity createRangedTroop(UnitType type) {
-        //TODO: implement ranged units
-        return new Entity();
+        BaseUnitConfig stats;
+
+        switch (type) {
+            case HOPLITE -> {
+                stats = UnitFactory.stats.archer;
+            }
+            default -> {
+                stats = new BaseUnitConfig();
+            }
+        }
+        return new Entity().addComponent(
+                        new CombatStatsComponent(stats.health,
+                                stats.baseAttack,
+                                stats.baseDefence))
+                        .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.NPC));
     }
 
     private static Entity createMeleeTroop(UnitType type) {
@@ -172,6 +188,20 @@ public class UnitFactory {
 
             if (type == UnitType.ARCHER) {
                 troop = createRangedTroop(UnitType.ARCHER);
+
+                animator.addAnimation("archer_forward_left_idle", framePeriod, loop);
+                animator.addAnimation("archer_forward_left_idle_highlight", framePeriod, loop);
+                animator.addAnimation("archer_forward_left_move", framePeriod, loop);
+                animator.addAnimation("archer_forward_right_move", framePeriod, loop);
+                animator.addAnimation("archer_forward_left_move_highlight", framePeriod, loop);
+                animator.addAnimation("archer_forward_right_move_highlight", framePeriod, loop);
+                animator.addAnimation("archer_forward_left_attack", framePeriod, loop);
+                animator.addAnimation("archer_forward_right_attack", framePeriod, loop);
+                animator.addAnimation("archer_forward_left_attack_highlight", framePeriod, loop);
+                animator.addAnimation("archer_forward_right_attack_highlight", framePeriod, loop);
+
+                troop.addComponent(animator);
+                troop.addComponent(new ArcherAnimationController());
             } else {
                 troop = createMeleeTroop(type);
 
@@ -205,6 +235,20 @@ public class UnitFactory {
 
                     troop.addComponent(animator);
                     troop.addComponent(new SwordsmanAnimationController());
+                }else if(type == UnitType.HOPLITE){
+                    animator.addAnimation("hoplite_forward_left_idle", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_left_idle_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_left_move", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_right_move", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_left_move_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_right_move_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_left_attack", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_right_attack", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_left_attack_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_forward_right_attack_highlighted", framePeriod, loop);
+
+                    troop.addComponent(animator);
+                    troop.addComponent(new HopliteAnimationController());
                 }
             }
 
