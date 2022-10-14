@@ -1,9 +1,12 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -21,8 +24,12 @@ public class BuildingUIDataComponent extends UIComponent {
     private Group contextBoxItems;
     private float initialHeight;
     private float initialWidth;
+    private Image healthBarFrame;
+    private ProgressBar healthBar;
+    private Label hp;
     private final String[] textures = {
             "images/context_box.png",
+            "images/health bar_6.png",
     };
 
     private void loadAssets() {
@@ -44,7 +51,35 @@ public class BuildingUIDataComponent extends UIComponent {
         selectableComponent = this.entity.getComponent(SelectableComponent.class);
         isSelected = selectableComponent.isSelected();
         contextBoxItems = new Group();
+        createHealthBar();
+    }
 
+    private void createHealthBar() {
+        float width = 180f, height = 36f;
+        float x = 220f, y = 60f;
+        float progressBarOffset = 25f; // Progress bar x offset from health bar frame
+        float xLabelOffset = 45f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png",
+                Texture.class));
+        healthBarFrame.setPosition(x, y);
+        healthBarFrame.setWidth(width);
+        healthBarFrame.setHeight(height);
+
+        Pixmap pixmap = new Pixmap(1, (int) height, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(pixmap));
+        pixmap.dispose();
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+        style.knobBefore = drawable;
+
+        healthBar = new ProgressBar(0, 1, 1f, false, style);
+        healthBar.setPosition(x + progressBarOffset, y + height / 2f);
+        healthBar.setWidth(width - progressBarOffset);
+
+        hp = new Label("", skin);
+        hp.setFontScale(0.8f);
+        hp.setPosition(x + xLabelOffset, y + yLabelOffset);
     }
 
     /**
@@ -81,8 +116,10 @@ public class BuildingUIDataComponent extends UIComponent {
             String statsString = "";
 
             try {
-                statsString = "Health: " + combatStats.getHealth() +
-                              " Attack: " + combatStats.getBaseAttack() +
+//                statsString = "Health: " + combatStats.getHealth() +
+//                              " Attack: " + combatStats.getBaseAttack() +
+//                              " Defence: " + combatStats.getBaseDefence();
+                statsString = "Attack: " + combatStats.getBaseAttack() +
                               " Defence: " + combatStats.getBaseDefence();
             } catch (NullPointerException nullPointerException) {
                 // pass
@@ -118,14 +155,22 @@ public class BuildingUIDataComponent extends UIComponent {
             contextBoxItems.setSize(contextBoxSprite.getWidth(), contextBoxSprite.getHeight());
             buildingNameLabel.setPosition(220f, 160f);
 
-            attributesLabel.setPosition(220f, 2f);
+            attributesLabel.setPosition(220f, 20f);
             attributesLabel.setSize(158f, 217f);
             attributesLabel.setWrap(true);
+
+            int health = combatStats.getHealth(), maxHealth =  combatStats.getMaxHealth();
+            healthBar.setRange(0, maxHealth);
+            healthBar.setValue(health);
+            hp.setText(String.format("%d/%d HP", health, maxHealth));
 
             buildingImage.setPosition(40f, 50f);
             buildingImage.setSize(130f, 130f);
 
             contextBoxItems.addActor(contextBoxSprite);
+            contextBoxItems.addActor(healthBar);
+            contextBoxItems.addActor(healthBarFrame);
+            contextBoxItems.addActor(hp);
             contextBoxItems.addActor(buildingNameLabel);
             contextBoxItems.addActor(attributesLabel);
             contextBoxItems.addActor(buildingImage);

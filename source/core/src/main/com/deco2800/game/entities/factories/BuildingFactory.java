@@ -73,8 +73,7 @@ public class BuildingFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new SelectableComponent())
                 .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HealthBarComponent(EntityType.FRIENDLY));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
     /**
