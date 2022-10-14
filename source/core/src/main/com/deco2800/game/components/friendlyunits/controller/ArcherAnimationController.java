@@ -20,6 +20,10 @@ public class ArcherAnimationController extends Component{
         entity.getEvents().addListener("unitRightAttackAnimate", this::animateRightAttack);
         entity.getEvents().addListener("unitHighlightedLeftAttackAnimate", this::animateHighlightedLeftAttack);
         entity.getEvents().addListener("unitHighlightedRightAttackAnimate", this::animateHighlightedRightAttack);
+        entity.getEvents().addListener("unitBackwardLeftMoveAnimate", this::animateBackwardLeftMove);
+        entity.getEvents().addListener("unitBackwardRightMoveAnimate", this::animateBackwardRightMove);
+        entity.getEvents().addListener("unitBackwardHighlightedLeftMoveAnimate", this::animateBackwardHighlightedLeftMove);
+        entity.getEvents().addListener("unitBackwardHighlightedRightMoveAnimate", this::animateBackwardHighlightedRightMove);
     }
 
     void animateIdle(){
@@ -60,5 +64,21 @@ public class ArcherAnimationController extends Component{
 
     void animateHighlightedRightAttack(){
         animator.startAnimation("archer_forward_right_attack_highlight");
+    }
+
+    void animateBackwardLeftMove(){
+        animator.startAnimation("archer_backward_left_move");
+    }
+
+    void animateBackwardRightMove(){
+        animator.startAnimation("archer_backward_right_move");
+    }
+
+    void animateBackwardHighlightedLeftMove(){
+        animator.startAnimation("archer_backward_left_move_highlighted");
+    }
+
+    void animateBackwardHighlightedRightMove(){
+        animator.startAnimation("archer_backward_right_move_highlighted");
     }
 }

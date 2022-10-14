@@ -20,6 +20,10 @@ public class SpearmanAnimationController extends Component{
         entity.getEvents().addListener("unitRightAttackAnimate", this::animateRightAttack);
         entity.getEvents().addListener("unitHighlightedLeftAttackAnimate", this::animateHighlightedLeftAttack);
         entity.getEvents().addListener("unitHighlightedRightAttackAnimate", this::animateHighlightedRightAttack);
+        entity.getEvents().addListener("unitBackwardLeftMoveAnimate", this::animateBackwardLeftMove);
+        entity.getEvents().addListener("unitBackwardRightMoveAnimate", this::animateBackwardRightMove);
+        entity.getEvents().addListener("unitBackwardHighlightedLeftMoveAnimate", this::animateBackwardHighlightedLeftMove);
+        entity.getEvents().addListener("unitBackwardHighlightedRightMoveAnimate", this::animateBackwardHighlightedRightMove);
     }
 
     void animateIdle(){
@@ -60,5 +64,21 @@ public class SpearmanAnimationController extends Component{
 
     void animateHighlightedRightAttack(){
         animator.startAnimation("spearman_forward_right_attack_highlighted");
+    }
+
+    void animateBackwardLeftMove(){
+        animator.startAnimation("spearman_backward_left_move");
+    }
+
+    void animateBackwardRightMove(){
+        animator.startAnimation("spearman_backward_right_move");
+    }
+
+    void animateBackwardHighlightedLeftMove(){
+        animator.startAnimation("spearman_backward_left_move_highlighted");
+    }
+
+    void animateBackwardHighlightedRightMove(){
+        animator.startAnimation("spearman_backward_right_move_highlighted");
     }
 }

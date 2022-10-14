@@ -26,6 +26,7 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
@@ -199,6 +200,10 @@ public class UnitFactory {
                 animator.addAnimation("archer_forward_right_attack", framePeriod, loop);
                 animator.addAnimation("archer_forward_left_attack_highlight", framePeriod, loop);
                 animator.addAnimation("archer_forward_right_attack_highlight", framePeriod, loop);
+                animator.addAnimation("archer_backward_left_move", framePeriod, loop);
+                animator.addAnimation("archer_backward_right_move", framePeriod, loop);
+                animator.addAnimation("archer_backward_left_move_highlight", framePeriod, loop);
+                animator.addAnimation("archer_backward_right_move_highlight", framePeriod, loop);
 
                 troop.addComponent(animator);
                 troop.addComponent(new ArcherAnimationController());
@@ -217,6 +222,10 @@ public class UnitFactory {
                     animator.addAnimation("spearman_forward_right_attack", framePeriod, loop);
                     animator.addAnimation("spearman_forward_left_attack_highlighted", framePeriod, loop);
                     animator.addAnimation("spearman_forward_right_attack_highlighted", framePeriod, loop);
+                    animator.addAnimation("spearman_backward_left_move", framePeriod, loop);
+                    animator.addAnimation("spearman_backward_right_move", framePeriod, loop);
+                    animator.addAnimation("spearman_backward_left_move_highlighted", framePeriod, loop);
+                    animator.addAnimation("spearman_backward_right_move_highlighted", framePeriod, loop);
 
                     troop.addComponent(animator);
                     troop.addComponent(new SpearmanAnimationController());
@@ -232,6 +241,10 @@ public class UnitFactory {
                     animator.addAnimation("swordsman_forward_right_attack", framePeriod, loop);
                     animator.addAnimation("swordsman_forward_left_attack_highlight", framePeriod, loop);
                     animator.addAnimation("swordsman_forward_right_attack_highlight", framePeriod, loop);
+                    animator.addAnimation("swordsman_backward_left_move", framePeriod, loop);
+                    animator.addAnimation("swordsman_backward_right_move", framePeriod, loop);
+                    animator.addAnimation("swordsman_backward_left_move_highlight", framePeriod, loop);
+                    animator.addAnimation("swordsman_backward_right_move_highlight", framePeriod, loop);
 
                     troop.addComponent(animator);
                     troop.addComponent(new SwordsmanAnimationController());
@@ -246,6 +259,10 @@ public class UnitFactory {
                     animator.addAnimation("hoplite_forward_right_attack", framePeriod, loop);
                     animator.addAnimation("hoplite_forward_left_attack_highlighted", framePeriod, loop);
                     animator.addAnimation("hoplite_forward_right_attack_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_backward_left_move", framePeriod, loop);
+                    animator.addAnimation("hoplite_backward_right_move", framePeriod, loop);
+                    animator.addAnimation("hoplite_backward_left_move_highlighted", framePeriod, loop);
+                    animator.addAnimation("hoplite_backward_right_move_highlighted", framePeriod, loop);
 
                     troop.addComponent(animator);
                     troop.addComponent(new HopliteAnimationController());
@@ -259,6 +276,7 @@ public class UnitFactory {
             troop.addComponent(aiComponent);
 
             troop.addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.ALL))
                     .addComponent(new FriendlyComponent())
