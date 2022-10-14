@@ -19,6 +19,8 @@ public class BuildingUIDataComponent extends UIComponent {
     private boolean isSelected = false;
     private static Image contextBoxSprite;
     private Group contextBoxItems;
+    private float initialHeight;
+    private float initialWidth;
     private final String[] textures = {
             "images/context_box.png",
     };
@@ -43,10 +45,6 @@ public class BuildingUIDataComponent extends UIComponent {
         isSelected = selectableComponent.isSelected();
         contextBoxItems = new Group();
 
-        Texture contextBoxTexture = ServiceLocator
-                .getResourceService().getAsset("images/context_box.png", Texture.class);
-
-        contextBoxSprite = new Image(contextBoxTexture);
     }
 
     /**
@@ -70,7 +68,14 @@ public class BuildingUIDataComponent extends UIComponent {
 
         if (selectableComponent != null)
             isSelected = selectableComponent.isSelected();
+
+        Texture contextBoxTexture = ServiceLocator
+                .getResourceService().getAsset("images/Information_Box_Deepsea.png", Texture.class);
+        contextBoxSprite = new Image(contextBoxTexture);
+
         contextBoxItems.clear();
+        contextBoxSprite.clear();
+
         if (isSelected) {
             stage.addActor(contextBoxItems);
             String statsString = "";
@@ -85,14 +90,14 @@ public class BuildingUIDataComponent extends UIComponent {
             String buildingName = "";
             try {
                 switch (buildingInfo.getType()) {
-                    case BARRACKS -> buildingName = "Barracks";
-                    case TOWNHALL -> buildingName = "Town Hall";
-                    case WALL, CONNECTOR_EW, CONNECTOR_NS -> buildingName = "Wall";
+                    case BARRACKS -> buildingName = "Barracks:";
+                    case TOWNHALL -> buildingName = "Town Hall:";
+                    case WALL, CONNECTOR_EW, CONNECTOR_NS -> buildingName = "Wall:";
                     case GATE_EW, GATE_NS -> buildingName = "Gate";
-                    case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getLevel() + ")";
-                    case LIBRARY -> buildingName = "Library";
-                    case FARM -> buildingName = "Farm";
-                    case BLACKSMITH -> buildingName = "Blacksmith";
+                    case TREBUCHET -> buildingName = "Canon (" + buildingInfo.getLevel() + "):";
+                    case LIBRARY -> buildingName = "Library:";
+                    case FARM -> buildingName = "Farm:";
+                    case BLACKSMITH -> buildingName = "Blacksmith:";
                 }
             } catch (NullPointerException nullPointerException) {
                 System.out.println(nullPointerException.getMessage());
@@ -106,24 +111,22 @@ public class BuildingUIDataComponent extends UIComponent {
                     .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
 
             /* TODO: create small context box for smaller window sizes */
+            contextBoxSprite.setWidth(contextBoxSprite.getWidth() * 1.5f);
+            contextBoxSprite.setHeight(contextBoxSprite.getHeight() * 1.5f);
+
             contextBoxItems.setPosition(contextBoxSprite.getX(), contextBoxSprite.getY());
             contextBoxItems.setSize(contextBoxSprite.getWidth(), contextBoxSprite.getHeight());
-            buildingNameLabel.setPosition(100f, 300f);
-            statsLabel.setPosition(14f, 239f);
-            statsLabel.setSize(158f, 25f);
-            statsLabel.setWrap(true);
-            attributesLabel.setPosition(14f, 11f);
+            buildingNameLabel.setPosition(220f, 160f);
+
+            attributesLabel.setPosition(220f, 2f);
             attributesLabel.setSize(158f, 217f);
             attributesLabel.setWrap(true);
-            inventoryLabel.setPosition(184f, 68f);
-            inventoryLabel.setSize(208f, 85f);
-            inventoryLabel.setWrap(true);
-            buildingImage.setPosition(183f, 60f);
-            buildingImage.setSize(209f, 209f);
+
+            buildingImage.setPosition(40f, 50f);
+            buildingImage.setSize(130f, 130f);
 
             contextBoxItems.addActor(contextBoxSprite);
             contextBoxItems.addActor(buildingNameLabel);
-            contextBoxItems.addActor(statsLabel);
             contextBoxItems.addActor(attributesLabel);
             contextBoxItems.addActor(buildingImage);
         } else {
