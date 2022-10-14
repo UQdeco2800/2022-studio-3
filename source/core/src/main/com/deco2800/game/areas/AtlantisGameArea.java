@@ -585,8 +585,8 @@ public class AtlantisGameArea extends GameArea {
             for (int i = 0; i < buildings.size(); i++) {
                 //Iterate through row of buildings, excluding the last entry
                 //Roll to see if a feature is being placed
-
                 if (new Random().nextInt(100) <= 30) {
+                    //No feature placed besides this building
                     //Skip last building in row, as features will be difficult to see
                     if (i == 0) {
                         i++;
