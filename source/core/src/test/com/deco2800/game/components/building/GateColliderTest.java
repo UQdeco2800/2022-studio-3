@@ -126,7 +126,7 @@ public class GateColliderTest {
         assertEquals(0, gc.getCollidedIds().size());
         assertFalse(gc.isGateOpen());
     }
-    
+
      */
 
 }
