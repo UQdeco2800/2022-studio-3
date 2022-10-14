@@ -111,8 +111,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)" class="member-name-link">TextureScaler</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
- com.badlogic.gdx.math.Vector2&nbsp;rightPoint)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)" class="member-name-link">TextureScaler</a><wbr>(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
+ com.badlogic.gdx.math.Vector2&nbsp;maxX,
+ com.badlogic.gdx.math.Vector2&nbsp;maxY)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -128,14 +129,35 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPreciseScale(float)" class="member-name-link">setPreciseScale</a><wbr>(float&nbsp;desiredScale)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.GridPoint2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPosition()" class="member-name-link">getPosition</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the Gridpoint2 (x,y) position of this entity tile wise</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTileHeight()" class="member-name-link">getTileHeight</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the height of this entity in tiles</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTileWidth()" class="member-name-link">getTileWidth</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the width of this entity in tiles</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPreciseScale(float,boolean)" class="member-name-link">setPreciseScale</a><wbr>(float&nbsp;desiredScale,
+ boolean&nbsp;scaleWidth)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Scales an entity with a TextureRenderComponent such that it occupies the desired number of tiles</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpawnPoint(com.badlogic.gdx.math.GridPoint2,com.deco2800.game.areas.terrain.TerrainComponent)" class="member-name-link">setSpawnPoint</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePoint,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpawnPoint(com.badlogic.gdx.math.GridPoint2,com.deco2800.game.areas.terrain.TerrainComponent)" class="member-name-link">setSpawnPoint</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePoint,
  <a href="../../areas/terrain/TerrainComponent.html" title="class in com.deco2800.game.areas.terrain">TerrainComponent</a>&nbsp;terrain)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpawnPoint(com.badlogic.gdx.math.GridPoint2,com.deco2800.game.areas.terrain.TerrainComponent,com.badlogic.gdx.math.Vector2)" class="member-name-link">setSpawnPoint</a><wbr>(com.badlogic.gdx.math.GridPoint2&nbsp;tilePoint,
+ <a href="../../areas/terrain/TerrainComponent.html" title="class in com.deco2800.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ com.badlogic.gdx.math.Vector2&nbsp;offset)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -178,10 +200,11 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">
+<section class="detail" id="&lt;init&gt;(com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2,com.badlogic.gdx.math.Vector2)">
 <h3>TextureScaler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TextureScaler</span><wbr><span class="parameters">(com.badlogic.gdx.math.Vector2&nbsp;leftPoint,
- com.badlogic.gdx.math.Vector2&nbsp;rightPoint)</span></div>
+ com.badlogic.gdx.math.Vector2&nbsp;maxX,
+ com.badlogic.gdx.math.Vector2&nbsp;maxY)</span></div>
 </section>
 </li>
 </ul>
@@ -193,15 +216,50 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="setPreciseScale(float)">
+<section class="detail" id="setPreciseScale(float,boolean)">
 <h3>setPreciseScale</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setPreciseScale</span><wbr><span class="parameters">(float&nbsp;desiredScale)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setPreciseScale</span><wbr><span class="parameters">(float&nbsp;desiredScale,
+ boolean&nbsp;scaleWidth)</span></div>
 <div class="block">Scales an entity with a TextureRenderComponent such that it occupies the desired number of tiles</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>desiredScale</code> - desired number of tiles to occupy (potentially float, but preferably integer input)</dd>
+<dd><code>scaleWidth</code> - scale the Entity's width if true, else scale Entitie's height</dd>
 <dt>Returns:</dt>
 <dd>true if the entity was scaled, else false</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTileWidth()">
+<h3>getTileWidth</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTileWidth</span>()</div>
+<div class="block">Returns the width of this entity in tiles</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>tile width</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTileHeight()">
+<h3>getTileHeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTileHeight</span>()</div>
+<div class="block">Returns the height of this entity in tiles</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>tile height</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPosition()">
+<h3>getPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.GridPoint2</span>&nbsp;<span class="element-name">getPosition</span>()</div>
+<div class="block">Returns the Gridpoint2 (x,y) position of this entity tile wise</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>tile position of Entity</dd>
 </dl>
 </section>
 </li>
@@ -210,6 +268,14 @@ loadScripts(document, 'script');</script>
 <h3>setSpawnPoint</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpawnPoint</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;tilePoint,
  <a href="../../areas/terrain/TerrainComponent.html" title="class in com.deco2800.game.areas.terrain">TerrainComponent</a>&nbsp;terrain)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setSpawnPoint(com.badlogic.gdx.math.GridPoint2,com.deco2800.game.areas.terrain.TerrainComponent,com.badlogic.gdx.math.Vector2)">
+<h3>setSpawnPoint</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpawnPoint</span><wbr><span class="parameters">(com.badlogic.gdx.math.GridPoint2&nbsp;tilePoint,
+ <a href="../../areas/terrain/TerrainComponent.html" title="class in com.deco2800.game.areas.terrain">TerrainComponent</a>&nbsp;terrain,
+ com.badlogic.gdx.math.Vector2&nbsp;offset)</span></div>
 </section>
 </li>
 </ul>
