@@ -97,7 +97,6 @@ public class GateCollider extends Component {
         }
         //Store the other's entity
         Entity collidedEntity = ((BodyUserData) other.getBody().getUserData()).entity;
-
         //Determine if the entity is an allied unit
         if (collidedEntity.getComponent(FriendlyComponent.class) != null) {
             //This unit is a friendly unit
