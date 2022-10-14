@@ -6,7 +6,25 @@
     "level": 1
   },
   "barracks": {
+    "health": 300,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1
+  },
+  "farm": {
+    "health": 100,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1
+  },
+  "library": {
     "health": 200,
+    "baseAttack": 0,
+    "baseDefence": 10,
+    "level": 1
+  },
+  "blacksmith": {
+    "health": 300,
     "baseAttack": 0,
     "baseDefence": 10,
     "level": 1

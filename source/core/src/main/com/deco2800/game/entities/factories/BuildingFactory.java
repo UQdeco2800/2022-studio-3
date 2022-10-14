@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -112,14 +111,14 @@ public class BuildingFactory {
 
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-                31f, 607f,      // Vertex 0       3--2
-                499f, 835f,     // Vertex 1      /  /
-                958f, 515f,     // Vertex 2     /  /
-                486f, 289f      // Vertex 3    0--1
+                139f, 836f,     // Vertex 0       3--2
+                543, 1009,      // Vertex 1      /  /
+                1076f, 792f,     // Vertex 2     /  /
+                634f, 636f      // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
-                .getAsset("images/base.png", Texture.class)), points, null);
+                .getAsset("images/level 1 town hall.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
 
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
@@ -191,6 +190,7 @@ public class BuildingFactory {
      */
     public static Entity createFarm() {
         Entity farm = createBaseBuilding();
+        FarmConfig config = configs.farm;
         final float FARM_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
@@ -203,6 +203,7 @@ public class BuildingFactory {
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
+               .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE, true);
@@ -237,6 +238,7 @@ public class BuildingFactory {
     public static Entity createTitanShrine() {
         final float TITANSHRINE_SCALE = 10f;
         Entity titanShrine = createBaseBuilding();
+        titanShrine.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         TitanShrineConfig config = configs.titanShrine;
 
         AnimationRenderComponent animator =
@@ -305,6 +307,7 @@ public class BuildingFactory {
     public static Entity createShip() {
         final float SHIP_SCALE = 5f;
         Entity ship = createBaseBuilding();
+        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         ShipConfig config = configs.ship;
 
         AnimationRenderComponent animator =
@@ -424,6 +427,7 @@ public class BuildingFactory {
      */
     public static Entity createLibrary() {
         Entity library = createBaseBuilding();
+        LibraryConfig config = configs.library;
         final float LIBRARY_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
@@ -436,6 +440,7 @@ public class BuildingFactory {
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
+               .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
@@ -470,6 +475,7 @@ public class BuildingFactory {
      */
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
+        BlacksmithConfig config = configs.blacksmith;
         final float BLACKSMITH_SCALE = 5f;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
@@ -481,6 +487,7 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.BLACK);
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
+          .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
           .addComponent(mp)
           .addComponent(new TextureScaler(leftPoint, maxX, maxY));
 
