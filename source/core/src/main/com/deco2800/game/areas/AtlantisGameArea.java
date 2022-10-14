@@ -256,8 +256,8 @@ public class AtlantisGameArea extends GameArea {
 //        player = spawnPlayer();
         centreCameraOnCity();
 
-//        spawnForager();
-//        spawnForager();
+        spawnForager();
+        spawnForager();
 
 
 //        spawnMiner();
@@ -296,7 +296,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnExampleUnit();
         //spawnBlueJokers();
 
-        spawnWolf();
+        //spawnWolf();
 
 
         //spawnTitan();
@@ -312,7 +312,7 @@ public class AtlantisGameArea extends GameArea {
 
         spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
-        startFlooding();
+        //startFlooding();
 
 //        spawnSoldierMenu();
 //        spawnBuildingMenu();

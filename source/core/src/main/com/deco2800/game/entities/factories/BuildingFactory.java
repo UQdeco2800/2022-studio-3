@@ -754,7 +754,6 @@ public class BuildingFactory {
         Entity gate = createBaseBuilding();
         gate.setEntityName("City Gate");
         WallConfig config = configs.wall;
-
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -795,7 +794,7 @@ public class BuildingFactory {
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new SelectionCollider())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-            .addComponent(new BuildingActions(config.type, config.level))
+            .addComponent(new BuildingActions(Building.GATE_NS, config.level))
             .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
@@ -870,7 +869,7 @@ public class BuildingFactory {
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingActions(Building.GATE_EW, config.level))
                 .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
