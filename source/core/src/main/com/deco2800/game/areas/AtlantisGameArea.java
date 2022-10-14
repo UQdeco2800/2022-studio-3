@@ -404,10 +404,10 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(ui);
 
 
-        Entity infoUi = new Entity();
-        infoUi.addComponent(new InfoBoxDisplay());
-//        infoUi.addComponent(new SpellUI());
-        spawnEntity(infoUi);
+//        Entity infoUi = new Entity();
+//        infoUi.addComponent(new InfoBoxDisplay());
+////        infoUi.addComponent(new SpellUI());
+//        spawnEntity(infoUi);
 
 
         Entity spellsUi = new Entity();
