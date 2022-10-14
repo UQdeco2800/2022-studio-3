@@ -84,6 +84,7 @@ public class SelectionColliderTest {
     /**
      * Creates a fixture for a given entity
      * @param entity entity that requires a fixture
+     * @param points points reflecting the selection hitbox of the fixture
      * @return fixture
      */
     private Fixture makeFixture(Entity entity, float[] points) {
