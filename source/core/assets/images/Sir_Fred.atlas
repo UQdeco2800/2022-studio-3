@@ -1,0 +1,40 @@
+Sir_Fred.png
+size: 900, 1350
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Attack_Fred
+  rotate: false
+  xy: 0, 0
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 0
+Fredmogus
+  rotate: false
+  xy: 450, 0
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 1
+Good_Luck_Fred
+  rotate: false
+  xy: 0, 450
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 2
+Scared_Fred
+  rotate: false
+  xy: 450, 450
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 3
+Teach_Fred
+  rotate: false
+  xy: 0, 900
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 4
