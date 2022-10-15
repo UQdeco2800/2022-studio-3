@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
-import org.w3c.dom.Text;
+import com.deco2800.game.ui.terminal.commands.ConstructionCommand;
+
+import java.util.ArrayList;
 
 public class BuildingMenuButton extends UIComponent {
     private TextButton buildingButton;
@@ -23,6 +24,11 @@ public class BuildingMenuButton extends UIComponent {
 
     private TextButton barracksButton;
     private TextButton wallButton;
+
+    ConstructionCommand commandBarracks = new ConstructionCommand();
+    ConstructionCommand commandWall = new ConstructionCommand();
+    ArrayList<String> buildBarracks = new ArrayList<String>();
+    ArrayList<String> buildWall = new ArrayList<String>();
 
     @Override
     public void create() {
@@ -38,6 +44,9 @@ public class BuildingMenuButton extends UIComponent {
     @Override
     public void dispose(){
         super.dispose();
+        backgroundTexture.remove();
+        barracks.remove();
+        wall.remove();
         buildingButton.remove();
         barracksButton.remove();
         wallButton.remove();
@@ -47,6 +56,37 @@ public class BuildingMenuButton extends UIComponent {
         buildingButton = new TextButton("Building", skin);
         buildingButton.setPosition(Gdx.graphics.getWidth()-buildingButton.getWidth(),Gdx.graphics.getHeight()/2-buildingButton.getHeight()/2);
 
+        barracksButton = new TextButton("Cost: $$$", skin);
+        wallButton = new TextButton("Cost: $", skin);
+
+        barracksButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                        if(barrackFlag == 1){
+                            barrackFlag = 0;
+                        }else {
+                            commandBarracks.action(buildBarracks);
+                        }
+                    }
+                }
+        );
+
+        wallButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                        if(wallFlag == 1){
+                            //backgroundTexture.remove();
+                            wallFlag = 0;
+                        }else{
+                            //addSoldierMenuUI();
+                            commandWall.action(buildWall);
+                        }
+                    }
+                }
+        );
+
         buildingButton.addListener(
                 new ChangeListener() {
                     @Override
@@ -55,21 +95,30 @@ public class BuildingMenuButton extends UIComponent {
                             backgroundTexture.remove();
                             barracks.remove();
                             wall.remove();
+
                             barracksButton.remove();
                             wallButton.remove();
+
                             displayFlag = 0;
                         }else{
                             addSoldierMenuUI();
+                            stage.addActor(barracksButton);
+                            stage.addActor(wallButton);
+
                             displayFlag = 1;
                         }
                     }
                 }
         );
 
+
+
         stage.addActor(buildingButton);
+        //stage.addActor(barracksButton);
+        //stage.addActor(wallButton);
     }
 
-    private void addSoldierMenuUI(){
+    private void addMenuComponents(){
         backgroundTexture = new Image(ServiceLocator.
                 getResourceService().getAsset("images/building-selection-menu.png", Texture.class));
         backgroundTexture.setSize(663, 330);
@@ -85,49 +134,25 @@ public class BuildingMenuButton extends UIComponent {
         wall.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + + barracks.getWidth() + 50f,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
 
-        barracksButton = new TextButton("Cost: $$$", skin);
+        //barracksButton = new TextButton("Cost: $$$", skin);
         barracksButton.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + 50f + barracks.getWidth()/4,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
 
-        wallButton = new TextButton("Cost: $", skin);
+        //wallButton = new TextButton("Cost: $", skin);
         wallButton.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + + barracks.getWidth() + 50f + wall.getWidth()/4,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
+    }
 
-        barracksButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
-                        if(displayFlag == 1){
-                            //backgroundTexture.remove();
-                            barrackFlag = 0;
-                        }else{
-                            //addSoldierMenuUI();
-                            barrackFlag = 1;
-                        }
-                    }
-                }
-        );
+    private void addSoldierMenuUI(){
+        addMenuComponents();
 
-        wallButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
-                        if(displayFlag == 1){
-                            //backgroundTexture.remove();
-                            wallFlag = 0;
-                        }else{
-                            //addSoldierMenuUI();
-                            wallFlag = 1;
-                        }
-                    }
-                }
-        );
+        buildBarracks.add("barracks");
+        buildWall.add("2");
+
+
 
         stage.addActor(backgroundTexture);
         stage.addActor(barracks);
         stage.addActor(wall);
-
-        stage.addActor(barracksButton);
-        stage.addActor(wallButton);
     }
 }
