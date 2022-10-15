@@ -8,6 +8,7 @@ import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -25,6 +26,8 @@ public class TouchAttackComponent extends Component {
 
   private EntityDirectionComponent entityDirectionComponent;
   private boolean isAttacking = false;
+  private int hitDamage;
+  private Entity targetEntity;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -39,9 +42,10 @@ public class TouchAttackComponent extends Component {
    * @param targetLayer The physics layer of the target's collider.
    * @param knockback The magnitude of the knockback applied to the entity.
    */
-  public TouchAttackComponent(short targetLayer, float knockback) {
+  public TouchAttackComponent(short targetLayer, float knockback, int hitDamage) {
     this.targetLayer = targetLayer;
     this.knockbackForce = knockback;
+    this.hitDamage = hitDamage;
   }
 
   @Override
@@ -50,6 +54,17 @@ public class TouchAttackComponent extends Component {
     combatStats = entity.getComponent(CombatStatsComponent.class);
     hitboxComponent = entity.getComponent(HitboxComponent.class);
     entityDirectionComponent = entity.getComponent(EntityDirectionComponent.class);
+  }
+
+  @Override
+  public void update() {
+    if (isAttacking) {
+      if (combatStats.isDead()) {
+        isAttacking = false;
+        this.targetEntity.dispose();
+        this.targetEntity = null;
+      }
+    }
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {
@@ -68,7 +83,9 @@ public class TouchAttackComponent extends Component {
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
 
     if (targetStats != null) {
-      targetStats.hit(combatStats);
+      this.targetEntity = target;
+      //targetStats.hit(combatStats);
+      targetStats.decreaseHealth(hitDamage);
       if (targetStats.getHealth() > 0) {
         if (!isAttacking) {
           isAttacking = true;
@@ -91,10 +108,7 @@ public class TouchAttackComponent extends Component {
             }
           }
         }
-      } else {
-        isAttacking = false;
-//        target.dispose();
-      }
+      } 
     }
 
 //     Apply knockback
@@ -107,4 +121,5 @@ public class TouchAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
   }
+
 }
