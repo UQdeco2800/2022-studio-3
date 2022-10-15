@@ -3,6 +3,7 @@ package com.deco2800.game.areas.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.utils.random.PseudoRandom;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -676,21 +677,34 @@ public class MapGenerator {
         //Check that the square to be flooded is a flood-able square
         //Return without crashing game if an error has been made
         boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
+        int furtherstLeft = mapWidth;
+        int furtherstRight = 0;
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                if (this.map[i][j] == this.getIslandChar()) {
-                    try {
-                        if (this.map[i - 1][j] == this.getOceanChar() ||
-                                this.map[i + 1][j] == this.getOceanChar() ||
-                                this.map[i][j - 1] == this.getOceanChar() ||
-                                this.map[i][j + 1] == this.getOceanChar()) {
-                            mapEdges[i][j] = true;
-                        } else {
-                            mapEdges[i][j] = false;
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        //Do Nothing
+                mapEdges[i][j] = false;
+                if (map[i][j] != this.getOceanChar()) {
+                    if (j < furtherstLeft) {
+                        furtherstLeft = j;
                     }
+                    if (j > furtherstRight) {
+                        furtherstRight = j;
+                    }
+                }
+            }
+        }
+
+        //Nuke the extremities
+        for (int i = 0; i < mapHeight; i++) {
+            int rand = PseudoRandom.seedRandomInt(0, 3);
+            if (rand != 0) {
+                if (this.map[i][furtherstLeft] != this.getCityChar()) {
+                    mapEdges[i][furtherstLeft] = true;
+                }
+            }
+            rand = PseudoRandom.seedRandomInt(0, 3);
+            if (rand != 0) {
+                if (this.map[i][furtherstRight] != this.getCityChar()) {
+                    mapEdges[i][furtherstRight] = true;
                 }
             }
         }

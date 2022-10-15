@@ -48,7 +48,7 @@ public class FloodingGenerator extends Component {
     /**
      * Constant value of flood timer (ms)
      */
-    private final int floodDuration = 40000;
+    private final int floodDuration = 1000;
     /**
      * Stores current progress update
      */
