@@ -131,9 +131,9 @@ public class TextureRenderComponent extends RenderComponent {
     /*
     if (entity.getComponent(TextureScaler.class) !=  null) {
       //drawTextureBox(batch);
-      TextureScaler bo = entity.getComponent(TextureScaler.class);
-      drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
+      //TextureScaler bo = entity.getComponent(TextureScaler.class);
+      //drawTextureBox(bo.drawPoints, bo.linePoints,  batch);
     }
-     */
+    */
   }
 }
