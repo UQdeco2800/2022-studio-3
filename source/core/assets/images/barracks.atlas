@@ -38,7 +38,6 @@ barracks_level_1.0-0_4
   orig: 1062, 615
   offset: 0, 0
   index: 4
-
 barracks_level_1.0-50_0
   rotate: false
   xy: 1374, 913
@@ -67,8 +66,6 @@ barracks_level_1.0-50_default
   orig: 894, 687
   offset: 0, 0
   index: 3
-
-
 barracks_level_2.0-0_0
   rotate: false
   xy: 1380, 1733
@@ -111,8 +108,6 @@ barracks_level_2.0-0_5
   orig: 1062, 615
   offset: 0, 0
   index: 5
-
-
 barracks_level_2.0-50_0
   rotate: false
   xy: 3642, 2153
@@ -148,6 +143,3 @@ barracks_level_2.0-50_default
   orig: 1050, 1041
   offset: 0, 0
   index: 4
-
-
-
