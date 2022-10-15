@@ -150,6 +150,12 @@ public class CombatStatsComponent extends Component {
     }
     if (entity != null) {
       entity.getEvents().trigger("updateHealth", this.health);
+      entity.getEvents().trigger("HealthAnimation");
+      if (health > 0.5*maxHealth) {
+        entity.getEvents().trigger("Damaged");
+      } else if (health <= 0.5*maxHealth) {
+        entity.getEvents().trigger("collapse");
+      }
     }
   }
 
@@ -232,13 +238,6 @@ public class CombatStatsComponent extends Component {
     int newHealth = getHealth() - max(1,
             attacker.getBaseAttack() - getBaseDefence());
     setHealth(newHealth);
-    checkDamageAnimation();
-  }
-
-  private void checkDamageAnimation() {
-    if (entity.getEvents().hasEvent("Damaged")) {
-      entity.getEvents().trigger("Damaged");
-    }
   }
 
   public void decreaseHealth(int damage) {

@@ -290,6 +290,7 @@ public class BuildingFactory {
         animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         MapComponent mc = new MapComponent();
@@ -300,6 +301,8 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(mc)
+                .addComponent(new HealthAnimation())
+                .addComponent(new BuildingAnimationController())
                 .addComponent(animator);
 
 
