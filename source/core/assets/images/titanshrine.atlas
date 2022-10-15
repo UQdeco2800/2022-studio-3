@@ -3,7 +3,7 @@ size: 4000, 1500
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-default
+100-idle
   rotate: false
   xy: 2500, 500
   size: 500, 500
@@ -45,28 +45,56 @@ default
   orig: 500, 500
   offset: 0, 0
   index: 3
-attacked
+50-attacked
+  rotate: false
+  xy: 500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+50-attacked
+  rotate: false
+  xy: 1000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+50-attacked
+  rotate: false
+  xy: 1500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+50-attacked
+  rotate: false
+  xy: 2000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+100-attacked
   rotate: false
   xy: 2500, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 0
-attacked
+100-attacked
   rotate: false
   xy: 3000, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 1
-attacked
+100-attacked
   rotate: false
   xy: 3500, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 2
-attacked
+100-attacked
   rotate: false
   xy: 0, 500
   size: 500, 500
