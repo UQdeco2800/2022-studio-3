@@ -73,8 +73,7 @@ public class BuildingFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new SelectableComponent())
                 .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HealthBarComponent(EntityType.FRIENDLY));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
     /**
@@ -278,7 +277,6 @@ public class BuildingFactory {
     public static Entity createTitanShrine() {
         final float TITANSHRINE_SCALE = 10f;
         Entity titanShrine = createBaseBuilding();
-        titanShrine.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         TitanShrineConfig config = configs.titanShrine;
 
         AnimationRenderComponent animator =
@@ -300,6 +298,7 @@ public class BuildingFactory {
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new HealthBarComponent(EntityType.ENEMY))
                 .addComponent(mc)
                 .addComponent(animator);
 
@@ -346,7 +345,6 @@ public class BuildingFactory {
     public static Entity createShip() {
         final float SHIP_SCALE = 5f;
         Entity ship = createBaseBuilding();
-        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         ShipConfig config = configs.ship;
 
         AnimationRenderComponent animator =
@@ -358,6 +356,7 @@ public class BuildingFactory {
         ship
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new HealthBarComponent(EntityType.ENEMY))
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(animator);
 
