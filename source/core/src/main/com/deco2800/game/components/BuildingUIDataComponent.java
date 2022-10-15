@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+
+import java.util.Random;
 
 public class BuildingUIDataComponent extends UIComponent {
     private CombatStatsComponent combatStats;
@@ -26,10 +27,17 @@ public class BuildingUIDataComponent extends UIComponent {
     private float initialWidth;
     private Image healthBarFrame;
     private ProgressBar healthBar;
-    private Label hp;
+    private Label healthPoints;
+    private Image attackIcon;
+    private Label attackPoints;
+    private Image defenseIcon;
+    private Label defensePoints;
+
     private final String[] textures = {
             "images/context_box.png",
             "images/health bar_6.png",
+            "images/attack.png",
+            "images/defense.png",
     };
 
     private void loadAssets() {
@@ -51,14 +59,16 @@ public class BuildingUIDataComponent extends UIComponent {
         selectableComponent = this.entity.getComponent(SelectableComponent.class);
         isSelected = selectableComponent.isSelected();
         contextBoxItems = new Group();
+        createAttackInfo();
+        createDefenseInfo();
         createHealthBar();
     }
 
     private void createHealthBar() {
         float width = 180f, height = 36f;
-        float x = 220f, y = 60f;
+        float x = 220f, y = 140f;
         float progressBarOffset = 25f; // Progress bar x offset from health bar frame
-        float xLabelOffset = 45f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
         healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png",
                 Texture.class));
         healthBarFrame.setPosition(x, y);
@@ -66,7 +76,7 @@ public class BuildingUIDataComponent extends UIComponent {
         healthBarFrame.setHeight(height);
 
         Pixmap pixmap = new Pixmap(1, (int) height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
+        pixmap.setColor(new Color(255, 0, 0, 0.8f));
         pixmap.fill();
         TextureRegionDrawable drawable = new TextureRegionDrawable(new Texture(pixmap));
         pixmap.dispose();
@@ -77,9 +87,37 @@ public class BuildingUIDataComponent extends UIComponent {
         healthBar.setPosition(x + progressBarOffset, y + height / 2f);
         healthBar.setWidth(width - progressBarOffset);
 
-        hp = new Label("", skin);
-        hp.setFontScale(0.8f);
-        hp.setPosition(x + xLabelOffset, y + yLabelOffset);
+        healthPoints = new Label("", skin);
+        healthPoints.setFontScale(0.8f);
+        healthPoints.setPosition(x + xLabelOffset, y + yLabelOffset);
+    }
+
+    private void createAttackInfo() {
+        float width = 36f, height = 36f;
+        float x = 220f, y = 100f;
+        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        attackIcon = new Image(ServiceLocator.getResourceService().getAsset("images/attack.png",
+                Texture.class));
+        attackIcon.setPosition(x, y);
+        attackIcon.setSize(width, height);
+
+        attackPoints = new Label("", skin);
+        attackPoints.setFontScale(0.8f);
+        attackPoints.setPosition(x + xLabelOffset, y + yLabelOffset);
+    }
+
+    private void createDefenseInfo() {
+        float width = 31f, height = 36f;
+        float x = 220f, y = 60f;
+        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        defenseIcon = new Image(ServiceLocator.getResourceService().getAsset("images/defense.png",
+                Texture.class));
+        defenseIcon.setPosition(x, y);
+        defenseIcon.setSize(width, height);
+
+        defensePoints = new Label("", skin);
+        defensePoints.setFontScale(0.8f);
+        defensePoints.setPosition(x + xLabelOffset, y + yLabelOffset);
     }
 
     /**
@@ -113,17 +151,6 @@ public class BuildingUIDataComponent extends UIComponent {
 
         if (isSelected) {
             stage.addActor(contextBoxItems);
-            String statsString = "";
-
-            try {
-//                statsString = "Health: " + combatStats.getHealth() +
-//                              " Attack: " + combatStats.getBaseAttack() +
-//                              " Defence: " + combatStats.getBaseDefence();
-                statsString = "Attack: " + combatStats.getBaseAttack() +
-                              " Defence: " + combatStats.getBaseDefence();
-            } catch (NullPointerException nullPointerException) {
-                // pass
-            }
             String buildingName = "";
             try {
                 switch (buildingInfo.getType()) {
@@ -142,7 +169,6 @@ public class BuildingUIDataComponent extends UIComponent {
             }
             buildingNameLabel = new Label(buildingName, skin);
             statsLabel = new Label("Stats: ", skin);
-            attributesLabel = new Label(statsString, skin);
             inventoryLabel = new Label("inventory things...", skin);
             buildingImage = new Image(ServiceLocator.getResourceService()
                     .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
@@ -153,26 +179,27 @@ public class BuildingUIDataComponent extends UIComponent {
 
             contextBoxItems.setPosition(contextBoxSprite.getX(), contextBoxSprite.getY());
             contextBoxItems.setSize(contextBoxSprite.getWidth(), contextBoxSprite.getHeight());
-            buildingNameLabel.setPosition(220f, 160f);
-
-            attributesLabel.setPosition(220f, 20f);
-            attributesLabel.setSize(158f, 217f);
-            attributesLabel.setWrap(true);
+            buildingNameLabel.setPosition(50f, 165f);
 
             int health = combatStats.getHealth(), maxHealth =  combatStats.getMaxHealth();
             healthBar.setRange(0, maxHealth);
             healthBar.setValue(health);
-            hp.setText(String.format("%d/%d HP", health, maxHealth));
+            healthPoints.setText(String.format("%d/%d HP", health, maxHealth));
+            attackPoints.setText(String.format("+%d", combatStats.getBaseAttack()));
+            defensePoints.setText(String.format("+%d", combatStats.getBaseDefence()));
 
-            buildingImage.setPosition(40f, 50f);
-            buildingImage.setSize(130f, 130f);
+            buildingImage.setPosition(45f, 50f);
+            buildingImage.setSize(120f, 120f);
 
             contextBoxItems.addActor(contextBoxSprite);
+            contextBoxItems.addActor(attackIcon);
+            contextBoxItems.addActor(attackPoints);
+            contextBoxItems.addActor(defenseIcon);
+            contextBoxItems.addActor(defensePoints);
             contextBoxItems.addActor(healthBar);
             contextBoxItems.addActor(healthBarFrame);
-            contextBoxItems.addActor(hp);
+            contextBoxItems.addActor(healthPoints);
             contextBoxItems.addActor(buildingNameLabel);
-            contextBoxItems.addActor(attributesLabel);
             contextBoxItems.addActor(buildingImage);
         } else {
             contextBoxItems.remove();
