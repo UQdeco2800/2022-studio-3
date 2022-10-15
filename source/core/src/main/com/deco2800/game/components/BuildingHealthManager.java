@@ -1,10 +1,14 @@
 package com.deco2800.game.components;
 
+import com.deco2800.game.components.building.Building;
+import com.deco2800.game.components.building.BuildingActions;
+
 /**
  * Component that sets the buildings health state.
  */
 public class BuildingHealthManager extends Component {
     private BuildingHealth buildingHealthState;
+    private BuildingActions buildingActions;
     private BuildingHealth previousHealthState;
     private CombatStatsComponent buildingStats;
 
@@ -19,6 +23,12 @@ public class BuildingHealthManager extends Component {
 
     @Override
     public void create() {
+        buildingActions = this.getEntity().getComponent(BuildingActions.class);
+
+        switch (buildingActions.getType()) {
+            case SHIP -> this.getEntity().getEvents().trigger("setShip", true);
+        }
+
         buildingStats = this.entity.getComponent(CombatStatsComponent.class);
         currentHealth = buildingStats.getHealth();
         previousHealth = currentHealth;
@@ -43,12 +53,26 @@ public class BuildingHealthManager extends Component {
 
         if (previousHealth != currentHealth) {
             previousHealth = currentHealth;
-            switch(buildingHealthState) {
-                case FULL_HEALTH:
-                    this.getEntity().getEvents().trigger("underAttackFull");
+            switch(buildingActions.getType()) {
+                case SHIP:
+                    switch (buildingHealthState) {
+                        case FULL_HEALTH:
+                            this.getEntity().getEvents().trigger("directionAttacked");
+                            break;
+                        case HALF_HEALTH:
+                            this.getEntity().getEvents().trigger("underAttackHalf");
+                            break;
+                    }
                     break;
-                case HALF_HEALTH:
-                    this.getEntity().getEvents().trigger("underAttackHalf");
+                default:
+                    switch (buildingHealthState) {
+                        case FULL_HEALTH:
+                            this.getEntity().getEvents().trigger("underAttackFull");
+                            break;
+                        case HALF_HEALTH:
+                            this.getEntity().getEvents().trigger("underAttackHalf");
+                            break;
+                    }
                     break;
             }
         }
@@ -68,10 +92,22 @@ public class BuildingHealthManager extends Component {
     }
 
     private void activateEvent() {
-        switch(buildingHealthState) {
-            case ZERO_HEALTH -> this.getEntity().getEvents().trigger("collapsing");
-            case HALF_HEALTH -> this.getEntity().getEvents().trigger("damaged");
-            case FULL_HEALTH -> this.getEntity().getEvents().trigger("creation");
+        int healthCode = 0;
+        switch (buildingActions.getType()) {
+            case SHIP:
+                switch (buildingHealthState) {
+                    case ZERO_HEALTH -> this.getEntity().getEvents().trigger("healthCode", 0);
+                    case HALF_HEALTH -> this.getEntity().getEvents().trigger("healthCode", 50);
+                    case FULL_HEALTH -> this.getEntity().getEvents().trigger("healthCode", 100);
+                }
+                break;
+            default:
+                switch(buildingHealthState) {
+                    case ZERO_HEALTH -> this.getEntity().getEvents().trigger("collapsing");
+                    case HALF_HEALTH -> this.getEntity().getEvents().trigger("damaged");
+                    case FULL_HEALTH -> this.getEntity().getEvents().trigger("creation");
+                }
+                break;
         }
     }
 }

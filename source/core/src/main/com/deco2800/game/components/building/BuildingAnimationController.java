@@ -24,12 +24,21 @@ public class BuildingAnimationController extends Component {
     private static final String COLLAPSE = "collapse";
     private static final String REBUILD = "reconstruction";
 
+    private boolean isShip;
+    private int healthCode;
+    String currentDirection;
+
     @Override
     public void create() {
         super.create();
+
+        isShip = false;
+        healthCode = 100;
+
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         D_health = this.entity.getComponent(CombatStatsComponent.class).getHealth();
         entity.getEvents().addListener("HealthAnimation", this::updateAnimation);
+        currentDirection = "";
 
         // Damage transition events
         entity.getEvents().addListener("damaged", this::damagedTransition);
@@ -38,6 +47,18 @@ public class BuildingAnimationController extends Component {
         // Under attack transition
         entity.getEvents().addListener("underAttackFull", this::underAttackFull);
         entity.getEvents().addListener("underAttackHalf", this::underAttackHalf);
+
+        // Ship specific
+        entity.getEvents().addListener("setShip", this::setIsShip);
+
+        entity.getEvents().addListener("healthCode", this::setHealthCode);
+        // Ship moving.
+        entity.getEvents().addListener("goWest", this::west);
+        entity.getEvents().addListener("goEast", this::east);
+        entity.getEvents().addListener("goNorth", this::north);
+        entity.getEvents().addListener("goSouth", this::south);
+        // Ship attacked.
+        entity.getEvents().addListener("directionAttacked", this::directionAttacked);
     }
 
     void updateAnimation() {
@@ -61,12 +82,74 @@ public class BuildingAnimationController extends Component {
     }
 
     /**
+     * Sets the health state encoded as an integer.
+     * This is only called in ships.
+     * @param code FULL_HEALTH: 100,
+     *             HALF_HEALTH: 50,
+     *             ZERO_HEALTH: 0
+     */
+    private void setHealthCode(int code) {
+        healthCode = code;
+    }
+
+    private void animateDirection(String direction) {
+        currentDirection = direction;
+        if (animator.isFinished()) {
+            switch (healthCode) {
+                case 0:
+                    animator.startAnimation("collapse-"+direction);
+                    break;
+                case 50:
+                    animator.startAnimation("50-"+direction);
+                    break;
+                case 100:
+                    animator.startAnimation("rebuild-"+direction);
+                    break;
+            }
+        }
+    }
+
+    private void directionAttacked() {
+        if (animator.isFinished()) {
+            switch (healthCode) {
+                case 50:
+                    animator.startAnimation("50-attacked-"+currentDirection);
+                    break;
+                case 100:
+                    animator.startAnimation("100-attacked-"+currentDirection);
+                    break;
+            }
+        }
+    }
+    private void west() {
+        animateDirection("west");
+    }
+    private void east() {
+        animateDirection("east");
+    }
+    private void north() {
+        animateDirection("north");
+    }
+    private void south() {
+        animateDirection("south");
+    }
+
+    /**
+     * Tells the animations controller if the entity is
+     * a ship.
+     */
+    private void setIsShip() {
+        this.isShip = true;
+    }
+
+    /**
      * This method plays an animation that transitions
      * the building to its damaged state.
      */
     private void damagedTransition() {
-        animator.startAnimation(HALF_HEALTH_TRANSITION);
-        animator.startAnimation(HALF_HEALTH);
+        if(animator.isFinished()) {
+            animator.startAnimation(HALF_HEALTH_TRANSITION);
+        }
     }
 
     /**
@@ -74,7 +157,9 @@ public class BuildingAnimationController extends Component {
      * the building to its collapsed state.
      */
     private void collapseTransition() {
-        animator.startAnimation(COLLAPSE);
+        if(animator.isFinished()) {
+            animator.startAnimation(COLLAPSE);
+        }
     }
 
     /**
@@ -82,8 +167,9 @@ public class BuildingAnimationController extends Component {
      * is being created/constructed/reconstructed.
      */
     private void creationTransition() {
-        animator.startAnimation(REBUILD);
-        animator.startAnimation(FULL_HEALTH);
+        if (animator.isFinished()) {
+            animator.startAnimation(REBUILD);
+        }
     }
 
     /**
@@ -92,7 +178,9 @@ public class BuildingAnimationController extends Component {
      * attacked
      */
     private void underAttackFull() {
-        animator.startAnimation(FULL_ATTACKED);
+        if (animator.isFinished()) {
+            animator.startAnimation(FULL_ATTACKED);
+        }
     }
 
     /**
@@ -101,6 +189,8 @@ public class BuildingAnimationController extends Component {
      * and is being attacked.
      */
     private void underAttackHalf() {
-        // animator.startAnimation(HALF_ATTACKED);
+        if (animator.isFinished()) {
+            // animator.startAnimation(HALF_ATTACKED);
+        }
     }
 }
