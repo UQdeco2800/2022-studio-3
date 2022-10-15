@@ -44,7 +44,7 @@ public class TreeFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
             .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
             .addComponent(new TreeComponent())
-            // .addComponent(new TextureScaler(new Vector2(0f, 128f), new Vector2(0f, 0f), new Vector2(128f, 0f)))
+            .addComponent(new TextureScaler(new Vector2(0f, 128f), new Vector2(0f, 0f), new Vector2(128f, 0f)))
             .addComponent(mc)
             .addComponent(animator);
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);

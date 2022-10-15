@@ -65,7 +65,7 @@ public class ShopUIFunctionalityComponent extends Component {
         Array<Actor> actors = s.getActors();
         List<Actor> toRemove = new ArrayList<>();
         for (Actor a : actors) {
-            if (a.getName() != null && (a.getName().equals("upgrade") || a.getName().equals("shopLabe") ||
+            if (a.getName() != null && (a.getName().equals("upgrade") || a.getName().equals("shopLabel") ||
                 a.getName().equals("levelUp"))) {
                     System.out.println(a.getName());
                     toRemove.add(a);
