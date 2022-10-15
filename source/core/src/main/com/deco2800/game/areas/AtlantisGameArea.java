@@ -117,6 +117,7 @@ public class AtlantisGameArea extends GameArea {
             //Features
             "images/waterFeatureDefault.png",
             "images/lampDefault.png",
+            "images/bush.png",
             // TownHall
             "images/base.png",
             "images/level 1 town hall.png",
@@ -660,7 +661,7 @@ public class AtlantisGameArea extends GameArea {
      * Randomly spawns a number of city features around the map
      */
     private void spawnFeatures(BuildingGenerator bg) {
-        int numFeatures = 2; //Total number of features in game
+        int numFeatures = 3; //Total number of features in game
         int currentFeature = 0; //Int corresponding to the next feature to be placed
         int featureOffset = 2; //Space to leave between building and feature
         MapGenerator mg = terrainFactory.getMapGenerator();
@@ -690,6 +691,10 @@ public class AtlantisGameArea extends GameArea {
                     case 0:
                         //Place a water feature
                         feature = CityFeatureFactory.createWaterFeature();
+                        break;
+                    case 1:
+                        //Place a bush
+                        feature = CityFeatureFactory.createCityBush();
                         break;
                     default:
                         //Place a lamp
