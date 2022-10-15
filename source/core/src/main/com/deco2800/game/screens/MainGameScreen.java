@@ -53,7 +53,8 @@ public class MainGameScreen extends ScreenAdapter {
           "images/gain10wood.png",
           "images/gainmetal.png",
           "images/character-selection-menu.png",
-          "images/building-selection-menu.png"
+          "images/building-selection-menu.png",
+          "images/CogWheel/Esc Menu/CogWheelBG.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 

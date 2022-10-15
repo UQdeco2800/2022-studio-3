@@ -1,52 +1,57 @@
-package com.deco2800.game.components.pausemenu;
+    package com.deco2800.game.components.pausemenu;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.deco2800.game.GdxGame;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
-import com.deco2800.game.services.GameTime;
-import com.sun.jdi.connect.spi.TransportService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    import com.badlogic.gdx.Gdx;
+    import com.badlogic.gdx.Input;
+    import com.badlogic.gdx.graphics.Texture;
+    import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+    import com.badlogic.gdx.scenes.scene2d.Actor;
+    import com.badlogic.gdx.scenes.scene2d.ui.Image;
+    import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+    import com.badlogic.gdx.scenes.scene2d.ui.Table;
+    import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+    import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+    import com.deco2800.game.GdxGame;
+    import com.deco2800.game.components.mainmenu.InsertButtons;
+    import com.deco2800.game.services.ServiceLocator;
+    import com.deco2800.game.ui.UIComponent;
+    import com.deco2800.game.services.GameTime;
+    import com.sun.jdi.connect.spi.TransportService;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
+    import javax.swing.*;
+    import java.awt.event.KeyEvent;
 
-/**
- * A ui component for displaying the Pause menu.
- */
-public class PauseMenuDisplay extends UIComponent {
-  private static final float MAX_PAUSE_MENU_WIDTH = 500;
-  private static final float MAX_PAUSE_MENU_HEIGHT = 600;
-  private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
-  private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
-  private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
-  private static final float Z_INDEX = 2f;
-  private static final String BACKGROUND_FILE_PATH = "images/bigblack.png";
-  private Table mainTable;
-  private Table pauseWindow;
-  private Image background;
-  private final GdxGame game;
-  private boolean pmEnabled = false;
-  public PauseMenuDisplay(GdxGame game) { this.game = game; }
+    /**
+    * A ui component for displaying the Pause menu.
+    */
+    public class PauseMenuDisplay extends UIComponent {
+    private static final float MAX_PAUSE_MENU_WIDTH = 500;
+    private static final float MAX_PAUSE_MENU_HEIGHT = 600;
+    private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
+    private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
+    private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+    private static final float Z_INDEX = 2f;
+    private static final String BACKGROUND_FILE_PATH = "images/CogWheel/Esc Menu/CogWheelBG.png";
 
-  @Override
-  public void create() {
+    private static final String resumeTexture = "images/CogWheel/Esc Menu/resumebutton.png";
+    private static final String resumeHoverTexture = "images/CogWheel/Esc Menu/Resumebuttonhighlighted.png";
+    private Table mainTable;
+    private Table pauseWindow;
+    private Image background;
+    private final GdxGame game;
+    private boolean pmEnabled = false;
+    public PauseMenuDisplay(GdxGame game) { this.game = game; }
+
+    @Override
+    public void create() {
     super.create();
     logger.debug("Creating Pause Menu Screen");
     addActors();
     logger.debug("Finished creating Pause Menu Screen");
-  }
+    }
 
-  public void togglePauseScreen() {
+    public void togglePauseScreen() {
       GameTime timeSource = ServiceLocator.getTimeSource();
 
       if (!pmEnabled) {
@@ -62,43 +67,46 @@ public class PauseMenuDisplay extends UIComponent {
       }
     }
 
-  private void addActors() {
-    pauseWindow = new Table();
-    background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
-    createMainTable();
-    pauseWindow.add(mainTable);
+    private void addActors() {
+        pauseWindow = new Table();
+        background = new Image(ServiceLocator.getResourceService().getAsset(BACKGROUND_FILE_PATH, Texture.class));
+        createMainTable();
+        pauseWindow.add(mainTable);
 
 
-   pauseWindow.padTop(0);
-   pauseWindow.padBottom(0);
-   pauseWindow.setVisible(false);
-   background.setVisible(false);
-   setPauseMenuSize();
+        pauseWindow.padTop(0);
+        pauseWindow.padBottom(0);
+        pauseWindow.setVisible(false);
+        background.setVisible(false);
+        setPauseMenuSize();
 
-   stage.addActor(background);
-   stage.addActor(pauseWindow);
+        stage.addActor(background);
+        stage.addActor(pauseWindow);
 
-   entity.getEvents().addListener("togglepm", this::togglePauseScreen);
-  }
+        entity.getEvents().addListener("togglepm", this::togglePauseScreen);
+    }
 
-  private void createMainTable() {
-    TextButton resumeBtn = new TextButton("Resume", skin);
-    TextButton settingsBtn = new TextButton("Settings", skin);
-    TextButton menuBtn = new TextButton("Exit to Menu", skin);
-    TextButton exitBtn = new TextButton("Exit Game", skin);
+    private void createMainTable() {
 
-    // Triggers an event when the button is pressed
-    resumeBtn.addListener(
+        InsertButtons insertButtons = new InsertButtons();
+        ImageButton resumeBtn = insertButtons.draw(resumeTexture, resumeHoverTexture);
+
+        TextButton settingsBtn = new TextButton("Settings", skin);
+        TextButton menuBtn = new TextButton("Exit to Menu", skin);
+        TextButton exitBtn = new TextButton("Exit Game", skin);
+
+        // Triggers an event when the button is pressed
+        resumeBtn.addListener(
             new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("Resume button clicked");
-//                    entity.getEvents().trigger("resume"); // this triggers the game to be restarted
+    //                entity.getEvents().trigger("resume"); // this triggers the game to be restarted
                     togglePauseScreen();
                 }
             });
 
-    menuBtn.addListener(
+        menuBtn.addListener(
             new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -107,7 +115,7 @@ public class PauseMenuDisplay extends UIComponent {
                 }
             });
 
-    settingsBtn.addListener(
+        settingsBtn.addListener(
             new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -116,7 +124,7 @@ public class PauseMenuDisplay extends UIComponent {
                 }
             });
 
-    exitBtn.addListener(
+        exitBtn.addListener(
             new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -126,16 +134,16 @@ public class PauseMenuDisplay extends UIComponent {
                 }
             });
 
-    mainTable = new Table();
-    mainTable.row();
-    mainTable.add(resumeBtn);
-    mainTable.row();
-    mainTable.add(menuBtn).padTop(15f);
-    mainTable.row();
-    mainTable.add(settingsBtn).padTop(15f);
-    mainTable.row();
-    mainTable.add(exitBtn).padTop(15f);
-  }
+        mainTable = new Table();
+        mainTable.row();
+        mainTable.add(resumeBtn);
+        mainTable.row();
+        mainTable.add(menuBtn).padTop(15f);
+        mainTable.row();
+        mainTable.add(settingsBtn).padTop(15f);
+        mainTable.row();
+        mainTable.add(exitBtn).padTop(15f);
+    }
     private void setPauseMenuSize() {
         float stageWidth = stage.getWidth();
         float stageHeight = stage.getHeight();
@@ -159,20 +167,20 @@ public class PauseMenuDisplay extends UIComponent {
                 stage.getHeight() / 2 - pauseWindow.getHeight() / 2);
 
     }
-  @Override
-  public void draw(SpriteBatch batch) {
+    @Override
+    public void draw(SpriteBatch batch) {
     // draw is handled by the stage
-  }
+    }
 
-  @Override
-  public float getZIndex() {
+    @Override
+    public float getZIndex() {
     return Z_INDEX;
-  }
+    }
 
-  @Override
-  public void dispose() {
-    mainTable.clear();
-    mainTable.remove();
-    super.dispose();
-  }
-}
+    @Override
+    public void dispose() {
+        mainTable.clear();
+        mainTable.remove();
+        super.dispose();
+    }
+    }
