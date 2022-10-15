@@ -29,7 +29,7 @@ public class MainGameExitDisplay extends UIComponent {
     table.setFillParent(true);
 
     TextButton mainMenuBtn = new TextButton("Exit", skin);
-    TextButton pauseMenuBtn = new TextButton("Pause", skin);
+    TextButton  pauseMenuBtn = new TextButton("Pause", skin);
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
       new ChangeListener() {

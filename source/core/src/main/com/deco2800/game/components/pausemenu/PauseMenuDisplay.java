@@ -34,9 +34,16 @@
     private static final float Z_INDEX = 2f;
     private static final String BACKGROUND_FILE_PATH = "images/CogWheel/Esc Menu/CogWheelBG.png";
 
-    private static final String resumeTexture = "images/CogWheel/Esc Menu/resumebutton.png";
-    private static final String resumeHoverTexture = "images/CogWheel/Esc Menu/Resumebuttonhighlighted.png";
-    private Table mainTable;
+    private static final String resumeTexture = "images/CogWheel/Esc Menu/resume_button.png";
+    private static final String resumeHoverTexture = "images/CogWheel/Esc Menu/highlighted_resume_button.png";
+    private static final String settingsTexture = "images/CogWheel/Esc Menu/settings_button.png";
+    private static final String settingsHoverTexture = "images/CogWheel/Esc Menu/highlighted_settings_button.png";
+    private static final String returnMenuTexture = "images/CogWheel/Esc Menu/returrntomenu_button.png";
+    private static final String returnMenuHoverTexture = "images/CogWheel/Esc Menu/highlighted_returrntomenu_button.png";
+    private static final String exitDesktopTexture = "images/CogWheel/Esc Menu/exittodesktop_button.png";
+    private static final String exitDesktopHoverTexture = "images/CogWheel/Esc Menu/highlighted_exittodesktop_button.png";
+
+        private Table mainTable;
     private Table pauseWindow;
     private Image background;
     private final GdxGame game;
@@ -90,10 +97,10 @@
 
         InsertButtons insertButtons = new InsertButtons();
         ImageButton resumeBtn = insertButtons.draw(resumeTexture, resumeHoverTexture);
-
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton menuBtn = new TextButton("Exit to Menu", skin);
-        TextButton exitBtn = new TextButton("Exit Game", skin);
+        ImageButton settingsBtn = insertButtons.draw(settingsTexture, settingsHoverTexture);
+        ImageButton menuBtn = insertButtons.draw(returnMenuTexture, returnMenuHoverTexture);
+        ImageButton exitBtn = insertButtons.draw(exitDesktopTexture, exitDesktopHoverTexture);
+//        TextButton exitBtn = new TextButton("Exit Game", skin);
 
         // Triggers an event when the button is pressed
         resumeBtn.addListener(
