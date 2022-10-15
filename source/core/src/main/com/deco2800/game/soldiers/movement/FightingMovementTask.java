@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 public class FightingMovementTask extends DefaultTask {
     private static final Logger logger = LoggerFactory.getLogger(FightingMovementTask.class);
 
+    private Entity owner;
     private final GameTime gameTime;
     private boolean isFollowing;
     private Vector2 target;
@@ -43,41 +44,43 @@ public class FightingMovementTask extends DefaultTask {
     private List<GridPoint2> path;
     private MapService mapService;
 
-    public FightingMovementTask(Vector2 target) {
+    public FightingMovementTask(Vector2 target, Entity owner) {
         this.target = target;
         this.targetEnemy = null;
         this.gameTime = ServiceLocator.getTimeSource();
+        this.owner = owner;
     }
 
     @Override
     public void start() {
         super.start();
-        this.movementComponent = owner.getEntity().getComponent(PhysicsMovementComponent.class);
+        this.movementComponent = owner.getComponent(PhysicsMovementComponent.class);
         this.mapService = ServiceLocator.getMapService();
-        this.mapService.unregister(owner.getEntity().getComponent(MapComponent.class));
+        this.mapService.unregister(owner.getComponent(MapComponent.class));
     
         // If there is an enemy to chase
         if (this.checkIfEnemy()) {
             logger.info("Enemy targeted");
             this.targetCurrentPosition = this.targetEnemy.getPosition();
-            this.finalTarget = this.targetCurrentPosition;
             this.isFollowing = true;
             this.setTarget(this.targetCurrentPosition);
+            this.finalTarget = this.targetCurrentPosition;
+            movementComponent.setMoving(true);
         // If there is no enemy to chase
         } else {
             logger.info("No enemy found");
             this.finalTarget = this.target;
             this.isFollowing = false;
-            this.path = mapService.getPath(MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target));
-            logger.info("Path from {} to {}: {}", MapService.worldToTile(owner.getEntity().getCenterPosition()), MapService.worldToTile(target), path);
+            this.path = mapService.getPath(MapService.worldToTile(owner.getCenterPosition()), MapService.worldToTile(target));
+            logger.info("Path from {} to {}: {}", MapService.worldToTile(owner.getCenterPosition()), MapService.worldToTile(target), path);
             if (!path.isEmpty()) {
                 this.setTarget(MapService.tileToWorldPosition(path.get(0)));
                 path.remove(0);
                 movementComponent.setMoving(true);
                 logger.info("Starting movement towards {}", MapService.worldToTile(target));
                 lastTimeMoved = gameTime.getTime();
-                lastPos = owner.getEntity().getPosition();
-                owner.getEntity().getEvents().addListener("changeWeather", this::changeSpeed);
+                lastPos = owner.getPosition();
+                owner.getEvents().addListener("changeWeather", this::changeSpeed);
             } else {
                 this.setTarget(target);
                 movementComponent.setMoving(true);
@@ -91,10 +94,17 @@ public class FightingMovementTask extends DefaultTask {
     public void update() {
         if (this.isFollowing) {
             if (this.targetEnemy != null) {
+                logger.info("Following the enemy");
                 this.targetCurrentPosition = this.targetEnemy.getCenterPosition();
                 this.setTarget(this.targetCurrentPosition);
+                this.finalTarget = this.targetCurrentPosition;
+                this.movementComponent.setMoving(true);
+                lastTimeMoved = gameTime.getTime();
+                lastPos = owner.getPosition();
             } else {
                 this.isFollowing = false;
+                movementComponent.setMoving(false);
+                status = Status.FINISHED;
             }              
         }
         if (isAtTarget()) {
@@ -108,7 +118,7 @@ public class FightingMovementTask extends DefaultTask {
                 movementComponent.setMoving(true);
                 logger.info("Moving to the next target: {}", MapService.worldToTile(target));
                 lastTimeMoved = gameTime.getTime();
-                lastPos = owner.getEntity().getPosition();
+                lastPos = owner.getPosition();
             }
         } else {
             checkIfStuck();
@@ -119,17 +129,17 @@ public class FightingMovementTask extends DefaultTask {
     public void stop() {
         super.stop();
         movementComponent.setMoving(false);
-        logger.debug("Stopping movement");
+        logger.info("Stopping movement");
     }
 
     public void checkIfStuck() {
         if (gameTime.getTime() - lastTimeMoved > 1000) {
-            if (lastPos.epsilonEquals(owner.getEntity().getPosition(), 0.01f)) {
+            if (lastPos != null && lastPos.epsilonEquals(owner.getPosition(), 0.01f)) {
                 logger.info("Stuck, moving to final target");
-                PhysicsComponent physicsComponent = owner.getEntity().getComponent(PhysicsComponent.class);
+                PhysicsComponent physicsComponent = owner.getComponent(PhysicsComponent.class);
                 if (physicsComponent != null) {
                     Body entityBody = physicsComponent.getBody();
-                    Vector2 direction = owner.getEntity().getCenterPosition().sub(owner.getEntity().getCenterPosition());
+                    Vector2 direction = owner.getCenterPosition().sub(owner.getCenterPosition());
                     Vector2 impulse = direction.setLength(0.2f);
                     entityBody.applyLinearImpulse(impulse, entityBody.getWorldCenter(), true);
                 }
@@ -138,7 +148,7 @@ public class FightingMovementTask extends DefaultTask {
                 path.clear();
             }
             lastTimeMoved = gameTime.getTime();
-            lastPos = owner.getEntity().getPosition();
+            lastPos = owner.getPosition();
         }
     }
 
@@ -151,7 +161,7 @@ public class FightingMovementTask extends DefaultTask {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
         for (int i = 0; i < entities.size; i++) {
             if (entities.get(i).getComponent(EnemySignal.class) != null) {
-                if (entities.get(i).getCenterPosition().epsilonEquals(this.target, 0.01f)) {
+                if (entities.get(i).getCenterPosition().epsilonEquals(this.target, 2f)) {
                     this.targetEnemy = entities.get(i);
                     return true;
                 }
@@ -165,7 +175,7 @@ public class FightingMovementTask extends DefaultTask {
     }
 
     private boolean isAtTarget() {
-        return owner.getEntity().getPosition().dst(target) <= stopDistance;
+        return owner.getPosition().dst(target) <= stopDistance;
     }
 
     public boolean isMoving() {

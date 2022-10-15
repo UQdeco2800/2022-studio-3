@@ -237,12 +237,12 @@ public class AtlantisGameArea extends GameArea {
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
-        gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
+        //gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
         //gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
         //gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
-        gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
-        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
-        gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
+        //gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
+        //gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
+        //gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
 //        loadAssets();
         displayUI();
@@ -297,7 +297,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnExampleUnit();
         //spawnBlueJokers();
 
-        //spawnWolf();
+        spawnWolf();
 
 
         //spawnTitan();
@@ -311,7 +311,7 @@ public class AtlantisGameArea extends GameArea {
         //spawnStone();
         //spawnMiner();
 
-        //spawnExplosion((new Explosion()).getEntity());
+        spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
         startFlooding();
 

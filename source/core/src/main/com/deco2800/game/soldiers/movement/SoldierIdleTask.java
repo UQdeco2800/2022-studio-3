@@ -30,7 +30,7 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
     public void start() {
         super.start();
         startPos = owner.getEntity().getPosition();
-        movementTask = new FightingMovementTask(startPos);
+        movementTask = new FightingMovementTask(startPos, this.owner.getEntity());
         movementTask.create(owner);
         movementTask.start();
         owner.getEntity().getEvents().addListener("workerWalk", this::startMoving);
