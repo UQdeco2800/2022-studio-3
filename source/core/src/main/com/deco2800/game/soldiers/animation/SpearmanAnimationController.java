@@ -18,12 +18,6 @@ public class SpearmanAnimationController extends Component {
         entity.getEvents().addListener("soldierBackRightMove", this::animateBackRightMove);
     }
 
-    @Override
-    public void update() {
-        super.update();
-        animator.startAnimation("spearman_forward_left_idle");
-    }
-
     public void animateIdle() {
         animator.startAnimation("spearman_forward_left_idle");
     }

@@ -17,12 +17,6 @@ public class SwordsmanAnimationController extends Component {
         entity.getEvents().addListener("soldierBackRightMove", this::animateBackRightMove);
     }
 
-    @Override
-    public void update() {
-        super.update();
-        animator.startAnimation("swordsman_forward_left_idle");
-    }
-
     public void animateIdle() {
         animator.startAnimation("swordsman_forward_left_idle");
     }

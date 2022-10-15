@@ -279,8 +279,8 @@ public class AtlantisGameArea extends GameArea {
         spawnCity();
         //spawnForager();
         spawnHoplite();
-        //spawnSpearman();
-        //spawnSwordsman();
+        spawnSpearman();
+        spawnSwordsman();
 
         spawnResources();
 
