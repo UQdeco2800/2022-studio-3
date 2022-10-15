@@ -950,7 +950,7 @@ public class AtlantisGameArea extends GameArea {
         int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
         char[][] map = mg.getMap();
-        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 10);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
                 true, true);

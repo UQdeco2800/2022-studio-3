@@ -334,15 +334,14 @@ public class BuildingFactory {
         Entity trebuchet = createBaseBuilding();
         TrebuchetConfig config = configs.trebuchet;
         AITaskComponent aiComponent = new AITaskComponent()
-                .addTask(new rangedAttackTask(target, 9, 10, 2000f));
+                .addTask(new rangedAttackTask(target, 4, 10, 2000f));
 
-        trebuchet.addComponent(new TextureRenderComponent("images/archerstatic.png"))
+        trebuchet.addComponent(new TextureRenderComponent("images/trebuchet.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(aiComponent)
                 .addComponent(new AttackListener(target, gameArea));
-        trebuchet.scaleHeight(1f);
-        trebuchet.scaleWidth(0.4f);
+        trebuchet.scaleHeight(3f);
 
         return trebuchet;
     }
