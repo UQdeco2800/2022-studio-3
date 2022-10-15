@@ -12,9 +12,9 @@ public class BaseComponent extends Component {
 
     public BaseComponent(){
         this.isBase = 1;
-        this.wood = 0;
-        this.metal = 0;
-        this.stone = 0;
+        this.wood = 100;
+        this.metal = 100;
+        this.stone = 100;
     }
 
     public int getIsBase(){

@@ -42,13 +42,17 @@ public class BuildingActions extends Component {
      * Increments level by 1
      */
     public void addLevel() {
-        CombatStatsComponent csc;
-        if (entity != null && (csc = entity.getComponent(CombatStatsComponent.class)) != null) {
+        System.out.println("Barracks level up");
+        CombatStatsComponent csc = entity.getComponent(CombatStatsComponent.class);
+        // if (entity != null && (csc = entity.getComponent(CombatStatsComponent.class)) != null) {
+        if (csc != null) {
             //Level up its stats: health and defence increased
-            csc.setHealth(csc.getHealth() + 100);
+            csc.setMaxHealth(csc.getMaxHealth() + 100);
+            csc.setHealth(csc.getMaxHealth());
             csc.setBaseDefence(csc.getBaseDefence() + 20);
         }
         this.level++;
+        ShopUIFunctionalityComponent.removeButton();
     }
 
     /**
@@ -128,7 +132,8 @@ public class BuildingActions extends Component {
      * Called upon creation. Used to define events for event listener to trigger.
      */
     public void create() {
-        entity.getEvents().addListener("levelUp", this::addLevel); // Not triggered by any event yet
+        System.out.println("Added level up event");
+        entity.getEvents().addListener("levelUp", this::addLevel);
     }
 
 }

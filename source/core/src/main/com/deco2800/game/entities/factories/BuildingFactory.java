@@ -182,6 +182,7 @@ public class BuildingFactory {
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(mp)
                 .addComponent(new SelectionCollider())
+                .addComponent(new ShopUIFunctionalityComponent())
                 .addComponent(new BuildingUIDataComponent());
 
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
@@ -515,6 +516,7 @@ public class BuildingFactory {
                .addComponent(new SelectionCollider())
                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                .addComponent(new BuildingActions(config.type, config.level))
+               .addComponent(new ShopUIFunctionalityComponent())
                .addComponent(new BuildingUIDataComponent());
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
@@ -581,6 +583,7 @@ public class BuildingFactory {
           .addComponent(new SelectionCollider())
           .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
           .addComponent(new BuildingActions(config.type, config.level))
+          .addComponent(new ShopUIFunctionalityComponent())
           .addComponent(new BuildingUIDataComponent());
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);

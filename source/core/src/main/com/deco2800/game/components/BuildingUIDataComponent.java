@@ -1,9 +1,13 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
@@ -19,6 +23,10 @@ public class BuildingUIDataComponent extends UIComponent {
     private boolean isSelected = false;
     private static Image contextBoxSprite;
     private Group contextBoxItems;
+    // private Table table;
+    private Label shopLabel;
+    private TextButton upgrade;
+    private TextButton levelUp;
     private float initialHeight;
     private float initialWidth;
     private final String[] textures = {
@@ -44,6 +52,13 @@ public class BuildingUIDataComponent extends UIComponent {
         selectableComponent = this.entity.getComponent(SelectableComponent.class);
         isSelected = selectableComponent.isSelected();
         contextBoxItems = new Group();
+        // table = new Table();
+        shopLabel = new Label("", skin);
+        shopLabel.setName("shopLabel");
+        upgrade = new TextButton("", skin);
+        upgrade.setName("upgrade");
+        levelUp = new TextButton("", skin);
+        levelUp.setName("levelUp");
 
     }
 
@@ -75,9 +90,19 @@ public class BuildingUIDataComponent extends UIComponent {
 
         contextBoxItems.clear();
         contextBoxSprite.clear();
+        // shopLabel.remove();
+        // upgrade.remove();
+        // levelUp.remove();
+        // table.clear();
+
+        // Label shopLabel = new Label("", skin);
+        // TextButton upgrade = new TextButton("", skin);
+        // TextButton levelUp = new TextButton("", skin);
+        // Table table = new Table();
 
         if (isSelected) {
             stage.addActor(contextBoxItems);
+            // stage.addActor(table);
             String statsString = "";
 
             try {
@@ -129,8 +154,128 @@ public class BuildingUIDataComponent extends UIComponent {
             contextBoxItems.addActor(buildingNameLabel);
             contextBoxItems.addActor(attributesLabel);
             contextBoxItems.addActor(buildingImage);
+
+            // create the shop interface
+            if (buildingName.equals("Library:")) {
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Unit\nupgrade", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("unit upgrade");
+                        }
+                    }
+                );
+                shopLabel.setPosition(370f, 160f);
+                upgrade.setPosition(360f, 107f);
+
+                levelUp = new TextButton("Level Up", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUp.setPosition(360f, 60f);
+                levelUp.getLabel().setFontScale(0.9f);
+                levelUp.setTransform(true);
+                levelUp.setScaleX(0.8f);
+                shopLabel.setName("shopLabel");
+                upgrade.setName("upgrade");
+                levelUp.setName("levelUp");
+                stage.addActor(shopLabel);
+                stage.addActor(upgrade);
+                stage.addActor(levelUp);
+
+            } else if (buildingName.equals("Blacksmith:")) {
+
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Wall\nupgrade", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("wall upgrade");
+                        }
+                    }
+                );
+                shopLabel.setPosition(370f, 160f);
+                upgrade.setPosition(360f, 107f);
+                levelUp = new TextButton("Level Up", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUp.setPosition(360f, 60f);
+                levelUp.getLabel().setFontScale(0.9f);
+                levelUp.setTransform(true);
+                levelUp.setScaleX(0.8f);
+                shopLabel.setName("shopLabel");
+                upgrade.setName("upgrade");
+                levelUp.setName("levelUp");
+                stage.addActor(shopLabel);
+                stage.addActor(upgrade);
+                stage.addActor(levelUp);
+
+            } else if (buildingName.equals("Barracks:")) {
+
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Spawn\nunit M10", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("spawn unit");
+                        }
+                    }
+                );
+                shopLabel.setPosition(370f, 160f);
+                upgrade.setPosition(360f, 107f);
+                levelUp = new TextButton("Level Up W10", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            // logger.debug("Skip button clicked");
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUp.setPosition(360f, 60f);
+                levelUp.getLabel().setFontScale(0.9f);
+                levelUp.setTransform(true);
+                levelUp.setScaleX(0.8f);
+                shopLabel.setName("shopLabel");
+                upgrade.setName("upgrade");
+                levelUp.setName("levelUp");
+                stage.addActor(shopLabel);
+                stage.addActor(upgrade);
+                stage.addActor(levelUp);
+            }
         } else {
             contextBoxItems.remove();
+            // table.remove();
+            // shopLabel.remove();
+            // upgrade.remove();
+            // levelUp.remove();
         }
     }
 }
