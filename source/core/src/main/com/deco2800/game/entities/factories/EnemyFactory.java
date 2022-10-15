@@ -74,7 +74,7 @@ public class EnemyFactory {
                     .addComponent(new bulletHitShips(target, gameArea));
 
     bullet1.getComponent(TextureRenderComponent.class).scaleEntity();
-    bullet1.scaleHeight(0.2f);
+    bullet1.scaleHeight(0.5f);
     PhysicsUtils.setScaledCollider(bullet1, 0.5f, 0.3f);
 
     bullet1.setPosition(x1 - bullet1.getScale().x / 2 + from.getScale().x / 2,
