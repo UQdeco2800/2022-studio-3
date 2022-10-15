@@ -120,7 +120,7 @@ public class BuildingFactory {
         //Add precise selection collider
         townHall.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
-        townHall.setEntityName("TownHall");
+        townHall.setEntityName("Town Hall");
 
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
