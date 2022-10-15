@@ -174,6 +174,8 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
+            "images/archer_sprite_sheet.png",
+
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -274,9 +276,9 @@ public class AtlantisGameArea extends GameArea {
 
         spawnResources();
 
-//        spawnTitanShrine();
-//        spawnShip();
-//        spawnTrebuchet(titan, this);
+          spawnTitanShrine();
+          spawnShip();
+        spawnTrebuchet(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
