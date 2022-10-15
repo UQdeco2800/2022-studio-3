@@ -267,7 +267,7 @@ public class AtlantisGameArea extends GameArea {
 //        spawnTownHall();
 //        spawnBarracks();
         //spawnWalls();
-        spawnCityWalls();
+//        spawnCityWalls();
 
         // spawnBuildings();
 
@@ -278,9 +278,9 @@ public class AtlantisGameArea extends GameArea {
 
         spawnResources();
 
-//        spawnTitanShrine();
-//        spawnShip();
-//        spawnTrebuchet(titan, this);
+        spawnTitanShrine();
+        spawnShip();
+        spawnTrebuchet(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -307,7 +307,7 @@ public class AtlantisGameArea extends GameArea {
 
         spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
-        startFlooding();
+//        startFlooding();
 
 //        spawnSoldierMenu();
 //        spawnBuildingMenu();

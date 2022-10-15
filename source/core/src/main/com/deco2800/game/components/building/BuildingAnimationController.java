@@ -41,23 +41,23 @@ public class BuildingAnimationController extends Component {
     }
 
     void updateAnimation() {
-        // Updates the health value in HealthComponent
-        int health = this.entity.getComponent(CombatStatsComponent.class).getHealth();
-
-        if (health <= D_health && health >= 0.5*D_health) {
-            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.NORMAL);
-        } else if (health < 0.5*D_health && health > 0) {
-            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.HALF);
-        } else if (health <= 0 && !dispose) {
-            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.DEAD);
-            dispose = true;
-        } else if (dispose) {
-            this.entity.getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
-        }
-        // Applies the correct animation
-        if (this.enabled) {
-            animator.startAnimation(entity.getComponent(HealthAnimation.class).getAnimation());
-        }
+//        // Updates the health value in HealthComponent
+//        int health = this.entity.getComponent(CombatStatsComponent.class).getHealth();
+//
+//        if (health <= D_health && health >= 0.5*D_health) {
+//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.NORMAL);
+//        } else if (health < 0.5*D_health && health > 0) {
+//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.HALF);
+//        } else if (health <= 0 && !dispose) {
+//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.DEAD);
+//            dispose = true;
+//        } else if (dispose) {
+//            this.entity.getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
+//        }
+//        // Applies the correct animation
+//        if (this.enabled) {
+//            animator.startAnimation(entity.getComponent(HealthAnimation.class).getAnimation());
+//        }
     }
 
     /**

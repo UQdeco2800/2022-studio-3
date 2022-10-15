@@ -11,11 +11,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
-import com.deco2800.game.components.BuildingUIDataComponent;
-import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.*;
 import com.deco2800.game.components.building.*;
-import com.deco2800.game.components.EntityType;
-import com.deco2800.game.components.HealthBarComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
@@ -303,7 +300,9 @@ public class BuildingFactory {
                 .addComponent(mc)
                 .addComponent(new HealthAnimation())
                 .addComponent(new BuildingAnimationController())
-                .addComponent(animator);
+                .addComponent(animator)
+                .addComponent(new BuildingHealthManager())
+                .addComponent(new BuildingAnimationController());
 
 
         // Setting Isometric Collider
