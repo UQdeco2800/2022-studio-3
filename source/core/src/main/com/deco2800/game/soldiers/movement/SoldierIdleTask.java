@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class SoldierIdleTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(SoldierIdleTask.class);
     private boolean idling = false;
-    private WorkerMovementTask movementTask;
+    private FightingMovementTask movementTask;
     private Vector2 startPos;
 
     public SoldierIdleTask() { /* already has start */ }
@@ -30,10 +30,11 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
     public void start() {
         super.start();
         startPos = owner.getEntity().getPosition();
-        movementTask = new WorkerMovementTask(startPos);
+        movementTask = new FightingMovementTask(startPos);
         movementTask.create(owner);
         movementTask.start();
-        owner.getEntity().getEvents().addListener("soldierWalk", this::startMoving);
+        owner.getEntity().getEvents().addListener("workerWalk", this::startMoving);
+
     }
 
     @Override
@@ -76,7 +77,7 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
      *
      * @return the movement task
      */
-    public WorkerMovementTask getMovementTask() {
+    public FightingMovementTask getMovementTask() {
         return this.movementTask;
     }
 

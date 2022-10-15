@@ -238,8 +238,8 @@ public class AtlantisGameArea extends GameArea {
     @Override
     public void create() {
         gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
-        gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
-        gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
+        //gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
+        //gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
         gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
         gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
@@ -273,13 +273,14 @@ public class AtlantisGameArea extends GameArea {
 //        spawnForager();
 //        spawnMiner();
 //        spawnBuilder();
-        spawnBuilder(); 
-        spawnForager();
-        spawnMiner();
+        //spawnBuilder(); 
+        //spawnForager();
+        //spawnMiner();
         spawnCity();
+        //spawnForager();
         spawnHoplite();
-        spawnSpearman();
-        spawnSwordsman();
+        //spawnSpearman();
+        //spawnSwordsman();
 
         spawnResources();
 
@@ -296,7 +297,7 @@ public class AtlantisGameArea extends GameArea {
         // spawnExampleUnit();
         //spawnBlueJokers();
 
-        spawnWolf();
+        //spawnWolf();
 
 
         //spawnTitan();
@@ -310,7 +311,7 @@ public class AtlantisGameArea extends GameArea {
         //spawnStone();
         //spawnMiner();
 
-        spawnExplosion((new Explosion()).getEntity());
+        //spawnExplosion((new Explosion()).getEntity());
         ServiceLocator.registerGameArea(this);
         startFlooding();
 
@@ -1054,11 +1055,20 @@ public class AtlantisGameArea extends GameArea {
     }
 
     private void spawnHoplite() {
+        /* 
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
         MapComponent mapComponent = new MapComponent();
         mapComponent.display();
         Entity newHoplite = HopliteFactory.createHoplite().addComponent(mapComponent);
         spawnEntityAt(newHoplite, spawn, true, true);
+        */
+
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.GREEN);
+        Entity newForager = HopliteFactory.createHoplite().addComponent(mapComponent);
+        spawnEntityAt(newForager, spawn, true, true);
     }
 
     /**

@@ -149,10 +149,12 @@ public class FightingMovementTask extends DefaultTask {
 
     public boolean checkIfEnemy() {
         Array<Entity> entities = ServiceLocator.getEntityService().getEntities();
-        for (Entity entity : entities) {
-            if (entity.getCenterPosition().epsilonEquals(this.target, 1f) && entity.getComponent(EnemySignal.class) != null) {
-                this.targetEnemy = entity;
-                return true;
+        for (int i = 0; i < entities.size; i++) {
+            if (entities.get(i).getComponent(EnemySignal.class) != null) {
+                if (entities.get(i).getCenterPosition().epsilonEquals(this.target, 0.01f)) {
+                    this.targetEnemy = entities.get(i);
+                    return true;
+                }
             }
         }
         return false;

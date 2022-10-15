@@ -42,5 +42,5 @@ public class HopliteAnimationController extends Component {
     public void animateBackRightMove() {
         animator.startAnimation("hoplite_backward_right_move");
     }
-    
+
 }
