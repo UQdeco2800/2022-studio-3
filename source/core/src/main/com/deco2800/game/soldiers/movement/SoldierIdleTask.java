@@ -43,6 +43,11 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
 
         selectableComponent = owner.getEntity().getComponent(SelectableComponent.class);
 
+        // Add attack animation
+        owner.getEntity().getEvents().addListener("attackEast", this::attackRight);
+        owner.getEntity().getEvents().addListener("attackWest", this::attackLeft);
+        owner.getEntity().getEvents().addListener("attackNorth", this::attackRight);
+        owner.getEntity().getEvents().addListener("attackSouth", this::attackRight);
     }
 
     @Override
@@ -112,5 +117,13 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
      */
     public boolean isIdling() {
         return this.idling;
+    }
+
+    private void attackLeft(){
+        owner.getEntity().getEvents().trigger("soldierLeftAttackAnimate");
+    }
+
+    private void attackRight(){
+        owner.getEntity().getEvents().trigger("soldierRightAttackAnimate");
     }
 }

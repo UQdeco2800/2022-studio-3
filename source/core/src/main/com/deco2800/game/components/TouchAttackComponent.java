@@ -64,6 +64,7 @@ public class TouchAttackComponent extends Component {
     }
 
     // Try to attack target.
+    Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
 
@@ -77,16 +78,20 @@ public class TouchAttackComponent extends Component {
               case DEFAULT:
                 break;
               case WEST:
-                entity.getEvents().trigger("attackWest");
+                source.getEvents().trigger("attackWest");
+                target.getEvents().trigger("attackEast");
                 break;
               case EAST:
-                entity.getEvents().trigger("attackEast");
+                source.getEvents().trigger("attackEast");
+                target.getEvents().trigger("attackWest");
                 break;
               case NORTH:
-                entity.getEvents().trigger("attackNorth");
+                source.getEvents().trigger("attackNorth");
+                target.getEvents().trigger("attackSouth");
                 break;
               case SOUTH:
-                entity.getEvents().trigger("attackSouth");
+                source.getEvents().trigger("attackSouth");
+                target.getEvents().trigger("attackNorth");
                 break;
             }
           }
