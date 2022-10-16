@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.AtlantisGameArea;
+import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.friendly.FriendlyComponent;
@@ -39,7 +40,7 @@ public class ShopUIFunctionalityComponent extends Component {
                 default:
             }
         }
-        entity.getEvents().addListener("exitShop", ShopUIFunctionalityComponent::removeButton);
+        entity.getEvents().addListener("exitShop", this::localRemove);
     }
 
     /**
@@ -59,7 +60,12 @@ public class ShopUIFunctionalityComponent extends Component {
                 csc.setBaseAttack(csc.getBaseAttack() + 20);
             }
         }
+    }
+
+    public void localRemove() {
         removeButton();
+        SelectableComponent e = entity.getComponent(SelectableComponent.class);
+        e.unselect();
     }
 
     /**
@@ -136,7 +142,6 @@ public class ShopUIFunctionalityComponent extends Component {
                 csc.setBaseDefence(csc.getBaseDefence() + 20);
             }
         }
-        removeButton();
     }
 
     /**
@@ -152,6 +157,5 @@ public class ShopUIFunctionalityComponent extends Component {
         handler.trigger("spawnArcher");
         handler.trigger("spawnHoplite");
         handler.trigger("spawnSpearmint");
-        removeButton();
     }
 }

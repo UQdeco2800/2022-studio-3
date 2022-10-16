@@ -53,7 +53,6 @@ public class BuildingActions extends Component {
                 csc.setHealth(csc.getMaxHealth());
                 csc.setBaseDefence(csc.getBaseDefence() + 20);
             }
-            ShopUIFunctionalityComponent.removeButton();
         }
         this.incrementLevel();
     }

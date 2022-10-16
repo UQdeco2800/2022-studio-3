@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.ShopUIFunctionalityComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
@@ -24,10 +25,9 @@ public class BuildingUIDataComponent extends UIComponent {
     private CombatStatsComponent combatStats;
     private BuildingActions buildingInfo;
     private SelectableComponent selectableComponent;
-    private boolean isSelected = false;
+    public static boolean isSelected = false;
     private static Image contextBoxSprite;
     private Group contextBoxItems;
-    // private Table table;
     private Label shopLabel;
     private TextButton upgrade;
     private Label upgradeCost;
@@ -359,5 +359,9 @@ public class BuildingUIDataComponent extends UIComponent {
         } else {
             contextBoxItems.remove();
         }
+    }
+
+    public void remove() {
+        contextBoxItems.remove();
     }
 }

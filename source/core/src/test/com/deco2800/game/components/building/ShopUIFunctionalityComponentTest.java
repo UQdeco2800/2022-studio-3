@@ -56,12 +56,6 @@ public class ShopUIFunctionalityComponentTest {
          .addComponent(new FriendlyComponent());
         ServiceLocator.getEntityService().register(e);
 
-        RenderService rs = new RenderService();
-        Stage s = mock(Stage.class);
-        rs.setStage(s);
-        when(s.getActors()).thenReturn(new Array<>());
-        ServiceLocator.registerRenderService(rs);
-
         ShopUIFunctionalityComponent shop = new ShopUIFunctionalityComponent();
         shop.onUnitUpgrade();
 
@@ -79,12 +73,6 @@ public class ShopUIFunctionalityComponentTest {
         e.addComponent(ba)
          .addComponent(csc);
         ServiceLocator.getEntityService().register(e);
-
-        RenderService rs = new RenderService();
-        Stage s = mock(Stage.class);
-        rs.setStage(s);
-        when(s.getActors()).thenReturn(new Array<>());
-        ServiceLocator.registerRenderService(rs);
 
         ShopUIFunctionalityComponent shop = new ShopUIFunctionalityComponent();
         shop.onWallUpgrade();
