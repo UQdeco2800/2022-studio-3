@@ -129,7 +129,7 @@ collapse-north
   orig: 371, 359
   offset: 0, 0
   index: 2
-south_100_default
+100-south
   rotate: false
   xy: 4, 1097
   size: 371, 359

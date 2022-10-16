@@ -365,15 +365,51 @@ public class BuildingFactory {
                 new AnimationRenderComponent(ServiceLocator.getResourceService()
                         .getAsset("images/ship2.atlas", TextureAtlas.class));
 
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(FULL_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(HALF_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + NORTH, 0.1f,
+                Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + SOUTH, 0.1f,
+                Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + EAST, 0.1f,
+                Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + WEST, 0.1f,
+                Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(COLLAPSE + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         ship
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new PhysicsMovementComponent())
+                .addComponent(new EntityDirectionComponent())
+                .addComponent(new BuildingHealthManager())
+                .addComponent(new DirectionalBuildingAnimationController())
                 .addComponent(animator);
 
-        ship.getComponent(AnimationRenderComponent.class).startAnimation("default");
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
 
