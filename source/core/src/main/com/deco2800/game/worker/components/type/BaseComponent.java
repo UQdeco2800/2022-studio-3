@@ -12,9 +12,11 @@ public class BaseComponent extends Component {
 
     public BaseComponent(){
         this.isBase = 1;
-        this.wood = 0;
+        this.wood = 10;
         this.metal = 0;
-        this.stone = 0;
+        this.stone = 2;
+        // in case this is made after resource count
+        updateDisplay();
     }
 
     public int getIsBase(){
@@ -45,6 +47,10 @@ public class BaseComponent extends Component {
             if(ServiceLocator.getEntityService().getEntities().get(i).getComponent(ResourceCountDisplay.class) != null){
                 displayComponent = ServiceLocator.getEntityService().getEntities().get(i).getComponent(ResourceCountDisplay.class);
             }
+        }
+        // avoid potential crash if resource display doesn't exist
+        if (displayComponent == null) {
+            return;
         }
         displayComponent.updatePlayerResourceUI("wood", this.wood);
         displayComponent.updatePlayerResourceUI("metal", this.metal);
