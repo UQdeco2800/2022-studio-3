@@ -153,6 +153,8 @@ public class WeatherIcon extends Actor {
         this.weatherFilter = new Image(new Texture(this.weatherIconProperties.getFilterLocation()));
         this.speedFactor = this.weatherIconProperties.getSpeedFactor();
         layout();
+        logger.info("Weather changing");
+
     }
 
     /**
