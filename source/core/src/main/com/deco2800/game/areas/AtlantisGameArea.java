@@ -203,7 +203,7 @@ public class AtlantisGameArea extends GameArea {
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
             "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas",
-            "images/barracks.atlas"
+            "images/barracks.atlas", "images/Trebuchet.atlas"
     };
     public static final String[] soldierMenuTextures = {
             "images/character-selection-menu.png"

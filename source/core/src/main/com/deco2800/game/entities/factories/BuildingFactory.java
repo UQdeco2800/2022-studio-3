@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
@@ -31,6 +32,8 @@ import com.deco2800.game.worker.components.ResourceStatsComponent;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.resources.ResourceConfig;
 
+import java.net.NoRouteToHostException;
+
 /**
  * Factory to create a building entity with predefined components.
  * <p> Each building entity type should have a creation method that returns a corresponding entity.
@@ -45,10 +48,18 @@ public class BuildingFactory {
 
     private static final String HALF_HEALTH = "50-idle";
     private static final String HALF_HEALTH_TRANSITION = "50";
-    private static final String FULL_HEALTH = "100";
-    private static final String FULL_ATTACKED = "attacked";
+    private static final String HALF_ATTACKED = "50-attacked";
+    private static final String FULL_HEALTH = "100-idle";
+    private static final String FULL_ATTACKED = "100-attacked";
     private static final String COLLAPSE = "collapse";
     private static final String REBUILD = "reconstruction";
+
+    private static final String WEST = "west";
+    private static final String EAST = "east";
+    private static final String NORTH = "north";
+    private static final String SOUTH = "south";
+
+    private static final String DELIMETER = "-";
 
     /**
      * Width in tiles of a wall pillar entity
@@ -286,12 +297,13 @@ public class BuildingFactory {
                                                            .getAsset("images/titanshrine.atlas",
                                                                         TextureAtlas.class));
 
-        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(COLLAPSE, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         MapComponent mc = new MapComponent();
@@ -302,8 +314,6 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(mc)
-                .addComponent(new HealthAnimation())
-                .addComponent(new BuildingAnimationController())
                 .addComponent(animator)
                 .addComponent(new BuildingHealthManager())
                 .addComponent(new BuildingAnimationController());
@@ -391,12 +401,62 @@ public class BuildingFactory {
         AITaskComponent aiComponent = new AITaskComponent()
                 .addTask(new rangedAttackTask(target, 4, 10, 2000f));
 
-        trebuchet.addComponent(new TextureRenderComponent("images/Trebuchet-lv1-north.png"))
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                                                           .getAsset("images/Trebuchet.atlas",
+                                                                     TextureAtlas.class));
+        animator.addAnimation(FULL_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(FULL_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(HALF_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + NORTH, 0.1f,
+                               Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + SOUTH, 0.1f,
+                               Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + EAST, 0.1f,
+                               Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + WEST, 0.1f,
+                               Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(COLLAPSE + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(HALF_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation(REBUILD + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(REBUILD + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(REBUILD + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(REBUILD + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        trebuchet
+                .addComponent(new TextureImageComponent("images/Trebuchet-lv1-north.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(aiComponent)
                 .addComponent(new AttackListener(target, gameArea))
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new BuildingAnimationController())
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(new BuildingHealthManager())
+                .addComponent(animator);
         trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;
     }

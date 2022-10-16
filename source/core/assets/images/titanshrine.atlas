@@ -94,6 +94,13 @@ repeat: none
   orig: 500, 500
   offset: 0, 0
   index: 3
+default
+  rotate: false
+  xy: 500, 1500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
 100-idle
   rotate: false
   xy: 500, 1500

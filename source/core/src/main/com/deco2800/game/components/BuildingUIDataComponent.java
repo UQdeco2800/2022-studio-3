@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -107,8 +108,12 @@ public class BuildingUIDataComponent extends UIComponent {
             statsLabel = new Label("Stats: ", skin);
             attributesLabel = new Label(statsString, skin);
             inventoryLabel = new Label("inventory things...", skin);
-            buildingImage = new Image(ServiceLocator.getResourceService()
-                    .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+            try {
+                buildingImage = new Image(ServiceLocator.getResourceService()
+                        .getAsset(entity.getComponent(TextureRenderComponent.class).texturePath, Texture.class));
+            } catch (Exception e) {
+                buildingImage = new Image(this.getEntity().getComponent(TextureImageComponent.class).getAsset());
+            }
 
             /* TODO: create small context box for smaller window sizes */
             contextBoxSprite.setWidth(contextBoxSprite.getWidth() * 1.5f);

@@ -19,8 +19,9 @@ public class BuildingAnimationController extends Component {
 
     private static final String HALF_HEALTH = "50-idle";
     private static final String HALF_HEALTH_TRANSITION = "50";
-    private static final String FULL_HEALTH = "100";
-    private static final String FULL_ATTACKED = "attacked";
+    private static final String HALF_ATTACKED = "50-attacked";
+    private static final String FULL_HEALTH = "100-idle";
+    private static final String FULL_ATTACKED = "100-attacked";
     private static final String COLLAPSE = "collapse";
     private static final String REBUILD = "reconstruction";
 
@@ -37,7 +38,6 @@ public class BuildingAnimationController extends Component {
 
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         D_health = this.entity.getComponent(CombatStatsComponent.class).getHealth();
-        entity.getEvents().addListener("HealthAnimation", this::updateAnimation);
         currentDirection = "";
 
         // Damage transition events
@@ -59,26 +59,8 @@ public class BuildingAnimationController extends Component {
         entity.getEvents().addListener("goSouth", this::south);
         // Ship attacked.
         entity.getEvents().addListener("directionAttacked", this::directionAttacked);
-    }
 
-    void updateAnimation() {
-//        // Updates the health value in HealthComponent
-//        int health = this.entity.getComponent(CombatStatsComponent.class).getHealth();
-//
-//        if (health <= D_health && health >= 0.5*D_health) {
-//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.NORMAL);
-//        } else if (health < 0.5*D_health && health > 0) {
-//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.HALF);
-//        } else if (health <= 0 && !dispose) {
-//            this.entity.getComponent(HealthAnimation.class).updateHealth(Health.DEAD);
-//            dispose = true;
-//        } else if (dispose) {
-//            this.entity.getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
-//        }
-//        // Applies the correct animation
-//        if (this.enabled) {
-//            animator.startAnimation(entity.getComponent(HealthAnimation.class).getAnimation());
-//        }
+        animator.startAnimation("default");
     }
 
     /**
@@ -190,7 +172,7 @@ public class BuildingAnimationController extends Component {
      */
     private void underAttackHalf() {
         if (animator.isFinished()) {
-            // animator.startAnimation(HALF_ATTACKED);
+             animator.startAnimation(HALF_ATTACKED);
         }
     }
 }
