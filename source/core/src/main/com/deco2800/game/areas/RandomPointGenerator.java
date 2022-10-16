@@ -15,6 +15,8 @@ import java.util.Random;
 /** Class used to spawn a random point within a certain range of the city center */
 public class RandomPointGenerator {
 
+    private final static Random random = new Random();
+
     /**
      * Get the centre of the city as a GridPoint2
      *
@@ -203,7 +205,7 @@ public class RandomPointGenerator {
         while (notFound) {
             GridPoint2 point1 = oceanTiles.get(0);
             GridPoint2 point2 = oceanTiles.get(oceanTiles.size()-1);
-            Random rand = new Random();
+            Random rand = random;
 
             GridPoint2 point = oceanTiles.get(rand.nextInt(oceanTiles.size()-1));
             int x = point.x;
@@ -256,7 +258,7 @@ public class RandomPointGenerator {
         while (notFound) {
             GridPoint2 point1 = islandTiles.get(0);
             GridPoint2 point2 = islandTiles.get(islandTiles.size()-1);
-            Random rand = new Random();
+            Random rand = random;
 
             GridPoint2 point = islandTiles.get(rand.nextInt(islandTiles.size()-1));
             int x = point.x;

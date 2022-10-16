@@ -82,6 +82,8 @@ public class AtlantisTerrainFactory {
      */
     private static MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
+    private final Random random = new Random();
+
     /**
      * Create a terrain factory with Isometric orientation
      *
@@ -235,7 +237,7 @@ public class AtlantisTerrainFactory {
         //Iterate through the map and set cells according to their type
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight; y++) {
-                int randNum = new Random().nextInt(100);
+                int randNum = random.nextInt(100);
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
                     //Set ocean tiles to animated ocean textures

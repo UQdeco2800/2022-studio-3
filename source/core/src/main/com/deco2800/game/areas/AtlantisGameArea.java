@@ -62,6 +62,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Target;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -225,6 +226,10 @@ public class AtlantisGameArea extends GameArea {
     private EventHandler gameAreaEventHandle;
     private Entity terrainMapAndMiniMap;
     private BuildingGenerator buildingGenerator;
+    // Random instance extracted as per sonarcloud
+    private final Random random = new Random();
+
+
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
@@ -667,7 +672,7 @@ public class AtlantisGameArea extends GameArea {
                 //Iterate through row of buildings, excluding the last entry
                 //Roll to see if a feature is being placed
 
-                if (new Random().nextInt(100) <= 30) {
+                if (random.nextInt(100) <= 30) {
                     //Skip last building in row, as features will be difficult to see
                     if (i == 0) {
                         i++;

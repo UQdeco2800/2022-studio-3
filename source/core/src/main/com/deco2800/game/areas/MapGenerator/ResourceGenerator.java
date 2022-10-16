@@ -25,6 +25,8 @@ public class ResourceGenerator {
      */
     private final int RESOURCE_BUFFER = 1;
 
+    private final Random random = new Random();
+
     /**
      * Constructs a new ResourceGenerator, provided the game's MapGenerator
      * @param mg The game's MapGenerator object
@@ -265,7 +267,7 @@ public class ResourceGenerator {
         }
         //Return the object correlating to the weight returned - in this case the lowest key
         //closest to the random number rolled correlates to the move chosen
-        return weightMap.get(weightMap.floorKey(new Random().nextInt(totalCount)));
+        return weightMap.get(weightMap.floorKey(random.nextInt(totalCount)));
     }
 
     /**
