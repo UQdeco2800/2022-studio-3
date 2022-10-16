@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.components.mainmenu.InsertButtons;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -50,6 +51,8 @@ public class StoryDisplay extends UIComponent {
     private ArrayList<String> storyImages;
     private int start;
     private int end;
+
+    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
 
 
 
@@ -84,11 +87,30 @@ public class StoryDisplay extends UIComponent {
 
         start += 1;
         stage.addActor(table);
+        InsertButtons bothButtons = new InsertButtons();
+
+        // next button
+
+        String nextTexture = "images/next_cut.png";
+        String nextTextureHover = "images/next_cut_hover.PNG";
+
+        ImageButton nextBtn;
+        nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
 
 
-        TextButton nextBtn = new TextButton("Next", skin);
+
+        // prev buttons
+        String prevTexture = "images/prev_cut.png";
+        String prevTextureHover = "images/prev_cut_hover.png";
+        ImageButton prevBtn;
+        prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
+
+
+        //TextButton nextBtn = new TextButton("Next", skin);
         TextButton skipBtn = new TextButton("Skip", skin);
-        TextButton prevBtn = new TextButton("Previous", skin);
+        //TextButton prevBtn = new TextButton("Previous", skin);
+
+        /*
         if (start == 0){
             prevBtn.setVisible(false);
             Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -97,7 +119,7 @@ public class StoryDisplay extends UIComponent {
             prevBtn.setVisible(true);
 
         }
-
+*/
         // Triggers an event when the button is pressed
 
 
