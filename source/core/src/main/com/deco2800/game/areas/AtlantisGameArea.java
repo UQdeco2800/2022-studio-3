@@ -1179,12 +1179,14 @@ public class AtlantisGameArea extends GameArea {
                     //Spawn a Tree entity
                     Entity tree = TreeFactory.createTree();
                     tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    this.terrainFactory.getMapGenerator().addGameResource(placement, tree);
                     spawnEntity(tree);
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
                     Entity camp = MiningCampFactory.createMiningCamp();
                     camp.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    this.terrainFactory.getMapGenerator().addGameResource(placement, camp);
                     spawnEntity(camp);
                 }
             }

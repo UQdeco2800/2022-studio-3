@@ -3,6 +3,7 @@ package com.deco2800.game.areas.MapGenerator;
 import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
 
@@ -92,6 +93,11 @@ public class MapGenerator {
     private Map<String, Coordinate> islandEdges;
 
     /**
+     * Map that holds resources of the game and their corresponding coordinates.
+     */
+    private Map<Coordinate, Entity> gameResources;
+
+    /**
      * Stores legal coordinates for players to move to.
      */
     public ArrayList<int[]> legalCoordinates;
@@ -127,6 +133,7 @@ public class MapGenerator {
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
         this.islandEdges = new HashMap<>();
+        this.gameResources = new HashMap<>();
         //Generate map
         generateMap();
 
@@ -724,11 +731,14 @@ public class MapGenerator {
         for (ResourceSpecification resourceSpecification: resourcePlacements) {
             for (Coordinate coords: resourceSpecification.getPlacements()) {
                 if (this.map[coords.getY()][coords.getX()] == this.getOceanChar()) {
-                    System.out.println("REMOVE: (" + coords.getX() + ", " + coords.getY() + ")");
+                    if (this.gameResources.get(coords) != null) {
+                        Entity res = this.gameResources.get(coords);
+                        res.dispose();
+                        this.gameResources.remove(coords);
+                    }
                 }
             }
         }
-        //TODO
     }
 
     // TODO: Make a flashing tile for warning the players which tiles will be flooded.
@@ -758,6 +768,10 @@ public class MapGenerator {
         this.bottomLeftX = bottomLeftI;
         this.bottomLeftY = bottomLeftJ;
         this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public void addGameResource(Coordinate cord, Entity resource) {
+        this.gameResources.put(cord, resource);
     }
 
     public int getBottomLeftX() {
