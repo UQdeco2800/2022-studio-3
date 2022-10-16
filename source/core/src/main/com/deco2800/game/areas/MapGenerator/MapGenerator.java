@@ -110,6 +110,10 @@ public class MapGenerator {
      *
      */
     private int bottomLeftY;
+    /**
+     * Container for the tiles to be flooded on the next iteration of flooding.
+     */
+    boolean[][] tilesToFlood;
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -726,21 +730,15 @@ public class MapGenerator {
         return tiles;
     }
 
-    public void updateFloodedTiles(boolean[][] tilesToFlood) {
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (tilesToFlood[i][j]) {
-                    this.map[i][j] = this.getOceanChar();
-                }
-            }
-        }
+    public void updateFloodedTiles() {
+
     }
 
     /**
      * Given a coordinate (x, y), update the internal representation of the map
      * to flood that tile.
      */
-    public void floodTile() throws IllegalArgumentException {
+    public void flashTiles() {
         // Container to represent squares to be flooded next
         boolean[][] nextSquaresToBeFlooded = new boolean[mapHeight][mapWidth];
 
@@ -751,7 +749,20 @@ public class MapGenerator {
 
         // Pick tiles to be flooded and flood them
         nextSquaresToBeFlooded = this.pickTilesToFlood(nextSquaresToBeFlooded, farLeft, farRight);
-        this.updateFloodedTiles(nextSquaresToBeFlooded);
+        this.tilesToFlood = nextSquaresToBeFlooded;
+    }
+
+    /**
+     * Floods selected tiles
+     */
+    public void flood() {
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (tilesToFlood[i][j]) {
+                    this.map[i][j] = this.getOceanChar();
+                }
+            }
+        }
         disposeFloodedSquares();
     }
 

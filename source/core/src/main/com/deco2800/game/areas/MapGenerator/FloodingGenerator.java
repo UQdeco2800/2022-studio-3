@@ -168,6 +168,7 @@ public class FloodingGenerator extends Component {
      * The call to atlantisTerrainFactory updates the structure of mapGenerator.
      */
     public void triggerFloodEvent() {
+        this.atlantisTerrainFactory.flashTiles();
         this.atlantisTerrainFactory.floodTiles();
         this.atlantisGameArea.flood();
     }

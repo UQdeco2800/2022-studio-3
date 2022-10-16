@@ -173,10 +173,14 @@ public class AtlantisTerrainFactory {
         return new GridPoint2(newX, newY);
     }
 
-    public MapGenerator floodTiles() {
-        mapGenerator.floodTile();
+    public void floodTiles() {
+        mapGenerator.flood();
         this.createAtlantisTerrainComponent();
-        return mapGenerator;
+    }
+
+    public void flashTiles() {
+        mapGenerator.flashTiles();
+        this.createAtlantisTerrainComponent();
     }
 
     /**
