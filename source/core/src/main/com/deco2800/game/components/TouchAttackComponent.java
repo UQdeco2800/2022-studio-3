@@ -26,7 +26,6 @@ public class TouchAttackComponent extends Component {
 
   private EntityDirectionComponent entityDirectionComponent;
   private boolean isAttacking = false;
-  private int hitDamage;
   private Entity targetEntity;
 
   /**
@@ -45,7 +44,6 @@ public class TouchAttackComponent extends Component {
   public TouchAttackComponent(short targetLayer, float knockback, int hitDamage) {
     this.targetLayer = targetLayer;
     this.knockbackForce = knockback;
-    this.hitDamage = hitDamage;
   }
 
   @Override
@@ -74,8 +72,7 @@ public class TouchAttackComponent extends Component {
 
     if (targetStats != null) {
       this.targetEntity = target;
-      //targetStats.hit(combatStats);
-      targetStats.decreaseHealth(hitDamage);
+      targetStats.hit(combatStats);
       if (targetStats.getHealth() > 0) {
         if (!isAttacking) {
           isAttacking = true;
@@ -102,7 +99,9 @@ public class TouchAttackComponent extends Component {
             }
           }
         }
-      } 
+      }else{
+        isAttacking = false;
+      }
     }
 
 //     Apply knockback
