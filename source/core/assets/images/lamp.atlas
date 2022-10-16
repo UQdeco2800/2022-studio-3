@@ -1,0 +1,34 @@
+
+lamp.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 2, 2
+  size: 278, 619
+  orig: 278, 619
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 282, 2
+  size: 278, 619
+  orig: 278, 619
+  offset: 0, 0
+  index: 2
+default
+  rotate: false
+  xy: 562, 2
+  size: 278, 619
+  orig: 278, 619
+  offset: 0, 0
+  index: 4
+default
+  rotate: false
+  xy: 842, 2
+  size: 278, 619
+  orig: 278, 619
+  offset: 0, 0
+  index: 1

@@ -24,6 +24,34 @@ public class FloodingGenerator extends Component {
      * Flooding timer to signal flooding event.
      */
     private Timer timer;
+    /**
+     * Flag for 20% complete
+     */
+    public Boolean status20p;
+    /**
+     * Flag for 40% complete
+     */
+    public Boolean status40p;
+    /**
+     * Flag for 60% complete
+     */
+    public Boolean status60p;
+    /**
+     * Flag for 80% complete
+     */
+    public Boolean status80p;
+    /**
+     * Flag for 100% complete
+     */
+    public Boolean status100p;
+    /**
+     * Constant value of flood timer (ms)
+     */
+    private final int floodDuration = 4000;
+    /**
+     * Stores current progress update
+     */
+    private byte progress;
 
     /**
      * Creates the entity that manages flooding for the game.
@@ -33,6 +61,7 @@ public class FloodingGenerator extends Component {
     public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory, AtlantisGameArea atlantisGameArea) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;
         this.atlantisGameArea = atlantisGameArea;
+        this.resetFlags();
         this.startTimer();
 
         //TODO - How do we pause the timer when the game is paused?
@@ -41,10 +70,22 @@ public class FloodingGenerator extends Component {
     }
 
     /**
+     * Sets all completion flags to false.
+     */
+    public void resetFlags() {
+        this.status20p = false;
+        this.status40p = false;
+        this.status60p = false;
+        this.status80p = false;
+        this.status100p = false;
+        this.progress = 0b00000000;
+    }
+
+    /**
      * Starts the countdown for flooding to occur.
      */
     private void startTimer() {
-        this.timer = new Timer(15000, 15001);
+        this.timer = new Timer(floodDuration, floodDuration + 1);
         this.timer.start();
     }
 
@@ -61,9 +102,47 @@ public class FloodingGenerator extends Component {
      */
     @Override
     public void update() {
+        this.updateFlags();
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
+            this.resetFlags();
             this.startTimer();
+        }
+    }
+
+    public Boolean updateFlags() {
+
+        //Obtain completion status
+        byte currentProgress = timer.getFlagStatus();
+
+        if (progress == currentProgress) {
+            return false;
+        } else {
+            progress = currentProgress;
+            this.setFlags();
+            return true;
+        }
+    }
+
+    public void setFlags() {
+        //Flags for completion
+        byte flag20p  = 0b00000001;
+        byte flag40p  = 0b00000010;
+        byte flag60p  = 0b00000100;
+        byte flag80p  = 0b00001000;
+        byte flag100p = 0b00010000;
+
+        //Update flags
+        if ((progress & flag100p) == flag100p) {
+            this.status100p = true;
+        } else if ((progress & flag80p) == flag80p) {
+            this.status80p = true;
+        } else if ((progress & flag60p) == flag60p) {
+            this.status60p = true;
+        } else if ((progress & flag40p) == flag40p) {
+            this.status40p = true;
+        } else if ((progress & flag20p) == flag20p) {
+            this.status20p = true;
         }
     }
 
