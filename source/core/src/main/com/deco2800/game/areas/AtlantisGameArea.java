@@ -281,12 +281,9 @@ public class AtlantisGameArea extends GameArea {
 
         // spawnBuildings();
 
-//        spawnForager();
-//        spawnMiner();
-//        spawnBuilder();
-        //spawnBuilder(); 
-        //spawnForager();
-        //spawnMiner();
+        spawnForager();
+        spawnMiner();
+        spawnBuilder();
         spawnCity();
         //spawnForager();
         spawnHoplite();
