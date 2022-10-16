@@ -1,6 +1,7 @@
 package com.deco2800.game.components.weather;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -50,18 +51,32 @@ public class WeatherIcon extends Actor {
      */
     private WeatherIconProperties weatherIconProperties;
 
+    /**
+     * Holds the frames for the snow and ice animation
+     */
     private TextureRegion[] iceFrames;
-
-    private Animation<TextureRegion> iceAnimation;
-
     private TextureRegion[] rainFrames;
 
+    /**
+     * Creates the animation object to track elapsed time and set the frame
+     */
+    private Animation<TextureRegion> iceAnimation;
     private Animation<TextureRegion> rainAnimation;
 
 
-
-
+    /**
+     * Holds the float value for the elapsed time from weather transition.
+     * It is used with the animation objects to change the current frame
+     */
     private float elapsedTime;
+
+    /**
+     * Holds the sounds for all the weather events
+     */
+    private Sound rainSound;
+    private Sound thunderSound;
+    private Sound sunnySound;
+    private Sound windSound;
 
     /**
      * Stores possible weather types.
@@ -103,7 +118,7 @@ public class WeatherIcon extends Actor {
 
         Texture img = new Texture("images/snow.png");
 
-
+        //Sets the frames in the texture array
         TextureRegion[][] snowImages = TextureRegion.split(img, 1400, 1600);
         this.iceFrames = new TextureRegion[4];
         this.rainFrames = new TextureRegion[3];
@@ -118,9 +133,16 @@ public class WeatherIcon extends Actor {
 
             }
         }
+
+        //Creating animations with different frame rates
         iceAnimation = new Animation(0.3f, iceFrames);
         rainAnimation = new Animation(0.1f, rainFrames);
 
+        //Creates all the sound objects used for the weather
+        rainSound = Gdx.audio.newSound(Gdx.files.internal("sounds/rainsound.mp3"));
+        thunderSound = Gdx.audio.newSound(Gdx.files.internal("sounds/thundersound.mp3"));
+        sunnySound = Gdx.audio.newSound(Gdx.files.internal("sounds/sunny.mp3"));
+        windSound = Gdx.audio.newSound(Gdx.files.internal("sounds/winds.mp3"));
         layout();
     }
 
@@ -140,7 +162,13 @@ public class WeatherIcon extends Actor {
      * new selected index.
      */
     public void changeWeatherImage() {
-        // Obtain a new index
+
+        //Stops all current sounds playing when weather changes
+        rainSound.stop();
+        thunderSound.stop();
+        sunnySound.stop();
+        windSound.stop();
+
         int index;
         do {
             index = PseudoRandom.seedRandomInt(0, weatherTypes.length);
@@ -154,6 +182,21 @@ public class WeatherIcon extends Actor {
         this.speedFactor = this.weatherIconProperties.getSpeedFactor();
         layout();
         logger.info("Weather changing");
+
+        //Plays sounds on right weather events
+        if (weatherIconProperties == WeatherIconProperties.RAINY || weatherIconProperties == WeatherIconProperties.STORMY){
+            rainSound.play();
+        }
+        if (weatherIconProperties == WeatherIconProperties.STORMY){
+            thunderSound.loop();
+            windSound.loop();
+        }
+        if (weatherIconProperties == WeatherIconProperties.SUNNY){
+            sunnySound.play();
+        }
+        if (weatherIconProperties == WeatherIconProperties.CLOUDY || weatherIconProperties == WeatherIconProperties.SNOWY){
+            windSound.loop();
+        }
 
     }
 
@@ -194,9 +237,14 @@ public class WeatherIcon extends Actor {
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        //Gets current time from the Gdx library
         elapsedTime+= Gdx.graphics.getDeltaTime();
+
+        //Runs the animation if the current weather event is snowy
         if (weatherIconProperties == WeatherIconProperties.SNOWY) {
             Image temp = new Image(iceAnimation.getKeyFrame(elapsedTime, true));
+            //Spawns multiple instances of the current animation frame at different locations
+            //This is to reduce the size of rain drop and fill the screen better
             for (int i=0 ; i < 4; i++){
                 for (int j=0; j < 3; j++) {
                     temp.setScale(0.3f, 0.3f);
@@ -208,10 +256,13 @@ public class WeatherIcon extends Actor {
             this.weatherFilter = temp;
         }
 
+        //This starts the rain animation which is used by both the rain and storm weather events
         if (weatherIconProperties == WeatherIconProperties.RAINY || weatherIconProperties == WeatherIconProperties.STORMY){
             Image temp = new Image(rainAnimation.getKeyFrame(elapsedTime, true));
             temp.setScale(0.5f, 0.5f);
             temp.setPosition(0,200);
+            //Spawns multiple instances of the current animation frame at different locations
+            //This is to reduce the size of rain drop and fill the screen better
             for (int i=0 ; i < 5; i++){
                 for (int j=0; j < 7; j++) {
                     temp.setPosition(300*i, j*200);
