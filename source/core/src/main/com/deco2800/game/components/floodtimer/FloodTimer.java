@@ -38,11 +38,11 @@ public class FloodTimer extends Actor {
 
     public void requestNewImage(int completion) {
         switch (completion) {
-            case 100 -> this.changeImage(TIMER100PC);
-            case 80 -> this.changeImage(TIMER80PC);
-            case 60 -> this.changeImage(TIMER60PC);
-            case 40 -> this.changeImage(TIMER40PC);
-            case 20 -> this.changeImage(TIMER20PC);
+            case 80 -> this.changeImage(TIMER100PC);
+            case 60 -> this.changeImage(TIMER80PC);
+            case 40 -> this.changeImage(TIMER60PC);
+            case 20 -> this.changeImage(TIMER40PC);
+            case 0 -> this.changeImage(TIMER20PC);
         }
     }
 
@@ -52,8 +52,8 @@ public class FloodTimer extends Actor {
     }
 
     public void layout() {
-        floodTimerImage.setSize(250f, 150f);
-        this.floodTimerImage.setPosition(Gdx.graphics.getWidth()/2f + floodTimerImage.getWidth()/2f + 40f, Gdx.graphics.getHeight()-150f);
+        floodTimerImage.setSize(160, 40f);
+        this.floodTimerImage.setPosition(Gdx.graphics.getWidth()/2f + floodTimerImage.getWidth()/2f + 180f, Gdx.graphics.getHeight()-50f);
     }
 
     @Override
