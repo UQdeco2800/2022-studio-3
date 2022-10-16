@@ -50,6 +50,7 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.factories.ArcherFactory;
 import com.deco2800.game.soldiers.factories.HopliteFactory;
 import com.deco2800.game.soldiers.factories.SpearmanFactory;
 import com.deco2800.game.soldiers.factories.SwordsmanFactory;
@@ -151,7 +152,7 @@ public class AtlantisGameArea extends GameArea {
             "images/Base_Highlight",
             "images/level_1_town_hall_Highlight.png",
             "images/stone.png",
-            "images/archer.png",
+            "images/archerstatic.png",
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
@@ -177,6 +178,7 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
+            "images/arrow.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -241,7 +243,7 @@ public class AtlantisGameArea extends GameArea {
         //gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
         //gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
         //gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
-        //gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
+        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         //gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
 //        loadAssets();
@@ -281,12 +283,14 @@ public class AtlantisGameArea extends GameArea {
         spawnHoplite();
         spawnSpearman();
         spawnSwordsman();
+        
 
         spawnResources();
 
-//        spawnTitanShrine();
+        spawnTitanShrine();
 //        spawnShip();
-//        spawnTrebuchet(titan, this);
+        spawnTrebuchet(titan, this);
+        spawnArcher(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -1039,9 +1043,14 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(unit, location, true, false);
     }
 
-    private void spawnArcher(Vector2 location) {
-        spawnUnit(UnitType.ARCHER, location);
+    private void spawnArcher(Entity target, GameArea gameArea) {
+        int offset = 20;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        char[][] map = mg.getMap();
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        spawnEntityAt((ArcherFactory.createArcher(target, gameArea)), spawn, true, true);
     }
+
 
     private void spawnSwordsman() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);

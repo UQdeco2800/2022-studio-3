@@ -39,7 +39,7 @@ public class SoldierFactory {
                         .addComponent(new HealthBarComponent(EntityType.FRIENDLY))
                         .addComponent(aiComponent)
                         .addComponent(inputComponent)
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.NPC));
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.NPC, 1.5f, 20));
 
         PhysicsUtils.setScaledCollider(soldier, 0.6f, 0.3f);
         soldier.getComponent(ColliderComponent.class).setDensity(1.5f);
