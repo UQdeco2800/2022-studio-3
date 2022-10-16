@@ -21,12 +21,11 @@ public class LoadingScreen extends ScreenAdapter {
     private final Renderer renderer;
     private Entity ui;
 
-    private final String[] forestTextures = AtlantisGameArea.forestTextures;
-
-    public static final String[] uiTextures = AtlantisGameArea.uiTextures;
-    public static final String[] forestTextureAtlases = AtlantisGameArea.forestTextureAtlases;
-    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
-    public static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
+    private static final String[] forestTextures = AtlantisGameArea.forestTextures;
+    private static final String[] uiTextures = AtlantisGameArea.uiTextures;
+    private static final String[] forestTextureAtlases = AtlantisGameArea.forestTextureAtlases;
+    private static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    private static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
 
     private static final String[] assets = {
             "images/loading_screen.png",
@@ -104,6 +103,7 @@ public class LoadingScreen extends ScreenAdapter {
         resourceService.loadTextures(buildingPlacementTextures);
     }
 
+    @Override
     public void dispose() {
         logger.debug("Disposing Loading Screen");
         renderer.dispose();
