@@ -56,17 +56,6 @@ public class TouchAttackComponent extends Component {
     entityDirectionComponent = entity.getComponent(EntityDirectionComponent.class);
   }
 
-  @Override
-  public void update() {
-    if (isAttacking) {
-      if (combatStats.isDead()) {
-        isAttacking = false;
-        this.targetEntity.dispose();
-        this.targetEntity = null;
-      }
-    }
-  }
-
   private void onCollisionStart(Fixture me, Fixture other) {
     if (hitboxComponent.getFixture() != me) {
       // Not triggered by hitbox, ignore

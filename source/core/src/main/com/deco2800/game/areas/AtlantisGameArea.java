@@ -152,7 +152,7 @@ public class AtlantisGameArea extends GameArea {
             "images/Base_Highlight",
             "images/level_1_town_hall_Highlight.png",
             "images/stone.png",
-            "images/archer.png",
+            "images/archerstatic.png",
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
@@ -243,7 +243,7 @@ public class AtlantisGameArea extends GameArea {
         //gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
         //gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
         //gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
-        //gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
+        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         //gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
 //        loadAssets();
@@ -289,7 +289,7 @@ public class AtlantisGameArea extends GameArea {
 
         spawnTitanShrine();
 //        spawnShip();
-//        spawnTrebuchet(titan, this);
+        spawnTrebuchet(titan, this);
         spawnArcher(titan, this);
 
         // spawnWorkerBase();
@@ -1043,9 +1043,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         char[][] map = mg.getMap();
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
-        spawnEntityAt((ArcherFactory.createArcher(target, gameArea))
-                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
-                true, true);
+        spawnEntityAt((ArcherFactory.createArcher(target, gameArea)), spawn, true, true);
     }
 
 

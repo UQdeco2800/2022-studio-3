@@ -2,11 +2,14 @@ package com.deco2800.game.soldiers.factories;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.EntityType;
 import com.deco2800.game.components.HealthBarComponent;
+import com.deco2800.game.components.bulletHitShips;
 import com.deco2800.game.components.building.AttackListener;
 import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
@@ -16,6 +19,7 @@ import com.deco2800.game.entities.configs.BaseUnitConfig;
 import com.deco2800.game.entities.configs.UnitConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -57,6 +61,37 @@ public class ArcherFactory {
         archer1.scaleWidth(0.5f);
         return archer1;
     }
+
+    public static Entity createArrow(Entity from, Entity target, GameArea gameArea) {
+        float x1 = from.getPosition().x;
+        float y1 = from.getPosition().y;
+        float x2 = target.getPosition().x;
+        float y2 = target.getPosition().y;
+    
+        Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
+    
+        newTarget = newTarget.scl(1000).add(from.getPosition());
+    
+        Entity arrow =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/arrow.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new bulletHitShips(target, gameArea));
+    
+        arrow.getComponent(TextureRenderComponent.class).scaleEntity();
+        arrow.scaleHeight(0.7f);
+        PhysicsUtils.setScaledCollider(arrow, 0.5f, 0.3f);
+    
+        arrow.setPosition(x1 - arrow.getScale().x / 2 + from.getScale().x / 2,
+                y1 - arrow.getScale().y / 2 + from.getScale().y / 2);
+    
+        arrow.getComponent(PhysicsMovementComponent.class).setTarget(newTarget);
+        arrow.getComponent(PhysicsMovementComponent.class).setMoving(true);
+        arrow.getComponent(ColliderComponent.class).setSensor(true);
+        return arrow;
+      }
 
     
     private ArcherFactory() {
