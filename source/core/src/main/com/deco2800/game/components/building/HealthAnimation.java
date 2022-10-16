@@ -33,4 +33,8 @@ public class HealthAnimation extends Component {
     public void updateHealth(Health health){
         this.health = health;
     }
+
+    public Health getHealth(){
+        return health;
+    }
 }
