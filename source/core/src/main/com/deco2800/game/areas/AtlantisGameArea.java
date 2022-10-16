@@ -51,6 +51,7 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.math.Vector2Utils;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -449,7 +450,7 @@ public class AtlantisGameArea extends GameArea {
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
 
         //Spawn boundaries where each ocean tile is
-        spawnIslandBounds();
+//        spawnIslandBounds();
 
         //Spawn boundaries around the map itself
         spawnMapBounds();
@@ -703,8 +704,8 @@ public class AtlantisGameArea extends GameArea {
         mc.setDisplayColour(Color.CORAL);
 
         GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInSea(terrainFactory, range);
-
-        ship = BuildingFactory.createShip();
+        Vector2 target = terrain.tileToWorldPosition(RandomPointGenerator.getRandomPointInIsland(terrainFactory, range));
+        ship = BuildingFactory.createShip(terrainFactory);
         ship.addComponent(mc).addComponent(new UnitSpawningComponent(gameAreaEventHandle));
         spawnEntityAt(ship, spawnPoint, false, false);
     //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
@@ -957,8 +958,13 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         char[][] map = mg.getMap();
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 10);
+        GridPoint2 corner1 = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory, 1f);
+        GridPoint2 corner2 = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory, 1f);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
-                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), corner1,
+                true, true);
+        spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), corner2,
                 true, true);
     }
 

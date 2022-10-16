@@ -10,13 +10,6 @@ default
   orig: 371, 359
   offset: 0, 0
   index: 0
-default
-  rotate: false
-  xy: 33, 2102
-  size: 371, 359
-  orig: 371, 359
-  offset: 0, 0
-  index: 0
 100-west
   rotate: false
   xy: 33, 2102

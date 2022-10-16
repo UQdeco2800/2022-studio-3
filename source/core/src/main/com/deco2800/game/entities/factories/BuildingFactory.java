@@ -11,9 +11,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
+import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.*;
 import com.deco2800.game.components.building.*;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.components.tasks.EnemyMovement;
 import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.*;
@@ -410,6 +412,79 @@ public class BuildingFactory {
                 .addComponent(new DirectionalBuildingAnimationController())
                 .addComponent(animator);
 
+        ship.getComponent(AnimationRenderComponent.class).scaleEntity();
+        ship.scaleWidth(SHIP_SCALE);
+
+        ship.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.DynamicBody);
+        ship.getComponent(ColliderComponent.class).setLayer(PhysicsLayer.NPC);
+        //TODO: Set isometric colliders
+
+
+
+        return ship;
+    }
+
+    /**
+     * Creates a ship entity, a ship shrine is an enemy building that transports
+     * enemy entities from sea to the shores of the island.
+     * that spawns titan's.
+     * @return Ship Building Entity
+     */
+    public static Entity createShip(AtlantisTerrainFactory terrainFactory) {
+        final float SHIP_SCALE = 5f;
+        Entity ship = createBaseBuilding();
+        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
+        ShipConfig config = configs.ship;
+
+        AITaskComponent aiTaskComponent = new AITaskComponent().addTask(new EnemyMovement(terrainFactory));
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/ship2.atlas", TextureAtlas.class));
+
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+//
+//        animator.addAnimation(FULL_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(FULL_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+//
+//        animator.addAnimation(HALF_HEALTH + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+//
+//        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + NORTH, 0.1f,
+//                Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + SOUTH, 0.1f,
+//                Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + EAST, 0.1f,
+//                Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_HEALTH_TRANSITION + DELIMETER + WEST, 0.1f,
+//                Animation.PlayMode.NORMAL);
+//
+//        animator.addAnimation(COLLAPSE + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(COLLAPSE + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(COLLAPSE + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(COLLAPSE + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(HALF_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        ship
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                .addComponent(aiTaskComponent)
+                .addComponent(animator);
+        ship.getComponent(AnimationRenderComponent.class).startAnimation("default");
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
 
