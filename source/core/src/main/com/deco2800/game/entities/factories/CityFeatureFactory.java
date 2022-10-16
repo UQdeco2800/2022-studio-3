@@ -16,6 +16,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 public class CityFeatureFactory {
@@ -36,11 +37,11 @@ public class CityFeatureFactory {
      */
     public static Entity createLamp() {
         Entity lamp = createBaseFeature();
-        final float LAMP_SCALE = 1f;
+        final float LAMP_SCALE = 0.5f;
         //Set TextureScalerPoints
-        Vector2 leftPoint = new Vector2(96f, 553f); //Bottom leftmost edge in pixels
-        Vector2 maxX = new Vector2(161f, 576f); //Bottom rightmost edge in pixels
-        Vector2 maxY = new Vector2(136f, 531f);
+        Vector2 leftPoint = new Vector2(112f, 556f); //Bottom leftmost edge in pixels
+        Vector2 maxX = new Vector2(139f, 574f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(138f, 540f);
 
         //Create animation component
         TextureAtlas lampAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/lamp.atlas", TextureAtlas.class);
@@ -62,15 +63,15 @@ public class CityFeatureFactory {
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY, baseTexture))
                 .addComponent(mp);
 
-        //Precisely scale width to one tile long
+        //Precisely scale width to half a tile long
         lamp.getComponent(TextureScaler.class).setPreciseScale(LAMP_SCALE, true);
 
         //Set collider
-        float[] points = new float[] {      // Four vertices
-                96f, 553f,       // Vertex 0       3--2
-                161f, 576f,     // Vertex 1      /  /
-                199f, 544f,     // Vertex 2     /  /
-                136f, 531f       // Vertex 3    0--1
+        float[] points = new float[] {
+                112f, 556f,      // Vertex 0       3--2
+                139f, 574f,      // Vertex 1      /  /
+                167f, 552f,      // Vertex 2     /  /
+                138f, 540f       // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(baseTexture), points, null);
@@ -143,6 +144,48 @@ public class CityFeatureFactory {
     }
 
     public static Entity createCityBush() {
-        return null;
+        Entity bush = createBaseFeature();
+        float BUSH_SCALE = 2f;
+
+        //Set TextureScalerPoints
+        Vector2 leftPoint = new Vector2(18f, 99f); //Bottom leftmost edge in pixels
+        Vector2 maxX = new Vector2(58f, 120f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(100f, 56f);
+
+        //Create map component
+        MapComponent mp = new MapComponent();
+        mp.display();
+        mp.setDisplayColour(Color.GREEN);
+
+        //Add components
+        bush.addComponent(new TextureRenderComponent("images/bush.png"))
+            .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+            .addComponent(mp);
+
+        //Precisely scale height to two tiles long
+        bush.getComponent(TextureScaler.class).setPreciseScale(BUSH_SCALE, false);
+
+        //Set collider
+        float[] points = new float[] {      // Four vertices
+                18f, 99f,       // Vertex 0       3--2
+                58f, 120f,      // Vertex 1      /  /
+                142f, 75f,      // Vertex 2     /  /
+                100f, 56f       // Vertex 3    0--1
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(
+                new TextureRegion(ServiceLocator.getResourceService().getAsset("images/bush.png", Texture.class)),
+                points, null);
+        float[] cords = region.getTextureCoords();
+
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(bush.getScale().x);
+        }
+        PolygonShape boundingBox = new PolygonShape();  // Collider shape
+        boundingBox.set(vertices);
+        bush.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
+
+        return bush;
     }
 }

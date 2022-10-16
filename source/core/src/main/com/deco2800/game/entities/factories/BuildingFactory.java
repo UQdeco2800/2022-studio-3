@@ -86,17 +86,18 @@ public class BuildingFactory {
         Entity townHall = createBaseBuilding();
         TownHallConfig config = configs.townHall;
 
-        Vector2 leftPoint = new Vector2(21f, 632f); //Bottom leftmost edge in pixels
-        Vector2 maxX = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
-        Vector2 maxY = new Vector2(507f, 359f); //NW edge
+        Vector2 leftPoint = new Vector2(111f, 840f); //Bottom leftmost edge in pixels
+        Vector2 maxX = new Vector2(540f, 1043f); //Bottom rightmost edge in pixels
+        Vector2 maxY = new Vector2(645f, 625f); //NW edge
 
         float[] selectionPoints = new float[] {
-                2f, 608f,
-                505f, 855f,
-                962f, 507f,
-                941f, 154f,
-                506f, 108f,
-                179f, 346f
+                111f, 840f,
+                540f, 1043f,
+                1091f, 814f,
+                1015f, 403f,
+                469f, 229f,
+                389f, 247f,
+                145f, 407f
         };
 
         MapComponent mp = new MapComponent();
@@ -124,10 +125,10 @@ public class BuildingFactory {
 
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-                31f, 607f,      // Vertex 0       3--2
-                499f, 835f,     // Vertex 1      /  /
-                958f, 515f,     // Vertex 2     /  /
-                486f, 289f      // Vertex 3    0--1
+                111f, 840f,      // Vertex 0       3--2
+                540f, 1043f,     // Vertex 1      /  /
+                1089f, 817f,     // Vertex 2     /  /
+                645f, 625f       // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -181,6 +182,7 @@ public class BuildingFactory {
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(mp)
                 .addComponent(new SelectionCollider())
+                .addComponent(new ShopUIFunctionalityComponent())
                 .addComponent(new BuildingUIDataComponent());
 
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
@@ -514,6 +516,7 @@ public class BuildingFactory {
                .addComponent(new SelectionCollider())
                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                .addComponent(new BuildingActions(config.type, config.level))
+               .addComponent(new ShopUIFunctionalityComponent())
                .addComponent(new BuildingUIDataComponent());
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
@@ -580,6 +583,7 @@ public class BuildingFactory {
           .addComponent(new SelectionCollider())
           .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
           .addComponent(new BuildingActions(config.type, config.level))
+          .addComponent(new ShopUIFunctionalityComponent())
           .addComponent(new BuildingUIDataComponent());
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);
@@ -752,7 +756,6 @@ public class BuildingFactory {
         Entity gate = createBaseBuilding();
         gate.setEntityName("City Gate");
         WallConfig config = configs.wall;
-
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
@@ -793,7 +796,7 @@ public class BuildingFactory {
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
             .addComponent(new SelectionCollider())
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-            .addComponent(new BuildingActions(config.type, config.level))
+            .addComponent(new BuildingActions(Building.GATE_NS, config.level))
             .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
@@ -868,7 +871,7 @@ public class BuildingFactory {
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(new SelectionCollider())
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingActions(Building.GATE_EW, config.level))
                 .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
