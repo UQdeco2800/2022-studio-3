@@ -15,8 +15,7 @@ public class FloodingGenerator {
     private MapGenerator mapGenerator;
     private WeatherIconDisplay weatherIconDisplay;
     private Timer timer;
-<<<<<<< Updated upstream
-=======
+
     /**
      * Flag for 20% complete
      */
@@ -46,7 +45,6 @@ public class FloodingGenerator {
      */
     private byte progress;
 
->>>>>>> Stashed changes
 
     public FloodingGenerator(AtlantisTerrainFactory atlantisTerrainFactory) {
         this.atlantisTerrainFactory = atlantisTerrainFactory;

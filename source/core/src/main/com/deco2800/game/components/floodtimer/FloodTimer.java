@@ -38,11 +38,11 @@ public class FloodTimer extends Actor {
 
     public void requestNewImage(int completion) {
         switch (completion) {
-            case 80 -> this.changeImage(TIMER100PC);
-            case 60 -> this.changeImage(TIMER80PC);
-            case 40 -> this.changeImage(TIMER60PC);
-            case 20 -> this.changeImage(TIMER40PC);
-            case 0 -> this.changeImage(TIMER20PC);
+            case 81 -> this.changeImage(TIMER100PC);
+            case 61 -> this.changeImage(TIMER80PC);
+            case 41 -> this.changeImage(TIMER60PC);
+            case 21 -> this.changeImage(TIMER40PC);
+            case 1 -> this.changeImage(TIMER20PC);
         }
     }
 
