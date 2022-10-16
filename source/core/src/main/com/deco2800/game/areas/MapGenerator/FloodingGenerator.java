@@ -122,6 +122,9 @@ public class FloodingGenerator extends Component {
         //Obtain completion status
         byte currentProgress = this.timer.getFlagStatus();
         if (progress == currentProgress) {
+            if (progress == 0b00000000) {
+                return true;
+            }
             return false;
         } else {
             progress = currentProgress;
