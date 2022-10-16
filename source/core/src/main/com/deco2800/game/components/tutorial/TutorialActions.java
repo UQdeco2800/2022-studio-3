@@ -60,13 +60,14 @@ public class TutorialActions extends Component {
 
         if (this.count < tutorialDialogues.length) {
             display.setDialogue(tutorialDialogues[count]);
-            // go to next dialogue
-
+            switch (this.count) {
+                case 1 -> display.setImage("images/dialogue_box_image_default.png");
+                case 2 -> display.setImage("images/SirFred.png");
+            }
         }
 
         if (this.count >= tutorialDialogues.length) {
             game.setScreen(GdxGame.ScreenType.LOADING);
         }
-
     }
 }
