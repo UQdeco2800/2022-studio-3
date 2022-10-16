@@ -23,7 +23,7 @@ public class FloodingGenerator extends Component {
     /**
      * Flooding timer to signal flooding event.
      */
-    private Timer timer;
+    public Timer timer;
     /**
      * Flag for 20% complete
      */
@@ -84,7 +84,7 @@ public class FloodingGenerator extends Component {
     /**
      * Starts the countdown for flooding to occur.
      */
-    private void startTimer() {
+    public void startTimer() {
         this.timer = new Timer(floodDuration, floodDuration + 1);
         this.timer.start();
     }

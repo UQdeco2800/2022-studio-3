@@ -48,7 +48,7 @@ public class PauseMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
-    game.exit();
+    game.setScreen(GdxGame.ScreenType.ENDGAME);
   }
 
   /**
