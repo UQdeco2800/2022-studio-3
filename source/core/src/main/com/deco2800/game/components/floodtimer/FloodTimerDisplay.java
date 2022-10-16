@@ -40,7 +40,7 @@ public class FloodTimerDisplay extends UIComponent {
             } else if (floodingGenerator.status20p) {
                 floodTimer.requestNewImage(20);
             } else {
-                floodTimer.requestNewImage(20);
+                floodTimer.requestNewImage(0);
             }
         }
     }
