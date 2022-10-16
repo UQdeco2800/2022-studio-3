@@ -1,6 +1,7 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
@@ -164,10 +165,12 @@ public class SpellUI extends UIComponent {
                 }
             }
 //            spell.setEnabled(true);
+            Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
 
             spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
 
             spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+            sound.play();
 
             for (Entity entity : enemyEntities) {
                 entity.dispose();
