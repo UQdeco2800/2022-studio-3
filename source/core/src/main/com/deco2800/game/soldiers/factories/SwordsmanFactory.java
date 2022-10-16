@@ -23,10 +23,19 @@ public class SwordsmanFactory {
                                 .getAsset("images/swordsman.atlas", TextureAtlas.class));
 
         animator.addAnimation("swordsman_forward_left_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swordsman_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swordsman_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_left_idle_highlight", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("swordsman_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("swordsman_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_left_move_highlight", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_right_move_highlight", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_left_attack", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_right_attack", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_left_attack_highlight", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_forward_right_attack_highlight", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_backward_left_move_highlight", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swordsman_backward_right_move_highlight", 0.1f, Animation.PlayMode.LOOP);
         
         Entity swordsman = SoldierFactory.createSoldier();
         swordsman.addComponent(new SwordsmanComponent())

@@ -23,11 +23,20 @@ public class SpearmanFactory {
                         ServiceLocator.getResourceService()
                                 .getAsset("images/spearman.atlas", TextureAtlas.class));
 
-        animator.addAnimation("spearman_forward_left_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("spearman_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("spearman_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("spearman_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("spearman_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_idle", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_idle_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_attack", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_right_attack", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_left_attack_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_forward_right_attack_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_backward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("spearman_backward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
         
         Entity spearman = SoldierFactory.createSoldier();
         spearman.addComponent(new SpearmanComponent())

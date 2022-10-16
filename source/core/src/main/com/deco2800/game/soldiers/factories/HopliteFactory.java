@@ -31,10 +31,19 @@ public class HopliteFactory {
                                 .getAsset("images/hoplite.atlas", TextureAtlas.class));
 
         animator.addAnimation("hoplite_forward_left_idle", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("hoplite_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("hoplite_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_left_idle_highlighted", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("hoplite_forward_left_move", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("hoplite_forward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_left_attack", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_right_attack", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_left_attack_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_forward_right_attack_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_backward_left_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_backward_right_move", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_backward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("hoplite_backward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
 
 
         Entity hoplite = SoldierFactory.createSoldier();

@@ -50,8 +50,6 @@ public class UnitIdleTask extends DefaultTask implements PriorityTask{
             isHovered = selectableComponent.isHovered();
         }
 
-        logger.info("[+] isHovered : " + String.valueOf(isHovered));
-
 
         if (movementTask.isMoving()) {
             movementTask.update();

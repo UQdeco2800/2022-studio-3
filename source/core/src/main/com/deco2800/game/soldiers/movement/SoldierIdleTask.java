@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.worker.components.movement.WorkerMovementTask;
 
 import org.slf4j.Logger;
@@ -18,6 +19,11 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
     private boolean idling = false;
     private FightingMovementTask movementTask;
     private Vector2 startPos;
+
+    // Selection
+    private boolean isSelected = false;
+    private boolean isHovered = false;
+    private SelectableComponent selectableComponent;
 
     public SoldierIdleTask() { /* already has start */ }
 
@@ -35,16 +41,34 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
         movementTask.start();
         owner.getEntity().getEvents().addListener("workerWalk", this::startMoving);
 
+        selectableComponent = owner.getEntity().getComponent(SelectableComponent.class);
+
     }
 
     @Override
     public void update() {
+
+        if (selectableComponent != null) {
+            isSelected = selectableComponent.isSelected();
+            isHovered = selectableComponent.isHovered();
+        }
+
         if (movementTask.isMoving()) {
             movementTask.update();
         } else if (!idling) {
             // Start idling again
-            owner.getEntity().getEvents().trigger("soldierIdleAnimate");
+            if(isHovered || isSelected){
+                owner.getEntity().getEvents().trigger("soldierHighlightedIdleAnimate");
+            }else{
+                owner.getEntity().getEvents().trigger("soldierIdleAnimate");
+            }
             idling = true;
+        }else if(idling){
+            if(isHovered || isSelected){
+                owner.getEntity().getEvents().trigger("soldierHighlightedIdleAnimate");
+            }else{
+                owner.getEntity().getEvents().trigger("soldierIdleAnimate");
+            }
         }
     }
 
@@ -59,13 +83,13 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
         movementTask.start();
 
         if (target.x > owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y){
-            owner.getEntity().getEvents().trigger("soldierBackRightMove");
+            owner.getEntity().getEvents().trigger("soldierBackwardRightMoveAnimate");
         } else if (target.x < owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierBackLeftMove");
+            owner.getEntity().getEvents().trigger("soldierBackwardLeftMoveAnimate");
         } else if (target.x < owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierForwardLeftMove");
+            owner.getEntity().getEvents().trigger("soldierLeftMoveAnimate");
         } else if (target.x > owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierForwardRightMove");
+            owner.getEntity().getEvents().trigger("soldierRightMoveAnimate");
         } else {
             owner.getEntity().getEvents().trigger("soldierIdleAnimate");
         }

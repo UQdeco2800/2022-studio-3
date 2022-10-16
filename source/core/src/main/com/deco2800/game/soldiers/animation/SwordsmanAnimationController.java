@@ -3,37 +3,83 @@ package com.deco2800.game.soldiers.animation;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
-public class SwordsmanAnimationController extends Component {
-    private AnimationRenderComponent animator;
+public class SwordsmanAnimationController extends Component{
+    AnimationRenderComponent animator;
 
     @Override
-    public void create() {
+    public void create(){
         super.create();
-        animator = entity.getComponent(AnimationRenderComponent.class);
+        animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("soldierIdleAnimate", this::animateIdle);
-        entity.getEvents().addListener("soldierForwardLeftMove", this::animateForwardLeftMove);
-        entity.getEvents().addListener("soldierForwardRightMove", this::animateForwardRightMove);
-        entity.getEvents().addListener("soldierBackLeftMove", this::animateBackLeftMove);
-        entity.getEvents().addListener("soldierBackRightMove", this::animateBackRightMove);
+        entity.getEvents().addListener("soldierHighlightedIdleAnimate", this::animateHighlightedIdle);
+        entity.getEvents().addListener("soldierLeftMoveAnimate", this::animateLeftMove);
+        entity.getEvents().addListener("soldierRightMoveAnimate", this::animateRightMove);
+        entity.getEvents().addListener("soldierHighlightedLeftMoveAnimate", this::animateHighlightedLeftMove);
+        entity.getEvents().addListener("soldierHighlightedRightMoveAnimate", this::animateHighlightedRightMove);
+        entity.getEvents().addListener("soldierLeftAttackAnimate", this::animateLeftAttack);
+        entity.getEvents().addListener("soldierRightAttackAnimate", this::animateRightAttack);
+        entity.getEvents().addListener("soldierHighlightedLeftAttackAnimate", this::animateHighlightedLeftAttack);
+        entity.getEvents().addListener("soldierHighlightedRightAttackAnimate", this::animateHighlightedRightAttack);
+        entity.getEvents().addListener("soldierBackwardLeftMoveAnimate", this::animateBackwardLeftMove);
+        entity.getEvents().addListener("soldierBackwardRightMoveAnimate", this::animateBackwardRightMove);
+        entity.getEvents().addListener("soldierBackwardHighlightedLeftMoveAnimate", this::animateBackwardHighlightedLeftMove);
+        entity.getEvents().addListener("soldierBackwardHighlightedRightMoveAnimate", this::animateBackwardHighlightedRightMove);
     }
 
-    public void animateIdle() {
+    void animateIdle(){
         animator.startAnimation("swordsman_forward_left_idle");
     }
 
-    public void animateForwardLeftMove() {
+    void animateHighlightedIdle(){
+        animator.startAnimation("swordsman_forward_left_idle_highlight");
+    }
+
+    void animateLeftMove(){
         animator.startAnimation("swordsman_forward_left_move");
     }
 
-    public void animateForwardRightMove() {
+    void animateRightMove(){
         animator.startAnimation("swordsman_forward_right_move");
     }
 
-    public void animateBackLeftMove() {
+    void animateHighlightedLeftMove(){
+        animator.startAnimation("swordsman_forward_left_move_highlight");
+    }
+
+    void animateHighlightedRightMove(){
+        animator.startAnimation("swordsman_forward_right_move_highlight");
+    }
+
+    void animateLeftAttack(){
+        animator.startAnimation("swordsman_forward_left_attack");
+    }
+
+    void animateRightAttack(){
+        animator.startAnimation("swordsman_forward_right_attack");
+    }
+
+    void animateHighlightedLeftAttack(){
+        animator.startAnimation("swordsman_forward_left_attack_highlight");
+    }
+
+    void animateHighlightedRightAttack(){
+        animator.startAnimation("swordsman_forward_right_attack_highlight");
+    }
+
+    void animateBackwardLeftMove(){
         animator.startAnimation("swordsman_backward_left_move");
     }
 
-    public void animateBackRightMove() {
+    void animateBackwardRightMove(){
         animator.startAnimation("swordsman_backward_right_move");
     }
+
+    void animateBackwardHighlightedLeftMove(){
+        animator.startAnimation("swordsman_backward_left_move_highlighted");
+    }
+
+    void animateBackwardHighlightedRightMove(){
+        animator.startAnimation("swordsman_backward_right_move_highlighted");
+    }
 }
+
