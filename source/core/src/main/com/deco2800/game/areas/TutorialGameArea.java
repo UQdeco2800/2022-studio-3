@@ -100,6 +100,7 @@ public class TutorialGameArea extends GameArea {
             "test/files/cityMinimap.png"
     };
 
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -124,6 +125,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
+        resourceService.unloadAssets(atlantisSounds);
     }
 
     /**

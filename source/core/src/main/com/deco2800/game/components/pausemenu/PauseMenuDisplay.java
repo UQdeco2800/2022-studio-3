@@ -2,6 +2,7 @@
 
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Input;
+    import com.badlogic.gdx.audio.Sound;
     import com.badlogic.gdx.graphics.Texture;
     import com.badlogic.gdx.graphics.g2d.SpriteBatch;
     import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,6 +32,8 @@
     private static final float PAUSE_MENU_WIDTH_TO_SCREEN_RATIO = 2.7f / 3f;
     private static final float PAUSE_MENU_HEIGHT_TO_SCREEN_RATIO = 2.7f / 3f;
     private static final Logger logger = LoggerFactory.getLogger(PauseMenuDisplay.class);
+
+    Sound btn_sound = ServiceLocator.getResourceService().getAsset("sounds/menuclicking.mp3", Sound.class);
     private static final float Z_INDEX = 2f;
     private static final String BACKGROUND_FILE_PATH = "images/CogWheel/Esc Menu/CogWheelBG.png";
 
@@ -109,6 +112,7 @@
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("Resume button clicked");
     //                entity.getEvents().trigger("resume"); // this triggers the game to be restarted
+                    btn_sound.play();
                     togglePauseScreen();
                 }
             });
@@ -118,6 +122,7 @@
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("exit to menu button clicked");
+                    btn_sound.play();
                     entity.getEvents().trigger("exit-to-menu");
                 }
             });
@@ -127,6 +132,7 @@
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     logger.debug("Settings button clicked");
+                    btn_sound.play();
                     entity.getEvents().trigger("settings");
                 }
             });
@@ -137,6 +143,7 @@
                 public void changed(ChangeEvent changeEvent, Actor actor) {
 
                     logger.debug("Exit button clicked");
+                    btn_sound.play();
                     entity.getEvents().trigger("exit");
                 }
             });

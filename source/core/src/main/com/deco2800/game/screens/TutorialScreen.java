@@ -62,6 +62,8 @@ public class TutorialScreen extends ScreenAdapter {
 
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+
     private final GdxGame game;
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
@@ -151,6 +153,7 @@ public class TutorialScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
+        resourceService.loadSounds(atlantisSounds);
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -158,6 +161,7 @@ public class TutorialScreen extends ScreenAdapter {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
+        resourceService.unloadAssets(atlantisSounds);
     }
 
     /**

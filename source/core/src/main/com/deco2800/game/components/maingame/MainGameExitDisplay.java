@@ -1,10 +1,12 @@
 package com.deco2800.game.components.maingame;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameExitDisplay extends UIComponent {
   private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
+
+  Sound btn_sound = ServiceLocator.getResourceService().getAsset("sounds/menuclicking.mp3", Sound.class);
   private static final float Z_INDEX = 2f;
   private Table table;
 
@@ -46,6 +50,7 @@ public class MainGameExitDisplay extends UIComponent {
         public void changed(ChangeEvent changeEvent, Actor actor) {
           logger.debug("Pause button clicked");
           entity.getEvents().trigger("togglepm");
+          btn_sound.play();
         }
       });
 
