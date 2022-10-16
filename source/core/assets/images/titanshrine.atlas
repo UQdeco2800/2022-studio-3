@@ -1,186 +1,165 @@
-titanshirne.png
-size: 2000, 3500
+titanshrine.png
+size: 4000, 1500
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-50-attacked
+default
   rotate: false
-  xy: 0, 0
+  xy: 2500, 500
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 0
-50-attacked
-  rotate: false
-  xy: 500, 0
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 1
-50-attacked
-  rotate: false
-  xy: 1000, 0
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 2
-50-attacked
-  rotate: false
-  xy: 1500, 0
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 3
 50-idle
   rotate: false
-  xy: 0, 500
+  xy: 2000, 0
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 0
 50
+  rotate: false
+  xy: 500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+50
+  rotate: false
+  xy: 1000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+50
+  rotate: false
+  xy: 1500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+50
+  rotate: false
+  xy: 2000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+attacked
+  rotate: false
+  xy: 2500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+attacked
+  rotate: false
+  xy: 3000, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+attacked
+  rotate: false
+  xy: 3500, 0
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 2
+attacked
+  rotate: false
+  xy: 0, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+collapse
   rotate: false
   xy: 500, 500
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 0
-50
+collapse
   rotate: false
   xy: 1000, 500
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 1
-50
+collapse
   rotate: false
   xy: 1500, 500
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 2
-50
+collapse
+  rotate: false
+  xy: 2000, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 3
+100
+  rotate: false
+  xy: 2500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+reconstruction
+  rotate: false
+  xy: 3000, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 0
+reconstruction
+  rotate: false
+  xy: 3500, 500
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 1
+reconstruction
   rotate: false
   xy: 0, 1000
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
-  index: 3
-100-attacked
+  index: 2
+reconstruction
   rotate: false
   xy: 500, 1000
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
-  index: 0
-100-attacked
+  index: 3
+reconstruction
   rotate: false
   xy: 1000, 1000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 1
-100-attacked
-  rotate: false
-  xy: 1500, 1000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 2
-100-attacked
-  rotate: false
-  xy: 0, 1500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 3
-100-idle
-  rotate: false
-  xy: 500, 1500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 0
-collapse
-  rotate: false
-  xy: 1000, 1500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 0
-collapse
-  rotate: false
-  xy: 1500, 1500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 1
-collapse
-  rotate: false
-  xy: 0, 2000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 2
-collapse
-  rotate: false
-  xy: 500, 2000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 3
-reconstruction
-  rotate: false
-  xy: 1000, 2000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 0
-reconstruction
-  rotate: false
-  xy: 1500, 2000
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 1
-reconstruction
-  rotate: false
-  xy: 0, 2500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 2
-reconstruction
-  rotate: false
-  xy: 500, 2500
-  size: 500, 500
-  orig: 500, 500
-  offset: 0, 0
-  index: 3
-reconstruction
-  rotate: false
-  xy: 1000, 2500
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 4
 reconstruction
   rotate: false
-  xy: 1500, 2500
+  xy: 1500, 1000
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 5
 reconstruction
   rotate: false
-  xy: 0, 3000
+  xy: 2000, 1000
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: 6
 reconstruction
   rotate: false
-  xy: 500, 3000
+  xy: 2500, 1000
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
