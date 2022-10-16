@@ -6,6 +6,7 @@ import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
+import net.dermetfan.utils.Pair;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -678,18 +679,14 @@ public class MapGenerator {
     }
 
     /**
-     * Given a coordinate (x, y), update the internal representation of the map
-     * to flood that tile.
+     * Finds the y-coordinate of the extremities of the island.
+     * @return Pair of extremities.
      */
-    public void floodTile() throws IllegalArgumentException {
-        //Check that the square to be flooded is a flood-able square
-        //Return without crashing game if an error has been made
-        boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
+    public Pair<Integer, Integer> getIslandExtremities() {
         int furtherstLeft = mapWidth;
         int furtherstRight = 0;
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                mapEdges[i][j] = false;
                 if (map[i][j] != this.getOceanChar()) {
                     if (j < furtherstLeft) {
                         furtherstLeft = j;
@@ -700,33 +697,67 @@ public class MapGenerator {
                 }
             }
         }
+        return new Pair<Integer, Integer>(furtherstLeft, furtherstRight);
+    }
 
-        //Pick tiles to flood
+    /**
+     * Randomly selects tiles to be flooded on next flooding event.
+     * @param tiles A boolean mapping of all tiles in the game.
+     * @param left The furthest left coordinate of the island.
+     * @param right The furthest right coordinate of the island.
+     * @return Mapping of all tiles with tiles to be flooded on the next flooding
+     *         event set to true.
+     */
+    public boolean[][] pickTilesToFlood(boolean[][] tiles, int left, int right) {
         for (int i = 0; i < mapHeight; i++) {
             int rand = PseudoRandom.seedRandomInt(0, 3);
             if (rand != 0) {
-                if (this.map[i][furtherstLeft] != this.getCityChar()) {
-                    mapEdges[i][furtherstLeft] = true;
+                if (this.map[i][left] != this.getCityChar()) {
+                    tiles[i][left] = true;
                 }
             }
             rand = PseudoRandom.seedRandomInt(0, 3);
             if (rand != 0) {
-                if (this.map[i][furtherstRight] != this.getCityChar()) {
-                    mapEdges[i][furtherstRight] = true;
+                if (this.map[i][right] != this.getCityChar()) {
+                    tiles[i][right] = true;
                 }
             }
         }
+        return tiles;
+    }
 
+    public void updateFloodedTiles(boolean[][] tilesToFlood) {
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                if (mapEdges[i][j]) {
+                if (tilesToFlood[i][j]) {
                     this.map[i][j] = this.getOceanChar();
                 }
             }
         }
+    }
+
+    /**
+     * Given a coordinate (x, y), update the internal representation of the map
+     * to flood that tile.
+     */
+    public void floodTile() throws IllegalArgumentException {
+        // Container to represent squares to be flooded next
+        boolean[][] nextSquaresToBeFlooded = new boolean[mapHeight][mapWidth];
+
+        // Find the furthest left and right coordinates of the island
+        Pair<Integer, Integer> extremities = this.getIslandExtremities();
+        int farLeft = extremities.getKey();
+        int farRight = extremities.getValue();
+
+        // Pick tiles to be flooded and flood them
+        nextSquaresToBeFlooded = this.pickTilesToFlood(nextSquaresToBeFlooded, farLeft, farRight);
+        this.updateFloodedTiles(nextSquaresToBeFlooded);
         disposeFloodedSquares();
     }
 
+    /**
+     * Iterates through the game resources and removes entities that have been flooded.
+     */
     public void disposeFloodedSquares() {
         for (ResourceSpecification resourceSpecification: resourcePlacements) {
             for (Coordinate coords: resourceSpecification.getPlacements()) {
