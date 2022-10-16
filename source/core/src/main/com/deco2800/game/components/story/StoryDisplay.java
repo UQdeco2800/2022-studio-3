@@ -1,21 +1,5 @@
 package com.deco2800.game.components.story;
 
-/**
-import com.badlogic.gdx.Gdx;
-import com.deco2800.game.GdxGame;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import static com.deco2800.game.GdxGame.ScreenType.MAIN_GAME;
- **/
 import com.badlogic.gdx.Gdx;
 import com.deco2800.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;

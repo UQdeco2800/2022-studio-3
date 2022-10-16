@@ -19,9 +19,7 @@ public class StoryActions extends Component {
     }
     @Override
     public void create() {
-        //entity.getEvents().addListener("next", this::onNext);
         entity.getEvents().addListener("skip", this::onSkip);
-        //entity.getEvents().addListener("previous", this::onPrevious);
     }
 
 

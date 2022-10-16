@@ -53,18 +53,7 @@ public class MainMenuDisplay extends UIComponent {
         String startTexture = "images/start-button.PNG";
         String startTextureHover = "images/start-button-hover.PNG";
 
-        //Texture startTextureHover = new Texture(Gdx.files.internal("images/start-button-hover.PNG"));
-
-        //ImageButton startBtn = new ImageButton(new TextureRegionDrawable(startTexture));
-
-
-        //ImageButton startBtnHover = new ImageButton(new TextureRegionDrawable(startTextureHover));
-
         ImageButton startBtn;
-        // intialising all dimensions
-        // X
-
-
         startBtn = bothButtons.draw(startTexture, startTextureHover);
 
 
@@ -76,12 +65,6 @@ public class MainMenuDisplay extends UIComponent {
         String exitTextureHover = "images/exit-button-hover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
-
-
-
-        //ImageButton exitBtn = new ImageButton(new TextureRegionDrawable(exitTexture));
-
-        //ImageButton exitBtnHover = new ImageButton(new TextureRegionDrawable(exitTextureHover));
 
         // Triggers an event when the button is pressed
         startBtn.addListener(
@@ -106,14 +89,11 @@ public class MainMenuDisplay extends UIComponent {
                 });
 
 
-
         table.left().padTop(280f).padLeft(180f);
         table.add(startBtn).left().width(200f).padLeft(35f);
         table.row();
         table.add(exitBtn).left().width(200f).padLeft(20f);
         //table.debug();
-
-
 
         stage.addActor(titleImage);
         stage.addActor(table);
