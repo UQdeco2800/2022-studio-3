@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.entities.BuildingType;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.ui.terminal.commands.ConstructionCommand;
@@ -29,6 +30,8 @@ public class BuildingMenuButton extends UIComponent {
     ConstructionCommand commandWall = new ConstructionCommand();
     ArrayList<String> buildBarracks = new ArrayList<String>();
     ArrayList<String> buildWall = new ArrayList<String>();
+
+    private boolean activeConstruction = false;
 
     @Override
     public void create() {
@@ -54,11 +57,10 @@ public class BuildingMenuButton extends UIComponent {
 
     private void addActors(){
         buildingButton = new TextButton("Building", skin);
-        buildingButton.setPosition(Gdx.graphics.getWidth()-buildingButton.getWidth(),Gdx.graphics.getHeight()/2-buildingButton.getHeight()/2);
+        buildingButton.setPosition(Gdx.graphics.getWidth()-buildingButton.getWidth(),Gdx.graphics.getHeight()/2f-buildingButton.getHeight()/2);
 
         barracksButton = new TextButton("Cost: $$$", skin);
         wallButton = new TextButton("Cost: $", skin);
-
         barracksButton.addListener(
                 new ChangeListener() {
                     @Override
@@ -66,7 +68,12 @@ public class BuildingMenuButton extends UIComponent {
                         if(barrackFlag == 1){
                             barrackFlag = 0;
                         }else {
-                            commandBarracks.action(buildBarracks);
+                            if(!activeConstruction) {
+                                activeConstruction = true;
+                                commandBarracks.construct(BuildingType.BARRACKS);
+                                activeConstruction = false;
+                            }
+
                         }
                     }
                 }
@@ -80,8 +87,11 @@ public class BuildingMenuButton extends UIComponent {
                             //backgroundTexture.remove();
                             wallFlag = 0;
                         }else{
-                            //addSoldierMenuUI();
-                            commandWall.action(buildWall);
+                            if(!activeConstruction) {
+                                activeConstruction = true;
+                                commandBarracks.construct(BuildingType.WALL);
+                                activeConstruction = false;
+                            }
                         }
                     }
                 }
