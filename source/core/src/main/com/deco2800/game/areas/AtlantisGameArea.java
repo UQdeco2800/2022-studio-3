@@ -50,6 +50,9 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.factories.HopliteFactory;
+import com.deco2800.game.soldiers.factories.SpearmanFactory;
+import com.deco2800.game.soldiers.factories.SwordsmanFactory;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -234,12 +237,12 @@ public class AtlantisGameArea extends GameArea {
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
     @Override
     public void create() {
-        gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
-        gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
-        gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
-        gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
-        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
-        gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
+        //gameAreaEventHandle.addListener("spawnSnake", this::spawnSnakes);
+        //gameAreaEventHandle.addListener("spawnHoplite", this::spawnHoplite);
+        //gameAreaEventHandle.addListener("spawnArcher", this::spawnArcher);
+        //gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
+        //gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
+        //gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
 
 //        loadAssets();
         displayUI();
@@ -270,7 +273,14 @@ public class AtlantisGameArea extends GameArea {
 //        spawnForager();
 //        spawnMiner();
 //        spawnBuilder();
+        //spawnBuilder(); 
+        //spawnForager();
+        //spawnMiner();
         spawnCity();
+        //spawnForager();
+        spawnHoplite();
+        spawnSpearman();
+        spawnSwordsman();
 
         spawnResources();
 
@@ -1033,16 +1043,37 @@ public class AtlantisGameArea extends GameArea {
         spawnUnit(UnitType.ARCHER, location);
     }
 
-    private void spawnSwordsman(Vector2 location) {
-        spawnUnit(UnitType.SWORDSMAN, location);
+    private void spawnSwordsman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSwordsman = SwordsmanFactory.createSwordsman().addComponent(mapComponent);
+        spawnEntityAt(newSwordsman, spawn, true, true);
     }
 
-    private void spawnSpearman(Vector2 location) {
-        spawnUnit(UnitType.SPEARMAN, location);
+    private void spawnSpearman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSpearman = SpearmanFactory.createSpearman().addComponent(mapComponent);
+        spawnEntityAt(newSpearman, spawn, true, true);
     }
 
-    private void spawnHoplite(Vector2 location) {
-        spawnUnit(UnitType.HOPLITE, location);
+    private void spawnHoplite() {
+        /* 
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newHoplite = HopliteFactory.createHoplite().addComponent(mapComponent);
+        spawnEntityAt(newHoplite, spawn, true, true);
+        */
+
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        mapComponent.setDisplayColour(Color.GREEN);
+        Entity newForager = HopliteFactory.createHoplite().addComponent(mapComponent);
+        spawnEntityAt(newForager, spawn, true, true);
     }
 
     /**

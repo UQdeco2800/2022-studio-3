@@ -3,6 +3,13 @@ size: 512, 1790
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+default
+  rotate: false
+  xy: 256, 1278
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 spearman_backward_left_attack
   rotate: false
   xy: 384, 254
