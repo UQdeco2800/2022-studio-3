@@ -26,6 +26,7 @@ import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
+import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -331,9 +332,15 @@ public class AtlantisGameArea extends GameArea {
     }
 
     public void startFlooding() {
+        // Create Flooding Event
         Entity floodingEntity = new Entity();
         floodingEntity.addComponent(new FloodingGenerator(this.terrainFactory, this));
         ServiceLocator.getEntityService().register(floodingEntity);
+
+        // Create Flooding Timer Display
+        Entity floodTimerDisplay = new Entity();
+        floodTimerDisplay.addComponent(new FloodTimerDisplay(this.floodingGenerator));
+        ServiceLocator.getEntityService().register(floodTimerDisplay);
     }
 
     /**

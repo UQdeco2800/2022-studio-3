@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FloodTimer extends Actor {
+    /**
+     * Handles logging information.
+     */
     private static final Logger logger = LoggerFactory.getLogger(FloodTimer.class);
 
     /**
@@ -18,12 +21,39 @@ public class FloodTimer extends Actor {
      */
     private Image floodTimerImage;
 
+    /**
+     * Path for image files
+     */
+    private final String TIMER20PC = "images/FloodTimer/flood_timer_20pc.png";
+    private final String TIMER40PC = "images/FloodTimer/flood_timer_40pc.png";
+    private final String TIMER60PC = "images/FloodTimer/flood_timer_60pc.png";
+    private final String TIMER80PC = "images/FloodTimer/flood_timer_80pc.png";
+    private final String TIMER100PC = "images/FloodTimer/flood_timer_100pc.png";
+
+
     public FloodTimer() {
-        this.floodTimerImage = new Image(new Texture("images/flood_timer_1.png"));
+        this.floodTimerImage = new Image(new Texture(TIMER20PC));
+        layout();
+    }
+
+    public void requestNewImage(int completion) {
+        switch (completion) {
+            case 100 -> this.changeImage(TIMER100PC);
+            case 80 -> this.changeImage(TIMER80PC);
+            case 60 -> this.changeImage(TIMER60PC);
+            case 40 -> this.changeImage(TIMER40PC);
+            case 20 -> this.changeImage(TIMER20PC);
+        }
+    }
+
+    public void changeImage(String timer) {
+        this.floodTimerImage = new Image(new Texture(timer));
+        layout();
     }
 
     public void layout() {
-        this.floodTimerImage.setPosition(Gdx.graphics.getWidth()/2f + floodTimerImage.getWidth()/2f + 30f, Gdx.graphics.getHeight()-50f);
+        floodTimerImage.setSize(250f, 150f);
+        this.floodTimerImage.setPosition(Gdx.graphics.getWidth()/2f + floodTimerImage.getWidth()/2f + 40f, Gdx.graphics.getHeight()-150f);
     }
 
     @Override

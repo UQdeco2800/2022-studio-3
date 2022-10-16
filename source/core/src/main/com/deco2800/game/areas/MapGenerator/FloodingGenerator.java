@@ -48,7 +48,7 @@ public class FloodingGenerator extends Component {
     /**
      * Constant value of flood timer (ms)
      */
-    private final int floodDuration = 1000;
+    private final int floodDuration = 12000;
     /**
      * Stores current progress update
      */
@@ -108,19 +108,19 @@ public class FloodingGenerator extends Component {
      */
     @Override
     public void update() {
-        this.updateFlags();
+        //this.updateFlags();
+
+    }
+
+    public Boolean updateFlags() {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
             this.resetFlags();
             this.startTimer();
         }
-    }
-
-    public Boolean updateFlags() {
 
         //Obtain completion status
-        byte currentProgress = timer.getFlagStatus();
-
+        byte currentProgress = this.timer.getFlagStatus();
         if (progress == currentProgress) {
             return false;
         } else {
