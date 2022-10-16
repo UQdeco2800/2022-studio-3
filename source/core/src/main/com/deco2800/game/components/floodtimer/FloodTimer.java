@@ -9,7 +9,4 @@ import org.slf4j.LoggerFactory;
 public class FloodTimer extends Actor {
     private static final Logger logger = LoggerFactory.getLogger(FloodTimer.class);
 
-    public FloodTimer() {
-
-    }
 }

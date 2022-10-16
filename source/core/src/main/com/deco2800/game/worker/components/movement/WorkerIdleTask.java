@@ -24,8 +24,6 @@ public class WorkerIdleTask extends DefaultTask implements PriorityTask {
     private Vector2 startPos;
     private List<GridPoint2> path;
 
-    public WorkerIdleTask() {}
-
     @Override
     public int getPriority() {
         return 1; // Low priority task
