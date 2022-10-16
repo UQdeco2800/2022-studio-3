@@ -76,7 +76,7 @@ public class StoryDisplay extends UIComponent {
         // next button
 
         String nextTexture = "images/next_cut.png";
-        String nextTextureHover = "images/next_cut_hover.PNG";
+        String nextTextureHover = "images/next_cut_hover.png";
 
         ImageButton nextBtn;
         nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
@@ -106,7 +106,6 @@ public class StoryDisplay extends UIComponent {
 */
         // Triggers an event when the button is pressed
 
-
         nextBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -115,12 +114,6 @@ public class StoryDisplay extends UIComponent {
                         entity.getEvents().trigger("next");
                     }
                 });
-
-
-
-
-
-
 
         skipBtn.addListener(
                 new ChangeListener() {
@@ -146,10 +139,8 @@ public class StoryDisplay extends UIComponent {
 
         table.add(skipBtn).expand().top().right().pad(25f).width(100);
         table.row();
-        table.add(prevBtn).pad(25f).left();
-        table.add(nextBtn).pad(25f).right();
-
-
+        table.add(prevBtn).pad(25f).left().setPreferredWidth(50);
+        table.add(nextBtn).pad(25f).right().setPreferredWidth(50);
         stage.addActor(table);
 
     }
@@ -158,9 +149,6 @@ public class StoryDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
-
-
-
 
     private void nextScene() {
         if (start < end) {
@@ -178,7 +166,6 @@ public class StoryDisplay extends UIComponent {
             start -=1;
         }
     }
-
 
 
     @Override

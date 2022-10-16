@@ -29,12 +29,9 @@ public class StoryActions extends Component {
    }
 
 
-
     private void onSkip() {
         logger.info("Skipping to game");
         game.setScreen(GdxGame.ScreenType.TUTORIAL);
     }
-
-
 
 }

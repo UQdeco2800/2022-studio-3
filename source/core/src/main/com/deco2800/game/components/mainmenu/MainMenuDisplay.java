@@ -47,7 +47,6 @@ public class MainMenuDisplay extends UIComponent {
 
         /* Load textures to create image buttons */
         InsertButtons bothButtons = new InsertButtons();
-
         // start button
         //Texture startTexture = new Texture(Gdx.files.internal("images/start-button.PNG"));
         String startTexture = "images/start-button.PNG";
@@ -55,10 +54,6 @@ public class MainMenuDisplay extends UIComponent {
 
         ImageButton startBtn;
         startBtn = bothButtons.draw(startTexture, startTextureHover);
-
-
-
-
 
         // exit button
         String exitTexture = "images/exit-button.PNG";
@@ -76,8 +71,6 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-
-
         exitBtn.addListener(
                 new ChangeListener() {
                     @Override
@@ -88,13 +81,11 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-
         table.left().padTop(280f).padLeft(180f);
-        table.add(startBtn).left().width(200f).padLeft(35f);
+        table.add(startBtn).left().width(150f).padLeft(35f);
         table.row();
-        table.add(exitBtn).left().width(200f).padLeft(20f);
+        table.add(exitBtn).left().width(150f).padLeft(20f);
         //table.debug();
-
         stage.addActor(titleImage);
         stage.addActor(table);
     }
