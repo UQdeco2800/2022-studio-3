@@ -23,6 +23,10 @@ public class SelectableComponent extends Component {
         hovered = false;
     }
 
+    public void unselect() {
+        this.selected = false;
+    }
+
 
     @Override
     public void create() {
