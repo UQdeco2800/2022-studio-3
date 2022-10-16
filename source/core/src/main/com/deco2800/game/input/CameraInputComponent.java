@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 
 import static com.deco2800.game.services.GameTime.ifPaused;
 
@@ -71,6 +72,11 @@ public class CameraInputComponent extends InputComponent {
 
     public CameraInputComponent() {
         super(5);
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.UI);
     }
 
     @Override

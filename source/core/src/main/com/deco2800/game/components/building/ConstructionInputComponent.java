@@ -14,6 +14,7 @@ import com.deco2800.game.entities.BuildingType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -39,6 +40,11 @@ public class ConstructionInputComponent extends InputComponent {
         ServiceLocator.getGameArea().spawnEntityAt(highlight, nearest, true,
                 true);
 
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.UI);
     }
 
     // follow the mouse

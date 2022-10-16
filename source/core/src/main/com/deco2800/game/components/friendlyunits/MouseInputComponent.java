@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.services.ServiceLocator;
 
 import static java.lang.Math.abs;
@@ -26,6 +27,11 @@ public class MouseInputComponent extends InputComponent {
     public MouseInputComponent() {
         super(5);
         leftPressed = false;
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.FRIENDLY);
     }
 
     /**
