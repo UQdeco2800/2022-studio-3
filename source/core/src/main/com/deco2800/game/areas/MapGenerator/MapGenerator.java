@@ -1,5 +1,6 @@
 package com.deco2800.game.areas.MapGenerator;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -693,7 +694,7 @@ public class MapGenerator {
             }
         }
 
-        //Nuke the extremities
+        //Pick tiles to flood
         for (int i = 0; i < mapHeight; i++) {
             int rand = PseudoRandom.seedRandomInt(0, 3);
             if (rand != 0) {
@@ -716,6 +717,18 @@ public class MapGenerator {
                 }
             }
         }
+        disposeFloodedSquares();
+    }
+
+    public void disposeFloodedSquares() {
+        for (ResourceSpecification resourceSpecification: resourcePlacements) {
+            for (Coordinate coords: resourceSpecification.getPlacements()) {
+                if (this.map[coords.getY()][coords.getX()] == this.getOceanChar()) {
+                    System.out.println("REMOVE: (" + coords.getX() + ", " + coords.getY() + ")");
+                }
+            }
+        }
+        //TODO
     }
 
     // TODO: Make a flashing tile for warning the players which tiles will be flooded.
