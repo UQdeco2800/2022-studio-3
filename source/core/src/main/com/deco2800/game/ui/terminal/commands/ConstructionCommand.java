@@ -19,7 +19,6 @@ public class ConstructionCommand implements Command{
     private static final Logger logger = LoggerFactory.getLogger(DebugCommand.class);
     private Entity constructHighlight =
             new Entity();
-    private boolean isActive = false;
     private ConstructionInputComponent activeBuild;
 
     @Override
@@ -86,5 +85,9 @@ public class ConstructionCommand implements Command{
                 new ConstructionInputComponent(constructHighlight, type);
         ServiceLocator.getInputService().register(activeBuild);
         return true;
+    }
+
+    public boolean isFinished() {
+        return activeBuild == null || activeBuild.isFinished();
     }
 }

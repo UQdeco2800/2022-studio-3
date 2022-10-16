@@ -75,10 +75,13 @@ public class BuildingMenuButton extends UIComponent {
                         if(barrackFlag == 1){
                             barrackFlag = 0;
                         }else {
-                            if(!activeConstruction && tryTakeCost(10, 0, 4)) {
-                                activeConstruction = true;
+                            // should extract these to config, no time for now
+                            if(commandBarracks.isFinished()
+                                    && sufficientResources(10, 0,
+                                    4)) {
+                                resourcePool.updateBaseStats(-10, 0, -4);
+                                resourcePool.updateDisplay();
                                 commandBarracks.construct(BuildingType.BARRACKS);
-                                activeConstruction = false;
                             }
 
                         }
@@ -94,10 +97,12 @@ public class BuildingMenuButton extends UIComponent {
                             //backgroundTexture.remove();
                             wallFlag = 0;
                         }else{
-                            if(!activeConstruction && tryTakeCost(4, 0, 0)) {
-                                activeConstruction = true;
+                            if(commandBarracks.isFinished()
+                                    && sufficientResources(4, 0,
+                                    0)) {
+                                resourcePool.updateBaseStats(-4, 0, 0);
+                                resourcePool.updateDisplay();
                                 commandBarracks.construct(BuildingType.WALL);
-                                activeConstruction = false;
                             }
                         }
                     }
@@ -135,7 +140,7 @@ public class BuildingMenuButton extends UIComponent {
         //stage.addActor(wallButton);
     }
 
-    private boolean tryTakeCost(int wood, int metal, int stone) {
+    private boolean sufficientResources(int wood, int metal, int stone) {
         /* uses the same model as the ShopUIFunctionalityComponent but not in
            abstract hell */
         if (resourcePool == null) {
@@ -162,9 +167,6 @@ public class BuildingMenuButton extends UIComponent {
             return false;
         if (resourcePool.getStone() < stone)
             return false;
-
-        resourcePool.updateBaseStats(-wood, -metal, -stone);
-        resourcePool.updateDisplay();
         return true;
     }
 
