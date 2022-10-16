@@ -167,7 +167,7 @@ public class SpellUI extends UIComponent {
 //            spell.setEnabled(true);
             Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
 
-            spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
+            spell.setPosition(screenToWorldPosition(screenX - 150, screenY + 120));
 
             spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
             sound.play();
