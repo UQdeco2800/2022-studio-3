@@ -305,8 +305,8 @@ public class BuildingFactory {
                 .addComponent(new HealthAnimation())
                 .addComponent(new BuildingAnimationController())
                 .addComponent(animator)
-                /*.addComponent(new BuildingHealthManager())*/
-                /*.addComponent(new BuildingAnimationController())*/;
+                .addComponent(new BuildingHealthManager())
+                .addComponent(new BuildingAnimationController());
 
 
         // Setting Isometric Collider
