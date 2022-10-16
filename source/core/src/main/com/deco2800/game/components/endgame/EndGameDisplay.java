@@ -54,7 +54,7 @@ public class EndGameDisplay extends UIComponent {
         start += 1;
         stage.addActor(table);
 
-        TextButton skipBtn = new TextButton("Skip", skin);
+        TextButton skipBtn = new TextButton("Play Again", skin);
 
         skipBtn.addListener(
                 new ChangeListener() {
@@ -66,7 +66,8 @@ public class EndGameDisplay extends UIComponent {
                     }
                 });
 
-        table.add(skipBtn).expand().top().right().pad(25f).width(100);
+        table.add(skipBtn).expand().pad(0).width(200);
+        skipBtn.setPosition(-50, 50);
         stage.addActor(table);
 
     }
