@@ -121,6 +121,8 @@ public class AtlantisGameArea extends GameArea {
             //trebuchet
             "images/trebuchet.png",
             "images/Trebuchet-lv1-north.png",
+            //ship
+            "images/ship_default.png",
             //Gate
             "images/gate_ew_closed.png",
             "images/gate_ew_open.png",
