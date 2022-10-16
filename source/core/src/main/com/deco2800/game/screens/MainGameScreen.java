@@ -81,12 +81,6 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.registerRenderService(new RenderService());
     ServiceLocator.registerMapService(new MapService());
 
-    ServiceLocator.registerMapService(new MapService());
-
-    ServiceLocator.registerMapService(new MapService());
-
-    ServiceLocator.registerMapService(new MapService());
-
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
