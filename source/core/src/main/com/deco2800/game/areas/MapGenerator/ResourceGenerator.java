@@ -311,12 +311,12 @@ public class ResourceGenerator {
             return (int)(Math.pow(2, 10.5 * distance / maxXDistance));
         } else if (preferredDistance <= 4) {
             //If distance is too close to centre, weight points with lower distance seen as more favourable
-            return distance > 0 ? (int) Math.pow(2, 9/distance) : 0;
+            return distance > 0 ? (int) Math.pow(2, 9f/distance) : 0;
         } else {
             //Calculate the difference between the distance between the placement
             // and the centre of the city and the preferred distance
             int distanceDifference = Math.abs(distance - preferredDistance);
-            return (int) Math.pow(2, 5/(distanceDifference + 1));
+            return (int) Math.pow(2, 5f/(distanceDifference + 1));
         }
     }
 }

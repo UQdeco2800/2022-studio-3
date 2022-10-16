@@ -2,6 +2,7 @@ package com.deco2800.game.areas.MapGenerator.pathBuilding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.badlogic.gdx.math.GridPoint2;
 
@@ -110,6 +111,11 @@ public class CheckConnectivity {
             }
 
             return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return position.hashCode();
         }
     }
 }
