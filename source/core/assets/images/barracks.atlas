@@ -36,15 +36,15 @@ repeat: none
 100-attacked
   rotate: false
   xy: 4800, 0
-  size: 1026, 1041
-  orig: 1026, 1041
+  size: 1050, 1041
+  orig: 1050, 1041
   offset: 0, 0
   index: 2
 100-attacked
   rotate: false
   xy: 0, 1200
-  size: 1080, 1041
-  orig: 1080, 1041
+  size: 1050, 1041
+  orig: 1050, 1041
   offset: 0, 0
   index: 3
 
@@ -153,4 +153,24 @@ collapse
   offset: 0, 0
   index: 5
 
-
+reconstruction
+  rotate: false
+  xy: 0, 4800
+  size: 1050, 1041
+  orig: 1050, 1041
+  offset: 0, 0
+  index: 0
+reconstruction
+  rotate: false
+  xy: 1200, 4800
+  size: 1050, 1041
+  orig: 1050, 1041
+  offset: 0, 0
+  index: 1
+reconstruction
+  rotate: false
+  xy: 2400, 4800
+  size: 1050, 1041
+  orig: 1050, 1041
+  offset: 0, 0
+  index: 2
