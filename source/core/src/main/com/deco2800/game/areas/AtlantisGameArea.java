@@ -50,6 +50,7 @@ import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.factories.ArcherFactory;
 import com.deco2800.game.soldiers.factories.HopliteFactory;
 import com.deco2800.game.soldiers.factories.SpearmanFactory;
 import com.deco2800.game.soldiers.factories.SwordsmanFactory;
@@ -177,6 +178,7 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
+            "images/arrow.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -281,12 +283,14 @@ public class AtlantisGameArea extends GameArea {
         spawnHoplite();
         spawnSpearman();
         spawnSwordsman();
+        
 
         spawnResources();
 
-//        spawnTitanShrine();
+        spawnTitanShrine();
 //        spawnShip();
 //        spawnTrebuchet(titan, this);
+        spawnArcher(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -1034,9 +1038,16 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(unit, location, true, false);
     }
 
-    private void spawnArcher(Vector2 location) {
-        spawnUnit(UnitType.ARCHER, location);
+    private void spawnArcher(Entity target, GameArea gameArea) {
+        int offset = 20;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        char[][] map = mg.getMap();
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        spawnEntityAt((ArcherFactory.createArcher(target, gameArea))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
+                true, true);
     }
+
 
     private void spawnSwordsman() {
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
