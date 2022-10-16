@@ -216,7 +216,6 @@ public class RandomPointGenerator {
                             notFound = true;
                             break;
                         } else {
-                            System.out.println("All good");
                         }
                     }
                 }
@@ -269,7 +268,6 @@ public class RandomPointGenerator {
                             notFound = true;
                             break;
                         } else {
-                            System.out.println("All good");
                         }
                     }
                 }

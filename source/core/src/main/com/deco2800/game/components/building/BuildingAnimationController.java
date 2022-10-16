@@ -48,82 +48,9 @@ public class BuildingAnimationController extends Component {
         entity.getEvents().addListener("underAttackFull", this::underAttackFull);
         entity.getEvents().addListener("underAttackHalf", this::underAttackHalf);
 
-        // Ship specific
-        entity.getEvents().addListener("setShip", this::setIsShip);
-
-        entity.getEvents().addListener("healthCode", this::setHealthCode);
-        // Ship moving.
-        entity.getEvents().addListener("goWest", this::west);
-        entity.getEvents().addListener("goEast", this::east);
-        entity.getEvents().addListener("goNorth", this::north);
-        entity.getEvents().addListener("goSouth", this::south);
-        // Ship attacked.
-        entity.getEvents().addListener("directionAttacked", this::directionAttacked);
-
-        animator.startAnimation("default");
+        animator.startAnimation(REBUILD);
     }
-
-    /**
-     * Sets the health state encoded as an integer.
-     * This is only called in ships.
-     * @param code FULL_HEALTH: 100,
-     *             HALF_HEALTH: 50,
-     *             ZERO_HEALTH: 0
-     */
-    private void setHealthCode(int code) {
-        healthCode = code;
-    }
-
-    private void animateDirection(String direction) {
-        currentDirection = direction;
-        if (animator.isFinished()) {
-            switch (healthCode) {
-                case 0:
-                    animator.startAnimation("collapse-"+direction);
-                    break;
-                case 50:
-                    animator.startAnimation("50-"+direction);
-                    break;
-                case 100:
-                    animator.startAnimation("rebuild-"+direction);
-                    break;
-            }
-        }
-    }
-
-    private void directionAttacked() {
-        if (animator.isFinished()) {
-            switch (healthCode) {
-                case 50:
-                    animator.startAnimation("50-attacked-"+currentDirection);
-                    break;
-                case 100:
-                    animator.startAnimation("100-attacked-"+currentDirection);
-                    break;
-            }
-        }
-    }
-    private void west() {
-        animateDirection("west");
-    }
-    private void east() {
-        animateDirection("east");
-    }
-    private void north() {
-        animateDirection("north");
-    }
-    private void south() {
-        animateDirection("south");
-    }
-
-    /**
-     * Tells the animations controller if the entity is
-     * a ship.
-     */
-    private void setIsShip() {
-        this.isShip = true;
-    }
-
+    
     /**
      * This method plays an animation that transitions
      * the building to its damaged state.

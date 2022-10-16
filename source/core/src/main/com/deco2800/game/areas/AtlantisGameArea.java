@@ -178,6 +178,8 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
+            "images/static_trebuchet.png",
+            "images/bullet.png"
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -351,7 +353,6 @@ public class AtlantisGameArea extends GameArea {
         mc.display();
         mc.setDisplayColour(Color.GREEN);
         Entity snake = EnemyFactory.createSnake(terrainFactory).addComponent(mc);
-        System.out.println("Snake spawned at: " + spawnPoint.toString());
         spawnEntityAt(snake, spawnPoint, true, true);
     }
 

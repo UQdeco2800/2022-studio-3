@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.*;
@@ -31,8 +30,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
 import com.deco2800.game.worker.components.type.BaseComponent;
 import com.deco2800.game.worker.resources.ResourceConfig;
-
-import java.net.NoRouteToHostException;
 
 /**
  * Factory to create a building entity with predefined components.
@@ -439,24 +436,25 @@ public class BuildingFactory {
         animator.addAnimation(HALF_ATTACKED + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation(HALF_ATTACKED + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
 
-        animator.addAnimation(REBUILD + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(REBUILD + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(REBUILD + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
-        animator.addAnimation(REBUILD + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(REBUILD + DELIMETER + NORTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(REBUILD + DELIMETER + SOUTH, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(REBUILD + DELIMETER + EAST, 0.1f, Animation.PlayMode.NORMAL);
+//        animator.addAnimation(REBUILD + DELIMETER + WEST, 0.1f, Animation.PlayMode.NORMAL);
 
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
-
         trebuchet
-                .addComponent(new TextureImageComponent("images/Trebuchet-lv1-north.png"))
+                .addComponent(new TextureImageComponent("images/static_trebuchet.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new EntityDirectionComponent())
+                .addComponent(new UpdateBuildingDirection(target))
+                .addComponent(new BuildingHealthManager())
+                .addComponent(new DirectionalBuildingAnimationController())
                 .addComponent(aiComponent)
                 .addComponent(new AttackListener(target, gameArea))
                 .addComponent(new BuildingUIDataComponent())
-                .addComponent(new BuildingAnimationController())
-                .addComponent(new PhysicsMovementComponent())
-                .addComponent(new BuildingHealthManager())
                 .addComponent(animator);
+
         trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;
     }

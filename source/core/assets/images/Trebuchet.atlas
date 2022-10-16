@@ -584,6 +584,13 @@ repeat: none
   orig: 256, 256
   offset: 0, 0
   index: 0
+default
+  rotate: false
+  xy: 768, 1280
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 0
 100-idle-west
   rotate: false
   xy: 768, 1280

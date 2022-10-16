@@ -67,7 +67,7 @@ public class EnemyFactory {
 
     Entity bullet1 =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/bullet1.png"))
+                    .addComponent(new TextureRenderComponent("images/bullet.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
                     .addComponent(new ColliderComponent())
