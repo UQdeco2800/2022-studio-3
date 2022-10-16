@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.deco2800.game.components.weather.WeatherIconProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.utils.random.PseudoRandom;
@@ -219,8 +217,6 @@ public class WeatherIcon extends Actor {
                 }
             }
             if (weatherIconProperties == WeatherIconProperties.RAINY){
-
-
                 this.weatherFilter = temp;
                 this.weatherFilter.setPosition(700,0);
             }
