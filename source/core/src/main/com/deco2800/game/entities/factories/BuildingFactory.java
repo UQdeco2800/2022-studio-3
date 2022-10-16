@@ -172,6 +172,10 @@ public class BuildingFactory {
         mp.setDisplayColour(Color.GOLDENROD);
 
         // TODO: Change barracks from static texture to animation.
+//        AnimationRenderComponent animator =
+////                new AnimationRenderComponent(ServiceLocator.getResourceService()
+////                                                           .getAsset("images/barracks.atlas",
+////                                                                     TextureAtlas.class));
         barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
@@ -301,13 +305,13 @@ public class BuildingFactory {
                 .addComponent(new HealthAnimation())
                 .addComponent(new BuildingAnimationController())
                 .addComponent(animator)
-                .addComponent(new BuildingHealthManager())
-                .addComponent(new BuildingAnimationController());
+                /*.addComponent(new BuildingHealthManager())*/
+                /*.addComponent(new BuildingAnimationController())*/;
 
 
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
-        float[] points = new float[]{
+        float[] points = new float[] {
                 605f, 1111,      // Vertex 0        3
                 1100f, 870f,     // Vertex 1    4 /   \ 2
                 1100f, 800f,     // Vertex 2     |     |
@@ -331,7 +335,7 @@ public class BuildingFactory {
         boundingBox.set(vertices);
         titanShrine.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
-        titanShrine.getComponent(AnimationRenderComponent.class).startAnimation("default");
+        titanShrine.getComponent(AnimationRenderComponent.class).startAnimation("100");
         titanShrine.getComponent(AnimationRenderComponent.class).scaleEntity();
         titanShrine.scaleWidth(TITANSHRINE_SCALE);
 
