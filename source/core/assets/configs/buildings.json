@@ -54,5 +54,20 @@
     "level": 1,
     "range": 10.0,
     "sight": 10.0
+  },
+  "library": {
+    "health": 200,
+    "baseAttack": 0,
+    "level": 1
+  },
+  "blacksmith": {
+    "health": 200,
+    "baseAttack": 0,
+    "level": 1
+  },
+  "farm": {
+    "health": 100,
+    "baseAttack": 0,
+    "level": 1
   }
 }

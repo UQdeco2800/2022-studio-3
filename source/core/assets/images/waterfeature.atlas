@@ -1,0 +1,41 @@
+
+waterfeature.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 140, 128
+  size: 136, 126
+  orig: 136, 126
+  offset: 0, 0
+  index: 1
+default
+  rotate: false
+  xy: 140, 2
+  size: 136, 124
+  orig: 136, 124
+  offset: 0, 0
+  index: 2
+default
+  rotate: false
+  xy: 2, 2
+  size: 136, 124
+  orig: 136, 124
+  offset: 0, 0
+  index: 3
+default
+  rotate: false
+  xy: 2, 128
+  size: 136, 126
+  orig: 136, 126
+  offset: 0, 0
+  index: 4
+default
+  rotate: false
+  xy: 278, 128
+  size: 136, 126
+  orig: 136, 126
+  offset: 0, 0
+  index: 5

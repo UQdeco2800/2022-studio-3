@@ -13,9 +13,9 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.building.*;
 import com.deco2800.game.components.EntityType;
 import com.deco2800.game.components.HealthBarComponent;
-import com.deco2800.game.components.building.*;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.tasks.rangedAttackTask;
 import com.deco2800.game.entities.Entity;
@@ -73,8 +73,7 @@ public class BuildingFactory {
                 .addComponent(new PhysicsComponent().setBodyType(BodyDef.BodyType.StaticBody))
                 .addComponent(new SelectableComponent())
                 .addComponent(ServiceLocator.getInputService().getInputFactory().createForFriendlyUnit())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HealthBarComponent(EntityType.FRIENDLY));
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     }
 
     /**
@@ -91,6 +90,15 @@ public class BuildingFactory {
         Vector2 maxX = new Vector2(500f, 856f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(507f, 359f); //NW edge
 
+        float[] selectionPoints = new float[] {
+                2f, 608f,
+                505f, 855f,
+                962f, 507f,
+                941f, 154f,
+                506f, 108f,
+                179f, 346f
+        };
+
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.BROWN);
@@ -102,19 +110,24 @@ public class BuildingFactory {
                 .addComponent(new HighlightedTextureRenderComponent("images/level_1_town_hall_Highlight.png"))
                 .addComponent(new BuildingUIDataComponent())
                 .addComponent(mp)
-                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(new SelectionCollider())
+                .addComponent(new BuildingUIDataComponent());
 
         townHall.getComponent(TextureScaler.class).setPreciseScale(TH_SCALE, true);
         // Setting Isometric Collider
 
-        townHall.setEntityName("TownHall");
+        //Add precise selection collider
+        townHall.getComponent(SelectionCollider.class).setPoints(selectionPoints);
+
+        townHall.setEntityName("Town Hall");
 
         // Points (in pixels) on the texture to set the collider to
         float[] points = new float[] {      // Four vertices
-                139f, 836f,     // Vertex 0       3--2
-                543, 1009,      // Vertex 1      /  /
-                1076f, 792f,     // Vertex 2     /  /
-                634f, 636f      // Vertex 3    0--1
+                31f, 607f,      // Vertex 0       3--2
+                499f, 835f,     // Vertex 1      /  /
+                958f, 515f,     // Vertex 2     /  /
+                486f, 289f      // Vertex 3    0--1
         };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -139,11 +152,22 @@ public class BuildingFactory {
     public static Entity createBarracks() {
         final float BARRACKS_SCALE = 4f;
         Entity barracks = createBaseBuilding();
+        barracks.setEntityName("Barracks");
         BarracksConfig config = configs.barracks;
 
         Vector2 leftPoint = new Vector2(155f, 858f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(591f, 1037f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(605f, 675f); //NW edge
+
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                605f, 1036f,    // Vertex 0        3
+                982f, 889f,     // Vertex 1    4 /   \ 2
+                982f, 761f,     // Vertex 2     |     |
+                605f, 581f,     // Vertex 3    5 \   / 1
+                222f, 736f,     // Vertex 4        0
+                222f, 874f      // Vertex 5
+        };
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -155,20 +179,15 @@ public class BuildingFactory {
                 .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(mp);
+                .addComponent(mp)
+                .addComponent(new SelectionCollider())
+                .addComponent(new BuildingUIDataComponent());
 
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
 
+        barracks.getComponent(SelectionCollider.class).setPoints(points);
+
         // Setting Isometric Collider
-        // Points (in pixels) on the texture to set the collider to
-        float[] points = new float[]{
-                605f, 1036f,    // Vertex 0        3
-                982f, 889f,     // Vertex 1    4 /   \ 2
-                982f, 761f,     // Vertex 2     |     |
-                605f, 581f,     // Vertex 3    5 \   / 1
-                222f, 736f,     // Vertex 4        0
-                222f, 874f      // Vertex 5
-        };
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
@@ -190,12 +209,25 @@ public class BuildingFactory {
      */
     public static Entity createFarm() {
         Entity farm = createBaseBuilding();
-        FarmConfig config = configs.farm;
         final float FARM_SCALE = 5f;
+        farm.setEntityName("Farm");
+        FarmConfig config = configs.farm;
 
+        //Set TextureScaler points
         Vector2 leftPoint = new Vector2(0f, 220f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(207f, 322f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(247f, 95f); //NW edge
+
+        //Define selection hitbox
+        float[] selectionPoints = new float[] {
+                27f, 203f,
+                116f, 243f,
+                256f, 172f,
+                262f, 114f,
+                213f, 50f,
+                159f, 66f,
+                22f, 140f
+        };
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -203,10 +235,16 @@ public class BuildingFactory {
         farm.addComponent(new TextureRenderComponent("images/farm.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedFarm.png"))
+               .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+               .addComponent(new SelectionCollider())
                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-               .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+               .addComponent(new BuildingActions(config.type, config.level))
+               .addComponent(new BuildingUIDataComponent());
 
         farm.getComponent(TextureScaler.class).setPreciseScale(FARM_SCALE, true);
+
+        //Set selection hitbox
+        farm.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
@@ -238,7 +276,6 @@ public class BuildingFactory {
     public static Entity createTitanShrine() {
         final float TITANSHRINE_SCALE = 10f;
         Entity titanShrine = createBaseBuilding();
-        titanShrine.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         TitanShrineConfig config = configs.titanShrine;
 
         AnimationRenderComponent animator =
@@ -260,7 +297,7 @@ public class BuildingFactory {
                 .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new HealthBarComponent(EntityType.ENEMY))
                 .addComponent(mc)
                 .addComponent(animator);
 
@@ -307,7 +344,6 @@ public class BuildingFactory {
     public static Entity createShip() {
         final float SHIP_SCALE = 5f;
         Entity ship = createBaseBuilding();
-        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
         ShipConfig config = configs.ship;
 
         AnimationRenderComponent animator =
@@ -319,6 +355,7 @@ public class BuildingFactory {
         ship
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new HealthBarComponent(EntityType.ENEMY))
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(animator);
 
@@ -351,25 +388,25 @@ public class BuildingFactory {
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(aiComponent)
-                .addComponent(new AttackListener(target, gameArea));
+                .addComponent(new AttackListener(target, gameArea))
+                .addComponent(new BuildingUIDataComponent());
         trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;
     }
 
     /**
      * Creates a wall entity, adds and configures Wall components
-     * @return Barracks Entity
-     * Creates entity, adds and configures Wall components
      * @return wall Entity
      */
     public static Entity createWall() {
         Entity wall = createBaseBuilding();
         WallConfig config = configs.wall;
-
+        wall.setEntityName("Wall");
 
         wall.addComponent(new TextureRenderComponent("images/wooden_wall.png"))
             .addComponent(new BuildingActions(config.type, config.level))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence));
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new BuildingUIDataComponent());
 
         wall.scaleWidth(2.2f);
         // Setting Isometric Collider (Normal collider rotated 60 degrees)
@@ -383,10 +420,23 @@ public class BuildingFactory {
 
     public static Entity createCornerWall() {
         Entity cornerWall = createBaseBuilding();
+        cornerWall.setEntityName("City Wall");
+        WallConfig config = configs.wall;
+
         //Set up building points for texture scaling
         Vector2 leftPoint = new Vector2(88f, 153f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(120f, 134f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(120f, 139f); //NW edge
+
+        //Points of image used to create a polygon around the image for selection
+        float[] selectionPoints = new float[] {
+                87f, 61f,
+                89f, 154f,
+                121f, 173f,
+                153f, 153f,
+                156f, 64f,
+                122f, 43f
+        };
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -399,11 +449,18 @@ public class BuildingFactory {
         mc.display();
         mc.setDisplayColour(Color.GRAY);
         cornerWall.addComponent(new TextureRenderComponent("images/wall_pillar.png"))
-                .addComponent(mc)
-                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale edge wall precisely
         cornerWall.getComponent(TextureScaler.class).setPreciseScale(CORNER_SCALE, true);
+
+        //Set selection collider
+        cornerWall.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
                 .getAsset("images/wall_pillar.png", Texture.class)), points, null);
@@ -427,12 +484,25 @@ public class BuildingFactory {
      */
     public static Entity createLibrary() {
         Entity library = createBaseBuilding();
-        LibraryConfig config = configs.library;
         final float LIBRARY_SCALE = 5f;
+        library.setEntityName("Library");
+        LibraryConfig config = configs.library;
 
         Vector2 leftPoint = new Vector2(69f, 351f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(280f, 457f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(281f, 260f); //NW edge
+
+        //Define selection hitbox
+        float[] selectionPoints = new float[] {
+                78f, 355f,
+                195f, 412f,
+                367f, 411f,
+                444f, 370f,
+                431f, 175f,
+                205f, 120f,
+                111f, 160f,
+                78f, 220f
+        };
 
         MapComponent mp = new MapComponent();
         mp.display();
@@ -440,10 +510,16 @@ public class BuildingFactory {
         library.addComponent(new TextureRenderComponent("images/library.png"))
                .addComponent(mp)
                .addComponent(new HighlightedTextureRenderComponent("images/highlightedLeftFacingLibrary.png"))
+               .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+               .addComponent(new SelectionCollider())
                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-               .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+               .addComponent(new BuildingActions(config.type, config.level))
+               .addComponent(new BuildingUIDataComponent());
 
         library.getComponent(TextureScaler.class).setPreciseScale(LIBRARY_SCALE, true);
+
+        //Add selection hitbox
+        library.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Six vertices
@@ -475,23 +551,41 @@ public class BuildingFactory {
      */
     public static Entity createBlacksmith() {
         Entity bs = createBaseBuilding();
-        BlacksmithConfig config = configs.blacksmith;
         final float BLACKSMITH_SCALE = 5f;
+        bs.setEntityName("Blacksmith");
+        BlacksmithConfig config = configs.blacksmith;
 
         Vector2 leftPoint = new Vector2(5f, 176f); //Bottom leftmost edge in pixels
         Vector2 maxX = new Vector2(123f, 251f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(115f, 143f); //NW edge
+
+        //Define pixel points for selecting a blacksmith
+        float[] selectionPoints = new float[] {
+                12f, 47f,
+                13f, 186f,
+                145f, 252f,
+                247f, 191f,
+                246f, 151f,
+                209f, 113f,
+                96f, 54f
+        };
 
         MapComponent mp = new MapComponent();
         mp.display();
         mp.setDisplayColour(Color.BLACK);
         bs.addComponent(new TextureRenderComponent("images/blacksmith.png"))
           .addComponent(new HighlightedTextureRenderComponent("images/highlightedBlacksmith.png"))
-          .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
           .addComponent(mp)
-          .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+          .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+          .addComponent(new SelectionCollider())
+          .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+          .addComponent(new BuildingActions(config.type, config.level))
+          .addComponent(new BuildingUIDataComponent());
 
         bs.getComponent(TextureScaler.class).setPreciseScale(BLACKSMITH_SCALE, true);
+
+        //Add selection hitbox
+        bs.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         // Methodology sourced from BuildingFactory.java:createTownHall()
         float[] points = new float[] {      // Four vertices
@@ -521,12 +615,24 @@ public class BuildingFactory {
      */
     public static Entity createNSConnector() {
         Entity connector = createBaseBuilding();
+        connector.setEntityName("City Wall");
+        WallConfig config = configs.wall;
 
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(71f, 136f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         Vector2 leftPoint = new Vector2(78f, 131f); //Bottom leftmost edge in pixels
         Vector2 maxX= new Vector2(138f, 162f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(88f, 123f);  //NW edge
+
+        //Define selection collider points
+        float[] selectionPoints = new float[] {
+                89f, 48f,
+                79f, 54f,
+                78f, 132f,
+                138f, 162f,
+                145f, 156f,
+                145f, 76f
+        };
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -540,11 +646,18 @@ public class BuildingFactory {
         mc.display();
         mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ns.png"))
-                .addComponent(mc)
-                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, true);
+
+        //Set selection collider
+        connector.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -569,6 +682,8 @@ public class BuildingFactory {
      */
     public static Entity createEWConnector() {
         Entity connector = createBaseBuilding();
+        connector.setEntityName("City Wall");
+        WallConfig config = configs.wall;
 
         //Set up building points for texture scaling
         //Vector2 leftPoint = new Vector2(73f, 147f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
@@ -576,6 +691,15 @@ public class BuildingFactory {
         Vector2 leftPoint = new Vector2(79f, 152f); //Bottom leftmost edge in pixels - offset slightly to centre in wall
         Vector2 maxY = new Vector2(138f, 124f); //Bottom rightmost edge in pixels
         Vector2 maxX = new Vector2(87f, 158f);  //NW edge
+
+        float[] selectionPoints = new float[] {
+                79f, 73f,
+                79f, 155f,
+                87f, 159f,
+                146f, 128f,
+                145f, 50f,
+                135f, 45f
+        };
 
         //Set up building points for isometric collider
         float[] points = new float[] {
@@ -589,11 +713,18 @@ public class BuildingFactory {
         mc.display();
         mc.setDisplayColour(Color.GRAY);
         connector.addComponent(new TextureRenderComponent("images/connector_ew.png"))
-                .addComponent(mc)
-                .addComponent(new TextureScaler(leftPoint, maxX, maxY));
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(mc);
 
         //Scale connector precisely
         connector.getComponent(TextureScaler.class).setPreciseScale(CONNECTOR_SCALE, false);
+
+        //Add selection collider
+        connector.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -619,6 +750,8 @@ public class BuildingFactory {
      */
     public static Entity createNSGate() {
         Entity gate = createBaseBuilding();
+        gate.setEntityName("City Gate");
+        WallConfig config = configs.wall;
 
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ns_gate.atlas", TextureAtlas.class);
@@ -631,6 +764,16 @@ public class BuildingFactory {
         Vector2 maxX = new Vector2(170f, 196f); //Bottom rightmost edge in pixels
         Vector2 maxY = new Vector2(68f, 107f);  //NW edge
 
+        //Define Selection hitbox
+        float[] selectionPoints = new float[] {
+                34f, 36f,
+                36f, 127f,
+                173f, 197f,
+                206f, 178f,
+                206f, 89f,
+                70f, 19f
+        };
+
         //Set up building points for isometric collider
         float[] points = new float[] {
                 37f, 125f,
@@ -638,7 +781,6 @@ public class BuildingFactory {
                 202f, 178f,
                 63f, 109f
         };
-
 
         //Add all components
         MapComponent mc = new MapComponent();
@@ -649,11 +791,16 @@ public class BuildingFactory {
             .addComponent(gateARC)
             .addComponent(mc)
             .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-            .addComponent(new BuildingActions(Building.GATE_NS, 1));
+            .addComponent(new SelectionCollider())
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+            .addComponent(new BuildingActions(config.type, config.level))
+            .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, true);
 
+        //Add Selection hitbox
+        gate.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
@@ -678,12 +825,24 @@ public class BuildingFactory {
      */
     public static Entity createEWGate() {
         Entity gate = createBaseBuilding();
+        gate.setEntityName("City Gate");
+        WallConfig config = configs.wall;
 
         //Create animation component
         TextureAtlas gateAnimationAtlas = ServiceLocator.getResourceService().getAsset("images/ew_gate.atlas", TextureAtlas.class);
         AnimationRenderComponent gateARC = new AnimationRenderComponent(gateAnimationAtlas);
         gateARC.addAnimation("open_gate", 0.1f, Animation.PlayMode.NORMAL);
         gateARC.addAnimation("close_gate", 0.1f, Animation.PlayMode.NORMAL);
+
+        //Define selection collider
+        float[] selectionPoints = new float[] {
+                38f, 87f,
+                38f, 181f,
+                71f, 196f,
+                204f, 125f,
+                204f, 37f,
+                172f, 18f
+        };
 
         //Set up building points
         Vector2 leftPoint = new Vector2(37f, 178f); //Bottom leftmost edge in pixels
@@ -707,10 +866,16 @@ public class BuildingFactory {
                 .addComponent(gateARC)
                 .addComponent(mc)
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
-                .addComponent(new BuildingActions(Building.GATE_EW, 1));
+                .addComponent(new SelectionCollider())
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new BuildingUIDataComponent());
 
         //Scale building precisely
         gate.getComponent(TextureScaler.class).setPreciseScale(GATE_SCALE, false);
+
+        //Add selection hitbox
+        gate.getComponent(SelectionCollider.class).setPoints(selectionPoints);
 
         //Set isometric collider
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
