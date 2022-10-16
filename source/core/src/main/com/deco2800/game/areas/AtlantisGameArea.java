@@ -211,7 +211,7 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] buildingMenuTextures = {
             "images/building-selection-menu.png"
     };
-    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
