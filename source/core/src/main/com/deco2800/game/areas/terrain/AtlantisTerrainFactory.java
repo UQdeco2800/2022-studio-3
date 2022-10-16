@@ -250,11 +250,9 @@ public class AtlantisTerrainFactory {
                     } else {
                         cell.setTile(sandTile);
                     }
-                    // register position with MapService (TODO: move somewhere nicer)
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 } else {
                     cell.setTile(cityTile);
-                    // register position with MapService (TODO: move somewhere nicer)
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely

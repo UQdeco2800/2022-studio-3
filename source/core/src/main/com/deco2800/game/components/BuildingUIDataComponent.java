@@ -4,10 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.ShopUIFunctionalityComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
@@ -20,9 +25,14 @@ public class BuildingUIDataComponent extends UIComponent {
     private CombatStatsComponent combatStats;
     private BuildingActions buildingInfo;
     private SelectableComponent selectableComponent;
-    private boolean isSelected = false;
+    public static boolean isSelected = false;
     private static Image contextBoxSprite;
     private Group contextBoxItems;
+    private Label shopLabel;
+    private TextButton upgrade;
+    private Label upgradeCost;
+    private TextButton levelUp;
+    private Label levelUpCost;
     private float initialHeight;
     private float initialWidth;
     private Image healthBarFrame;
@@ -59,6 +69,17 @@ public class BuildingUIDataComponent extends UIComponent {
         selectableComponent = this.entity.getComponent(SelectableComponent.class);
         isSelected = selectableComponent.isSelected();
         contextBoxItems = new Group();
+        // table = new Table();
+        shopLabel = new Label("Shop", skin);
+        shopLabel.setName("shopLabel");
+        upgrade = new TextButton("", skin);
+        upgrade.setName("upgrade");
+        levelUp = new TextButton("", skin);
+        levelUp.setName("levelUp");
+        levelUpCost = new Label("", skin);
+        levelUpCost.setName("levelUpCost");
+        upgradeCost = new Label("", skin);
+        upgradeCost.setName("upgradeCost");
         createAttackInfo();
         createDefenseInfo();
         createHealthBar();
@@ -66,7 +87,7 @@ public class BuildingUIDataComponent extends UIComponent {
 
     private void createHealthBar() {
         float width = 180f, height = 36f;
-        float x = 220f, y = 140f;
+        float x = 210f, y = 140f;
         float progressBarOffset = 25f; // Progress bar x offset from health bar frame
         float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
         healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png",
@@ -94,7 +115,7 @@ public class BuildingUIDataComponent extends UIComponent {
 
     private void createAttackInfo() {
         float width = 36f, height = 36f;
-        float x = 220f, y = 100f;
+        float x = 210f, y = 100f;
         float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
         attackIcon = new Image(ServiceLocator.getResourceService().getAsset("images/attack.png",
                 Texture.class));
@@ -108,7 +129,7 @@ public class BuildingUIDataComponent extends UIComponent {
 
     private void createDefenseInfo() {
         float width = 31f, height = 36f;
-        float x = 220f, y = 60f;
+        float x = 210f, y = 60f;
         float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
         defenseIcon = new Image(ServiceLocator.getResourceService().getAsset("images/defense.png",
                 Texture.class));
@@ -201,8 +222,146 @@ public class BuildingUIDataComponent extends UIComponent {
             contextBoxItems.addActor(healthPoints);
             contextBoxItems.addActor(buildingNameLabel);
             contextBoxItems.addActor(buildingImage);
+
+            boolean shop = false;
+
+            // create the shop interface
+            if (buildingName.equals("Library:")) {
+                shop = true;
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Unit\nupgrade", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            entity.getEvents().trigger("unit upgrade");
+                        }
+                    }
+                );
+
+                levelUp = new TextButton("Level Up", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUpCost = new Label("-30\nWood", skin);
+                upgradeCost = new Label("-30\nMetal", skin);
+
+            } else if (buildingName.equals("Blacksmith:")) {
+
+                shop = true;
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Wall\nupgrade", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            entity.getEvents().trigger("wall upgrade");
+                        }
+                    }
+                );
+                levelUp = new TextButton("Level Up", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUpCost = new Label("-30\nWood", skin);
+                upgradeCost = new Label("-30\nStone", skin);
+
+            } else if (buildingName.equals("Barracks:")) {
+
+                shop = true;
+                shopLabel = new Label("Shop", skin);
+                upgrade = new TextButton("Spawn\nunit", skin);
+                upgrade.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+    
+                            entity.getEvents().trigger("spawn unit");
+                        }
+                    }
+                );
+                levelUp = new TextButton("Level Up", skin);
+                levelUp.addListener(
+                    new ChangeListener() {
+                        @Override
+                        public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                            entity.getEvents().trigger("levelUp");
+                        }
+                    }
+                );
+                levelUpCost = new Label("-30\nWood", skin);
+                upgradeCost = new Label("-30\nMetal", skin);
+            }
+
+            if (shop) {
+                shopLabel.setPosition(400f, 150f);
+
+                TextButton tb = new TextButton("X", skin);
+                tb.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        entity.getEvents().trigger("exitShop");
+                    }
+                });
+                tb.setPosition(475f, 150f);
+                tb.setTransform(true);
+                tb.setWidth(10f);
+                tb.setHeight(20f);
+
+                upgrade.setPosition(400f, 102f);
+                levelUp.setPosition(400f, 60f);
+                levelUp.getLabel().setFontScale(0.9f);
+                levelUp.setTransform(true);
+                levelUp.setScaleX(0.8f);
+                levelUp.setScaleY(0.8f);
+
+                upgrade.getLabel().setFontScale(0.9f);
+                upgrade.setTransform(true);
+                upgrade.setWidth(levelUp.getWidth() * 0.8f);
+                upgrade.setScaleY(0.8f);
+
+                levelUpCost.setFontScale(0.7f);
+                levelUpCost.setPosition(355f, 53f);
+                upgradeCost.setFontScale(0.7f);
+                upgradeCost.setPosition(355f, 96f);
+
+                shopLabel.setName("shopLabel");
+                upgrade.setName("upgrade");
+                levelUp.setName("levelUp");
+                levelUpCost.setName("levelUpCost");
+                upgradeCost.setName("upgradeCost");
+                tb.setName("exit");
+
+                stage.addActor(shopLabel);
+                stage.addActor(upgrade);
+                stage.addActor(levelUp);
+                stage.addActor(levelUpCost);
+                stage.addActor(upgradeCost);
+                stage.addActor(tb);
+            }
+
         } else {
             contextBoxItems.remove();
         }
+    }
+
+    public void remove() {
+        contextBoxItems.remove();
     }
 }
