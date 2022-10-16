@@ -86,6 +86,38 @@ public class EnemyFactory {
     return bullet1;
   }
 
+  public static Entity createArrow1(Entity from, Entity target, GameArea gameArea) {
+
+    float x1 = from.getPosition().x;
+    float y1 = from.getPosition().y;
+    float x2 = target.getPosition().x;
+    float y2 = target.getPosition().y;
+
+    Vector2 newTarget = new Vector2(x2 - x1, y2 - y1);
+
+    newTarget = newTarget.scl(1000).add(from.getPosition());
+
+    Entity arrow1 =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/arrow1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new bulletHitShips(target, gameArea));
+
+    arrow1.getComponent(TextureRenderComponent.class).scaleEntity();
+    arrow1.scaleHeight(0.7f);
+    PhysicsUtils.setScaledCollider(arrow1, 0.5f, 0.3f);
+
+    arrow1.setPosition(x1 - arrow1.getScale().x / 2 + from.getScale().x / 2,
+            y1 - arrow1.getScale().y / 2 + from.getScale().y / 2);
+
+    arrow1.getComponent(PhysicsMovementComponent.class).setTarget(newTarget);
+    arrow1.getComponent(PhysicsMovementComponent.class).setMoving(true);
+    arrow1.getComponent(ColliderComponent.class).setSensor(true);
+    return arrow1;
+  }
+
   /**
    * Creates a Blue Joker enemy entity
    *

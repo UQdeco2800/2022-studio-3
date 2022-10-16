@@ -6,6 +6,7 @@ public enum Building {
     SHIP,
     TITANSHRINE,
     TREBUCHET,
+    ARCHER1,
     WALL,
     WALL_NE,
     GATE_EW,

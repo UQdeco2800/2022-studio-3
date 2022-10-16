@@ -345,6 +345,23 @@ public class BuildingFactory {
 
         return trebuchet;
     }
+    public static Entity createArcher1(Entity target, GameArea gameArea) {
+        Entity archer1 = createBaseBuilding();
+        Archer1Config config = configs.archer1;
+        AITaskComponent aiComponent = new AITaskComponent()
+                .addTask(new rangedAttackTask(target, 4, 10, 2000f));
+
+        archer1.addComponent(new TextureRenderComponent("images/archerstatic.png"))
+                .addComponent(new BuildingActions(config.type, config.level))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
+                .addComponent(aiComponent)
+                .addComponent(new AttackListener(target, gameArea));
+        archer1.scaleHeight(0.8f);
+        archer1.scaleWidth(0.5f);
+
+
+        return archer1;
+    }
 
     /**
      * Creates a wall entity, adds and configures Wall components

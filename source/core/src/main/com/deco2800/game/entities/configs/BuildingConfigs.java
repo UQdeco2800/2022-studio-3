@@ -10,4 +10,6 @@ public class BuildingConfigs {
     public ShipConfig ship = new ShipConfig();
     public TitanShrineConfig titanShrine = new TitanShrineConfig();
     public TrebuchetConfig trebuchet = new TrebuchetConfig();
+    public Archer1Config archer1 = new Archer1Config();
+
 }

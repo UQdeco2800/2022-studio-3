@@ -175,6 +175,7 @@ public class AtlantisGameArea extends GameArea {
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
             "images/archerstatic.png",
+            "images/arrow1.png",
 
 
     };
@@ -279,7 +280,9 @@ public class AtlantisGameArea extends GameArea {
 
           spawnTitanShrine();
           spawnShip();
-        spawnTrebuchet(titan, this);
+//        spawnTrebuchet(titan, this);
+        spawnArcher1(titan, this);
+
 
         // spawnWorkerBase();
         // spawnResources();
@@ -952,6 +955,15 @@ public class AtlantisGameArea extends GameArea {
         char[][] map = mg.getMap();
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 10);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
+                true, true);
+    }
+    private void spawnArcher1(Entity target, GameArea gameArea) {
+        int offset = 20;
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        char[][] map = mg.getMap();
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        spawnEntityAt((BuildingFactory.createArcher1(target, gameArea))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn,
                 true, true);
     }
