@@ -1,6 +1,8 @@
 package com.deco2800.game.map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Map;
@@ -8,15 +10,18 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.services.ServiceLocator;
 
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MapServiceTest {
     @BeforeEach
     void setup() {
@@ -45,12 +50,21 @@ public class MapServiceTest {
             }
         }
 
-        Entity et = (new Entity()).addComponent(new MapComponent());
+        TextureScaler ts = mock(TextureScaler.class);
+        when(ts.getTileHeight()).thenReturn(1);
+        when(ts.getTileWidth()).thenReturn(1);
+        when(ts.getPosition()).thenReturn(new GridPoint2(4, 9));
+        TextureScaler ts2 = mock(TextureScaler.class);
+        when(ts2.getTileHeight()).thenReturn(1);
+        when(ts2.getTileWidth()).thenReturn(1);
+        when(ts2.getPosition()).thenReturn(new GridPoint2(4, 0));
+
+        Entity et = (new Entity()).addComponent(new MapComponent()).addComponent(ts);
         et.setPosition(MapService.tileToWorldPosition(new GridPoint2(4, 9)));
         et.setScale(MapService.tileToWorldPosition(new GridPoint2(-1, 1)));
         ServiceLocator.getEntityService().register(et);
 
-        Entity et2 = (new Entity()).addComponent(new MapComponent());
+        Entity et2 = (new Entity()).addComponent(new MapComponent()).addComponent(ts2);
         et2.setPosition(MapService.tileToWorldPosition(new GridPoint2(4, 0)));
         et2.setScale(MapService.tileToWorldPosition(new GridPoint2(-1, 1)));
         ServiceLocator.getEntityService().register(et2);

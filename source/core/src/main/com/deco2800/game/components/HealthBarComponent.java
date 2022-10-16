@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.building.TextureScaler;
+import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -36,8 +38,9 @@ public class HealthBarComponent extends RenderComponent {
      * @param entityType Type of entity. e.g. Friendly, Enemy, Building
      */
     public HealthBarComponent(EntityType entityType) {
+        logger.debug("Creating {} Health Bar", entityType);
         this.entityType = entityType;
-        visibleTime = 15 * 1000; // 15 seconds
+        visibleTime = 15 * 1000L; // 15 seconds
     }
 
     @Override
@@ -77,19 +80,18 @@ public class HealthBarComponent extends RenderComponent {
 
     @Override
     protected void draw(SpriteBatch batch) {
+        // Uncomment to allow hidden feature
         if (!showing) {
             return;
         }
-        Texture health = green;
-        if (entityType == EntityType.ENEMY) {
-            health = red; // enemy entity health is red
-        }
+        // friendly health is green enemy entity health is red
+        Texture health = entityType == EntityType.FRIENDLY ? green : red;
 
         // Constants for health bar size
-        float xdist = 0.4f; // x scaled distance for health bar from centre of entity (0.5 = whole entity
+        float xdist = 0.5f; // x scaled distance for health bar from centre of entity (0.5 = whole entity
         float ydist = 0.3f; // y offset for health bar from centre of entity
-        float height = 0.15f; // height of health bar
-        float line_size = 0.03f; // segment line width
+        float height = 0.2f; // height of health bar
+        float line_size = 0.06f; // segment line width
         float segment_health = 25f; // amount of health to display per segment
 
         Vector2 position = entity.getCenterPosition();
@@ -114,6 +116,10 @@ public class HealthBarComponent extends RenderComponent {
 
     @Override
     public void update() {
+        if (entity.getComponent(SelectableComponent.class) != null && entity.getComponent(SelectableComponent.class).isSelected()) {
+            showing = true;
+            return;
+        }
         if (ServiceLocator.getRenderService().getDebug().getActive()) {
             showing = true; // debug command sets health bar to be visible
         } else if (ServiceLocator.getTimeSource().getTimeSince(lastUpdate) > visibleTime) {
@@ -155,6 +161,10 @@ public class HealthBarComponent extends RenderComponent {
 
     public boolean getVisible() {
         return showing;
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
     }
 
     @Override

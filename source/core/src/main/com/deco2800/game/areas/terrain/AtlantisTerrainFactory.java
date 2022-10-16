@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 /** Factory for creating game terrain. */
@@ -98,6 +100,8 @@ public class AtlantisTerrainFactory {
         ResourceService resourceService = ServiceLocator.getResourceService();
         textures.put("Grass", new TextureRegion(resourceService.getAsset("images/Grass.png", Texture.class)));
         textures.put("Sand", new TextureRegion(resourceService.getAsset("images/Sand.png", Texture.class)));
+        textures.put("Sand Starfish", new TextureRegion(resourceService.getAsset("images/sand_starfish.png", Texture.class)));
+        textures.put("Sand Shell", new TextureRegion(resourceService.getAsset("images/sand_shell.png", Texture.class)));
         textures.put("City", new TextureRegion(resourceService.getAsset("images/city_tile.png", Texture.class)));
         textures.put("Sea1", new TextureRegion(resourceService.getAsset("images/sea_1.png", Texture.class)));
         textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
@@ -124,28 +128,54 @@ public class AtlantisTerrainFactory {
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
     }
 
-    public GridPoint2 randomlySelectTileToMoveTo() {
-        int height = this.mapGenerator.getHeight();
-        ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
-        int size = legalMoves.size();
-        int randomSeed = PseudoRandom.seedRandomInt(0, size);
-        int[] coords = legalMoves.get(randomSeed);
-        return new GridPoint2(coords[1], height - coords[0]);
+    /**
+     * Randomly selects a tile for a unit to roam to.
+     * @param startPos Starting position, bounding the exploration.
+     * @return A GridPoint2 coordinate to move to.
+     */
+    public GridPoint2 randomlySelectTileToMoveTo(GridPoint2 startPos) {
+        //Get relevant details
+        int mapHeight = mapGenerator.getHeight();
+        int cityHeight = mapGenerator.getCityHeight();
+        int cityWidth = mapGenerator.getCityWidth();
+        int x = startPos.x/2;
+        int y = startPos.y/2;
+
+        //Set bounds
+        int minX = mapGenerator.getBottomLeftY();
+        int maxX = minX + cityWidth;
+        int minY = mapGenerator.getBottomLeftX();
+        int maxY = minY + cityHeight;
+
+        //New Bounds for x and y
+        int lowerX = x - 5;
+        int upperX = x + 5;
+        int lowerY = y - 5;
+        int upperY = y + 5;
+
+        //Keep within bounds
+        if (lowerX < minX) {
+            lowerX = minX;
+        }
+        if (upperX > maxX) {
+            upperX = maxX;
+        }
+        if (lowerY < minY) {
+            lowerY = minY;
+        }
+        if (upperY > maxY) {
+            upperY = maxY;
+        }
+
+        //Generate New Coords
+        int newX = (lowerX >= upperX) ? lowerX : PseudoRandom.seedRandomInt(lowerX, upperX);
+        int newY = (lowerY >= upperY) ? lowerY : PseudoRandom.seedRandomInt(lowerY, upperY);
+        return new GridPoint2(newX, newY);
     }
 
     public MapGenerator floodTiles() {
         mapGenerator.floodTile();
         this.createAtlantisTerrainComponent();
-
-        //TODO - re-Draw to the screen - (Jordan/Dito)
-
-//        TextureRegion grass = textures.get("Grass");
-//        GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-//        TiledMap tiledMap = this.createMapTiles(tilePixelSize);
-
-//        this.fillTiles(tiledMap);
-
-        //Return new mapGenerator
         return mapGenerator;
     }
 
@@ -180,9 +210,11 @@ public class AtlantisTerrainFactory {
      * @param layer the layer with which to be filled with cells
      */
     private void fillTiles(TiledMapTileLayer layer) {
-        //Set terrainTiles based on textures stored in textures
+        //Set terrainTiles based on textures stored in textures list
         TerrainTile cityTile = new TerrainTile(textures.get("City"));
         TerrainTile sandTile = new TerrainTile(textures.get("Sand"));
+        TerrainTile sandStarTile = new TerrainTile(textures.get("Sand Starfish"));
+        TerrainTile sandShellTile = new TerrainTile(textures.get("Sand Shell"));
 
         //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
         Array<StaticTiledMapTile> oceanFrames = new Array<>();
@@ -195,24 +227,32 @@ public class AtlantisTerrainFactory {
         //Set id for each tile - used for visualising minimap
         cityTile.setId(0);
         sandTile.setId(1);
+        sandStarTile.setId(1);
+        sandShellTile.setId(1);
 
         //Load the map from the map generator
         char[][] map = mapGenerator.getMap();
         //Iterate through the map and set cells according to their type
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight; y++) {
+                int randNum = new Random().nextInt(100);
                 Cell cell = new Cell();
                 if (map[y][x] == mapGenerator.getOceanChar()) {
                     //Set ocean tiles to animated ocean textures
                     cell.setTile(animatedOceanTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
-                    cell.setTile(sandTile);
-                    // register position with MapService (TODO: move somewhere nicer)
+                    //Set to correct new texture if applicable
+                    if (randNum == 0) {
+                        cell.setTile(sandStarTile);
+                    } else if (randNum == 1) {
+                        cell.setTile(sandShellTile);
+                    } else {
+                        cell.setTile(sandTile);
+                    }
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 } else {
                     cell.setTile(cityTile);
-                    // register position with MapService (TODO: move somewhere nicer)
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely

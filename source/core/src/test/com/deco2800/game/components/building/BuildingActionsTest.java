@@ -2,6 +2,7 @@ package com.deco2800.game.components.building;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
@@ -32,6 +33,7 @@ class BuildingActionsTest {
         resourceService.loadAll();
 
         ServiceLocator.registerResourceService(resourceService);
+        ServiceLocator.registerEntityService(new EntityService());
     }
 
     @Test
@@ -42,6 +44,8 @@ class BuildingActionsTest {
     @Test
     void addLevel() {
         BuildingActions ba = new BuildingActions(Building.WALL, 1);
+        Entity e = new Entity().addComponent(ba);
+        ServiceLocator.getEntityService().register(e);
         ba.addLevel();
         assertEquals(ba.getLevel(), 2);
         ba.addLevel();
