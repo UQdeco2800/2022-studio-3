@@ -19,6 +19,8 @@
     import com.sun.jdi.connect.spi.TransportService;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
+    import com.deco2800.game.input.InputLayer;
+
 
     import javax.swing.*;
     import java.awt.event.KeyEvent;
@@ -66,11 +68,13 @@
 
       if (!pmEnabled) {
           timeSource.paused();
+          ServiceLocator.getInputService().disableInputType(InputLayer.UI | InputLayer.FRIENDLY);
           pauseWindow.setVisible(true);
           background.setVisible(true);
           pmEnabled = true;
       } else {
           timeSource.unpaused();
+          ServiceLocator.getInputService().enableInputType(InputLayer.UI | InputLayer.FRIENDLY);
           pauseWindow.setVisible(false);
           background.setVisible(false);
           pmEnabled = false;

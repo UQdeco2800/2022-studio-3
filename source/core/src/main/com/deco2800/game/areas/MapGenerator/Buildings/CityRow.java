@@ -3,6 +3,7 @@ package com.deco2800.game.areas.MapGenerator.Buildings;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class CityRow {
     /**
@@ -212,6 +213,11 @@ public class CityRow {
                 && this.buildings.size() == otherRow.getBuildings().size()
                 && this.height == otherRow.getHeight()
                 && this.rowWidth == otherRow.getRowWidth());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(spaceRemaining, buildings.size(), height, rowWidth);
     }
 
     @Override
