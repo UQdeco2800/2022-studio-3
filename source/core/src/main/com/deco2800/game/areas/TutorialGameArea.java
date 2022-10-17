@@ -8,21 +8,18 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
-import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
-import com.deco2800.game.components.tutorial.TutorialActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
 
 import java.util.Map;
-import java.util.Vector;
 
 public class TutorialGameArea extends GameArea {
 
@@ -60,6 +57,10 @@ public class TutorialGameArea extends GameArea {
             "images/sea_2.png",
             "images/sea_3.png",
             "images/sea_4.png",
+            "images/flash_1.png",
+            "images/flash_2.png",
+            "images/flash_3.png",
+            "images/flash_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -100,6 +101,7 @@ public class TutorialGameArea extends GameArea {
             "test/files/cityMinimap.png"
     };
 
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
     private String[] tutorialSprites = {
         "images/barracks.atlas"
     };
@@ -130,6 +132,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
+        resourceService.unloadAssets(atlantisSounds);
     }
 
     /**
