@@ -241,6 +241,7 @@ public class AtlantisGameArea extends GameArea {
         gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
         gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
+        gameAreaEventHandle.addListener("spawnUnit",this::spawnUnit);
 
 //        loadAssets();
         displayUI();

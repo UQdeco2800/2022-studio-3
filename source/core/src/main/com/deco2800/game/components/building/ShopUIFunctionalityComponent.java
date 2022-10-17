@@ -14,6 +14,7 @@ import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.type.BaseComponent;
@@ -97,7 +98,7 @@ public class ShopUIFunctionalityComponent extends Component {
         for (Entity e : entities) {
             if (ShopUIFunctionalityComponent.isResourceBase(e)) {
                 BaseComponent bc = e.getComponent(BaseComponent.class);
-                if (bc.getWood() + wood > 0 && bc.getMetal() + metal > 0 && bc.getStone() + stone > 0) {
+                if (bc.getWood() + wood >= 0 && bc.getMetal() + metal >= 0 && bc.getStone() + stone >= 0) {
                     bc.updateBaseStats(wood, metal, stone);
                     bc.updateDisplay();
                     return true;
@@ -148,13 +149,12 @@ public class ShopUIFunctionalityComponent extends Component {
      * Spawns units in the city centre.
      */
     public void onUnitSpawn() {
-        System.out.println("Unit spawn event");
         if (!spendResources(0, -30, 0)) {
             return;
         }
         AtlantisGameArea area = ServiceLocator.getGameArea();
         EventHandler handler = area.getGameAreaEventHandler();
-        handler.trigger("spawnArcher");
+        handler.trigger("spawnUnit", UnitType.ARCHER);
         handler.trigger("spawnHoplite");
         handler.trigger("spawnSpearmint");
     }
