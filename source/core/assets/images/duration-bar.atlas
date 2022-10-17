@@ -1,0 +1,40 @@
+duration-bar.png
+size: 1280, 1280
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+default
+  rotate: false
+  xy: 0, 0
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
+duration-bar-25
+  rotate: false
+  xy: 0, 0
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
+duration-bar-50
+  rotate: false
+  xy: 640, 0
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
+duration-bar-75
+  rotate: false
+  xy: 0, 640
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
+duration-bar-100
+  rotate: false
+  xy: 640, 640
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1

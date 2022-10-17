@@ -1,6 +1,6 @@
 package com.deco2800.game.areas;
 
-import static org.mockito.Mockito.mock;
+import  static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import com.deco2800.game.areas.terrain.TerrainComponent;

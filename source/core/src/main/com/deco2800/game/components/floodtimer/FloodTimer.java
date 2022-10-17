@@ -24,6 +24,8 @@ public class FloodTimer extends Actor {
     /**
      * Path for image files
      */
+
+    private final String TIMER0PC = "images/FloodTimer/flood_timer_0pc.png";
     private final String TIMER20PC = "images/FloodTimer/flood_timer_20pc.png";
     private final String TIMER40PC = "images/FloodTimer/flood_timer_40pc.png";
     private final String TIMER60PC = "images/FloodTimer/flood_timer_60pc.png";
@@ -31,18 +33,22 @@ public class FloodTimer extends Actor {
     private final String TIMER100PC = "images/FloodTimer/flood_timer_100pc.png";
 
 
+
+
     public FloodTimer() {
-        this.floodTimerImage = new Image(new Texture(TIMER20PC));
+        this.floodTimerImage = new Image(new Texture(TIMER0PC));
         layout();
     }
 
     public void requestNewImage(int completion) {
         switch (completion) {
-            case 81 -> this.changeImage(TIMER100PC);
-            case 61 -> this.changeImage(TIMER80PC);
-            case 41 -> this.changeImage(TIMER60PC);
-            case 21 -> this.changeImage(TIMER40PC);
-            case 1 -> this.changeImage(TIMER20PC);
+
+            case 100 -> this.changeImage(TIMER100PC);
+            case 80 -> this.changeImage(TIMER80PC);
+            case 60 -> this.changeImage(TIMER60PC);
+            case 40 -> this.changeImage(TIMER40PC);
+            case 20 -> this.changeImage(TIMER20PC);
+            case 0 -> this.changeImage(TIMER0PC);
         }
     }
 

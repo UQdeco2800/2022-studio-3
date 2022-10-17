@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.SelectionCollider;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -22,6 +23,10 @@ public class SelectableComponent extends Component {
         hovered = false;
     }
 
+    public void unselect() {
+        this.selected = false;
+    }
+
 
     @Override
     public void create() {
@@ -29,6 +34,7 @@ public class SelectableComponent extends Component {
         entity.getEvents().addListener("multipleSelect", this::multipleSelect);
         entity.getEvents().addListener("singleHover", this::singleHover);
         entity.getEvents().addListener("multipleHover", this::multipleHover);
+        entity.getEvents().addListener("moveLocation", this::moveLocation);
     }
 
 
@@ -62,8 +68,8 @@ public class SelectableComponent extends Component {
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
 
         // If entity is a building, test if the clicked point is in building collider
-        if (entity.getComponent(BuildingActions.class) != null) {
-            return entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
+        if (entity.getComponent(SelectionCollider.class) != null) {
+            return entity.getComponent(SelectionCollider.class).getFixture().testPoint(pointInWorld);
         }
 
 
@@ -110,6 +116,14 @@ public class SelectableComponent extends Component {
     public Vector2 screenToWorldPosition(int screenX, int screenY) {
         Vector3 worldPos = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
         return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    public void moveLocation(int screenX, int screenY) {
+        if (this.selected) {
+            Vector2 entityDeltas = entity.getPosition().sub(entity.getCenterPosition());
+            Vector2 centerTarget = screenToWorldPosition(screenX, screenY).add(entityDeltas);
+            entity.getEvents().trigger("workerWalk", centerTarget);
+        }
     }
 
     /**

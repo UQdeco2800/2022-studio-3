@@ -40,7 +40,14 @@ public class StoryScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(StoryScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] storyTextures = {"images/cutscene-3.png"};
+  private static final String[] storyTextures = {
+          "images/cut1.png",
+          "images/cut2.png",
+          "images/cut3.png",
+          "images/cut4.png",
+          "images/cut5.png",
+          "images/cut6.png",
+  };
 
 
   public StoryScreen(GdxGame game) {

@@ -104,9 +104,25 @@ public class CameraInputComponent extends InputComponent {
                 verticalChange = 0;
             }
         }
+
         super.entity.setPosition(cameraX + horizontalChange * currentSpeed,
                 cameraY + verticalChange * currentSpeed);
+
+
     }
+
+    /*Debug function - prints specific world coordinates or tile positions on key press
+    public boolean keyTyped(char character) {
+        //testing
+        int currentX = Gdx.input.getX();
+        int currentY = Gdx.input.getY();
+        OrthographicCamera camera = (OrthographicCamera) super.entity.getComponent(CameraComponent.class).getCamera();
+        Vector3 worldCoords = camera.unproject(new Vector3(currentX, currentY,0));
+        GridPoint2 tileCoords = worldToTile(worldCoords.x, worldCoords.y);
+        //System.out.println("TileX: " + tileCoords.x + " | TileY: " + tileCoords.y);
+        System.out.println("WorldX: " + worldCoords.x + " WorldY: " + worldCoords.y);
+        return true;
+    }*/
 
     /**
      * Checks to see if the cursor is hovered to a screen edge, and if so updates the direction it

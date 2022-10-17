@@ -40,7 +40,7 @@ public abstract class GameArea implements Disposable {
    *
    * @param entity Entity (not yet registered)
    */
-  protected void spawnEntity(Entity entity) {
+  public void spawnEntity(Entity entity) {
     areaEntities.add(entity);
     ServiceLocator.getEntityService().register(entity);
   }
@@ -51,10 +51,27 @@ public abstract class GameArea implements Disposable {
    * @param entity Entity (not yet registered)
    * @param tilePos tile position to spawn at
    * @param centerX true to center entity X on the tile, false to align the bottom left corner
-   * @param centerY true to center entity Y on the tile, false to align the bottom left corner
+   * @param centerY true to center entity Y on the tile, false to align the bot+tom left corner
    */
-  protected void spawnEntityAt(Entity entity, GridPoint2 tilePos, boolean centerX, boolean centerY) {
+  public void spawnEntityAt(Entity entity, GridPoint2 tilePos, boolean centerX,
+                       boolean centerY) {
     Vector2 worldPos = terrain.tileToWorldPosition(tilePos);
+    float tileSize = terrain.getTileSize();
+
+    if (centerX) {
+      worldPos.x += (tileSize / 2) - entity.getCenterPosition().x;
+    }
+    if (centerY) {
+      worldPos.y += (tileSize / 2) - entity.getCenterPosition().y;
+    }
+
+    entity.setPosition(worldPos);
+    spawnEntity(entity);
+  }
+
+  public void spawnEntityAt(Entity entity, Vector2 worldPos, boolean centerX,
+                            boolean centerY) {
+
     float tileSize = terrain.getTileSize();
 
     if (centerX) {

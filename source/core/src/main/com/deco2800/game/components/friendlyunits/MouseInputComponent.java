@@ -43,6 +43,9 @@ public class MouseInputComponent extends InputComponent {
             this.leftPressed = true;
             this.touchDownX = screenX;
             this.touchDownY = screenY;
+            entity.getEvents().trigger("release spell");
+        } else if (button == Input.Buttons.RIGHT) {
+            entity.getEvents().trigger("moveLocation", screenX, screenY);
         }
         return false;
     }
@@ -52,6 +55,8 @@ public class MouseInputComponent extends InputComponent {
         if (!this.leftPressed) {
             entity.getEvents().trigger("singleHover", screenX, screenY);
         }
+
+        entity.getEvents().trigger("update pointer", screenX, screenY);
         return false;
     }
 

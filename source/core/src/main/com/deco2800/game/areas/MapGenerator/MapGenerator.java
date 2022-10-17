@@ -1,5 +1,13 @@
 package com.deco2800.game.areas.MapGenerator;
 
+import com.badlogic.gdx.math.GridPoint2;
+import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
+import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.utils.random.PseudoRandom;
+import net.dermetfan.utils.Pair;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -70,6 +78,11 @@ public class MapGenerator {
     private final char cityChar = 'c';
 
     /**
+     * Char denoting a flashing tile
+     */
+    private final char flash = 'f';
+
+    /**
      * List of resourceSpecification objects that contain the placements of each resource
      */
     private List<ResourceSpecification> resourcePlacements;
@@ -85,6 +98,27 @@ public class MapGenerator {
      */
     private Map<String, Coordinate> islandEdges;
 
+    /**
+     * Map that holds resources of the game and their corresponding coordinates.
+     */
+    private Map<Coordinate, Entity> gameResources;
+
+    /**
+     * Stores legal coordinates for players to move to.
+     */
+    public ArrayList<int[]> legalCoordinates;
+    /**
+     *
+     */
+    private int bottomLeftX;
+    /**
+     *
+     */
+    private int bottomLeftY;
+    /**
+     * Container for the tiles to be flooded on the next iteration of flooding.
+     */
+    boolean[][] tilesToFlood;
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -103,18 +137,20 @@ public class MapGenerator {
         //Set variables
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.cityWidth = cityWidth;
-        this.cityHeight = cityHeight;
+        this.cityWidth = setValidCityDimension(cityWidth);
+        this.cityHeight = setValidCityDimension(cityHeight);
         this.islandSize = islandSize;
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
         this.islandEdges = new HashMap<>();
+        this.gameResources = new HashMap<>();
         //Generate map
         generateMap();
 
         //Add resources
         ResourceGenerator rg = new ResourceGenerator(this);
         resourcePlacements = rg.getResources();
+        this.getLegalCoordinates();
     }
 
     /**
@@ -131,6 +167,31 @@ public class MapGenerator {
         placeCity();
         //Add island to map
         makeIsland();
+    }
+
+    /**
+     * Returns the valid dimensions of the city to fit an aligned wall around the outsides
+     * @param dimension width or height of the city in tiles
+     * @return the minimum closest dimension necessary to fit a wall around the outskirts of the city
+     */
+    public int setValidCityDimension(int dimension) {
+        //Minimum side length of a city
+        float minDimension =  (2 * BuildingFactory.CORNER_SCALE) + 2 * (BuildingFactory.CONNECTOR_SCALE) + BuildingFactory.GATE_SCALE;
+        if (dimension <= minDimension) {
+            return (int) minDimension;
+        }
+        //Remaining distance for connectors
+        int remainingTiles = (int) (dimension - minDimension);
+        //Distance occupied by one wall pillar and one connecting wall
+        int wallConnectorDistance =  (int) (BuildingFactory.CORNER_SCALE + BuildingFactory.CONNECTOR_SCALE);
+        int tileDifference = remainingTiles % (2 * wallConnectorDistance);
+        if (tileDifference == 0) {
+            //Perfect size
+            return dimension;
+        } else {
+            //Add on the necessary difference to complete wall around city
+            return dimension + (2 * wallConnectorDistance - tileDifference);
+        }
     }
 
     /**
@@ -203,6 +264,14 @@ public class MapGenerator {
      */
     public char getCityChar() {
         return this.cityChar;
+    }
+
+    /**
+     * Returns the current char representing a flashing tile.
+     * @return flash char
+     */
+    public char getFlashChar() {
+        return this.flash;
     }
 
     /**
@@ -378,6 +447,8 @@ public class MapGenerator {
         this.outlineMap = copyMap(map, mapWidth, mapHeight);
         //Fill between vertices of map to complete island
         fillMap(rightEdge, leftEdge);
+        //Fill all edges around city to be island tiles
+        fillAroundCity();
     }
 
     /**
@@ -386,6 +457,40 @@ public class MapGenerator {
      */
     private void addPoint(Coordinate position) {
         map[position.getY()][position.getX()] = islandChar;
+    }
+
+    /**
+     * Adds tiles around the city to allow the entire map to be accessible
+     */
+    private void fillAroundCity() {
+        //Find city height in tiles
+        int cityHeight = cityDetails.get("SE").getY() - cityDetails.get("NE").getY() + 1;
+        //Find city width in tiles
+        int cityWidth = cityDetails.get("NE").getX() - cityDetails.get("NW").getX() + 1;
+        //Find min and max X values of city
+        int cityMinX = cityDetails.get("NW").getX();
+        int cityMinY = cityDetails.get("NW").getY();
+        int cityMaxX = cityDetails.get("SE").getX();
+        int cityMaxY = cityDetails.get("SE").getY();
+
+        //Fill left and right sides of city
+        for (int i = cityMinY - 1; i <= cityMaxY + 1; i++) {
+            if (map[i][cityMinX - 1] == oceanChar) {
+                map[i][cityMinX - 1] = islandChar;
+            }
+            if (map[i][cityMaxX + 1] == oceanChar) {
+                map[i][cityMaxX + 1] = islandChar;
+            }
+        }
+        //Fill top and bottom sides of city
+        for (int j = cityMinX - 1; j <= cityMaxX + 1; j++) {
+            if (map[cityMinY - 1][j] == oceanChar) {
+                map[cityMinY - 1][j]= islandChar;
+            }
+            if (map[cityMaxY + 1][j] == oceanChar) {
+                map[cityMaxY + 1][j]= islandChar;
+            }
+        }
     }
 
     /**
@@ -417,7 +522,7 @@ public class MapGenerator {
      */
     private void defineIslandEdges() throws IllegalArgumentException {
         if (mapWidth < islandSize + cityWidth + 2 * islandBuffer) {
-            throw new IllegalArgumentException("Map too small for island of size " + islandSize);
+            throw new IllegalArgumentException("Map too small for island of size " + islandSize + " and city of width " + cityWidth);
         }
         Coordinate centre = cityDetails.get("Centre");
 
@@ -589,5 +694,173 @@ public class MapGenerator {
         }
         return newMap;
     }
-}
 
+    /**
+     * Finds the y-coordinate of the extremities of the island.
+     * @return Pair of extremities.
+     */
+    public Pair<Integer, Integer> getIslandExtremities() {
+        int furtherstLeft = mapWidth;
+        int furtherstRight = 0;
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (map[i][j] != this.getOceanChar()) {
+                    if (j < furtherstLeft) {
+                        furtherstLeft = j;
+                    }
+                    if (j > furtherstRight) {
+                        furtherstRight = j;
+                    }
+                }
+            }
+        }
+        return new Pair<Integer, Integer>(furtherstLeft, furtherstRight);
+    }
+
+    /**
+     * Randomly selects tiles to be flooded on next flooding event.
+     * @param tiles A boolean mapping of all tiles in the game.
+     * @param left The furthest left coordinate of the island.
+     * @param right The furthest right coordinate of the island.
+     * @return Mapping of all tiles with tiles to be flooded on the next flooding
+     *         event set to true.
+     */
+    public boolean[][] pickTilesToFlood(boolean[][] tiles, int left, int right) {
+        for (int i = 0; i < mapHeight; i++) {
+            int rand = PseudoRandom.seedRandomInt(0, 3);
+            if (rand != 0) {
+                if (this.map[i][left] != this.getCityChar()) {
+                    tiles[i][left] = true;
+                }
+            }
+            rand = PseudoRandom.seedRandomInt(0, 3);
+            if (rand != 0) {
+                if (this.map[i][right] != this.getCityChar()) {
+                    tiles[i][right] = true;
+                }
+            }
+        }
+        return tiles;
+    }
+
+    /**
+     * Flashes tiles that are chosen to flood on the next flooding iteration.
+     */
+    public void updateFlashingTiles() {
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (tilesToFlood[i][j]) {
+                    if (this.map[i][j] != this.getOceanChar()) {
+                        this.map[i][j] = this.getFlashChar();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Given a coordinate (x, y), update the internal representation of the map
+     * to flood that tile.
+     */
+    public void flashTiles() {
+        // Container to represent squares to be flooded next
+        boolean[][] nextSquaresToBeFlooded = new boolean[mapHeight][mapWidth];
+
+        // Find the furthest left and right coordinates of the island
+        Pair<Integer, Integer> extremities = this.getIslandExtremities();
+        int farLeft = extremities.getKey();
+        int farRight = extremities.getValue();
+
+        // Pick tiles to be flooded and flood them
+        nextSquaresToBeFlooded = this.pickTilesToFlood(nextSquaresToBeFlooded, farLeft, farRight);
+        this.tilesToFlood = nextSquaresToBeFlooded;
+        this.updateFlashingTiles();
+    }
+
+    /**
+     * Floods selected tiles
+     */
+    public void flood() {
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (tilesToFlood[i][j]) {
+                    this.map[i][j] = this.getOceanChar();
+                }
+            }
+        }
+        disposeFloodedSquares();
+    }
+
+    /**
+     * Iterates through the game resources and removes entities that have been flooded.
+     */
+    public void disposeFloodedSquares() {
+        for (ResourceSpecification resourceSpecification: resourcePlacements) {
+            for (Coordinate coords: resourceSpecification.getPlacements()) {
+                if (this.map[coords.getY()][coords.getX()] == this.getOceanChar()) {
+                    if (this.gameResources.get(coords) != null) {
+                        Entity res = this.gameResources.get(coords);
+                        res.dispose();
+                        this.gameResources.remove(coords);
+                    }
+                }
+            }
+        }
+    }
+
+    // TODO: Make a flashing tile for warning the players which tiles will be flooded.
+    // TODO:    Choose the tile to be flashed
+    // TODO:    Flash the tile
+    /**
+     * Get array map of city.
+     */
+    public void createArrayMap() {
+        int bottomLeftI = mapHeight;
+        int bottomLeftJ = mapWidth;
+        ArrayList<int[]> legalMoveCoordinates = new ArrayList<>();
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (this.map[i][j] == this.getCityChar()) {
+                    if (i < bottomLeftI) {
+                        bottomLeftI = i;
+                    }
+                    if (j < bottomLeftJ) {
+                        bottomLeftJ = j;
+                    }
+                    int[] coords = {i, j};
+                    legalMoveCoordinates.add(coords);
+                }
+            }
+        }
+        this.bottomLeftX = bottomLeftI;
+        this.bottomLeftY = bottomLeftJ;
+        this.legalCoordinates = legalMoveCoordinates;
+    }
+
+    public void addGameResource(Coordinate cord, Entity resource) {
+        this.gameResources.put(cord, resource);
+    }
+
+    public int getBottomLeftX() {
+        return this.bottomLeftX;
+    }
+
+    public int getBottomLeftY() {
+        return this.bottomLeftY;
+    }
+
+    public int getCityWidth() {
+        return this.cityWidth;
+    }
+
+    public int getCityHeight() {
+        return this.cityHeight;
+    }
+
+    public ArrayList<int[]> getLegalCoordinates() {
+        if (this.legalCoordinates == null) {
+            createArrayMap();
+        }
+        return this.legalCoordinates;
+    }
+}

@@ -92,6 +92,11 @@ public class Coordinate {
                 && this.y == otherCoordinate.getY());
     }
 
+    @Override
+    public int hashCode() {
+        return String.format("%d%d", x, y).hashCode();
+    }
+
     /**
      * Coordinates can be more easily visualised in typical cartesian form of "(x, y)"
      * The toString() function is overridden to allow debugging of errors

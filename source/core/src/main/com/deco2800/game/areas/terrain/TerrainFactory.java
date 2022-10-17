@@ -27,8 +27,8 @@ import java.io.IOException;
 
 /** Factory for creating game terrain. */
 public class TerrainFactory {
-  private static final int mapWidth = 100;
-  private static final int mapHeight = 45;
+  private static final int mapWidth = 300;
+  private static final int mapHeight = 300;
   private static final int cityWidth = 7;
   private static final int cityHeight = 7;
   private static final int islandSize = 70;
@@ -155,6 +155,7 @@ public class TerrainFactory {
     }
   }
 
+
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     TextureRegion isoGrass =
@@ -209,6 +210,7 @@ public class TerrainFactory {
   public CameraComponent getCameraComponent() {
     return this.cameraComponent;
   }
+
 
   public MapGenerator getMapGenerator() {
     return this.mapGenerator;
