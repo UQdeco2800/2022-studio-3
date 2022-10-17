@@ -1,12 +1,13 @@
 package com.deco2800.game.utils.random;
 import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 
 
 public class Timer {
     /**
      * Reference to the game time.
      */
-    GameTime gt = new GameTime();
+    GameTime gt = ServiceLocator.getTimeSource();
 
     /**
      * Initiating the start variable.
@@ -69,14 +70,14 @@ public class Timer {
      * Setting up the start variable to the current time.
      */
     public void start() {
-        this.start = gt.getTime();
+        this.start = gt.getGameTime();
     }
 
     /**
      * Checking whether if the timer is already expired or not.
      */
     public boolean isTimerExpired() {
-        return (gt.getTime() > this.finish);
+        return (gt.getGameTime() > this.finish);
     }
 
     /**
@@ -86,7 +87,7 @@ public class Timer {
         if (isTimerExpired()) {
             return 0;
         } else {
-            return this.finish - gt.getTime();
+            return this.finish - gt.getGameTime();
         }
     }
 
@@ -94,7 +95,7 @@ public class Timer {
      * Updates flags and returns them.
      */
     public byte getFlagStatus() {
-        long currentTime = gt.getTime();
+        long currentTime = gt.getGameTime();
         if (currentTime > val100p) {
             return flag100p;
         } else if (currentTime > val80p) {

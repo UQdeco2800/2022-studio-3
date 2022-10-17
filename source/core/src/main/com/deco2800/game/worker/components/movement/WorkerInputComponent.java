@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -18,6 +19,11 @@ public class WorkerInputComponent extends InputComponent {
     public WorkerInputComponent() {
         super(5);
         this.camera = ServiceLocator.getEntityService().getCamera();
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.FRIENDLY);
     }
 
     /**

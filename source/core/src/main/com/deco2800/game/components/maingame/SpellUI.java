@@ -19,6 +19,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.random.Timer;
+import com.deco2800.game.worker.components.type.BaseComponent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -154,25 +156,43 @@ public class SpellUI extends UIComponent {
 
     private void onRelease() {
         if (pseudoCast) {
-            logger.info("Releasing Spell");
-            spellBtn.setVisible(false);
-            this.timer = new Timer(15000, 15001);
-            for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-                if (entity.getEntityName() == "Explosion") {
-                    spell = entity;
-                    break;
+
+            // Find base and check the number of resources
+            // 1 spell cast cost 30 metals, woods, and stones
+            BaseComponent baseComponent = null;
+            for(int i=0; i<ServiceLocator.getEntityService().getEntities().size; i++){
+                if(ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class) != null){
+                    baseComponent = ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class);
                 }
             }
-//            spell.setEnabled(true);
+            if(baseComponent.getMetal() < 30 || baseComponent.getStone() < 30 || baseComponent.getWood() < 30){
+                // Made new UI that says the resource is not enough to cast the spell
+                pseudoCast = false;
+            }else{
+                logger.info("Releasing Spell");
+                spellBtn.setVisible(false);
+                this.timer = new Timer(15000, 15001);
+                for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+                    if (entity.getEntityName() == "Explosion") {
+                        spell = entity;
+                        break;
+                    }
+                }
+    //            spell.setEnabled(true);
 
-            spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
+                spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
 
-            spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+                spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
 
-            for (Entity entity : enemyEntities) {
-                entity.dispose();
+                for (Entity entity : enemyEntities) {
+                    entity.dispose();
+                }
+                pseudoCast = false;
+
+                // Update BaseComponent resources
+                baseComponent.updateBaseStats(-30, -30, -30);
+                baseComponent.updateDisplay();
             }
-            pseudoCast = false;
         }
     }
 

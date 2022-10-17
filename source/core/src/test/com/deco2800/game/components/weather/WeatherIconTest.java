@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.random.Timer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import com.deco2800.game.components.weather.WeatherIcon;
@@ -14,10 +16,21 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(GameExtension.class)
 public class WeatherIconTest {
     Skin countdownSkin = new Skin(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
-    Timer timer = new Timer(5000, 10001);
-    Label timerCountdown = new Label(String.valueOf(timer.timeLeft()), countdownSkin);
-    Label timerCountdown2 = new Label(String.valueOf(timer.timeLeft() + 2), countdownSkin);
-    WeatherIcon weatherIcon = new WeatherIcon(timerCountdown);
+    Timer timer;
+    Label timerCountdown;
+    Label timerCountdown2;
+    WeatherIcon weatherIcon;
+
+    @BeforeEach
+    public void setup() {
+        ServiceLocator.registerTimeSource(new GameTime());
+        timer  = new Timer(5000, 10001);
+        timerCountdown  = new Label(String.valueOf(timer.timeLeft()),
+                countdownSkin);
+        timerCountdown2 = new Label(String.valueOf(timer.timeLeft() + 2),
+                countdownSkin);
+        weatherIcon = new WeatherIcon(timerCountdown);
+    }
 
     @Test
     void checkTimerExpires() {

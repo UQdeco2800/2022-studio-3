@@ -2,6 +2,7 @@ package com.deco2800.game.components.tasks;
 
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.components.friendly.FriendlyComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
@@ -40,7 +41,11 @@ public class rangedAttackTask extends DefaultTask implements PriorityTask {
     @Override
     public void update() {
         if (timeSource.getTime() >= endtime) {
-            this.owner.getEntity().getEvents().trigger("attack");
+            if (this.owner.getEntity().getComponent(FriendlyComponent.class) != null) {
+                this.owner.getEntity().getEvents().trigger("shoot");
+            } else {
+                this.owner.getEntity().getEvents().trigger("attack");
+            }   
             endtime = timeSource.getTime() + (int)(waitTime * 1000);
         }
     }

@@ -7,13 +7,12 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.entities.BuildingType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -40,6 +39,11 @@ public class ConstructionInputComponent extends InputComponent {
         ServiceLocator.getGameArea().spawnEntityAt(highlight, nearest, true,
                 true);
 
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.UI);
     }
 
     // follow the mouse
@@ -114,7 +118,7 @@ public class ConstructionInputComponent extends InputComponent {
 
     private GridPoint2 worldPositionToTile(Vector2 worldPos) {
         // really just invert the previous function
-        float tileSize = AtlantisTerrainFactory.mapTileScale;
+        float tileSize = AtlantisTerrainFactory.MAP_TILE_SCALE;
         float i = ((worldPos.x * 2f) - (worldPos.y * 3.724f)) / tileSize / 2f;
         float j =
                 ((worldPos.x * 2f) + (worldPos.y * 3.724f)) / tileSize / 2f;
@@ -123,7 +127,7 @@ public class ConstructionInputComponent extends InputComponent {
     }
 
     private Vector2 tileToWorldPosition(int x, int y) {
-        float tileSize = AtlantisTerrainFactory.mapTileScale;
+        float tileSize = AtlantisTerrainFactory.MAP_TILE_SCALE;
         return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 3.724f);
     }
 

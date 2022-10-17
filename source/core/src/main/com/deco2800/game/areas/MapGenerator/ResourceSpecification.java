@@ -15,7 +15,7 @@ public class ResourceSpecification {
     private final int preferredDistance;
     private List<Coordinate> placements;
     private List<Coordinate> potentialPlacements;
-
+    private final Random random = new Random();
 
     /**
      * Creates a new ResourceSpecification with desired placement information within the game
@@ -109,7 +109,7 @@ public class ResourceSpecification {
      * Randomly sets a number of resources to add to the game based on maxAmount and minAmount
      */
     public void setNewAmount() {
-        amount = new Random().nextInt(maxAmount - minAmount) + minAmount + 1;
+        amount = random.nextInt(maxAmount - minAmount) + minAmount + 1;
     }
 
     /**

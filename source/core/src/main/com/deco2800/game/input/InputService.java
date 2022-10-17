@@ -6,10 +6,8 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * Provides a global access point for handling user input and creating input handlers. All active
@@ -29,7 +27,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
       Collections.reverseOrder(Comparator.comparingInt(InputComponent::getPriority));
 
   private final List<InputComponent> inputHandlers = new ArrayList<>();
+  private final Map<InputComponent, Integer> inputMasks = new HashMap<>();
   private final InputFactory inputFactory;
+
+  private int activeMask = InputLayer.IN_USE;
 
   public InputService() {
     this(InputFactory.createFromInputType(inputType));
@@ -51,12 +52,18 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
 
   /**
    * Register an input handler based on its priority and reorder inputHandlers.
+   * Give the handler the default input type mask
    *
    * @param inputHandler input handler
    */
   public void register(InputComponent inputHandler) {
+    register(inputHandler, InputLayer.DEFAULT);
+  }
+
+  public void register(InputComponent inputHandler, int typeMask) {
     logger.debug("Registering input handler {}", inputHandler);
     inputHandlers.add(inputHandler);
+    inputMasks.put(inputHandler, typeMask);
     inputHandlers.sort(comparator);
   }
 
@@ -68,6 +75,25 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   public void unregister(InputComponent inputHandler) {
     logger.debug("Unregistering input handler {}", inputHandler);
     inputHandlers.remove(inputHandler);
+    inputMasks.remove(inputHandler);
+  }
+
+  /**
+   * disable specific type(s) of input - depends on correct registration
+   * NB - it is recommended that you do not disable the default input class
+   *
+   * @param inputType the input bits to mask out
+   */
+  public void disableInputType(int inputType) {
+    activeMask &= ~inputType;
+  }
+
+  /**
+   * enable specific type(s) of input
+   * @param inputType the input bits to enable
+   */
+  public void enableInputType(int inputType) {
+    activeMask |= inputType;
   }
 
   /**
@@ -80,6 +106,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean keyDown(int keycode) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.keyDown(keycode)) {
         logger.debug("keyDown input handled by {}", inputHandler);
         return true;
@@ -99,6 +129,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean keyTyped(char character) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.keyTyped(character)) {
         logger.debug("keyTyped input handled by {}", inputHandler);
         return true;
@@ -118,6 +152,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean keyUp(int keycode) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.keyUp(keycode)) {
         logger.debug("keyUp input handled by {}", inputHandler);
         return true;
@@ -137,6 +175,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean mouseMoved(int screenX, int screenY) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.mouseMoved(screenX, screenY)) {
         logger.debug("mouseMoved input handled by {}", inputHandler);
         return true;
@@ -156,6 +198,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean scrolled(float amountX, float amountY) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.scrolled(amountX, amountY)) {
         logger.debug("scrolled input handled by {}", inputHandler);
         return true;
@@ -175,6 +221,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.touchDown(screenX, screenY, pointer, button)) {
         logger.debug("touchDown input handled by {}", inputHandler);
         return true;
@@ -194,6 +244,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean touchDragged(int screenX, int screenY, int pointer) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.touchDragged(screenX, screenY, pointer)) {
         logger.debug("touchDragged input handled by {}", inputHandler);
         return true;
@@ -213,6 +267,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.touchUp(screenX, screenY, pointer, button)) {
         logger.debug("touchUp input handled by {}", inputHandler);
         return true;
@@ -232,6 +290,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean fling(float velocityX, float velocityY, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.fling(velocityX, velocityY, button)) {
         logger.debug("fling input handled by {}", inputHandler);
         return true;
@@ -251,6 +313,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean longPress(float x, float y) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.longPress(x, y)) {
         logger.debug("longPress input handled by {}", inputHandler);
         return true;
@@ -270,6 +336,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean pan(float x, float y, float deltaX, float deltaY) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.pan(x, y, deltaX, deltaY)) {
         logger.debug("pan input handled by {}", inputHandler);
         return true;
@@ -289,6 +359,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean panStop(float x, float y, int pointer, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.panStop(x, y, pointer, button)) {
         logger.debug("panStop input handled by {}", inputHandler);
         return true;
@@ -309,6 +383,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   public boolean pinch(
       Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.pinch(initialPointer1, initialPointer2, pointer1, pointer2)) {
         logger.debug("pinch input handled by {}", inputHandler);
         return true;
@@ -327,6 +405,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public void pinchStop() {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.pinchStopHandled()) {
         logger.debug("pinchStop input handled by {}", inputHandler);
         return;
@@ -345,6 +427,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean tap(float x, float y, int count, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.tap(x, y, count, button)) {
         logger.debug("tap input handled by {}", inputHandler);
         return true;
@@ -364,6 +450,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean touchDown(float x, float y, int pointer, int button) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.touchDown(x, y, pointer, button)) {
         logger.debug("touchDown (gesture) input handled by {}", inputHandler);
         return true;
@@ -383,6 +473,10 @@ public class InputService implements InputProcessor, GestureDetector.GestureList
   @Override
   public boolean zoom(float initialDistance, float distance) {
     for (InputComponent inputHandler : inputHandlers) {
+      if ((inputMasks.getOrDefault(inputHandler,
+              InputLayer.IN_USE) & activeMask) == 0) {
+        continue;
+      }
       if (inputHandler.zoom(initialDistance, distance)) {
         logger.debug("zoom input handled by {}", inputHandler);
         return true;
