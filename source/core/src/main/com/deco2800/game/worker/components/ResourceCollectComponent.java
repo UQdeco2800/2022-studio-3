@@ -131,17 +131,17 @@ public class ResourceCollectComponent extends Component {
             collectStone(targetStats);
             collectMetal(targetStats);
             if (target.getCenterPosition().x < collector.getCenterPosition().x) {
-                collector.getEvents().trigger("workerForwardLeftAction");
+                collector.getEvents().trigger("workerForwardLeftActionAnimate");
             } else {
-                collector.getEvents().trigger("workerForwardRightAction");
+                collector.getEvents().trigger("workerForwardRightActionAnimate");
             }
         } else if (collectorIsForager != null && isTree != null) {
             // If the worker type is Forager
             collectWood(targetStats);
             if (target.getCenterPosition().x < collector.getCenterPosition().x) {
-                collector.getEvents().trigger("workerForwardLeftAction");
+                collector.getEvents().trigger("workerForwardLeftActionAnimate");
             } else {
-                collector.getEvents().trigger("workerForwardRightAction");
+                collector.getEvents().trigger("workerForwardRightActionAnimate");
             }
             // this.triggerDurationBarAnimation(this.initialWoodValue, collectorInventory.getWood());
         } else {
