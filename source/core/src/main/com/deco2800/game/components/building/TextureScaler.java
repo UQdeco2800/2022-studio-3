@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.TextureImageComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class TextureScaler extends Component{
     private Vector2 maxX;
     private Vector2 maxY;
     private float initialScale = 0;
+    private Texture baseTexture = null;
 
     //Variables which should be accessed after scaling
     private int tileWidth = -1;
@@ -33,6 +35,21 @@ public class TextureScaler extends Component{
         this.leftPoint = leftPoint;
         this.maxX = maxX;
         this.maxY = maxY;
+    }
+
+    /**
+     * Used to construct a TextureScaler with an existing texture - used for entities
+     * without a TextureRenderComponent. For example, an Entity with an AnimationRenderComponent
+     * @param leftPoint bottom left point of entity
+     * @param maxX bottom right point of entity (max x value)
+     * @param maxY max y point of entity
+     * @param baseTexture default texture of entity
+     */
+    public TextureScaler(Vector2 leftPoint, Vector2 maxX, Vector2 maxY, Texture baseTexture) {
+        this.leftPoint = leftPoint;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.baseTexture = baseTexture;
     }
 
     /**

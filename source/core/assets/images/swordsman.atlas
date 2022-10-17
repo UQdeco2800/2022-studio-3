@@ -3,6 +3,13 @@ size: 1023, 768
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+default
+  rotate: false
+  xy: 511, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 28
 swordsman_backward_left_attack
   rotate: false
   xy: 0, 0

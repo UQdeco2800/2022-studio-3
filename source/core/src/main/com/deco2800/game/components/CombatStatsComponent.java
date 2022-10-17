@@ -2,6 +2,11 @@ package com.deco2800.game.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.deco2800.game.map.MapComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
+
 import static java.lang.Math.max;
 
 /**
@@ -36,6 +41,18 @@ public class CombatStatsComponent extends Component {
     setBaseDefence(baseDefence);
     setLandSpeed(landSpeed);
     setRange(range);
+  }
+
+  @Override
+  public void update() {
+    super.update();
+    if (health <= 0 && ServiceLocator.getTimeSource().getTime() > 1000) {
+      if (entity.getComponent(MapComponent.class) != null) {
+        ServiceLocator.getMapService().unregister(entity.getComponent(MapComponent.class));
+      }
+      ServiceLocator.getPhysicsService().getPhysics().destroyBody(entity.getComponent(PhysicsComponent.class).getBody());
+      ServiceLocator.getEntityService().unregister(entity);
+    }
   }
 
   /**

@@ -7,13 +7,12 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.entities.BuildingType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -25,6 +24,7 @@ public class ConstructionInputComponent extends InputComponent {
     private GridPoint2 placePoint = new GridPoint2(0, 0);
     private BuildingType type;
     private boolean clear = false;
+    private boolean finished = false;
 
     public ConstructionInputComponent(Entity highlight, BuildingType type) {
         super(7);
@@ -39,6 +39,11 @@ public class ConstructionInputComponent extends InputComponent {
         ServiceLocator.getGameArea().spawnEntityAt(highlight, nearest, true,
                 true);
 
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.UI);
     }
 
     // follow the mouse
@@ -85,10 +90,13 @@ public class ConstructionInputComponent extends InputComponent {
                     placePoint, true, true);
             placementHightlight.setScale(0, 0);
             ServiceLocator.getInputService().unregister(this);
+            finished = true;
             return true;
         } else if (button == Input.Buttons.RIGHT) {
             placementHightlight.setScale(0, 0);
+            finished = true;
             ServiceLocator.getInputService().unregister(this);
+            finished = true;
             return true;
         }
         return false;
@@ -110,7 +118,7 @@ public class ConstructionInputComponent extends InputComponent {
 
     private GridPoint2 worldPositionToTile(Vector2 worldPos) {
         // really just invert the previous function
-        float tileSize = AtlantisTerrainFactory.mapTileScale;
+        float tileSize = AtlantisTerrainFactory.MAP_TILE_SCALE;
         float i = ((worldPos.x * 2f) - (worldPos.y * 3.724f)) / tileSize / 2f;
         float j =
                 ((worldPos.x * 2f) + (worldPos.y * 3.724f)) / tileSize / 2f;
@@ -119,7 +127,7 @@ public class ConstructionInputComponent extends InputComponent {
     }
 
     private Vector2 tileToWorldPosition(int x, int y) {
-        float tileSize = AtlantisTerrainFactory.mapTileScale;
+        float tileSize = AtlantisTerrainFactory.MAP_TILE_SCALE;
         return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 3.724f);
     }
 
@@ -145,6 +153,15 @@ public class ConstructionInputComponent extends InputComponent {
         }
 
         this.clear = isClear;
+    }
+
+    /**
+     * Flag for the calling ConstructionCommand that this building placement
+     * is done.
+     * @return whether this building process has been cancelled or completed
+     */
+    public boolean isFinished() {
+        return finished;
     }
 
 }

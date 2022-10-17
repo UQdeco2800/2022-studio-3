@@ -15,22 +15,53 @@ import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 
+import com.deco2800.game.input.InputService;
+import com.deco2800.game.physics.PhysicsService;
+import com.deco2800.game.rendering.RenderService;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.entities.EntityService;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.Gdx;
+
 import java.lang.Class;
 import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MinerFactoryTest {
 
     private static Entity miner;
 
+    @BeforeEach
+    void BeforeEach() {
+        ServiceLocator.clear();
+        TextureAtlas builderAtlas = new TextureAtlas(Gdx.files.internal("images/miner.atlas"));
+        ResourceService rs = mock(ResourceService.class);
+        when(rs.getAsset(anyString(), eq(TextureAtlas.class))).thenReturn(builderAtlas);
+        ServiceLocator.registerResourceService(rs);
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+    }
+
     @Test
-    static void minerComponentDetected(){
+    public void minerComponentDetected(){
         miner = MinerFactory.createMiner();
         MinerComponent miner_type = miner.getComponent(MinerComponent.class);
         ForagerComponent forager_type = miner.getComponent(ForagerComponent.class);
@@ -43,14 +74,14 @@ public class MinerFactoryTest {
     }
 
     @Test
-    static void minerCollectStatsDetected(){
+    public void minerCollectStatsDetected(){
         miner = MinerFactory.createMiner();
         CollectStatsComponent miner_collect_stats = miner.getComponent(CollectStatsComponent.class);
         assertEquals(miner_collect_stats.getCollectionAmount(), 2);
     }
 
     @Test
-    static void minerResourceStatsDetected(){
+    public void minerResourceStatsDetected(){
         ResourceConfig stats = FileLoader.readClass(ResourceConfig.class, "configs/stone.json");
         Entity stone_entity = new Entity().addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal));
 
@@ -66,7 +97,7 @@ public class MinerFactoryTest {
     }
 
     @Test
-    static void minerAnimationControllerDetected(){
+    public void minerAnimationControllerDetected(){
         miner = MinerFactory.createMiner();
 
         try {
@@ -86,12 +117,8 @@ public class MinerFactoryTest {
     }
 
     @Test
-    static void inventoryCouldBeAttachedToMiner(){
-        miner = new Entity()
-            .addComponent(new CollectStatsComponent(2))
-            .addComponent(new ResourceCollectComponent(PhysicsLayer.WORKER))
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.WORKER))
-            .addComponent(new WorkerInventoryComponent());
+    public void inventoryCouldBeAttachedToMiner(){
+        miner = MinerFactory.createMiner();
         
         WorkerInventoryComponent miner_inventory = miner.getComponent(WorkerInventoryComponent.class);
 

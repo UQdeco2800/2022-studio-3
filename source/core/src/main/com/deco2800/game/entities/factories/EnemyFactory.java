@@ -246,7 +246,7 @@ public class EnemyFactory {
             .addComponent(new PhysicsMovementComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1f, 1))
             .addComponent(aiComponent)
             .addComponent(new EntityDirectionComponent());
 
