@@ -1,4 +1,4 @@
-package com.deco2800.game.worker.components.movement;
+package com.deco2800.game.soldiers.movement;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
@@ -16,8 +16,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WorkerMovementTask extends DefaultTask{
-    private static final Logger logger = LoggerFactory.getLogger(WorkerMovementTask.class);
+public class SoldierMovementTask extends DefaultTask{
+    private static final Logger logger = LoggerFactory.getLogger(SoldierMovementTask.class);
 
     private final GameTime gameTime;
     private Vector2 target;
@@ -26,7 +26,7 @@ public class WorkerMovementTask extends DefaultTask{
     private Vector2 lastPos;
     private PhysicsMovementComponent movementComponent;
 
-    public WorkerMovementTask(Vector2 target) {
+    public SoldierMovementTask(Vector2 target) {
         this.target = target;
         this.gameTime = ServiceLocator.getTimeSource();
     }
@@ -91,4 +91,5 @@ public class WorkerMovementTask extends DefaultTask{
     private boolean didMove() {
         return owner.getEntity().getPosition().dst2(lastPos) > 0.001f;
     }
+
 }

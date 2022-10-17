@@ -61,7 +61,7 @@ public class MouseInputComponent extends InputComponent {
         } else if (button == Input.Buttons.RIGHT) {
             entity.getEvents().trigger("moveLocation", screenX, screenY);
             // For friendly unit movement (has 'unitWalk' event handler)
-            if(entity.getEvents().hasEvent("unitWalk")){
+            if(entity.getEvents().hasEvent("soldierWalk") || entity.getEvents().hasEvent("workerWalk")){
                 // Only selected friendly unit will be moving
                 SelectableComponent selectedUnit = entity.getComponent(SelectableComponent.class);
                 if(selectedUnit != null && selectedUnit.isSelected()){
@@ -72,8 +72,13 @@ public class MouseInputComponent extends InputComponent {
                     // Find target vector such that when the entity reaches the target, it's
                     // central point will align with the cursor
                     Vector2 centerTarget = cursorWorldPos.add(entityDeltas);
-                    // Trigger UnitMovementTask
-                    entity.getEvents().trigger("unitWalk", centerTarget);
+                    // Trigger Worker/SoldierMovementTask
+                    if(entity.getEvents().hasEvent("soldierWalk")){
+                        entity.getEvents().trigger("soldierWalk", centerTarget);
+                    }
+                    if(entity.getEvents().hasEvent("workerWalk")){
+                        entity.getEvents().trigger("workerWalk", centerTarget);
+                    }
                 }
             }
         }

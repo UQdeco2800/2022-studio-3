@@ -12,20 +12,20 @@ public class MinerAnimationController extends Component {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("workerIdleAnimate", this::animateIdle);
-        entity.getEvents().addListener("workerForwardLeftMove", this::animateForwardLeftMove);
-        entity.getEvents().addListener("workerForwardRightMove", this::animateForwardRightMove);
-        entity.getEvents().addListener("workerBackLeftMove", this::animateBackLeftMove);
-        entity.getEvents().addListener("workerBackRightMove", this::animateBackRightMove);
-        entity.getEvents().addListener("workerForwardLeftAction", this::animateForwardLeftAction);
-        entity.getEvents().addListener("workerForwardRightAction", this::animateForwardRightAction);
+        entity.getEvents().addListener("workerForwardLeftMoveAnimate", this::animateForwardLeftMove);
+        entity.getEvents().addListener("workerForwardRightMoveAnimate", this::animateForwardRightMove);
+        entity.getEvents().addListener("workerBackwardLeftMoveAnimate", this::animateBackLeftMove);
+        entity.getEvents().addListener("workerBackwardRightMoveAnimate", this::animateBackRightMove);
+        entity.getEvents().addListener("workerForwardLeftActionAnimate", this::animateForwardLeftAction);
+        entity.getEvents().addListener("workerForwardRightActionAnimate", this::animateForwardRightAction);
         // Highlight
         entity.getEvents().addListener("workerHighlightedIdleAnimate", this::animateHighlightedIdle);
-        entity.getEvents().addListener("workerHighlightedForwardLeftMove", this::animateHighlightedForwardLeftMove);
-        entity.getEvents().addListener("workerHighlightedForwardRightMove", this::animateHighlightedForwardRightMove);
-        entity.getEvents().addListener("workerHighlightedBackLeftMove", this::animateHighlightedBackLeftMove);
-        entity.getEvents().addListener("workerHighlightedBackRightMove", this::animateHighlightedBackRightMove);
-        entity.getEvents().addListener("workerHighlightedForwardLeftAction", this::animateHighlightedForwardLeftAction);
-        entity.getEvents().addListener("workerHighlightedForwardRightAction", this::animateHighlightedForwardRightAction);
+        entity.getEvents().addListener("workerHighlightedForwardLeftMoveAnimateAnimate", this::animateHighlightedForwardLeftMove);
+        entity.getEvents().addListener("workerHighlightedForwardRightMoveAnimate", this::animateHighlightedForwardRightMove);
+        entity.getEvents().addListener("workerHighlightedBackwardLeftMoveAnimate", this::animateHighlightedBackLeftMove);
+        entity.getEvents().addListener("workerHighlightedBackwardRightMoveAnimate", this::animateHighlightedBackRightMove);
+        entity.getEvents().addListener("workerHighlightedForwardLeftActionAnimate", this::animateHighlightedForwardLeftAction);
+        entity.getEvents().addListener("workerHighlightedForwardRightActionAnimate", this::animateHighlightedForwardRightAction);
     }
 
     void animateIdle() {

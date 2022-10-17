@@ -33,7 +33,7 @@ public class TreeFactory {
                                 .getAsset("images/tree_.atlas", TextureAtlas.class));
         animator.addAnimation("tree_damaged", 0.5f, Animation.PlayMode.NORMAL);
         animator.addAnimation("tree_idle", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("tree_destroyed", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("tree_grow", 1f, Animation.PlayMode.LOOP);
 
         TextureAtlas ta = ServiceLocator.getResourceService()
         .getAsset("images/tree_.atlas", TextureAtlas.class);
