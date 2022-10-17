@@ -69,10 +69,6 @@ public class FloodingGenerator extends Component {
         this.resetFlags();
         this.startTimer();
         this.floodTimerDisplay = new FloodTimerDisplay(this);
-
-        //TODO - How do we pause the timer when the game is paused?
-        //TODO - IDEAS: Flash tile that is picked to be flooded next.
-        //TODO - Visual Timer on the screen.
     }
 
     /**

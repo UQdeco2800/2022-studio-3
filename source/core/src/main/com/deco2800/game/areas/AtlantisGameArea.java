@@ -330,6 +330,9 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(buildingBox);
     }
 
+    /**
+     * Starts the map flooding event.
+     */
     public void startFlooding() {
         // Create Flooding Event
         Entity floodingEntity = new Entity();
