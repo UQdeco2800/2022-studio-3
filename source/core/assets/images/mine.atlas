@@ -1,166 +1,138 @@
 mine.png
-size: 1542, 3084
+size: 2048, 2560
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-mining-50%
+50-attacked-west/50-attacked-west
   rotate: false
-  xy: 1, 1
+  xy: 0, 0
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 0
-mining-50%
+50-attacked-west/50-attacked-west
   rotate: false
-  xy: 515, 1
+  xy: 512, 0
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 1
-mining-50%
+50-attacked-west/50-attacked-west
   rotate: false
-  xy: 1, 1
+  xy: 1024, 0
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 2
-mining-50%
+50-idle-west/50-idle-west
   rotate: false
-  xy: 515, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 3
-mining-50%
-  rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 4
-mining-50%
-  rotate: false
-  xy: 515, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 5
-mining-50%
-  rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 6
-mining-50%
-  rotate: false
-  xy: 1029, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 7
-mining-50%
-  rotate: false
-  xy: 1, 515
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 8
-mining-50%
-  rotate: false
-  xy: 515, 515
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 9
-mining-50%
-  rotate: false
-  xy: 1029, 515
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 10
-mining-50%
-  rotate: false
-  xy: 1, 1029
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 11
-mining-100%
-  rotate: false
-  xy: 1, 1029
+  xy: 1536, 0
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 0
-mining-100%
+50-west/50-west
   rotate: false
-  xy: 515, 1029
+  xy: 0, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+50-west/50-west
+  rotate: false
+  xy: 512, 512
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 1
-mining-100%
+50-west/50-west
   rotate: false
-  xy: 1029, 1029
+  xy: 1024, 512
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 2
-mining-100%
+50-west/50-west
   rotate: false
-  xy: 1, 1543
+  xy: 1536, 512
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 3
-mining-100%
+50-west/50-west
   rotate: false
-  xy: 515, 1543
+  xy: 0, 1024
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 4
-mining-100%
+100-attacked-west/100-attacked-west
   rotate: false
-  xy: 1029, 1543
+  xy: 512, 1024
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+100-attacked-west/100-attacked-west
+  rotate: false
+  xy: 1024, 1024
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 1
+100-attacked-west/100-attacked-west
+  rotate: false
+  xy: 1536, 1024
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 2
+100-idle-west
+  rotate: false
+  xy: 0, 1536
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+collapse-west/collapse-west
+  rotate: false
+  xy: 512, 1536
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 0
+collapse-west/collapse-west
+  rotate: false
+  xy: 1024, 1536
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 1
+collapse-west/collapse-west
+  rotate: false
+  xy: 1536, 1536
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 2
+collapse-west/collapse-west
+  rotate: false
+  xy: 0, 2048
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 3
+collapse-west/collapse-west
+  rotate: false
+  xy: 512, 2048
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 4
+collapse-west/collapse-west
+  rotate: false
+  xy: 1024, 2048
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: 5
-mining-100%
-  rotate: false
-  xy: 1, 2057
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 6
-mining-100%
-  rotate: false
-  xy: 515, 2057
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 7
-mining-100%
-  rotate: false
-  xy: 1029, 2057
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 8
-mining-100%
-  rotate: false
-  xy: 1, 2571
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 9
-mining-100%
-  rotate: false
-  xy: 515, 2571
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: 10

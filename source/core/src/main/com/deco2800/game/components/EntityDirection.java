@@ -5,9 +5,34 @@ package com.deco2800.game.components;
  * enemy entities.
  */
 public enum EntityDirection {
-  NORTH,
-  SOUTH,
-  EAST,
-  WEST,
-  DEFAULT
+  NORTH {
+    @Override
+    public String toString() {
+      return "north";
+    }
+  },
+  SOUTH {
+    @Override
+    public String toString() {
+      return "south";
+    }
+  },
+  EAST {
+    @Override
+    public String toString() {
+      return "east";
+    }
+  },
+  WEST {
+    @Override
+    public String toString() {
+      return "west";
+    }
+  },
+  DEFAULT {
+    @Override
+    public String toString() {
+      return "default";
+    }
+  }
 }

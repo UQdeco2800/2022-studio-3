@@ -98,6 +98,10 @@ public class TutorialGameArea extends GameArea {
     };
 
     public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    private String[] tutorialSprites = {
+        "images/barracks.atlas"
+    };
+
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -112,6 +116,8 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(this.tutorialTextures);
+
+        resourceService.loadTextureAtlases(this.tutorialSprites);
         resourceService.loadAll();
     }
 
