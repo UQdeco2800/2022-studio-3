@@ -205,7 +205,9 @@ public class Entity {
   public void dispose() {
     if (created) { // if not created, createdComponents are null
       for (Component component : createdComponents) {
-        //System.out.println("REMOVING COMPONENT: " + component.getEntityString());
+//        if (!component.isAnimationRenderComponent()) {
+//          component.dispose();
+//        }
         component.dispose();
       }
     }
