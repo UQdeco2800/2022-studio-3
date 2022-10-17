@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.building.BuildingActions;
+import com.deco2800.game.components.building.SelectionCollider;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -20,6 +21,10 @@ public class SelectableComponent extends Component {
     public SelectableComponent() {
         selected = false;
         hovered = false;
+    }
+
+    public void unselect() {
+        this.selected = false;
     }
 
 
@@ -63,8 +68,8 @@ public class SelectableComponent extends Component {
         Vector2 pointInWorld = screenToWorldPosition(xCoordinate, yCoordinate);
 
         // If entity is a building, test if the clicked point is in building collider
-        if (entity.getComponent(BuildingActions.class) != null) {
-            return entity.getComponent(ColliderComponent.class).getFixture().testPoint(pointInWorld);
+        if (entity.getComponent(SelectionCollider.class) != null) {
+            return entity.getComponent(SelectionCollider.class).getFixture().testPoint(pointInWorld);
         }
 
 

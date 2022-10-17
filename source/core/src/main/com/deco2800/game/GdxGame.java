@@ -67,7 +67,6 @@ public class GdxGame extends Game {
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case GAME_STORY:
-
         return new StoryScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
@@ -75,14 +74,17 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case TUTORIAL:
         return new TutorialScreen(this);
-
-      default:
+      case LOADING:
+        return new LoadingScreen(this);
+      case ENDGAME:
+        return new EndGameScreen(this);
+        default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_STORY, TUTORIAL;
+    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_STORY, TUTORIAL, LOADING, ENDGAME;
   }
 
   /**

@@ -7,6 +7,7 @@ import com.deco2800.game.components.AtlantisGameAreaEventHandler;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.map.MapService;
+import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
 import org.slf4j.Logger;
@@ -35,7 +36,6 @@ public class ServiceLocator {
   public static EntityService getEntityService() {
     return entityService;
   }
-
   public static MapService getMapService() {
     return mapService;
   }

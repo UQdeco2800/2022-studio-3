@@ -5,12 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
+import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -28,7 +29,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.components.maingame.MainGameExitDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
@@ -41,12 +41,22 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png","images/bigblack.png", "images/resource_display.png", "images/gainstone.png", "images/gain10wood.png", "images/gainmetal.png"};
+  private static final String[] mainGameTextures = {
+          "images/heart.png",
+          "images/bigblack.png",
+          "images/resource_display.png",
+          "images/gainstone.png",
+          "images/gain10wood.png",
+          "images/gainmetal.png",
+          "images/character-selection-menu.png",
+          "images/building-selection-menu.png"
+  };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private FloodingGenerator floodingGenerator;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -59,16 +69,11 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine = physicsService.getPhysics();
 
     ServiceLocator.registerInputService(new InputService());
-    ServiceLocator.registerResourceService(new ResourceService());
+//    ServiceLocator.registerResourceService(new ResourceService());
+    // Resource Service created in Loading Screen
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerMapService(new MapService());
-
-    ServiceLocator.registerMapService(new MapService());
-
-    ServiceLocator.registerMapService(new MapService());
-
     ServiceLocator.registerMapService(new MapService());
 
     renderer = RenderFactory.createRenderer();
@@ -79,17 +84,21 @@ public class MainGameScreen extends ScreenAdapter {
     createUI();
 
     logger.debug("Initialising main game screen entities");
-
     // Create game area as an AtlantisGameArea with an AtlantisTerrainFactory
     AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
     AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
     atlantisGameArea.create();
+    this.floodingGenerator = new FloodingGenerator(terrainFactory, atlantisGameArea);
   }
 
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    floodingGenerator.update();
+    if (floodingGenerator.status100p) {
+      game.setScreen(GdxGame.ScreenType.ENDGAME);
+    }
     renderer.render();
   }
 
@@ -147,7 +156,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
     Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
+    ui.addComponent(new InputDecorator(stage, 11))
         .addComponent(new WeatherIconDisplay())
         .addComponent(new PauseMenuDisplay(this.game))
         .addComponent(new PauseMenuActions(this.game))
@@ -157,6 +166,8 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())
+        //.addComponent(new SoldierMenuButton())
+        .addComponent(new SoldierMenuDisplay())
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);

@@ -30,8 +30,8 @@ public class CombatStatsComponent extends Component {
 
   public CombatStatsComponent(int troops, int health, int baseAttack, int baseDefence, float landSpeed, int range) {
     setTroops(troops);
-    setHealth(health);
     setMaxHealth(health);
+    setHealth(health);
     setBaseAttack(baseAttack);
     setBaseDefence(baseDefence);
     setLandSpeed(landSpeed);
@@ -142,6 +142,9 @@ public class CombatStatsComponent extends Component {
   public void setHealth(int health) {
     if (health >= 0) {
       this.health = health;
+      if (health > maxHealth) {
+        this.health = maxHealth;
+      }
     } else {
       this.health = 0;
     }
@@ -151,12 +154,14 @@ public class CombatStatsComponent extends Component {
   }
 
   /**
-   * Sets the entity's maximum health. Health has a minimum bound of 0.
-   *
-   * @param maxHealth maximum health
+   * Sets the entity's maximum health. Maximum Health must be greater than or equal to 0.
+   * @param maxHealth Maximum health an entity can have
    */
   public void setMaxHealth(int maxHealth) {
     this.maxHealth = maxHealth;
+    if (this.maxHealth < 0) {
+      this.maxHealth = 0;
+    }
   }
 
   /**

@@ -53,7 +53,10 @@ public class TutorialScreen extends ScreenAdapter {
             "images/gainstone.png",
             "images/gain10wood.png",
             "images/gainmetal.png",
-            "images/Information_Box_Deepsea.png"
+            "images/Information_Box_Deepsea.png",
+            "images/health bar_6.png",
+            "images/level 1 town hall.png",
+            "images/level_1_town_hall_Highlight.png",
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
