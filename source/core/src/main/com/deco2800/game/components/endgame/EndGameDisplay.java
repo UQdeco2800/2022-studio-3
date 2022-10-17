@@ -55,9 +55,9 @@ public class EndGameDisplay extends UIComponent {
         String playAgainTexture = "images/playAgain.PNG";
         String playAgainTextureHover = "images/playAgainHover.PNG";
         ImageButton playAgainBtn;
-        playAgainBtn = bothButtons.draw(playAgainTexture, playAgainTextureHover);
+        playAgainBtn = bothButtons.draw(playAgainTextureHover, playAgainTexture);
 
-        String exitTexture = "images/onexit.PNG";
+        String exitTexture = "images/onexit.png";
         String exitTextureHover = "images/onexithover.PNG";
         ImageButton exitBtn;
         exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
@@ -82,8 +82,10 @@ public class EndGameDisplay extends UIComponent {
                     }
                 });
 
-        playAgainBtn.setPosition(400f, 290f);
-        exitBtn.setPosition(800f, 290f);
+        playAgainBtn.setPosition(360f, 250f);
+        playAgainBtn.setSize(250, 125);
+        exitBtn.setPosition(360f, 250f);
+        exitBtn.setSize(250, 125);
         stage.addActor(table);
         stage.addActor(playAgainBtn);
         stage.addActor(exitBtn);
