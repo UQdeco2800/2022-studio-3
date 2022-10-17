@@ -19,8 +19,6 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
-import java.util.Random;
-
 public class BuildingUIDataComponent extends UIComponent {
     private CombatStatsComponent combatStats;
     private BuildingActions buildingInfo;
@@ -85,11 +83,21 @@ public class BuildingUIDataComponent extends UIComponent {
         createHealthBar();
     }
 
+    /**
+     * Create and configures the actors used for the Health Bar.
+     */
     private void createHealthBar() {
-        float width = 180f, height = 36f;
-        float x = 210f, y = 140f;
+        // Size of Health Bar
+        float width = 180f;
+        float height = 36f;
+        // X and Y position of Health Bar
+        float x = 210f;
+        float y = 140f;
         float progressBarOffset = 25f; // Progress bar x offset from health bar frame
-        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        // HP label x and y offset from health bar frame
+        float xLabelOffset = 40f;
+        float yLabelOffset = 18f;
+
         healthBarFrame = new Image(ServiceLocator.getResourceService().getAsset("images/health bar_6.png",
                 Texture.class));
         healthBarFrame.setPosition(x, y);
@@ -113,10 +121,20 @@ public class BuildingUIDataComponent extends UIComponent {
         healthPoints.setPosition(x + xLabelOffset, y + yLabelOffset);
     }
 
+    /**
+     * Create and configures the actors used for the Attack stats.
+     */
     private void createAttackInfo() {
-        float width = 36f, height = 36f;
-        float x = 210f, y = 100f;
-        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        // Size of Icon
+        float width = 36f;
+        float height = 36f;
+        // X and Y position of Icon
+        float x = 210f;
+        float y = 100f;
+        // Label x and y offset from icon
+        float xLabelOffset = 40f;
+        float yLabelOffset = 18f;
+
         attackIcon = new Image(ServiceLocator.getResourceService().getAsset("images/attack.png",
                 Texture.class));
         attackIcon.setPosition(x, y);
@@ -127,10 +145,20 @@ public class BuildingUIDataComponent extends UIComponent {
         attackPoints.setPosition(x + xLabelOffset, y + yLabelOffset);
     }
 
+    /**
+     * Create and configures the actors used for the Defense stats.
+     */
     private void createDefenseInfo() {
-        float width = 31f, height = 36f;
-        float x = 210f, y = 60f;
-        float xLabelOffset = 40f, yLabelOffset = 18f; // HP label x and y offset from health bar frame
+        // Size of Icon
+        float width = 31f;
+        float height = 36f;
+        // X and Y position of Icon
+        float x = 210f;
+        float y = 60f;
+        // Label x and y offset from icon
+        float xLabelOffset = 40f;
+        float yLabelOffset = 18f;
+
         defenseIcon = new Image(ServiceLocator.getResourceService().getAsset("images/defense.png",
                 Texture.class));
         defenseIcon.setPosition(x, y);

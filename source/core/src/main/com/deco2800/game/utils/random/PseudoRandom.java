@@ -7,6 +7,9 @@ import static java.lang.Math.random;
  * This class provides an API for seeding Pseduo-Generated Random features.
  */
 public class PseudoRandom {
+
+    private static final Random random = new Random();
+
     /**
      * This method generates a pseudo-randomly generated number between 0 and 1.
      * @return  double between 0 and 1.
@@ -25,7 +28,7 @@ public class PseudoRandom {
      * @return double between lowerBound and upperBound.
      */
     public static double seedRandomDouble (double lowerBound, double upperBound) {
-        return lowerBound + new Random().nextDouble(upperBound - lowerBound);
+        return lowerBound + random.nextDouble(upperBound - lowerBound);
     }
 
     /**
@@ -39,7 +42,7 @@ public class PseudoRandom {
      * @return Integer value between lowerBound and upperBound.
      */
     public static int seedRandomInt (int lowerBound, int upperBound) {
-        return lowerBound + new Random().nextInt(upperBound - lowerBound);
+        return lowerBound + random.nextInt(upperBound - lowerBound);
     }
 
     /**

@@ -29,6 +29,13 @@ public class ForagerFactory {
         animator.addAnimation("forager_back_right_move", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("forager_forward_left_action", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("forager_forward_right_action", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_idle_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_back_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_back_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_left_action_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("forager_forward_right_action_highlighted", 0.1f, Animation.PlayMode.LOOP);
 
         Entity forager = WorkerFactory.createWorker()
                 .addComponent(new AvatarIconComponent("images/forager_avatar.png"))

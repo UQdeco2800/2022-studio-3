@@ -63,7 +63,7 @@ public class WorkerMovementTask extends DefaultTask {
     }
 
     public void changeSpeed(float factor) {
-        this.movementComponent.changeSpeed(factor);
+        //this.movementComponent.changeSpeed(factor);
     }
 
     @Override

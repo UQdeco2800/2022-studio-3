@@ -9,10 +9,9 @@ import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.resources.StoneFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -93,7 +92,6 @@ public class ForestGameArea extends GameArea {
     spawnTownHall(new GridPoint2(9, 7));
 //    spawnBarracks(new GridPoint2(3, 6));
     spawnWalls(0,3);
-    player = spawnPlayer();
   }
 
 
@@ -215,13 +213,6 @@ public class ForestGameArea extends GameArea {
 //    spawnEntityAt(barracks, position, true, true);
 //  }
 
-  private Entity spawnPlayer() {
-
-    Entity newPlayer = PlayerFactory.createPlayer();
-    spawnEntity(newPlayer);
-
-    return newPlayer;
-  }
 
 
 

@@ -15,6 +15,8 @@ import java.util.Random;
 /** Class used to spawn a random point within a certain range of the city center */
 public class RandomPointGenerator {
 
+    private final static Random random = new Random();
+
     /**
      * Get the centre of the city as a GridPoint2
      *
@@ -52,7 +54,7 @@ public class RandomPointGenerator {
         // Get bottom-right corner of city
         Coordinate bottomRightCorner = cityDetails.get("SE");
         // Get width and height of city
-        float width = bottomRightCorner.getX() - topLeftCorner.getX();
+        float width = (float) bottomRightCorner.getX() - topLeftCorner.getX();
         return (int) (scale * width);
     }
 
@@ -77,7 +79,7 @@ public class RandomPointGenerator {
         // Get bottom-right corner of city
         Coordinate bottomRightCorner = cityDetails.get("SE");
         // Get width and height of city
-        float height = bottomRightCorner.getY() - topLeftCorner.getY();
+        float height = (float) bottomRightCorner.getY() - topLeftCorner.getY();
         return (int) (scale * height);
     }
 
@@ -203,9 +205,8 @@ public class RandomPointGenerator {
         while (notFound) {
             GridPoint2 point1 = oceanTiles.get(0);
             GridPoint2 point2 = oceanTiles.get(oceanTiles.size()-1);
-            Random rand = new Random();
 
-            GridPoint2 point = oceanTiles.get(rand.nextInt(oceanTiles.size()-1));
+            GridPoint2 point = oceanTiles.get(random.nextInt(oceanTiles.size()-1));
             int x = point.x;
             int y = (mg.getHeight()-1) - point.y;
 
@@ -256,9 +257,8 @@ public class RandomPointGenerator {
         while (notFound) {
             GridPoint2 point1 = islandTiles.get(0);
             GridPoint2 point2 = islandTiles.get(islandTiles.size()-1);
-            Random rand = new Random();
 
-            GridPoint2 point = islandTiles.get(rand.nextInt(islandTiles.size()-1));
+            GridPoint2 point = islandTiles.get(random.nextInt(islandTiles.size()-1));
             int x = point.x;
             int y = (mg.getHeight()-1) - point.y;
 

@@ -65,7 +65,7 @@ public class TutorialActions extends Component {
         }
 
         if (this.count >= tutorialDialogues.length) {
-            game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+            game.setScreen(GdxGame.ScreenType.LOADING);
         }
 
     }
