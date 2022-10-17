@@ -21,6 +21,8 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.random.Timer;
+import com.deco2800.game.worker.components.type.BaseComponent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,34 +158,54 @@ public class SpellUI extends UIComponent {
 
     private void onRelease() {
         if (pseudoCast) {
-            logger.info("Releasing Spell");
-            spellBtn.setVisible(false);
-            this.timer = new Timer(15000, 15001);
-            for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
-                if (entity.getEntityName() == "Explosion") {
-                    spell = entity;
-                    break;
+
+            // Find base and check the number of resources
+            // 1 spell cast cost 30 metals, woods, and stones
+            BaseComponent baseComponent = null;
+            for (int i = 0; i < ServiceLocator.getEntityService().getEntities().size; i++) {
+                if (ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class) != null) {
+                    baseComponent = ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class);
                 }
             }
-//            spell.setEnabled(true);
-            Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
 
-            Vector2 worldPosition = screenToWorldPosition(screenX, screenY);
-            Vector2 spellWorldPosition = new Vector2(worldPosition.x - 10, worldPosition.y - 6);
-
-            spell.setPosition(spellWorldPosition);
-
-            spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
-            sound.play();
-
-            for (Entity entity : enemyEntities) {
-                Vector2 enemyPosition = entity.getPosition();
-                if (distanceBetweenWorldPositions(enemyPosition, worldPosition) < 5) {
-                    CombatStatsComponent stats = entity.getComponent(CombatStatsComponent.class);
-                    stats.decreaseHealth((int)(stats.getMaxHealth() * 0.9));
+            if (baseComponent.getMetal() < 30 || baseComponent.getStone() < 30 || baseComponent.getWood() < 30) {
+                // Made new UI that says the resource is not enough to cast the spell
+                pseudoCast = false;
+            } else {
+                logger.info("Releasing Spell");
+                spellBtn.setVisible(false);
+                this.timer = new Timer(15000, 15001);
+                for (Entity entity : ServiceLocator.getEntityService().getEntities()) {
+                    if (entity.getEntityName() == "Explosion") {
+                        spell = entity;
+                        break;
+                    }
                 }
+
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
+
+                Vector2 worldPosition = screenToWorldPosition(screenX, screenY);
+                Vector2 spellWorldPosition = new Vector2(worldPosition.x - 10, worldPosition.y - 6);
+
+                spell.setPosition(spellWorldPosition);
+
+                spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+                sound.play();
+
+                for (Entity entity : enemyEntities) {
+                    Vector2 enemyPosition = entity.getPosition();
+                    if (distanceBetweenWorldPositions(enemyPosition, worldPosition) < 5) {
+                        CombatStatsComponent stats = entity.getComponent(CombatStatsComponent.class);
+                        stats.decreaseHealth((int) (stats.getMaxHealth() * 0.9));
+                    }
+                }
+                pseudoCast = false;
+
+                // Update BaseComponent resources
+                baseComponent.updateBaseStats(-30, -30, -30);
+                baseComponent.updateDisplay();
+
             }
-            pseudoCast = false;
         }
     }
 

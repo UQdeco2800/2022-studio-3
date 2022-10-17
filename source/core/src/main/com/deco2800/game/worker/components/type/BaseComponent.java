@@ -5,9 +5,9 @@ import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.services.ServiceLocator;
 
 public class BaseComponent extends Component {
-    public final static int STARTING_WOOD = 10;
-    public final static int STARTING_METAL = 0;
-    public final static int STARTING_STONE = 2;
+    public final static int STARTING_WOOD = 30;
+    public final static int STARTING_METAL = 30;
+    public final static int STARTING_STONE = 30;
     private int isBase;
     private int wood;
     private int metal;

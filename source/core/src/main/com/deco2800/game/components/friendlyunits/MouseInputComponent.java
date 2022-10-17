@@ -2,9 +2,12 @@ package com.deco2800.game.components.friendlyunits;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.services.ServiceLocator;
@@ -18,6 +21,9 @@ public class MouseInputComponent extends InputComponent {
     //used for touchDown
     int touchDownY;
 
+    // For friendly units movement
+    private final Camera camera;
+
     boolean leftPressed;
 
     /**
@@ -27,6 +33,8 @@ public class MouseInputComponent extends InputComponent {
     public MouseInputComponent() {
         super(5);
         leftPressed = false;
+        // For friendly units movement
+        this.camera = ServiceLocator.getEntityService().getCamera();
     }
 
     @Override
@@ -52,6 +60,22 @@ public class MouseInputComponent extends InputComponent {
             entity.getEvents().trigger("release spell");
         } else if (button == Input.Buttons.RIGHT) {
             entity.getEvents().trigger("moveLocation", screenX, screenY);
+            // For friendly unit movement (has 'unitWalk' event handler)
+            if(entity.getEvents().hasEvent("unitWalk")){
+                // Only selected friendly unit will be moving
+                SelectableComponent selectedUnit = entity.getComponent(SelectableComponent.class);
+                if(selectedUnit != null && selectedUnit.isSelected()){
+                    // Find the world coordinates of the cursor
+                    Vector2 cursorWorldPos = screenToWorldPosition(screenX, screenY);
+                    // Find the difference between the entity position and its central point
+                    Vector2 entityDeltas = entity.getPosition().sub(entity.getCenterPosition());
+                    // Find target vector such that when the entity reaches the target, it's
+                    // central point will align with the cursor
+                    Vector2 centerTarget = cursorWorldPos.add(entityDeltas);
+                    // Trigger UnitMovementTask
+                    entity.getEvents().trigger("unitWalk", centerTarget);
+                }
+            }
         }
         return false;
     }
@@ -113,5 +137,17 @@ public class MouseInputComponent extends InputComponent {
         }
         this.leftPressed = false;
         return false;
+    }
+
+    /**
+     * Converts from screen coordinates to world coordinates, and returns them as a Vector2 (For friendly units).
+     *
+     * @param screenX the x coordinate on the screen
+     * @param screenY the y coordinate on the screen
+     * @return the equivalent world coordinates
+     */
+    public Vector2 screenToWorldPosition(int screenX, int screenY) {
+        Vector3 worldPos = camera.unproject(new Vector3(screenX, screenY, 0));
+        return new Vector2(worldPos.x, worldPos.y);
     }
 }

@@ -5,6 +5,7 @@ public class PhysicsLayer {
   public static final short DEFAULT = (1 << 0);
   public static final short PLAYER = (1 << 1);
   public static final short WORKER = PLAYER;
+  public static final short SOLDIER = PLAYER;
   // Terrain obstacle, e.g. trees
   public static final short OBSTACLE = (1 << 2);
   public static final short RESOURCE_NODE = OBSTACLE;
