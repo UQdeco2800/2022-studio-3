@@ -55,7 +55,7 @@ public class ConstructionCommand implements Command{
      * @return whether or not the input component was successfully created
      */
     public boolean construct(BuildingType type) {
-
+        System.out.println("starting construct");
         if (activeBuild != null && !activeBuild.isFinished()) {
             return false;
         }
@@ -81,6 +81,7 @@ public class ConstructionCommand implements Command{
         // gotta be a cleaner way to set this up
         if (activeBuild != null)
             activeBuild.dispose();
+        System.out.println("Creating input component");
         activeBuild =
                 new ConstructionInputComponent(constructHighlight, type);
         ServiceLocator.getInputService().register(activeBuild);

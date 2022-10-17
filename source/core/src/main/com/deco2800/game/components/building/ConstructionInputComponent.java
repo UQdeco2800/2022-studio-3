@@ -49,6 +49,7 @@ public class ConstructionInputComponent extends InputComponent {
     // follow the mouse
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        System.out.println("input mouse moved");
         Vector3 mouseOver = camera.unproject(new Vector3(screenX, screenY, 0));
         GridPoint2 nearestTile = worldPositionToTile(new Vector2(mouseOver.x,
                 mouseOver.y));
@@ -73,10 +74,12 @@ public class ConstructionInputComponent extends InputComponent {
             }
 
         }
-        setClear(ServiceLocator.gameArea.isRegionClear(clearance));
+        //setClear(ServiceLocator.gameArea.isRegionClear(clearance));
+        setClear(true);
         placementHightlight.setPosition(tileToWorldPosition(nearestTile.x,
                 nearestTile.y).sub(offset));
         placePoint = nearestTile;
+        System.out.println("mouse moved success");
         // we don't want this to interfere with any other mouseMoved calls
         return false;
     }
@@ -84,6 +87,7 @@ public class ConstructionInputComponent extends InputComponent {
     // if left click, attempt build; if right click, cancel
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("time to build");
         if (button == Input.Buttons.LEFT) {
             if (!clear) return false;
             ServiceLocator.getGameArea().spawnEntityAt(getBuilding(type),

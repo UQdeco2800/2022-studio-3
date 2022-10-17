@@ -249,7 +249,7 @@ public class AtlantisGameArea extends GameArea {
         gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
         gameAreaEventHandle.addListener("spawnUnit",this::spawnUnit);
 
-//        loadAssets();
+        loadAssets();
         displayUI();
         spawnTerrain();
         centreCameraOnCity();
@@ -1176,7 +1176,8 @@ public class AtlantisGameArea extends GameArea {
      * @return true if there are no colliders in region, false otherwise
      */
     public boolean isRegionClear(PolygonShape shape) {
-        for (Entity entity: areaEntities) {
+        for (int j = 0; j < areaEntities.size(); j++) {
+            Entity entity = areaEntities.get(j);
             if(entity.getComponent(ColliderComponent.class) != null) {
                 for (int i = 0; i < shape.getVertexCount(); i++) {
                     Vector2 vertex = new Vector2();
