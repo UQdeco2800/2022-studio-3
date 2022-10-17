@@ -136,28 +136,34 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mouseMoved(int,int)" class="member-name-link">mouseMoved</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.badlogic.gdx.math.Vector2</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#screenToWorldPosition(int,int)" class="member-name-link">screenToWorldPosition</a><wbr>(int&nbsp;screenX,
+ int&nbsp;screenY)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Converts from screen coordinates to world coordinates, and returns them as a Vector2 (For friendly units).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY,
  int&nbsp;pointer,
  int&nbsp;button)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stores value in this class as the starting point of left mouse button being clicked</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDragged(int,int,int)" class="member-name-link">touchDragged</a><wbr>(int&nbsp;screenX,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDragged(int,int,int)" class="member-name-link">touchDragged</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY,
  int&nbsp;pointer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">To be completed/doesn't work yet:
  When mouse is clicked and dragged, a rectangle is drawn to tell you the area of units that will be selected.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchUp(int,int,int,int)" class="member-name-link">touchUp</a><wbr>(int&nbsp;screenX,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchUp(int,int,int,int)" class="member-name-link">touchUp</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY,
  int&nbsp;pointer,
  int&nbsp;button)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">handles the finish of the click.</div>
 </div>
 </div>
@@ -314,6 +320,21 @@ loadScripts(document, 'script');</script>
 <li><code>InputProcessor.touchUp(int, int, int, int)</code></li>
 </ul>
 </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="screenToWorldPosition(int,int)">
+<h3>screenToWorldPosition</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.badlogic.gdx.math.Vector2</span>&nbsp;<span class="element-name">screenToWorldPosition</span><wbr><span class="parameters">(int&nbsp;screenX,
+ int&nbsp;screenY)</span></div>
+<div class="block">Converts from screen coordinates to world coordinates, and returns them as a Vector2 (For friendly units).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>screenX</code> - the x coordinate on the screen</dd>
+<dd><code>screenY</code> - the y coordinate on the screen</dd>
+<dt>Returns:</dt>
+<dd>the equivalent world coordinates</dd>
 </dl>
 </section>
 </li>
