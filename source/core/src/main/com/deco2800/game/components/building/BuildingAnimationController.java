@@ -48,7 +48,8 @@ public class BuildingAnimationController extends Component {
         entity.getEvents().addListener("underAttackFull", this::underAttackFull);
         entity.getEvents().addListener("underAttackHalf", this::underAttackHalf);
 
-        animator.startAnimation("default");
+//        animator.startAnimation("default");
+        animator.startAnimation(REBUILD);
     }
     
     /**
@@ -69,6 +70,8 @@ public class BuildingAnimationController extends Component {
         if(animator.isFinished()) {
             animator.startAnimation(COLLAPSE);
         }
+        ServiceLocator.getEntityService().unregister(this.getEntity());
+        this.getEntity().getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
     }
 
     /**
@@ -77,7 +80,7 @@ public class BuildingAnimationController extends Component {
      */
     private void creationTransition() {
         if (animator.isFinished()) {
-            animator.startAnimation(FULL_HEALTH);
+            animator.startAnimation(REBUILD);
         }
     }
 

@@ -2,6 +2,8 @@ package com.deco2800.game.components.building;
 
 import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.components.*;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Component that sets the buildings health state.
