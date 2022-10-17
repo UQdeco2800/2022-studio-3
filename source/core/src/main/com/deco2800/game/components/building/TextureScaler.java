@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Null;
 import com.deco2800.game.areas.terrain.TerrainComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.TextureImageComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
@@ -68,6 +70,7 @@ public class TextureScaler extends Component{
         float[] points = new float[] {
                 leftPoint.x, leftPoint.y, maxX.x, maxX.y, maxY.x, maxY.y
         };
+
         //Set building Texture to baseTexture if it has been set, else use TRC
         Texture buildingTexture = baseTexture == null
                 ? entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;

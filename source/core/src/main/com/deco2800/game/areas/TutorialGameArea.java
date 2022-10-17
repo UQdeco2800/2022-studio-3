@@ -147,8 +147,9 @@ public class TutorialGameArea extends GameArea {
 
     public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
     private String[] tutorialSprites = {
-            "images/barracks.atlas"
+        "images/barracks.atlas"
     };
+
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -166,6 +167,8 @@ public class TutorialGameArea extends GameArea {
         resourceService.loadTextures(sounds);
         resourceService.loadTextureAtlases(this.tutorialTexturesAtlases);
         resourceService.loadTextures(this.tutorialTextures);
+
+        resourceService.loadTextureAtlases(this.tutorialSprites);
 
 
         resourceService.loadTextures(forestTextures);
@@ -226,7 +229,7 @@ public class TutorialGameArea extends GameArea {
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
         Coordinate centre = cityDetails.get("Centre");
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-
+        this.terrain = terrainFactory.createAtlantisTerrainComponent();
         MapComponent mapComponent = new MapComponent();
         mapComponent.display();
         mapComponent.setDisplayColour(Color.BROWN);

@@ -1,0 +1,145 @@
+townHallCentre.png
+size: 5200, 5200
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+default
+  rotate: false
+  xy: 119, 220
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+100-idle
+  rotate: false
+  xy: 119, 220
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+50-idle 
+  rotate: false
+  xy: 1459, 1481
+  size: 1043,948 
+  orig: 1043,948
+  offset: 0, 0
+  index: 0
+100-attacked
+  rotate: false
+  xy: 2773, 220
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+100-attacked
+  rotate: false
+  xy: 4055, 220
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 1
+50-attacked
+  rotate: false
+  xy: 2748, 1481
+  size: 1043,948
+  orig: 1043,948
+  offset: 0, 0
+  index: 0
+50-attacked
+  rotate: false
+  xy: 4055, 1477
+  size: 1043,948
+  orig: 1043,948
+  offset: 0, 0
+  index: 1
+50
+  rotate: false
+  xy: 119, 220
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+50
+  rotate: false
+  xy: 1491, 221
+  size: 978, 955
+  orig: 978, 955
+  offset: 0, 0
+  index: 1
+50
+  rotate: false
+  xy: 119, 1473
+  size: 978, 952
+  orig: 978, 952
+  offset: 0, 0
+  index: 2
+50
+  rotate: false
+  xy: 1459, 1481
+  size: 1043, 948
+  orig: 1043, 948
+  offset: 0, 0
+  index: 3
+collapse
+  rotate: false
+  xy: 1459, 1481
+  size: 1043, 948
+  orig: 1043, 948
+  offset: 0, 0
+  index: 0
+collapse
+  rotate: false
+  xy: 119, 2926
+  size: 1043, 948
+  orig: 1043, 948
+  offset: 0, 0
+  index: 1
+collapse
+  rotate: false
+  xy: 1491, 3124
+  size: 978, 764
+  orig: 978, 764
+  offset: 0, 0
+  index: 2
+collapse
+  rotate: false
+  xy: 119, 4059
+  size: 978, 764
+  orig: 978, 764
+  offset: 0, 0
+  index: 3
+collapse
+  rotate: false
+  xy: 1557, 4335
+  size: 769, 488
+  orig: 769, 488
+  offset: 0, 0
+  index: 4
+reconstruction
+  rotate: false
+  xy: 2748, 2646
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 0
+reconstruction
+  rotate: false
+  xy: 4088, 2726
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 1
+reconstruction
+  rotate: false
+  xy: 2748, 4335
+  size: 978, 749
+  orig: 978, 749
+  offset: 0, 0
+  index: 2
+reconstruction
+  rotate: false
+  xy: 4088, 4128
+  size: 978, 956
+  orig: 978, 956
+  offset: 0, 0
+  index: 3
