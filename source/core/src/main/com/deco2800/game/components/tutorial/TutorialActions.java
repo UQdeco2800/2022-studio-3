@@ -38,7 +38,6 @@ public class TutorialActions extends Component {
             "Release the spell over\nthe titan to defeat it!",
             "Build am Army and send the foes\nback to where they came from!",
             "I wish you the best of luck\nNow go save Atlantis!"
-
     };
 
 
