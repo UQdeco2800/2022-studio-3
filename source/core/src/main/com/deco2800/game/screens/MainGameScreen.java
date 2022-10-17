@@ -9,13 +9,11 @@ import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.LoadingBar;
 import com.deco2800.game.components.buildingmenu.BuildingMenuButton;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
-import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.soldiermenu.SoldierMenuButton;
 import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -34,9 +32,8 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.components.maingame.MainGameExitDisplay;
-import com.deco2800.game.components.gamearea.PerformanceDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +53,9 @@ public class MainGameScreen extends ScreenAdapter {
           "images/gainmetal.png",
           "images/character-selection-menu.png",
           "images/building-selection-menu.png",
-          "images/barracks_level_1.0.png"
+          "images/CogWheel/Esc Menu/CogWheelBG.png",
+          "images/barracks_level_1.0.png",
+          "images/wooden_wall.png"
   };
   private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 

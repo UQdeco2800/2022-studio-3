@@ -328,7 +328,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	button: {
 		font: button
 		fontColor: color
-	}
+	},
+	custom: {
+		font: font,
+		fontColor: white
+	},
 	title: {
 		font: title
 		fontColor: color
@@ -341,7 +345,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font_large,
 		fontColor: black
 	}
-}
+},
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
 		font: font

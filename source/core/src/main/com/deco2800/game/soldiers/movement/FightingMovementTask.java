@@ -108,17 +108,21 @@ public class FightingMovementTask extends DefaultTask {
             }              
         }
         if (isAtTarget()) {
-            if (path.isEmpty()) {
-                movementComponent.setMoving(false);
-                status = Status.FINISHED;
-                logger.info("Finished path");
-            } else {
-                setTarget(MapService.tileToWorldPosition(path.get(0)));
-                path.remove(0);
-                movementComponent.setMoving(true);
-                logger.info("Moving to the next target: {}", MapService.worldToTile(target));
-                lastTimeMoved = gameTime.getTime();
-                lastPos = owner.getPosition();
+            try {
+                if (path.isEmpty()) {
+                    movementComponent.setMoving(false);
+                    status = Status.FINISHED;
+                    logger.info("Finished path");
+                } else {
+                    setTarget(MapService.tileToWorldPosition(path.get(0)));
+                    path.remove(0);
+                    movementComponent.setMoving(true);
+                    logger.info("Moving to the next target: {}", MapService.worldToTile(target));
+                    lastTimeMoved = gameTime.getTime();
+                    lastPos = owner.getPosition();
+                }
+            } catch (NullPointerException e) {
+                logger.debug("No path :(");
             }
         } else {
             checkIfStuck();
