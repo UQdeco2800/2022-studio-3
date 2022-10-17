@@ -119,6 +119,17 @@ implements com.badlogic.gdx.InputProcessor, com.badlogic.gdx.input.GestureDetect
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disableInputType(int)" class="member-name-link">disableInputType</a><wbr>(int&nbsp;inputType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">disable specific type(s) of input - depends on correct registration
+ NB - it is recommended that you do not disable the default input class</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableInputType(int)" class="member-name-link">enableInputType</a><wbr>(int&nbsp;inputType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">enable specific type(s) of input</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fling(float,float,int)" class="member-name-link">fling</a><wbr>(float&nbsp;velocityX,
  float&nbsp;velocityY,
@@ -202,66 +213,70 @@ implements com.badlogic.gdx.InputProcessor, com.badlogic.gdx.input.GestureDetect
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Register an input handler based on its priority and reorder inputHandlers.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scrolled(float,float)" class="member-name-link">scrolled</a><wbr>(float&nbsp;amountX,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register(com.deco2800.game.input.InputComponent,int)" class="member-name-link">register</a><wbr>(<a href="InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a>&nbsp;inputHandler,
+ int&nbsp;typeMask)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scrolled(float,float)" class="member-name-link">scrolled</a><wbr>(float&nbsp;amountX,
  float&nbsp;amountY)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tap(float,float,int,int)" class="member-name-link">tap</a><wbr>(float&nbsp;x,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tap(float,float,int,int)" class="member-name-link">tap</a><wbr>(float&nbsp;x,
  float&nbsp;y,
  int&nbsp;count,
  int&nbsp;button)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(float,float,int,int)" class="member-name-link">touchDown</a><wbr>(float&nbsp;x,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(float,float,int,int)" class="member-name-link">touchDown</a><wbr>(float&nbsp;x,
  float&nbsp;y,
  int&nbsp;pointer,
  int&nbsp;button)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
- processed</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
- int&nbsp;screenY,
- int&nbsp;pointer,
- int&nbsp;button)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDragged(int,int,int)" class="member-name-link">touchDragged</a><wbr>(int&nbsp;screenX,
- int&nbsp;screenY,
- int&nbsp;pointer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
- processed</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchUp(int,int,int,int)" class="member-name-link">touchUp</a><wbr>(int&nbsp;screenX,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDown(int,int,int,int)" class="member-name-link">touchDown</a><wbr>(int&nbsp;screenX,
  int&nbsp;screenY,
  int&nbsp;pointer,
  int&nbsp;button)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
+ processed</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchDragged(int,int,int)" class="member-name-link">touchDragged</a><wbr>(int&nbsp;screenX,
+ int&nbsp;screenY,
+ int&nbsp;pointer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unregister(com.deco2800.game.input.InputComponent)" class="member-name-link">unregister</a><wbr>(<a href="InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a>&nbsp;inputHandler)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#touchUp(int,int,int,int)" class="member-name-link">touchUp</a><wbr>(int&nbsp;screenX,
+ int&nbsp;screenY,
+ int&nbsp;pointer,
+ int&nbsp;button)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
+ processed</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unregister(com.deco2800.game.input.InputComponent)" class="member-name-link">unregister</a><wbr>(<a href="InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a>&nbsp;inputHandler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unregister an input handler</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#zoom(float,float)" class="member-name-link">zoom</a><wbr>(float&nbsp;initialDistance,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#zoom(float,float)" class="member-name-link">zoom</a><wbr>(float&nbsp;initialDistance,
  float&nbsp;distance)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </div>
@@ -317,11 +332,19 @@ implements com.badlogic.gdx.InputProcessor, com.badlogic.gdx.input.GestureDetect
 <section class="detail" id="register(com.deco2800.game.input.InputComponent)">
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(<a href="InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a>&nbsp;inputHandler)</span></div>
-<div class="block">Register an input handler based on its priority and reorder inputHandlers.</div>
+<div class="block">Register an input handler based on its priority and reorder inputHandlers.
+ Give the handler the default input type mask</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>inputHandler</code> - input handler</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="register(com.deco2800.game.input.InputComponent,int)">
+<h3>register</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(<a href="InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a>&nbsp;inputHandler,
+ int&nbsp;typeMask)</span></div>
 </section>
 </li>
 <li>
@@ -332,6 +355,29 @@ implements com.badlogic.gdx.InputProcessor, com.badlogic.gdx.input.GestureDetect
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>inputHandler</code> - input handler</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="disableInputType(int)">
+<h3>disableInputType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">disableInputType</span><wbr><span class="parameters">(int&nbsp;inputType)</span></div>
+<div class="block">disable specific type(s) of input - depends on correct registration
+ NB - it is recommended that you do not disable the default input class</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>inputType</code> - the input bits to mask out</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="enableInputType(int)">
+<h3>enableInputType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enableInputType</span><wbr><span class="parameters">(int&nbsp;inputType)</span></div>
+<div class="block">enable specific type(s) of input</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>inputType</code> - the input bits to enable</dd>
 </dl>
 </section>
 </li>
