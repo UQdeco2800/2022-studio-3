@@ -30,17 +30,17 @@ public class FloodTimerDisplay extends UIComponent {
         Boolean hasUpdated = floodingGenerator.updateFlags();
         if (hasUpdated) {
             if (floodingGenerator.status100p) {
-                //TODO - display 100p on screen
+                floodTimer.requestNewImage(100);
             } else if (floodingGenerator.status80p) {
-                //TODO - display 80p on screen
+                floodTimer.requestNewImage(80);
             } else if (floodingGenerator.status60p) {
-                //TODO - display 60p on screen
+                floodTimer.requestNewImage(60);
             } else if (floodingGenerator.status40p) {
-                //TODO - display 40p on screen
+                floodTimer.requestNewImage(40);
             } else if (floodingGenerator.status20p) {
-                //TODO - display 20p on screen
+                floodTimer.requestNewImage(20);
             } else {
-                //TODO - add empty timer
+                floodTimer.requestNewImage(0);
             }
         }
     }
