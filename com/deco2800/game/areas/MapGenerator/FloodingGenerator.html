@@ -116,6 +116,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Flag for 80% complete</div>
 </div>
+<div class="col-first odd-row-color"><code><a href="../../utils/random/Timer.html" title="class in com.deco2800.game.utils.random">Timer</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#timer" class="member-name-link">timer</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Flooding timer to signal flooding event.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.deco2800.game.components.Component">Fields inherited from class&nbsp;com.deco2800.game.components.<a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a></h3>
@@ -170,23 +175,28 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets flags from the internal timer flags.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#triggerFlashTilesEvent()" class="member-name-link">triggerFlashTilesEvent</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startTimer()" class="member-name-link">startTimer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Flashes tiles that will be flooded on the next iteration.</div>
+<div class="block">Starts the countdown for flooding to occur.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#triggerFloodEvent()" class="member-name-link">triggerFloodEvent</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#triggerFlashTilesEvent()" class="member-name-link">triggerFlashTilesEvent</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Algorithm that determines which tiles to be flooded on the next flooding event.</div>
+<div class="block">Flashes tiles that will be flooded on the next iteration.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#triggerFloodEvent()" class="member-name-link">triggerFloodEvent</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Algorithm that determines which tiles to be flooded on the next flooding event.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">To be called each time update is called.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateFlags()" class="member-name-link">updateFlags</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateFlags()" class="member-name-link">updateFlags</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the internal flag logic.</div>
 </div>
 </div>
@@ -209,6 +219,13 @@ loadScripts(document, 'script');</script>
 <section class="field-details" id="field-detail">
 <h2>Field Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="timer">
+<h3>timer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../utils/random/Timer.html" title="class in com.deco2800.game.utils.random">Timer</a></span>&nbsp;<span class="element-name">timer</span></div>
+<div class="block">Flooding timer to signal flooding event.</div>
+</section>
+</li>
 <li>
 <section class="detail" id="status20p">
 <h3>status20p</h3>
@@ -278,6 +295,13 @@ loadScripts(document, 'script');</script>
 <h3>resetFlags</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetFlags</span>()</div>
 <div class="block">Sets all completion flags to false.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="startTimer()">
+<h3>startTimer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startTimer</span>()</div>
+<div class="block">Starts the countdown for flooding to occur.</div>
 </section>
 </li>
 <li>
