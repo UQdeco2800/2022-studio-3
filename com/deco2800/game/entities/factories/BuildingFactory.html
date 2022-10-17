@@ -175,27 +175,33 @@ loadScripts(document, 'script');</script>
  enemy entities from sea to the shores of the island.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTitanShrine()" class="member-name-link">createTitanShrine</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createShip(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)" class="member-name-link">createShip</a><wbr>(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a ship entity, a ship shrine is an enemy building that transports
+ enemy entities from sea to the shores of the island.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTitanShrine()" class="member-name-link">createTitanShrine</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a titan shrine entity, a titan shrine is an enemy building
  that spawns titan's.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTownHall()" class="member-name-link">createTownHall</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTownHall()" class="member-name-link">createTownHall</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates entity, adds and configures TownHall components</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTrebuchet(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)" class="member-name-link">createTrebuchet</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createTrebuchet(com.deco2800.game.entities.Entity,com.deco2800.game.areas.GameArea)" class="member-name-link">createTrebuchet</a><wbr>(<a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;target,
  <a href="../../areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a>&nbsp;gameArea)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a trebuchet entity, a trebuchet is a friendly building
  that defends the shores of atlantis, it primarily attacks enemy
  transport ships.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWall()" class="member-name-link">createWall</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createWall()" class="member-name-link">createWall</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a wall entity, adds and configures Wall components</div>
 </div>
 </div>
@@ -327,6 +333,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createShip()">
 <h3>createShip</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createShip</span>()</div>
+<div class="block">Creates a ship entity, a ship shrine is an enemy building that transports
+ enemy entities from sea to the shores of the island.
+ that spawns titan's.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Ship Building Entity</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createShip(com.deco2800.game.areas.terrain.AtlantisTerrainFactory)">
+<h3>createShip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="element-name">createShip</span><wbr><span class="parameters">(<a href="../../areas/terrain/AtlantisTerrainFactory.html" title="class in com.deco2800.game.areas.terrain">AtlantisTerrainFactory</a>&nbsp;terrainFactory)</span></div>
 <div class="block">Creates a ship entity, a ship shrine is an enemy building that transports
  enemy entities from sea to the shores of the island.
  that spawns titan's.</div>

@@ -83,19 +83,42 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AttackListener.html" title="class in com.deco2800.game.components.building">AttackListener</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AnimationTestingComponent.html" title="class in com.deco2800.game.components.building">AnimationTestingComponent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AttackListener.html" title="class in com.deco2800.game.components.building">AttackListener</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="Building.html" title="enum class in com.deco2800.game.components.building">Building</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BuildingActions.html" title="class in com.deco2800.game.components.building">BuildingActions</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Action component for interacting with a building.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BuildingAnimationController.html" title="class in com.deco2800.game.components.building">BuildingAnimationController</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Component to handle building animations, this component
+ simply listens to events and plays animation associated
+ with events called.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="BuildingHealth.html" title="enum class in com.deco2800.game.components.building">BuildingHealth</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BuildingHealthManager.html" title="class in com.deco2800.game.components.building">BuildingHealthManager</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Component that sets the buildings health state.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConstructionInputComponent.html" title="class in com.deco2800.game.components.building">ConstructionInputComponent</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="damageAnimation.html" title="class in com.deco2800.game.components.building">damageAnimation</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DirectionalBuildingAnimationController.html" title="class in com.deco2800.game.components.building">DirectionalBuildingAnimationController</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Some buildings face different direction, as such they will
+ have animation in different directions, this component
+ accounts for these cases and handles animations and states
+ just for these buildings.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="GateCollider.html" title="class in com.deco2800.game.components.building">GateCollider</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HealthAnimation.html" title="class in com.deco2800.game.components.building">HealthAnimation</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="SelectionCollider.html" title="class in com.deco2800.game.components.building">SelectionCollider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -107,6 +130,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="TextureScaler.html" title="class in com.deco2800.game.components.building">TextureScaler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UpdateBuildingDirection.html" title="class in com.deco2800.game.components.building">UpdateBuildingDirection</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">There are stationary buildings (trebuchet)
+ in the game that change their sprite depending
+ on what direction their target is in, this
+ component implements similar direction detection
+ as PhysicsMovementComponent, but for stationary
+ entities.</div>
+</div>
 </div>
 </div>
 </div>
