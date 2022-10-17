@@ -111,7 +111,6 @@ public class StoryScreen extends ScreenAdapter {
        .addComponent(new InputDecorator(stage, 10))
             .addComponent(new StoryActions(game));;
 
-
     ServiceLocator.getEntityService().register(ui);
   }
 }

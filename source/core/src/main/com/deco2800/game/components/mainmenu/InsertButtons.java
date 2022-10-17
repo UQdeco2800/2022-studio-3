@@ -17,7 +17,6 @@ public class InsertButtons {
         Drawable drawing = new TextureRegionDrawable(new TextureRegion(nomButton));
         ImageButton buttonImage = new ImageButton(drawing);
         buttonImage.getStyle().imageOver = new TextureRegionDrawable(hovButton);
-
         return buttonImage;
     }
 

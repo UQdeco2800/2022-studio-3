@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
+import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.components.LoadingBar;
 import com.deco2800.game.components.buildingmenu.BuildingMenuButton;
@@ -63,6 +64,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private FloodingGenerator floodingGenerator;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -94,12 +96,17 @@ public class MainGameScreen extends ScreenAdapter {
     AtlantisTerrainFactory terrainFactory = new AtlantisTerrainFactory(renderer.getCamera());
     AtlantisGameArea atlantisGameArea = new AtlantisGameArea(terrainFactory);
     atlantisGameArea.create();
+    this.floodingGenerator = new FloodingGenerator(terrainFactory, atlantisGameArea);
   }
 
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    floodingGenerator.update();
+    if (floodingGenerator.status100p) {
+      game.setScreen(GdxGame.ScreenType.ENDGAME);
+    }
     renderer.render();
   }
 
