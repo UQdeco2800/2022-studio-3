@@ -13,10 +13,8 @@ import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.UnitSpawningComponent;
-import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
 import com.deco2800.game.components.maingame.*;
-import com.deco2800.game.components.tutorial.TutorialActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
@@ -30,7 +28,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
 
 import java.util.Map;
-import java.util.Vector;
 
 public class TutorialGameArea extends GameArea {
 
