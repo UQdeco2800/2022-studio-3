@@ -9,7 +9,6 @@ import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.random.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deco2800.game.components.weather.WeatherIcon;
 
 public class WeatherIconDisplay extends UIComponent {
     /**
