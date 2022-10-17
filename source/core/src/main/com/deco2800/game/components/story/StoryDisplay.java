@@ -166,7 +166,7 @@ public class StoryDisplay extends UIComponent {
         }}
 
     private void prevScene(){
-        if (end - start > 0){
+        if (end - start > 0 && start > 0){
             Drawable prev = new TextureRegionDrawable(new Texture(Gdx.files.internal(storyImages.get(start-1))));
             table.setBackground(prev);
             start -=1;

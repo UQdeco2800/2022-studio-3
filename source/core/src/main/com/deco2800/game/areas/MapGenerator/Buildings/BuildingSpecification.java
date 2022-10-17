@@ -3,6 +3,8 @@ package com.deco2800.game.areas.MapGenerator.Buildings;
 import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 
+import java.util.Objects;
+
 public class BuildingSpecification {
     /**
      * Building type to add to game
@@ -105,5 +107,11 @@ public class BuildingSpecification {
                 && this.getHeight() == otherBS.getHeight()
                 && this.getDoor().equals(otherBS.getDoor())
                 && this.getNum() == otherBS.getNum());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getWidth(),
+                            getHeight(), getDoor(), getNum());
     }
 }

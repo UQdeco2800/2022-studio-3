@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.services.GameTime;
@@ -51,11 +52,13 @@ public class PauseMenuDisplay extends UIComponent {
 
       if (!pmEnabled) {
           timeSource.paused();
+          ServiceLocator.getInputService().disableInputType(InputLayer.UI | InputLayer.FRIENDLY);
           pauseWindow.setVisible(true);
           background.setVisible(true);
           pmEnabled = true;
       } else {
           timeSource.unpaused();
+          ServiceLocator.getInputService().enableInputType(InputLayer.UI | InputLayer.FRIENDLY);
           pauseWindow.setVisible(false);
           background.setVisible(false);
           pmEnabled = false;

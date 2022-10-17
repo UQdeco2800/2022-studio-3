@@ -32,23 +32,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
         walkDirection.add(Vector2Utils.UP);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.S:
         walkDirection.add(Vector2Utils.DOWN);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
-        triggerWalkEvent();
-        return false;
+        break;
       default:
         return false;
     }
+    triggerWalkEvent();
+    return false;
   }
 
   /**
@@ -62,23 +60,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
         walkDirection.sub(Vector2Utils.UP);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.S:
         walkDirection.sub(Vector2Utils.DOWN);
-        triggerWalkEvent();
-        return false;
+        break;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
-        triggerWalkEvent();
-        return false;
+        break;
       default:
         return false;
     }
+    triggerWalkEvent();
+    return false;
   }
 
 
