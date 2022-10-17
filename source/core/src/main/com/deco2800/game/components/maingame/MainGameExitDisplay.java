@@ -31,7 +31,7 @@ public class MainGameExitDisplay extends UIComponent {
 
   private void addActors() {
     table = new Table();
-    table.top().right();
+    table.top().left();
     table.setFillParent(true);
 
 //    TextButton mainMenuBtn = new TextButton("Exit", skin);
@@ -60,7 +60,7 @@ public class MainGameExitDisplay extends UIComponent {
 
 
 //    table.add(mainMenuBtn).padTop(10f).padRight(10f);
-    table.add(pauseMenuBtn.padTop(10f)).padRight(10f);
+    table.add(pauseMenuBtn).padTop(140f).padRight(30f);
     stage.addActor(table);
   }
 

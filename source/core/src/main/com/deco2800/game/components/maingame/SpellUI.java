@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
@@ -167,13 +168,21 @@ public class SpellUI extends UIComponent {
 //            spell.setEnabled(true);
             Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
 
-            spell.setPosition(screenToWorldPosition(screenX - 150, screenY + 120));
+            Vector2 worldPosition = screenToWorldPosition(screenX, screenY);
+            Vector2 spellWorldPosition = new Vector2(worldPosition.x - 10, worldPosition.y - 6);
+            System.out.println(worldPosition);
+
+            spell.setPosition(spellWorldPosition);
 
             spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
             sound.play();
 
             for (Entity entity : enemyEntities) {
-                entity.dispose();
+                Vector2 enemyPosition = entity.getPosition();
+                if (distanceBetweenWorldPositions(enemyPosition, worldPosition) < 5) {
+                    CombatStatsComponent stats = entity.getComponent(CombatStatsComponent.class);
+                    stats.decreaseHealth((int)(stats.getMaxHealth() * 0.9));
+                }
             }
             pseudoCast = false;
         }
@@ -182,5 +191,11 @@ public class SpellUI extends UIComponent {
     public Vector2 screenToWorldPosition(int screenX, int screenY) {
         Vector3 worldPos = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
         return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    public float distanceBetweenWorldPositions(Vector2 object, Vector2 point) {
+        float diffX = Math.abs(object.x - point.x);
+        float diffY = Math.abs(object.y - point.y);
+        return (float)Math.sqrt(diffX * diffX + diffY * diffY);
     }
 }
