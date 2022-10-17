@@ -33,6 +33,13 @@ public class MinerFactory {
         animator.addAnimation("miner_back_right_move", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("miner_forward_left_action", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("miner_forward_right_action", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_idle_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_back_left_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_back_right_move_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_left_action_highlighted", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("miner_forward_right_action_highlighted", 0.1f, Animation.PlayMode.LOOP);
 
         Entity newMiner = WorkerFactory.createWorker()
             .addComponent(new MinerComponent())

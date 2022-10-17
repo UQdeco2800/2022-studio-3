@@ -157,5 +157,10 @@ public class FindPath {
 
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return position.hashCode();
+        }
     }
 }

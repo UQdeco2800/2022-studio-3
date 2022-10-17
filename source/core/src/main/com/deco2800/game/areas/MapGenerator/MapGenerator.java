@@ -116,9 +116,15 @@ public class MapGenerator {
      */
     private int bottomLeftY;
     /**
+<<<<<<< HEAD
      * Container for the tiles to be flooded on the next iteration of flooding.
      */
     boolean[][] tilesToFlood;
+
+    /**
+     * For reuse to ensure
+     */
+    private final Random random = new Random();
 
     /**
      * Initiates a new instance of MapGenerator, with a map width, height, citySize and islandSize
@@ -302,10 +308,9 @@ public class MapGenerator {
         }
 
         Coordinate cityPlacement;
-        Random rand = new Random();
         do {
             //Pick random coordinates for city until it is a passable location
-            cityPlacement = new Coordinate(rand.nextInt(mapWidth), rand.nextInt(mapHeight));
+            cityPlacement = new Coordinate(random.nextInt(mapWidth), random.nextInt(mapHeight));
         } while (!(isValidCityPlacement(cityPlacement)));
 
         //Define short hands for city (x,y)
@@ -358,8 +363,8 @@ public class MapGenerator {
      */
     public void writeMap(String path) {
         File outFile = new File(path);
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outFile))) {
             for (int i = 0; i < mapHeight; i++) {
                 for (int j = 0; j < mapWidth; j++) {
                     bw.write(map[i][j]);
@@ -389,8 +394,8 @@ public class MapGenerator {
      */
     public static void writeMap(char[][] map, String path, int mapWidth, int mapHeight) {
         File outFile = new File(path);
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(outFile));
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outFile))){
             for (int i = 0; i < mapHeight; i++) {
                 for (int j = 0; j < mapWidth; j++) {
                     bw.write(map[i][j]);
@@ -648,10 +653,9 @@ public class MapGenerator {
             weightMap.put(totalCount, c);
             totalCount += weightPoint(c);
         }
-        Random rand = new Random();
         //Return the object correlating to the weight returned - in this case the lowest key
         //closest to the random number rolled correlates to the move chosen
-        return weightMap.get(weightMap.floorKey(rand.nextInt(totalCount)));
+        return weightMap.get(weightMap.floorKey(random.nextInt(totalCount)));
     }
 
     /**

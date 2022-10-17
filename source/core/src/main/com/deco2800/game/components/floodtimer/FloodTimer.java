@@ -31,8 +31,6 @@ public class FloodTimer extends Actor {
     private final String TIMER80PC = "images/FloodTimer/flood_timer_80pc.png";
     private final String TIMER100PC = "images/FloodTimer/flood_timer_100pc.png";
 
-
-
     public FloodTimer() {
         this.floodTimerImage = new Image(new Texture(TIMER0PC));
         layout();

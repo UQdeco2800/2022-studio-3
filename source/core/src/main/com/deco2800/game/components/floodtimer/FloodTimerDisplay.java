@@ -56,5 +56,7 @@ public class FloodTimerDisplay extends UIComponent {
      * @param batch SpriteBatch batch
      */
     @Override
-    public void draw(SpriteBatch batch) {}
+    public void draw(SpriteBatch batch) {
+        // ensures super draw method is not run
+    }
 }
