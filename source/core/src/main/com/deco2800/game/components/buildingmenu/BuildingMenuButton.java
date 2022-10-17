@@ -64,7 +64,7 @@ public class BuildingMenuButton extends UIComponent {
 
     private void addActors(){
         buildingButton = new TextButton("Building", skin);
-        buildingButton.setPosition(Gdx.graphics.getWidth()-buildingButton.getWidth(),Gdx.graphics.getHeight()/2f-buildingButton.getHeight()/2);
+        buildingButton.setPosition(Gdx.graphics.getWidth()-buildingButton.getWidth()-25f,Gdx.graphics.getHeight()/2f-buildingButton.getHeight()/2);
 
         barracksButton = new TextButton("Cost: 10 wood, 4 stone", skin);
         wallButton = new TextButton("Cost: 4 wood", skin);
@@ -178,16 +178,16 @@ public class BuildingMenuButton extends UIComponent {
 
         barracks = new Image(ServiceLocator.getResourceService().getAsset("images/barracks_level_1.0.png", Texture.class));
         barracks.setSize(barracks.getWidth()/4, barracks.getHeight()/4);
-        barracks.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + 50f,
+        barracks.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + 75f,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
 
         wall = new Image(ServiceLocator.getResourceService().getAsset("images/wooden_wall.png", Texture.class));
         wall.setSize(wall.getWidth()/4, wall.getHeight()/4);
-        wall.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + + barracks.getWidth() + 50f,
+        wall.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + + barracks.getWidth() + 75f,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
 
         //barracksButton = new TextButton("Cost: $$$", skin);
-        barracksButton.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + 50f + barracks.getWidth()/4,
+        barracksButton.setPosition(Gdx.graphics.getWidth()/2-backgroundTexture.getWidth()/2 + 25f + barracks.getWidth()/4,
                 Gdx.graphics.getHeight()/2-backgroundTexture.getHeight()/2 + 50f);
 
         //wallButton = new TextButton("Cost: $", skin);
