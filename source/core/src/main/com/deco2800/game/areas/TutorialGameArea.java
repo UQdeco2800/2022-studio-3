@@ -58,10 +58,13 @@ public class TutorialGameArea extends GameArea {
             "images/Ocean.png",
             "images/Sand.png",
             "images/Grass.png",
-            "images/box_boy_leaf.png",
-            "images/box_boy.png",
+            "images/Attack_Fred.png",
+            "images/Scared_Fred.png",
             "images/Base_Highlight.png",
+            "images/Fredmogus.png",
             "images/box_boy_highlight.png",
+            "images/Teach_Fred.png",
+            "images/Good_Luck_Fred.png",
             "images/tree.png",
             "images/titanshrine-default.png",
             "images/ghost_king.png",
@@ -150,7 +153,6 @@ public class TutorialGameArea extends GameArea {
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextures(uiTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(atlantisSounds);
         resourceService.loadTextures(buildingPlacementTextures);
         ServiceLocator.getResourceService().loadAll();
     }
@@ -162,6 +164,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
+        resourceService.unloadAssets(this.forestTextures);
     }
 
     /**
@@ -310,7 +313,7 @@ public class TutorialGameArea extends GameArea {
         spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
         spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         spawnBlueJokers(new Vector2(50f, 5f));
-        spawnTitanShrine();
+
         spawnTitan(new Vector2(60f, 4f));
     }
 
