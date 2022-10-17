@@ -2,6 +2,7 @@ package com.deco2800.game.areas.MapGenerator;
 
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.utils.random.Timer;
@@ -47,11 +48,15 @@ public class FloodingGenerator extends Component {
     /**
      * Constant value of flood timer (ms)
      */
-    private final int floodDuration = 4000;
+    private final int floodDuration = 70000;
     /**
      * Stores current progress update
      */
     private byte progress;
+
+
+    private FloodTimerDisplay floodTimerDisplay;
+
 
     /**
      * Creates the entity that manages flooding for the game.
@@ -63,10 +68,7 @@ public class FloodingGenerator extends Component {
         this.atlantisGameArea = atlantisGameArea;
         this.resetFlags();
         this.startTimer();
-
-        //TODO - How do we pause the timer when the game is paused?
-        //TODO - IDEAS: Flash tile that is picked to be flooded next.
-        //TODO - Visual Timer on the screen.
+        this.floodTimerDisplay = new FloodTimerDisplay(this);
     }
 
     /**
@@ -101,29 +103,36 @@ public class FloodingGenerator extends Component {
      * To be called each time update is called.
      */
     @Override
-    public void update() {
-        this.updateFlags();
+    public void update() {}
+
+    /**
+     * Updates the internal flag logic.
+     * @return True if the flag changed. False otherwise.
+     */
+    public Boolean updateFlags() {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
             this.resetFlags();
             this.startTimer();
         }
-    }
-
-    public Boolean updateFlags() {
 
         //Obtain completion status
-        byte currentProgress = timer.getFlagStatus();
-
+        byte currentProgress = this.timer.getFlagStatus();
         if (progress == currentProgress) {
-            return false;
+            return progress == 0b00000000;
         } else {
+            if ((currentProgress & 0b00010000) == 0b00010000) {
+                this.triggerFlashTilesEvent();
+            }
             progress = currentProgress;
             this.setFlags();
             return true;
         }
     }
 
+    /**
+     * Sets flags from the internal timer flags.
+     */
     public void setFlags() {
         //Flags for completion
         byte flag20p  = 0b00000001;
@@ -152,6 +161,14 @@ public class FloodingGenerator extends Component {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    /**
+     * Flashes tiles that will be flooded on the next iteration.
+     */
+    public void triggerFlashTilesEvent() {
+        this.atlantisTerrainFactory.flashTiles();
+        this.atlantisGameArea.flood();
     }
 
     /**

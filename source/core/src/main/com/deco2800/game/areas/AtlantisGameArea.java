@@ -20,17 +20,22 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
+import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
+//import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.maingame.SpellUI;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -90,6 +95,10 @@ public class AtlantisGameArea extends GameArea {
             "images/sea_2.png",
             "images/sea_3.png",
             "images/sea_4.png",
+            "images/flash_1.png",
+            "images/flash_2.png",
+            "images/flash_3.png",
+            "images/flash_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -199,7 +208,7 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] buildingMenuTextures = {
             "images/building-selection-menu.png"
     };
-    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
@@ -314,10 +323,19 @@ public class AtlantisGameArea extends GameArea {
         spawnEntity(buildingBox);
     }
 
+    /**
+     * Starts the map flooding event.
+     */
     public void startFlooding() {
+        // Create Flooding Event
         Entity floodingEntity = new Entity();
         floodingEntity.addComponent(new FloodingGenerator(this.terrainFactory, this));
         ServiceLocator.getEntityService().register(floodingEntity);
+
+        // Create Flooding Timer Display
+        Entity floodTimerDisplay = new Entity();
+        floodTimerDisplay.addComponent(new FloodTimerDisplay(this.floodingGenerator));
+        ServiceLocator.getEntityService().register(floodTimerDisplay);
     }
 
     /**
@@ -1091,12 +1109,14 @@ public class AtlantisGameArea extends GameArea {
                     //Spawn a Tree entity
                     Entity tree = TreeFactory.createTree();
                     tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    this.terrainFactory.getMapGenerator().addGameResource(placement, tree);
                     spawnEntity(tree);
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
                     //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
                     Entity camp = MiningCampFactory.createMiningCamp();
                     camp.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    this.terrainFactory.getMapGenerator().addGameResource(placement, camp);
                     spawnEntity(camp);
                 }
             }

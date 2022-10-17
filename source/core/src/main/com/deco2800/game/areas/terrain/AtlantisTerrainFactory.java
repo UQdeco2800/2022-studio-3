@@ -80,6 +80,10 @@ public class AtlantisTerrainFactory {
         textures.put("Sea2", new TextureRegion(resourceService.getAsset("images/sea_2.png", Texture.class)));
         textures.put("Sea3", new TextureRegion(resourceService.getAsset("images/sea_3.png", Texture.class)));
         textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/sea_4.png", Texture.class)));
+        textures.put("Flash1", new TextureRegion(resourceService.getAsset("images/flash_1.png", Texture.class)));
+        textures.put("Flash2", new TextureRegion(resourceService.getAsset("images/flash_2.png", Texture.class)));
+        textures.put("Flash3", new TextureRegion(resourceService.getAsset("images/flash_3.png", Texture.class)));
+        textures.put("Flash4", new TextureRegion(resourceService.getAsset("images/flash_4.png", Texture.class)));
     }
 
     private void setMapGenerator (MapGenerator newMapGenerator) {
@@ -146,10 +150,20 @@ public class AtlantisTerrainFactory {
         return new GridPoint2(newX, newY);
     }
 
-    public MapGenerator floodTiles() {
-        mapGenerator.floodTile();
+    /**
+     * Updates the structure and rendering to show flooding.
+     */
+    public void floodTiles() {
+        mapGenerator.flood();
         this.createAtlantisTerrainComponent();
-        return mapGenerator;
+    }
+
+    /**
+     * Updates the structure and rendering to show flashing tiles before flooding.
+     */
+    public void flashTiles() {
+        mapGenerator.flashTiles();
+        this.createAtlantisTerrainComponent();
     }
 
     /**
@@ -197,6 +211,14 @@ public class AtlantisTerrainFactory {
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
         AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1f/2f, oceanFrames);
 
+        //Create an AnimatedTiledMapTile for flashing tiles to be flooded
+        Array<StaticTiledMapTile> flashTiles = new Array<>();
+        flashTiles.add(new StaticTiledMapTile(textures.get("Flash1")));
+        flashTiles.add(new StaticTiledMapTile(textures.get("Flash2")));
+        flashTiles.add(new StaticTiledMapTile(textures.get("Flash3")));
+        flashTiles.add(new StaticTiledMapTile(textures.get("Flash4")));
+        AnimatedTiledMapTile animatedFlashTile = new AnimatedTiledMapTile(1f/5f, flashTiles);
+
         //Set id for each tile - used for visualising minimap
         cityTile.setId(0);
         sandTile.setId(1);
@@ -213,6 +235,8 @@ public class AtlantisTerrainFactory {
                 if (map[y][x] == mapGenerator.getOceanChar()) {
                     //Set ocean tiles to animated ocean textures
                     cell.setTile(animatedOceanTile);
+                } else if (map[y][x] == mapGenerator.getFlashChar()) {
+                    cell.setTile(animatedFlashTile);
                 } else if (map[y][x] == mapGenerator.getIslandChar()) {
                     //Set island tiles to sand textures
                     //Set to correct new texture if applicable
