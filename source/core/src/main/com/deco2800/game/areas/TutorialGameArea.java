@@ -143,6 +143,12 @@ public class TutorialGameArea extends GameArea {
 
 
     public static final String[] sounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
+
+
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    private String[] tutorialSprites = {
+            "images/barracks.atlas"
+    };
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -167,7 +173,13 @@ public class TutorialGameArea extends GameArea {
 
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadTextures(buildingPlacementTextures);
+
         ServiceLocator.getResourceService().loadAll();
+
+
+
+        resourceService.loadTextureAtlases(this.tutorialSprites);
+        resourceService.loadAll();
     }
 
     /**
