@@ -25,6 +25,7 @@ public class ConstructionInputComponent extends InputComponent {
     private GridPoint2 placePoint = new GridPoint2(0, 0);
     private BuildingType type;
     private boolean clear = false;
+    private boolean finished = false;
 
     public ConstructionInputComponent(Entity highlight, BuildingType type) {
         super(7);
@@ -85,10 +86,13 @@ public class ConstructionInputComponent extends InputComponent {
                     placePoint, true, true);
             placementHightlight.setScale(0, 0);
             ServiceLocator.getInputService().unregister(this);
+            finished = true;
             return true;
         } else if (button == Input.Buttons.RIGHT) {
             placementHightlight.setScale(0, 0);
+            finished = true;
             ServiceLocator.getInputService().unregister(this);
+            finished = true;
             return true;
         }
         return false;
@@ -145,6 +149,15 @@ public class ConstructionInputComponent extends InputComponent {
         }
 
         this.clear = isClear;
+    }
+
+    /**
+     * Flag for the calling ConstructionCommand that this building placement
+     * is done.
+     * @return whether this building process has been cancelled or completed
+     */
+    public boolean isFinished() {
+        return finished;
     }
 
 }
