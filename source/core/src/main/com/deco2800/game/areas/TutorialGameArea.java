@@ -1,5 +1,6 @@
 package com.deco2800.game.areas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.GridPoint2;
@@ -8,13 +9,17 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.Building;
-import com.deco2800.game.components.maingame.DialogueBoxActions;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
-import com.deco2800.game.components.maingame.InfoBoxDisplay;
+import com.deco2800.game.components.friendlyunits.MouseInputComponent;
+import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.components.tutorial.TutorialActions;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.UnitType;
 import com.deco2800.game.entities.factories.BuildingFactory;
+import com.deco2800.game.entities.factories.EnemyFactory;
+import com.deco2800.game.entities.factories.UnitFactory;
+import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.services.ResourceService;
@@ -30,6 +35,15 @@ public class TutorialGameArea extends GameArea {
     public DialogueBoxDisplay dialogueBoxDisplay;
 
     private final AtlantisTerrainFactory terrainFactory;
+    private Entity titan;
+
+    private final String[] forestTextures = AtlantisGameArea.forestTextures;
+
+    public static final String[] uiTextures = AtlantisGameArea.uiTextures;
+    public static final String[] forestTextureAtlases = AtlantisGameArea.forestTextureAtlases;
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    public static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
+
 
     /** textures needed to load */
     private String[] tutorialTextures = {
@@ -48,9 +62,15 @@ public class TutorialGameArea extends GameArea {
             "images/sand_shell.png",
             "images/box_boy_leaf.png",
             "images/box_boy.png",
+            "images/Attack_Fred.png",
+            "images/Scared_Fred.png",
             "images/Base_Highlight.png",
+            "images/Fredmogus.png",
             "images/box_boy_highlight.png",
+            "images/Teach_Fred.png",
+            "images/Good_Luck_Fred.png",
             "images/tree.png",
+            "images/titanshrine-default.png",
             "images/ghost_king.png",
             "images/ghost_1.png",
             "images/grass_1.png",
@@ -67,6 +87,7 @@ public class TutorialGameArea extends GameArea {
             "images/iso_grass_3.png",
             "images/Information_Box_Deepsea.png",
             "images/TransBox.png",
+
             "images/white.png",
             "images/stone.png",
             "images/city_tile.png",
@@ -97,13 +118,30 @@ public class TutorialGameArea extends GameArea {
             "images/hoplite.png",
             "images/spearman.png",
             "images/simpleman.png",
-            "test/files/cityMinimap.png"
+            "test/files/cityMinimap.png",
+            "images/spellbox-zeus.png",
+            "images/spell-btn-unclickable.png",
+            "images/spell-btn.png",
+            "images/SpellIndicator/spelliso.png",
     };
+
+    private String[] tutorialTexturesAtlases = {"images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
+            "images/forager.atlas", "images/miner.atlas", "images/builder.atlas",
+            "images/duration-bar.atlas", "images/archer.atlas", "images/swordsman.atlas",
+            "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
+            "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
+            "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
+            "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
+            "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"};
+    private EventHandler gameAreaEventHandle;
+
+
 
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
         this.dialogueBoxDisplay = display;
+        gameAreaEventHandle = new EventHandler();
     }
 
 
@@ -113,8 +151,13 @@ public class TutorialGameArea extends GameArea {
     private void loadAssets() {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextureAtlases(this.tutorialTexturesAtlases);
         resourceService.loadTextures(this.tutorialTextures);
-        resourceService.loadAll();
+        resourceService.loadTextures(forestTextures);
+        resourceService.loadTextures(uiTextures);
+        resourceService.loadTextureAtlases(forestTextureAtlases);
+        resourceService.loadTextures(buildingPlacementTextures);
+        ServiceLocator.getResourceService().loadAll();
     }
 
     /**
@@ -124,6 +167,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
+        resourceService.unloadAssets(this.forestTextures);
     }
 
     /**
@@ -141,6 +185,11 @@ public class TutorialGameArea extends GameArea {
         Entity infoUi = new Entity();
         infoUi.addComponent(new InfoBoxDisplay());
 
+        Entity spellsUi = new Entity();
+        spellsUi.addComponent(new SpellUI());
+        spellsUi.addComponent(new MouseInputComponent());
+        spawnEntity(spellsUi);
+
         spawnEntity(dialogueBox);
         spawnEntity(ui);
         spawnEntity(infoUi);
@@ -154,7 +203,7 @@ public class TutorialGameArea extends GameArea {
         Map<String, Coordinate> cityDetails = mg.getCityDetails();
         Coordinate centre = cityDetails.get("Centre");
         GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-        this.terrain = terrainFactory.createAtlantisTerrainComponent();
+
         MapComponent mapComponent = new MapComponent();
         mapComponent.display();
         mapComponent.setDisplayColour(Color.BROWN);
@@ -183,14 +232,96 @@ public class TutorialGameArea extends GameArea {
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
     }
 
+
+    public void spawnExplosion(Entity entity) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        //Get details of where the city is located
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+
+
+        //Spawn player at centre of city
+        GridPoint2 spawn = new GridPoint2(Gdx.input.getX(), Gdx.input.getY());
+
+        MapComponent mapComponent = new MapComponent();
+//        mapComponent.display();
+//        mapComponent.setDisplayColour(Color.PURPLE);
+//        entity.addComponent(mapComponent);
+//        entity.setEnabled(false);
+        spawnEntityAt(entity, spawn, true, true);
+    }
+
+    private void spawnUnit(UnitType type, GridPoint2 location) {
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.GRAY);
+        Entity unit = UnitFactory.createUnit(type).addComponent(mc);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate cityCentre = mg.getCityDetails().get("Centre");
+        spawnEntityAt(unit, new GridPoint2(cityCentre.getX(),
+                        mg.getHeight() - cityCentre.getY()).add(location.x, location.y)
+                , true, false);
+    }
+
+    private void spawnBlueJokers(Vector2 spawnPoint) {
+        MapComponent mc = new MapComponent();
+        mc.display();
+        mc.setDisplayColour(Color.BLUE);
+        Entity blueJoker = EnemyFactory.createBlueJoker(terrainFactory).addComponent(mc);
+        spawnEntityAt(blueJoker, spawnPoint, true, true);
+    }
+
+    private void spawnTitanShrine() {
+        int range = 20;
+
+        // To get spawn point
+        GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInIsland(terrainFactory, range);
+
+        MapComponent mc1 = new MapComponent();
+        mc1.display();
+        mc1.setDisplayColour(Color.DARK_GRAY);
+        titan = BuildingFactory.createTitanShrine();
+        spawnEntityAt((titan.addComponent(mc1))
+                        .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
+                spawnPoint, false, false);
+    }
+
+    private void spawnTitan(Vector2 spawnPoint) {
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        MapComponent mc = new MapComponent();
+        Map<String, Coordinate> cityDetails = mg.getCityDetails();
+        //Store centre of city
+        Coordinate centre = cityDetails.get("Centre");
+        mc.display();
+        mc.setDisplayColour(Color.RED);
+        Entity titan = EnemyFactory.createTitan(terrainFactory).addComponent(mc);
+        titan.setEntityName("titan");
+        spawnEntityAt(titan, spawnPoint, true, true);
+    }
+
+
     @Override
     public void create() {
+        gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
 
         this.loadAssets();
         this.displayUI();
+        this.terrain = terrainFactory.createAtlantisTerrainComponent();
+        spawnExplosion((new Explosion()).getEntity());
         spawnBuildings();
         spawnTerrain();
+        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
+        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
+        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
+        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
+        spawnBlueJokers(new Vector2(50f, 5f));
+
+        spawnTitan(new Vector2(60f, 4f));
     }
+
+
+
 
     @Override
     public void dispose() {
