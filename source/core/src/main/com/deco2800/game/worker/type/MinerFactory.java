@@ -1,5 +1,9 @@
 package com.deco2800.game.worker.type;
 
+
+import com.deco2800.game.components.friendlyunits.AvatarIconComponent;
+import com.deco2800.game.worker.WorkerConfig;
+
 import com.deco2800.game.worker.WorkerFactory;
 import com.deco2800.game.worker.components.CollectStatsComponent;
 import com.deco2800.game.worker.components.EnemyDetectionComponent;
@@ -36,11 +40,11 @@ public class MinerFactory {
             .addComponent(new ResourceCollectComponent(PhysicsLayer.RESOURCE_NODE))
             .addComponent(animator)
             .addComponent(new MinerAnimationController())
+            .addComponent(new AvatarIconComponent("images/miner_avatar.png"))
             .addComponent(new EnemyDetectionComponent());
         newMiner.getComponent(AnimationRenderComponent.class).scaleEntity();
         newMiner.scaleHeight(2.0f);
         newMiner.scaleWidth(2.0f);
         return newMiner;
     }
-    
 }

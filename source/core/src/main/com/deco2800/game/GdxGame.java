@@ -75,6 +75,8 @@ public class GdxGame extends Game {
         return new SettingsScreen(this);
       case TUTORIAL:
         return new TutorialScreen(this);
+      case LOADING:
+        return new LoadingScreen(this);
 
       default:
         return null;
@@ -82,7 +84,7 @@ public class GdxGame extends Game {
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_STORY, TUTORIAL;
+    MAIN_MENU, MAIN_GAME, SETTINGS, GAME_STORY, TUTORIAL, LOADING;
   }
 
   /**

@@ -13,14 +13,44 @@ import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.random.PseudoRandom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.areas.MapGenerator.Coordinate;
+import com.deco2800.game.areas.MapGenerator.MapGenerator;
+import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
+import com.deco2800.game.components.CameraComponent;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.utils.random.PseudoRandom;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /** Factory for creating game terrain. */
 public class AtlantisTerrainFactory {
@@ -48,7 +78,7 @@ public class AtlantisTerrainFactory {
     /**
      * Instantiate a new MapGenerator for this terrain factory
      */
-    private static final MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
+    private static MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeight, cityWidth, cityHeight, islandSize);
 
     /**
      * Create a terrain factory with Isometric orientation
@@ -60,7 +90,6 @@ public class AtlantisTerrainFactory {
         this.cameraComponent = cameraComponent;
         this.textures = new HashMap<>();
     }
-
 
     /**
      * Create all textures needed to generate the AtlantisMap
@@ -76,6 +105,10 @@ public class AtlantisTerrainFactory {
         textures.put("Sea4", new TextureRegion(resourceService.getAsset("images/sea_4.png", Texture.class)));
     }
 
+    private void setMapGenerator (MapGenerator newMapGenerator) {
+        mapGenerator = newMapGenerator;
+    }
+
     public TerrainComponent createAtlantisTerrainComponent() {
         createTextures();
         //Take a sample texture to determine size
@@ -89,6 +122,31 @@ public class AtlantisTerrainFactory {
         TiledMapRenderer renderer = createRenderer(tiledMap, mapTileScale / tilePixelSize.x);
         //Return the component
         return new TerrainComponent(camera,  tiledMap, renderer, orientation, mapTileScale);
+    }
+
+    public GridPoint2 randomlySelectTileToMoveTo() {
+        int height = this.mapGenerator.getHeight();
+        ArrayList<int[]> legalMoves = this.mapGenerator.getLegalCoordinates();
+        int size = legalMoves.size();
+        int randomSeed = PseudoRandom.seedRandomInt(0, size);
+        int[] coords = legalMoves.get(randomSeed);
+        return new GridPoint2(coords[1], height - coords[0]);
+    }
+
+    public MapGenerator floodTiles() {
+        mapGenerator.floodTile();
+        this.createAtlantisTerrainComponent();
+
+        //TODO - re-Draw to the screen - (Jordan/Dito)
+
+//        TextureRegion grass = textures.get("Grass");
+//        GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
+//        TiledMap tiledMap = this.createMapTiles(tilePixelSize);
+
+//        this.fillTiles(tiledMap);
+
+        //Return new mapGenerator
+        return mapGenerator;
     }
 
     /**
@@ -132,7 +190,7 @@ public class AtlantisTerrainFactory {
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
         oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
-        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1f/2f, oceanFrames);
 
         //Set id for each tile - used for visualising minimap
         cityTile.setId(0);
@@ -158,6 +216,33 @@ public class AtlantisTerrainFactory {
                     ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
                 }
                 //Set cell to layer at a position (i.e. Tile) - y mapped inversely
+                layer.setCell(x, mapHeight - 1 - y, cell);
+            }
+        }
+    }
+
+    /**
+     * Change the outline of the map island into sea
+     * @param layer The layer before the change from island to sea
+     */
+    private void floodOutlineMap(TiledMapTileLayer layer) {
+        //Create an AnimatedTiledMapTile with frames corresponding to each ocean texture
+        Array<StaticTiledMapTile> oceanFrames = new Array<>();
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea1")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea2")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea3")));
+        oceanFrames.add(new StaticTiledMapTile(textures.get("Sea4")));
+        AnimatedTiledMapTile animatedOceanTile = new AnimatedTiledMapTile(1/3f, oceanFrames);
+
+        char[][] map = mapGenerator.getOutlineMap();
+        for (int x = 0; x < mapWidth; x++) {
+            for (int y = 0; y < mapHeight; y++) {
+                Cell cell = new Cell();
+                if (map[y][x] == mapGenerator.getIslandChar()) {
+                    //ServiceLocator.getMapService().removeIslandTile(x, mapHeight - 1 - y);
+                    cell.setTile(animatedOceanTile);
+                    ServiceLocator.getMapService().addIslandTile(x, mapHeight - 1 - y);
+                }
                 layer.setCell(x, mapHeight - 1 - y, cell);
             }
         }
