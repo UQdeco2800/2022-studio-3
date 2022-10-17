@@ -11,9 +11,9 @@ public class FloodTimerDisplay extends UIComponent {
     private final FloodingGenerator floodingGenerator;
     private final FloodTimer floodTimer;
 
-    public FloodTimerDisplay(FloodingGenerator floodingGenerator, FloodTimer floodTimer) {
+    public FloodTimerDisplay(FloodingGenerator floodingGenerator) {
         this.floodingGenerator = floodingGenerator;
-        this.floodTimer = floodTimer;
+        this.floodTimer = new FloodTimer();
     }
 
     /**
@@ -30,17 +30,17 @@ public class FloodTimerDisplay extends UIComponent {
         Boolean hasUpdated = floodingGenerator.updateFlags();
         if (hasUpdated) {
             if (floodingGenerator.status100p) {
-//                floodTimer.requestNewImage(100);
+                floodTimer.requestNewImage(100);
             } else if (floodingGenerator.status80p) {
-//                floodTimer.requestNewImage(80);
+                floodTimer.requestNewImage(80);
             } else if (floodingGenerator.status60p) {
-//                floodTimer.requestNewImage(60);
+                floodTimer.requestNewImage(60);
             } else if (floodingGenerator.status40p) {
-//                floodTimer.requestNewImage(40);
+                floodTimer.requestNewImage(40);
             } else if (floodingGenerator.status20p) {
-//                floodTimer.requestNewImage(20);
+                floodTimer.requestNewImage(20);
             } else {
-//                floodTimer.requestNewImage(0);
+                floodTimer.requestNewImage(0);
             }
         }
     }
@@ -48,7 +48,7 @@ public class FloodTimerDisplay extends UIComponent {
     @Override
     public void dispose() {
         super.dispose();
-        //this.floodTimer.dispose();
+        this.floodTimer.remove();
     }
 
     /**

@@ -10,6 +10,7 @@ import com.deco2800.game.components.LoadingBar;
 import com.deco2800.game.components.buildingmenu.BuildingMenuButton;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
+import com.deco2800.game.components.floodtimer.FloodTimerDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
