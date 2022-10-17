@@ -208,9 +208,7 @@ public class BuildingFactory {
                 .addComponent(new ShopUIFunctionalityComponent())
                 .addComponent(new BuildingUIDataComponent())
                 .addComponent(new BuildingHealthManager())
-                .addComponent(new BuildingAnimationController())
-                .addComponent(new AnimationTestingComponent());
-
+                .addComponent(new BuildingAnimationController());
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
 
         barracks.getComponent(SelectionCollider.class).setPoints(points);
