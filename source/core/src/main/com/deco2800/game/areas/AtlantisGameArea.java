@@ -192,7 +192,8 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_highlight_red.png",
             "images/barracks_highlight_green.png",
             "images/wooden_wall_green.png",
-            "images/wooden_wall_red.png"
+            "images/wooden_wall_red.png",
+            "images/wooden_wall.png"
     };
     public static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
