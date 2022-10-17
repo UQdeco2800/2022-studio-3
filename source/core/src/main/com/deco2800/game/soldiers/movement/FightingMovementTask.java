@@ -122,7 +122,7 @@ public class FightingMovementTask extends DefaultTask {
                     lastPos = owner.getPosition();
                 }
             } catch (NullPointerException e) {
-                System.out.println("No Path :(");
+                logger.debug("No path :(");
             }
         } else {
             checkIfStuck();
