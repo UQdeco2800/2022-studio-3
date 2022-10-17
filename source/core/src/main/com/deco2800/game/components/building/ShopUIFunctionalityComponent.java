@@ -97,7 +97,7 @@ public class ShopUIFunctionalityComponent extends Component {
         for (Entity e : entities) {
             if (ShopUIFunctionalityComponent.isResourceBase(e)) {
                 BaseComponent bc = e.getComponent(BaseComponent.class);
-                if (bc.getWood() + wood > 0 && bc.getMetal() + metal > 0 && bc.getStone() + stone > 0) {
+                if (bc.getWood() + wood >= 0 && bc.getMetal() + metal >= 0 && bc.getStone() + stone >= 0) {
                     bc.updateBaseStats(wood, metal, stone);
                     bc.updateDisplay();
                     return true;

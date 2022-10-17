@@ -441,7 +441,7 @@ public class AtlantisGameArea extends GameArea {
                 .setMapDetails(terrain.getTileSize(), mg.getWidth(), mg.getHeight());
 
         //Spawn boundaries where each ocean tile is
-        spawnIslandBounds();
+//        spawnIslandBounds();
 
         //Spawn boundaries around the map itself
         spawnMapBounds();
