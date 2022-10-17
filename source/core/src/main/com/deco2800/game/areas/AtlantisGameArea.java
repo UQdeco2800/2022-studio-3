@@ -44,6 +44,7 @@ import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -93,10 +94,6 @@ public class AtlantisGameArea extends GameArea {
             "images/sea_2.png",
             "images/sea_3.png",
             "images/sea_4.png",
-            "images/Waves tile/wave_1.png",
-            "images/Waves tile/wave_2.png",
-            "images/Waves tile/wave_3.png",
-            "images/Waves tile/wave_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -112,6 +109,7 @@ public class AtlantisGameArea extends GameArea {
             //Features
             "images/waterFeatureDefault.png",
             "images/lampDefault.png",
+            "images/bush.png",
             // TownHall
             "images/base.png",
             "images/level 1 town hall.png",
@@ -141,12 +139,6 @@ public class AtlantisGameArea extends GameArea {
             "images/connector_ew.png",
             "images/wall_pillar.png",
             "images/SpellIndicator/spelliso.png",
-            "images/wooden_wall.png",
-            "images/wooden_wall_2.png",
-            "images/wooden_wall_3.png",
-            "images/stone_wall.png",
-            "images/stone_wall_2_.png",
-            "images/stone_wall_3.png",
             "images/Base_Highlight",
             "images/level_1_town_hall_Highlight.png",
             "images/stone.png",
@@ -227,12 +219,15 @@ public class AtlantisGameArea extends GameArea {
     private FloodingGenerator floodingGenerator;
     private EventHandler gameAreaEventHandle;
     private Entity terrainMapAndMiniMap;
+    private BuildingGenerator buildingGenerator;
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
         gameAreaEventHandle = new EventHandler();
         this.floodingGenerator = new FloodingGenerator(this.terrainFactory, this);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        this.buildingGenerator = new BuildingGenerator(mg);
     }
 
     /** Create the game area, including terrain, static entities (resources), dynamic entities (player) */
@@ -251,8 +246,8 @@ public class AtlantisGameArea extends GameArea {
 //        player = spawnPlayer();
         centreCameraOnCity();
 
-//        spawnForager();
-//        spawnForager();
+        spawnForager();
+        spawnForager();
 
 
 //        spawnMiner();
@@ -309,15 +304,15 @@ public class AtlantisGameArea extends GameArea {
         ServiceLocator.registerGameArea(this);
         startFlooding();
 
-//        spawnSoldierMenu();
+    //    spawnSoldierMenu();
 //        spawnBuildingMenu();
     }
 
-    private void spawnSoldierMenu() {
-        Entity shopBox = new Entity();
-        shopBox.addComponent(new SoldierMenuDisplay());
-        spawnEntity(shopBox);
-    }
+    // private void spawnSoldierMenu() {
+    //     Entity shopBox = new Entity();
+    //     shopBox.addComponent(new SoldierMenuDisplay());
+    //     spawnEntity(shopBox);
+    // }
 
     private void spawnBuildingMenu() {
         Entity buildingBox = new Entity();
@@ -582,10 +577,10 @@ public class AtlantisGameArea extends GameArea {
      */
     private void spawnCity() {
         MapGenerator mg = terrainFactory.getMapGenerator();
-        BuildingGenerator bg = new BuildingGenerator(mg);
-        spawnBuildings(bg,mg.getHeight());
-        spawnPaths(bg, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
-        spawnFeatures(bg);
+        // BuildingGenerator bg = new BuildingGenerator(mg);
+        spawnBuildings(this.buildingGenerator,mg.getHeight());
+        spawnPaths(this.buildingGenerator, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
+        spawnFeatures(this.buildingGenerator);
     }
 
     /**
@@ -636,7 +631,7 @@ public class AtlantisGameArea extends GameArea {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createBlacksmith();
                 } else if (building.getName().equals("Barracks")) {
-                    buildingEntity = BuildingFactory.createBarracks().addComponent(new UnitSpawningComponent(gameAreaEventHandle));
+                    buildingEntity = BuildingFactory.createBarracks(); //.addComponent(new UnitSpawningComponent(gameAreaEventHandle));
                 } else if (building.getName().equals("Farm")) {
                     // System.out.print("\n\nTH position: " + spawn + "\n\n");
                     buildingEntity = BuildingFactory.createFarm();
@@ -655,7 +650,7 @@ public class AtlantisGameArea extends GameArea {
      * Randomly spawns a number of city features around the map
      */
     private void spawnFeatures(BuildingGenerator bg) {
-        int numFeatures = 2; //Total number of features in game
+        int numFeatures = 3; //Total number of features in game
         int currentFeature = 0; //Int corresponding to the next feature to be placed
         int featureOffset = 2; //Space to leave between building and feature
         MapGenerator mg = terrainFactory.getMapGenerator();
@@ -685,6 +680,10 @@ public class AtlantisGameArea extends GameArea {
                     case 0:
                         //Place a water feature
                         feature = CityFeatureFactory.createWaterFeature();
+                        break;
+                    case 1:
+                        //Place a bush
+                        feature = CityFeatureFactory.createCityBush();
                         break;
                     default:
                         //Place a lamp
@@ -1015,6 +1014,13 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
+     * @return the Atlantis Game Area event handler
+     */
+    public EventHandler getGameAreaEventHandler() {
+        return this.gameAreaEventHandle;
+    }
+
+    /**
      * Spawns forager at the centre of the Atlantean city
      *
      * @return entity corresponding to the spawned forager
@@ -1085,21 +1091,44 @@ public class AtlantisGameArea extends GameArea {
         spawnEntityAt(unit, location, true, false);
     }
 
-    private void spawnArcher(Vector2 location) {
-        spawnUnit(UnitType.ARCHER, location);
+    /**
+     * Overloaded method used for spawning units from the Shop UI
+     */
+    private void spawnUnit(UnitType type) {
+        Entity unit = UnitFactory.createUnit(type);
+        MapGenerator mg = terrainFactory.getMapGenerator();
+        Coordinate cityCentre = mg.getCityDetails().get("Centre");
+        GridPoint2 gp = new GridPoint2(cityCentre.getX(), mg.getHeight() - cityCentre.getY());
+        spawnEntityAt(unit, MapService.tileToWorldPosition(gp), true, false);
     }
 
-    private void spawnSwordsman(Vector2 location) {
-        spawnUnit(UnitType.SWORDSMAN, location);
+    private void spawnArcher() {
+        spawnUnit(UnitType.ARCHER);
     }
 
-    private void spawnSpearman(Vector2 location) {
-        spawnUnit(UnitType.SPEARMAN, location);
+    // private void spawnArcher(Vector2 location) {
+    //     spawnUnit(UnitType.ARCHER, location);
+    // }
+
+    // private void spawnSwordsman(Vector2 location) {
+    //     spawnUnit(UnitType.SWORDSMAN, location);
+    // }
+
+    private void spawnSpearman() {
+        spawnUnit(UnitType.SPEARMAN);
     }
 
-    private void spawnHoplite(Vector2 location) {
-        spawnUnit(UnitType.HOPLITE, location);
+    private void spawnHoplite() {
+        spawnUnit(UnitType.HOPLITE);
     }
+
+    // private void spawnSpearman(Vector2 location) {
+    //     spawnUnit(UnitType.SPEARMAN, location);
+    // }
+
+    // private void spawnHoplite(Vector2 location) {
+    //     spawnUnit(UnitType.HOPLITE, location);
+    // }
 
     /**
      * Randomly spawns a worker base on the map
@@ -1122,22 +1151,19 @@ public class AtlantisGameArea extends GameArea {
         //Place each resource in the list
         for (ResourceSpecification rs : resources) {
             //Add a Minimap tracking component
-            MapComponent mapComponent = new MapComponent();
-            mapComponent.display();
             for (Coordinate placement : rs.getPlacements()) {
                 GridPoint2 spawn = new GridPoint2(placement.getX(), mg.getHeight() - 1 - placement.getY());
                 if (rs.getName().equals("Tree")) {
                     //Spawn a Tree entity
-                    // Entity tree = TreeFactory.createTree();
-                    // tree.getComponent(TextureScaler.class).setPreciseScale(1, false);
-                    // tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
-                    // spawnEntity(tree);
-                    spawnEntityAt(TreeFactory.createTree(), spawn, false, false);
+                    Entity tree = TreeFactory.createTree();
+                    tree.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    spawnEntity(tree);
                 } else if (rs.getName().equals("Stone")) {
                     //Spawn a Stone entity
-                    mapComponent.setDisplayColour(Color.DARK_GRAY);
                     //spawnEntityAt(StoneFactory.createStone().addComponent(mapComponent), spawn, false, false);
-                    spawnEntityAt(MiningCampFactory.createMiningCamp().addComponent(mapComponent), spawn, false, false);
+                    Entity camp = MiningCampFactory.createMiningCamp();
+                    camp.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
+                    spawnEntity(camp);
                 }
             }
         }
@@ -1219,6 +1245,7 @@ public class AtlantisGameArea extends GameArea {
         MapGenerator mg = terrainFactory.getMapGenerator();
         terrain = terrainFactory.createAtlantisTerrainComponent();
         ServiceLocator.getMapService().registerMapDetails(mg.getHeight(), mg.getWidth(), terrain.getTileSize());
+        spawnPaths(this.buildingGenerator, mg.getHeight(), mg.getCityDetails().get("NW").getY(), mg.getCityDetails().get("SW").getX());
         MinimapComponent minimapComponent = new MinimapComponent(terrain.getMap(), (OrthographicCamera) terrainFactory.getCameraComponent().getCamera());
         // allow access to minimap via UI for dynamic resizing/positioning
         this.dialogueBoxDisplay.setMinimap(minimapComponent);

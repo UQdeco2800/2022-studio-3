@@ -13,6 +13,7 @@ import com.deco2800.game.worker.components.type.TreeComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -34,6 +35,9 @@ public class TreeFactory {
         animator.addAnimation("tree_idle", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("tree_destroyed", 1f, Animation.PlayMode.LOOP);
 
+        TextureAtlas ta = ServiceLocator.getResourceService()
+        .getAsset("images/tree_.atlas", TextureAtlas.class);
+        Texture t = ta.getTextures().first();
 
         MapComponent mc = new MapComponent();
         mc.display();
@@ -44,11 +48,13 @@ public class TreeFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.RESOURCE_NODE))
             .addComponent(new ResourceStatsComponent(stats.wood, stats.stone, stats.metal))
             .addComponent(new TreeComponent())
-            // .addComponent(new TextureScaler(new Vector2(0f, 128f), new Vector2(0f, 0f), new Vector2(128f, 0f)))
+            .addComponent(new TextureScaler(new Vector2(0f, 128f), new Vector2(0f, 0f), new Vector2(128f, 0f), t))
             .addComponent(mc)
             .addComponent(animator);
         tree.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
         tree.getComponent(AnimationRenderComponent.class).startAnimation("tree_idle");
+
+        tree.getComponent(TextureScaler.class).setPreciseScale(1, true);
 
         return tree;
     }
