@@ -1,6 +1,7 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
@@ -160,15 +162,16 @@ public class SpellUI extends UIComponent {
             // Find base and check the number of resources
             // 1 spell cast cost 30 metals, woods, and stones
             BaseComponent baseComponent = null;
-            for(int i=0; i<ServiceLocator.getEntityService().getEntities().size; i++){
-                if(ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class) != null){
+            for (int i = 0; i < ServiceLocator.getEntityService().getEntities().size; i++) {
+                if (ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class) != null) {
                     baseComponent = ServiceLocator.getEntityService().getEntities().get(i).getComponent(BaseComponent.class);
                 }
             }
-            if(baseComponent.getMetal() < 30 || baseComponent.getStone() < 30 || baseComponent.getWood() < 30){
+
+            if (baseComponent.getMetal() < 30 || baseComponent.getStone() < 30 || baseComponent.getWood() < 30) {
                 // Made new UI that says the resource is not enough to cast the spell
                 pseudoCast = false;
-            }else{
+            } else {
                 logger.info("Releasing Spell");
                 spellBtn.setVisible(false);
                 this.timer = new Timer(15000, 15001);
@@ -178,20 +181,30 @@ public class SpellUI extends UIComponent {
                         break;
                     }
                 }
-    //            spell.setEnabled(true);
 
-                spell.setPosition(screenToWorldPosition(screenX - 613, screenY + 345));
+                Sound sound = ServiceLocator.getResourceService().getAsset("sounds/spell_sound.wav", Sound.class);
+
+                Vector2 worldPosition = screenToWorldPosition(screenX, screenY);
+                Vector2 spellWorldPosition = new Vector2(worldPosition.x - 10, worldPosition.y - 6);
+
+                spell.setPosition(spellWorldPosition);
 
                 spell.getComponent(AnimationRenderComponent.class).startAnimation("spell_effect");
+                sound.play();
 
                 for (Entity entity : enemyEntities) {
-                    entity.dispose();
+                    Vector2 enemyPosition = entity.getPosition();
+                    if (distanceBetweenWorldPositions(enemyPosition, worldPosition) < 5) {
+                        CombatStatsComponent stats = entity.getComponent(CombatStatsComponent.class);
+                        stats.decreaseHealth((int) (stats.getMaxHealth() * 0.9));
+                    }
                 }
                 pseudoCast = false;
 
                 // Update BaseComponent resources
                 baseComponent.updateBaseStats(-30, -30, -30);
                 baseComponent.updateDisplay();
+
             }
         }
     }
@@ -199,5 +212,11 @@ public class SpellUI extends UIComponent {
     public Vector2 screenToWorldPosition(int screenX, int screenY) {
         Vector3 worldPos = ServiceLocator.getEntityService().getCamera().unproject(new Vector3(screenX, screenY, 0));
         return new Vector2(worldPos.x, worldPos.y);
+    }
+
+    public float distanceBetweenWorldPositions(Vector2 object, Vector2 point) {
+        float diffX = Math.abs(object.x - point.x);
+        float diffY = Math.abs(object.y - point.y);
+        return (float)Math.sqrt(diffX * diffX + diffY * diffY);
     }
 }

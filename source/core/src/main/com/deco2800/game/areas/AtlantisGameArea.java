@@ -20,6 +20,7 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.BuildingActions;
@@ -27,10 +28,13 @@ import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
+import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
+//import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.maingame.SpellUI;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
@@ -199,7 +203,7 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] buildingMenuTextures = {
             "images/building-selection-menu.png"
     };
-    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
