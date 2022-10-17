@@ -13,14 +13,17 @@ public class EndGameActions extends Component {
     }
     @Override
     public void create() {
-        entity.getEvents().addListener("skip", this::onSkip);
+        entity.getEvents().addListener("playAgain", this::playAgain);
+        entity.getEvents().addListener("exit", this::onExit);
     }
 
-    private void onSkip() {
+    private void playAgain() {
         logger.info("Skipping to game");
         game.setScreen(GdxGame.ScreenType.LOADING);
     }
 
-
-
+    private void onExit() {
+        logger.info("Game closed");
+        game.exit();
+    }
 }

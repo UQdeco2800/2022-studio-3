@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.components.mainmenu.InsertButtons;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -25,12 +26,8 @@ import java.util.ArrayList;
 
 public class EndGameDisplay extends UIComponent {
     private static final Logger logger = LoggerFactory.getLogger(EndGameDisplay.class);
-
     private Table table;
     private ArrayList<String> storyImages;
-    private int start;
-    private int end;
-
     @Override
     public void create() {
         super.create();
@@ -41,34 +38,55 @@ public class EndGameDisplay extends UIComponent {
         table = new Table();
         table.setFillParent(true);
 
-        table.bottom().right();
-
         storyImages = new ArrayList<>();
         storyImages.add("images/EndGameScreen.png");
-        start = 0;
+        int start = 0;
 
         Texture storyLine = new Texture(Gdx.files.internal(storyImages.get(start)));
         TextureRegionDrawable storyBackground = new TextureRegionDrawable(storyLine);
         table.setBackground(storyBackground);
-
-        start += 1;
         stage.addActor(table);
 
-        TextButton skipBtn = new TextButton("Play Again", skin);
+//        TextButton playAgainBtn = new TextButton("Play Again", skin);
+//        TextButton exitBtn = new TextButton("Quit", skin);
 
-        skipBtn.addListener(
+        InsertButtons bothButtons = new InsertButtons();
+
+        String playAgainTexture = "images/playAgain.PNG";
+        String playAgainTextureHover = "images/playAgainHover.PNG";
+        ImageButton playAgainBtn;
+        playAgainBtn = bothButtons.draw(playAgainTexture, playAgainTextureHover);
+
+        String exitTexture = "images/onexit.PNG";
+        String exitTextureHover = "images/onexithover.PNG";
+        ImageButton exitBtn;
+        exitBtn = bothButtons.draw(exitTexture, exitTextureHover);
+
+        playAgainBtn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
 
-                        logger.debug("Skip button clicked");
-                        entity.getEvents().trigger("skip");
+                        logger.debug("Play Again button clicked");
+                        entity.getEvents().trigger("playAgain");
                     }
                 });
 
-        table.add(skipBtn).expand().pad(0).width(200);
-        skipBtn.setPosition(-50, 50);
+        exitBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                        logger.debug("Exit button clicked");
+                        entity.getEvents().trigger("exit");
+                    }
+                });
+
+        playAgainBtn.setPosition(400f, 290f);
+        exitBtn.setPosition(800f, 290f);
         stage.addActor(table);
+        stage.addActor(playAgainBtn);
+        stage.addActor(exitBtn);
 
     }
 

@@ -7,14 +7,10 @@ import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AtlantisGameArea;
 import com.deco2800.game.areas.MapGenerator.FloodingGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
-import com.deco2800.game.components.LoadingBar;
-import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
-import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.soldiermenu.SoldierMenuButton;
 import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -33,7 +29,6 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
 import com.deco2800.game.components.maingame.MainGameExitDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
@@ -100,6 +95,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    floodingGenerator.update();
     if (floodingGenerator.status100p) {
       game.setScreen(GdxGame.ScreenType.ENDGAME);
     }
