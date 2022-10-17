@@ -154,7 +154,7 @@ public class CombatStatsComponent extends Component {
       if (health > 0.5*maxHealth) {
         entity.getEvents().trigger("Damaged");
       } else if (health <= 0.5*maxHealth) {
-        entity.getEvents().trigger("collapse");
+        entity.getEvents().trigger("HalfDamaged");
       }
     }
   }

@@ -332,21 +332,15 @@ public class BuildingFactory {
 
         // Setting Isometric Collider
         // Points (in pixels) on the texture to set the collider to
-        float[] points = new float[] {
-                605f, 1111,      // Vertex 0        3
-                1100f, 870f,     // Vertex 1    4 /   \ 2
-                1100f, 800f,     // Vertex 2     |     |
-                605f, 581f,      // Vertex 3    5 \   / 1
-                100f, 800f,      // Vertex 4        0
-                100f, 874f       // Vertex 5
+        float[] points = new float[]{
+                246f, 466f,
+                470f, 351f,
+                250f, 238f,
+                28f, 352f
         };
-
-        Texture titanShrineTexture = ServiceLocator.getResourceService()
-                                                   .getAsset("images/titanshrine-default.png",
-                                                             Texture.class);
         // Defines a polygon shape on top of a texture region
         PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
-                .getAsset("images/barracks_level_1.0.png", Texture.class)), points, null);
+                .getAsset("images/titanshrine-default.png", Texture.class)), points, null);
         float[] cords = region.getTextureCoords();
         Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
         for (int i = 0; i < cords.length / 2; i++) {
@@ -416,6 +410,7 @@ public class BuildingFactory {
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
         ship
+                .addComponent(new TextureRenderComponent("images/ship_default.png"))
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new PhysicsMovementComponent())
@@ -423,6 +418,26 @@ public class BuildingFactory {
                 .addComponent(new BuildingHealthManager())
                 .addComponent(new DirectionalBuildingAnimationController())
                 .addComponent(animator);
+
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                90f, 340f,
+                400f, 530f,
+                475f, 460f,
+                160f, 280f
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/ship_default.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(SHIP_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        ship.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
@@ -500,10 +515,6 @@ public class BuildingFactory {
         ship.getComponent(AnimationRenderComponent.class).scaleEntity();
         ship.scaleWidth(SHIP_SCALE);
 
-        //TODO: Set isometric colliders
-
-
-
         return ship;
     }
 
@@ -577,6 +588,27 @@ public class BuildingFactory {
                 .addComponent(new AttackListener(target, gameArea))
                 .addComponent(new BuildingUIDataComponent())
                 .addComponent(animator);
+        // Setting Isometric Collider
+        // Points (in pixels) on the texture to set the collider to
+        float[] points = new float[]{
+                84f, 240f,
+                177f, 238f,
+                216f, 192f,
+                167f, 117f,
+                67f, 116f,
+                35f, 186f
+        };
+        // Defines a polygon shape on top of a texture region
+        PolygonRegion region = new PolygonRegion(new TextureRegion(ServiceLocator.getResourceService()
+                .getAsset("images/Trebuchet-lv1-north.png", Texture.class)), points, null);
+        float[] cords = region.getTextureCoords();
+        Vector2[] vertices = new Vector2[region.getTextureCoords().length / 2];
+        for (int i = 0; i < cords.length / 2; i++) {
+            vertices[i] = new Vector2(cords[2*i], cords[2*i+1]).scl(Trebuchet_SCALE);
+        }
+        PolygonShape boundingBox = new PolygonShape(); // Collider shape
+        boundingBox.set(vertices);
+        trebuchet.getComponent(ColliderComponent.class).setShape(boundingBox); // Setting Isometric Collider
 
         trebuchet.scaleHeight(Trebuchet_SCALE);
         return trebuchet;

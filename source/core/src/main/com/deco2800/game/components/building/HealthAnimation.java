@@ -17,7 +17,7 @@ public class HealthAnimation extends Component {
 
     public String getAnimation() {
         if (health == Health.NORMAL) {
-            return "default";
+            return "100-idle";
         } else if (health == Health.HALF) {
             return "50";
         } else if (health == Health.DEAD) {
@@ -32,5 +32,9 @@ public class HealthAnimation extends Component {
      */
     public void updateHealth(Health health){
         this.health = health;
+    }
+
+    public Health getHealth(){
+        return health;
     }
 }
