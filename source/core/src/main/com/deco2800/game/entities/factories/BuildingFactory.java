@@ -194,12 +194,15 @@ public class BuildingFactory {
         animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
         animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
 
+        Texture baseTexture = ServiceLocator.getResourceService().getAsset("images/barracks_level_2.0.png",
+                                Texture.class);
+
         barracks
                 .addComponent(new TextureImageComponent("images/barracks_level_2.0.png"))
                 .addComponent(animator)
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
-                .addComponent(new TextureScaler(leftPoint, maxX, maxY))
+                .addComponent(new TextureScaler(leftPoint, maxX, maxY, baseTexture))
                 .addComponent(mp)
                 .addComponent(new SelectionCollider())
                 .addComponent(new ShopUIFunctionalityComponent())
@@ -460,7 +463,7 @@ public class BuildingFactory {
     public static Entity createShip(AtlantisTerrainFactory terrainFactory) {
         final float SHIP_SCALE = 5f;
         Entity ship = createBaseBuilding();
-        ship.getComponent(HealthBarComponent.class).setEntityType(EntityType.ENEMY);
+        ship.addComponent(new HealthBarComponent(EntityType.ENEMY));
         ShipConfig config = configs.ship;
 
         AITaskComponent aiTaskComponent = new AITaskComponent().addTask(new EnemyMovement(terrainFactory));

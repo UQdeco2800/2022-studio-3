@@ -59,8 +59,8 @@ public class TextureScaler extends Component{
      * @return true if the entity was scaled, else false
      */
     public boolean setPreciseScale(float desiredScale, boolean scaleWidth) {
-        if (entity == null ||(entity.getComponent(TextureRenderComponent.class) == null &&
-            entity.getComponent(TextureImageComponent.class) == null)) {
+        if (entity == null ||
+                (entity.getComponent(TextureRenderComponent.class) == null && baseTexture == null)) {
             return false;
         }
 
@@ -71,12 +71,9 @@ public class TextureScaler extends Component{
                 leftPoint.x, leftPoint.y, maxX.x, maxX.y, maxY.x, maxY.y
         };
 
-        Texture buildingTexture;
-        try {
-            buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
-        } catch (NullPointerException e) {
-            buildingTexture = entity.getComponent(TextureImageComponent.class).getAsset();
-        }
+        //Set building Texture to baseTexture if it has been set, else use TRC
+        Texture buildingTexture = baseTexture == null
+                ? entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         //Determine the positions of both points of the image in world coordinates
@@ -171,12 +168,8 @@ public class TextureScaler extends Component{
         };
 
         //Find world position of the edge of the building relative to its spawn point
-        Texture buildingTexture;
-        try {
-            buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
-        } catch (NullPointerException e) {
-            buildingTexture = entity.getComponent(TextureImageComponent.class).getAsset();
-        }
+        Texture buildingTexture = baseTexture == null ?
+                entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         Vector2 offsetPointPosition = new Vector2(translatedCoords[0], translatedCoords[1])
@@ -236,12 +229,8 @@ public class TextureScaler extends Component{
         };
 
         //Find world position of the edge of the building relative to its spawn point
-        Texture buildingTexture;
-        try {
-            buildingTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
-        } catch (NullPointerException e) {
-            buildingTexture = entity.getComponent(TextureImageComponent.class).getAsset();
-        }
+        Texture buildingTexture = baseTexture == null ?
+                entity.getComponent(TextureRenderComponent.class).getTextureOG() : baseTexture;
         PolygonRegion region = new PolygonRegion(new TextureRegion(buildingTexture), points, null);
         float[] translatedCoords = region.getTextureCoords();
         Vector2 offsetPointPosition = new Vector2(translatedCoords[0], translatedCoords[1])
