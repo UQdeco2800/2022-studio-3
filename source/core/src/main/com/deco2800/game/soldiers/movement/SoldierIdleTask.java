@@ -5,7 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.movement.WorkerMovementTask;
 
 import org.slf4j.Logger;
@@ -88,15 +91,15 @@ public class SoldierIdleTask extends DefaultTask implements PriorityTask {
         movementTask.start();
 
         if (target.x > owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y){
-            owner.getEntity().getEvents().trigger("soldierBackwardRightMoveAnimate");
+            owner.getEntity().getEvents().trigger("soldierHighlightedBackwardRightMoveAnimate");
         } else if (target.x < owner.getEntity().getPosition().x && target.y > owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierBackwardLeftMoveAnimate");
+            owner.getEntity().getEvents().trigger("soldierHighlightedBackwardLeftMoveAnimate");
         } else if (target.x < owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierLeftMoveAnimate");
+            owner.getEntity().getEvents().trigger("soldierHighlightedLeftMoveAnimate");
         } else if (target.x > owner.getEntity().getPosition().x && target.y < owner.getEntity().getPosition().y) {
-            owner.getEntity().getEvents().trigger("soldierRightMoveAnimate");
+            owner.getEntity().getEvents().trigger("soldierHighlightedRightMoveAnimate");
         } else {
-            owner.getEntity().getEvents().trigger("soldierIdleAnimate");
+            owner.getEntity().getEvents().trigger("soldierHighlightedIdleAnimate");
         }
         idling = false;
     }
