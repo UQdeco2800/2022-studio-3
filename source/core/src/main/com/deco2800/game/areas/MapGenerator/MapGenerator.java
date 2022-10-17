@@ -1,12 +1,8 @@
 package com.deco2800.game.areas.MapGenerator;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Buildings.BuildingGenerator;
 import com.deco2800.game.areas.MapGenerator.pathBuilding.PathGenerator;
-import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.BuildingFactory;
-import com.deco2800.game.utils.random.PseudoRandom;
-import net.dermetfan.utils.Pair;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -78,11 +74,6 @@ public class MapGenerator {
     private final char cityChar = 'c';
 
     /**
-     * Char denoting a flashing tile
-     */
-    private final char flash = 'f';
-
-    /**
      * List of resourceSpecification objects that contain the placements of each resource
      */
     private List<ResourceSpecification> resourcePlacements;
@@ -99,11 +90,6 @@ public class MapGenerator {
     private Map<String, Coordinate> islandEdges;
 
     /**
-     * Map that holds resources of the game and their corresponding coordinates.
-     */
-    private Map<Coordinate, Entity> gameResources;
-
-    /**
      * Stores legal coordinates for players to move to.
      */
     public ArrayList<int[]> legalCoordinates;
@@ -115,12 +101,6 @@ public class MapGenerator {
      *
      */
     private int bottomLeftY;
-    /**
-<<<<<<< HEAD
-     * Container for the tiles to be flooded on the next iteration of flooding.
-     */
-    boolean[][] tilesToFlood;
-
     /**
      * For reuse to ensure
      */
@@ -149,7 +129,6 @@ public class MapGenerator {
         this.map = new char[mapHeight][mapWidth];
         this.cityDetails = new HashMap<>();
         this.islandEdges = new HashMap<>();
-        this.gameResources = new HashMap<>();
         //Generate map
         generateMap();
 
@@ -270,14 +249,6 @@ public class MapGenerator {
      */
     public char getCityChar() {
         return this.cityChar;
-    }
-
-    /**
-     * Returns the current char representing a flashing tile.
-     * @return flash char
-     */
-    public char getFlashChar() {
-        return this.flash;
     }
 
     /**
@@ -700,113 +671,36 @@ public class MapGenerator {
     }
 
     /**
-     * Finds the y-coordinate of the extremities of the island.
-     * @return Pair of extremities.
-     */
-    public Pair<Integer, Integer> getIslandExtremities() {
-        int furtherstLeft = mapWidth;
-        int furtherstRight = 0;
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (map[i][j] != this.getOceanChar()) {
-                    if (j < furtherstLeft) {
-                        furtherstLeft = j;
-                    }
-                    if (j > furtherstRight) {
-                        furtherstRight = j;
-                    }
-                }
-            }
-        }
-        return new Pair<Integer, Integer>(furtherstLeft, furtherstRight);
-    }
-
-    /**
-     * Randomly selects tiles to be flooded on next flooding event.
-     * @param tiles A boolean mapping of all tiles in the game.
-     * @param left The furthest left coordinate of the island.
-     * @param right The furthest right coordinate of the island.
-     * @return Mapping of all tiles with tiles to be flooded on the next flooding
-     *         event set to true.
-     */
-    public boolean[][] pickTilesToFlood(boolean[][] tiles, int left, int right) {
-        for (int i = 0; i < mapHeight; i++) {
-            int rand = PseudoRandom.seedRandomInt(0, 3);
-            if (rand != 0) {
-                if (this.map[i][left] != this.getCityChar()) {
-                    tiles[i][left] = true;
-                }
-            }
-            rand = PseudoRandom.seedRandomInt(0, 3);
-            if (rand != 0) {
-                if (this.map[i][right] != this.getCityChar()) {
-                    tiles[i][right] = true;
-                }
-            }
-        }
-        return tiles;
-    }
-
-    /**
-     * Flashes tiles that are chosen to flood on the next flooding iteration.
-     */
-    public void updateFlashingTiles() {
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (tilesToFlood[i][j]) {
-                    if (this.map[i][j] != this.getOceanChar()) {
-                        this.map[i][j] = this.getFlashChar();
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Given a coordinate (x, y), update the internal representation of the map
      * to flood that tile.
      */
-    public void flashTiles() {
-        // Container to represent squares to be flooded next
-        boolean[][] nextSquaresToBeFlooded = new boolean[mapHeight][mapWidth];
-
-        // Find the furthest left and right coordinates of the island
-        Pair<Integer, Integer> extremities = this.getIslandExtremities();
-        int farLeft = extremities.getKey();
-        int farRight = extremities.getValue();
-
-        // Pick tiles to be flooded and flood them
-        nextSquaresToBeFlooded = this.pickTilesToFlood(nextSquaresToBeFlooded, farLeft, farRight);
-        this.tilesToFlood = nextSquaresToBeFlooded;
-        this.updateFlashingTiles();
-    }
-
-    /**
-     * Floods selected tiles
-     */
-    public void flood() {
+    public void floodTile() throws IllegalArgumentException {
+        //Check that the square to be flooded is a flood-able square
+        //Return without crashing game if an error has been made
+        boolean[][] mapEdges = new boolean[mapHeight][mapWidth];
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
-                if (tilesToFlood[i][j]) {
-                    this.map[i][j] = this.getOceanChar();
+                if (this.map[i][j] == this.getIslandChar()) {
+                    try {
+                        if (this.map[i - 1][j] == this.getOceanChar() ||
+                                this.map[i + 1][j] == this.getOceanChar() ||
+                                this.map[i][j - 1] == this.getOceanChar() ||
+                                this.map[i][j + 1] == this.getOceanChar()) {
+                            mapEdges[i][j] = true;
+                        } else {
+                            mapEdges[i][j] = false;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //Do Nothing
+                    }
                 }
             }
         }
-        disposeFloodedSquares();
-    }
 
-    /**
-     * Iterates through the game resources and removes entities that have been flooded.
-     */
-    public void disposeFloodedSquares() {
-        for (ResourceSpecification resourceSpecification: resourcePlacements) {
-            for (Coordinate coords: resourceSpecification.getPlacements()) {
-                if (this.map[coords.getY()][coords.getX()] == this.getOceanChar()) {
-                    if (this.gameResources.get(coords) != null) {
-                        Entity res = this.gameResources.get(coords);
-                        res.dispose();
-                        this.gameResources.remove(coords);
-                    }
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (mapEdges[i][j]) {
+                    this.map[i][j] = this.getOceanChar();
                 }
             }
         }
@@ -839,10 +733,6 @@ public class MapGenerator {
         this.bottomLeftX = bottomLeftI;
         this.bottomLeftY = bottomLeftJ;
         this.legalCoordinates = legalMoveCoordinates;
-    }
-
-    public void addGameResource(Coordinate cord, Entity resource) {
-        this.gameResources.put(cord, resource);
     }
 
     public int getBottomLeftX() {

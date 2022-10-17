@@ -1,7 +1,6 @@
 package com.deco2800.game.components;
 
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.rendering.AnimationRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,10 +89,6 @@ public class Component {
     if (enabled) {
       earlyUpdate();
     }
-  }
-
-  public Boolean isAnimationRenderComponent() {
-    return this instanceof AnimationRenderComponent;
   }
 
   @Override

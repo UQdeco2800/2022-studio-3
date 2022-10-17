@@ -3,16 +3,23 @@ package com.deco2800.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.GdxGame.ScreenType;
+import com.deco2800.game.components.mainmenu.InsertButtons;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.files.UserSettings.DisplaySettings;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.utils.StringDecorator;
@@ -49,13 +56,15 @@ public class SettingsMenuDisplay extends UIComponent {
     Label title = new Label("Settings", skin, "title");
     Table settingsTable = makeSettingsTable();
     Table menuBtns = makeMenuBtns();
+    Drawable backGround = new TextureRegionDrawable(new TextureRegion(new Texture("images/CogWheel/Esc Menu/Settings_menu_blank.png")));
 
     rootTable = new Table();
+    rootTable.setBackground(backGround);
     rootTable.setFillParent(true);
 
-    rootTable.add(title).expandX().top().padTop(20f);
+//    rootTable.add(title).expandX().top().padTop(20f);
 
-    rootTable.row().padTop(30f);
+    rootTable.row().padTop(160f);
     rootTable.add(settingsTable).expandX().expandY();
 
     rootTable.row();
@@ -69,23 +78,23 @@ public class SettingsMenuDisplay extends UIComponent {
     UserSettings.Settings settings = UserSettings.get();
 
     // Create components
-    Label fpsLabel = new Label("FPS Cap:", skin);
+    Label fpsLabel = new Label("FPS Cap:", skin, "custom");
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
-    Label fullScreenLabel = new Label("Fullscreen:", skin);
+    Label fullScreenLabel = new Label("Fullscreen:",skin, "custom");
     fullScreenCheck = new CheckBox("", skin);
     fullScreenCheck.setChecked(settings.fullscreen);
 
-    Label vsyncLabel = new Label("VSync:", skin);
+    Label vsyncLabel = new Label("VSync:", skin, "custom");
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin);
+    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, "custom");
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
     Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
 
-    Label displayModeLabel = new Label("Resolution:", skin);
+    Label displayModeLabel = new Label("Resolution:", skin, "custom");
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
@@ -158,14 +167,19 @@ public class SettingsMenuDisplay extends UIComponent {
   }
 
   private Table makeMenuBtns() {
-    TextButton exitBtn = new TextButton("Exit", skin);
-    TextButton applyBtn = new TextButton("Apply", skin);
+    InsertButtons insertButtons = new InsertButtons();
+    ImageButton backBtn = insertButtons.draw("images/CogWheel/Esc Menu/back_button.png",
+            "images/CogWheel/Esc Menu/highlighted_back_button.png");
+    ImageButton applyBtn = insertButtons.draw("images/CogWheel/Esc Menu/apply_button.png",
+            "images/CogWheel/Esc Menu/highlighted_apply_button.png");
+//    TextButton exitBtn = new TextButton("Exit", skin);
+//    TextButton applyBtn = new TextButton("Apply", skin);
 
-    exitBtn.addListener(
+    backBtn.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Exit button clicked");
+            logger.debug("Back button clicked");
             exitMenu();
           }
         });
@@ -181,7 +195,7 @@ public class SettingsMenuDisplay extends UIComponent {
         });
 
     Table table = new Table();
-    table.add(exitBtn).expandX().left().pad(0f, 15f, 15f, 0f);
+    table.add(backBtn).expandX().left().pad(0f, 15f, 15f, 0f);
     table.add(applyBtn).expandX().right().pad(0f, 0f, 15f, 15f);
     return table;
   }

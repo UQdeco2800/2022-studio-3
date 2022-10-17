@@ -205,9 +205,6 @@ public class Entity {
   public void dispose() {
     if (created) { // if not created, createdComponents are null
       for (Component component : createdComponents) {
-//        if (!component.isAnimationRenderComponent()) {
-//          component.dispose();
-//        }
         component.dispose();
       }
     }
