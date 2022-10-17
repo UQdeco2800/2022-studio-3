@@ -48,7 +48,7 @@ public class FloodingGenerator extends Component {
     /**
      * Constant value of flood timer (ms)
      */
-    private final int floodDuration = 150000;
+    private final int floodDuration = 1500;
     /**
      * Stores current progress update
      */
@@ -118,7 +118,6 @@ public class FloodingGenerator extends Component {
             return progress == 0b00000000;
         } else {
             if ((currentProgress & 0b00010000) == 0b00010000) {
-                System.out.println("HEREEEEE");
                 this.triggerFlashTilesEvent();
             }
             progress = currentProgress;
