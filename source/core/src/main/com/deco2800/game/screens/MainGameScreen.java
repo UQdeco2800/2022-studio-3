@@ -167,7 +167,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new ResourceCountDisplay())
-//        .addComponent(new BuildingMenuButton())
+        .addComponent(new BuildingMenuButton())
         .addComponent(new SoldierMenuDisplay())
         .addComponent(new TerminalDisplay());
 
