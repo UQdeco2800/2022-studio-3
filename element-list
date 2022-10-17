@@ -14,8 +14,8 @@ com.deco2800.game.components.floodtimer
 com.deco2800.game.components.friendly
 com.deco2800.game.components.friendlyunits
 com.deco2800.game.components.friendlyunits.controller
+com.deco2800.game.components.friendlyunits.gamearea
 com.deco2800.game.components.friendlyunits.task
-com.deco2800.game.components.gamearea
 com.deco2800.game.components.maingame
 com.deco2800.game.components.mainmenu
 com.deco2800.game.components.npc
