@@ -55,6 +55,9 @@ public class Timer {
         this.initCompletionValues();
     }
 
+    /**
+     * Initialize delay intervals.
+     */
     public void initCompletionValues() {
         long currentTime = gt.getTime();
         long interval = this.delay / 5;
@@ -62,7 +65,7 @@ public class Timer {
         val40p = currentTime + (interval * 2);
         val60p = currentTime + (interval * 3);
         val80p = currentTime + (interval * 4);
-        val100p = currentTime + (interval * 5) - interval;//(interval / 4);
+        val100p = currentTime + (interval * 5) - (interval / 4);
     }
 
     /**

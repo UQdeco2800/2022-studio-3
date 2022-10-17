@@ -105,6 +105,10 @@ public class FloodingGenerator extends Component {
     @Override
     public void update() {}
 
+    /**
+     * Updates the internal flag logic.
+     * @return True if the flag changed. False otherwise.
+     */
     public Boolean updateFlags() {
         if (this.timer.isTimerExpired()) {
             triggerFloodEvent();
@@ -126,6 +130,9 @@ public class FloodingGenerator extends Component {
         }
     }
 
+    /**
+     * Sets flags from the internal timer flags.
+     */
     public void setFlags() {
         //Flags for completion
         byte flag20p  = 0b00000001;
