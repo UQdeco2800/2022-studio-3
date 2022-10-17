@@ -8,6 +8,7 @@ import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * When this entity touches a valid enemy's hitbox, deal damage to them and apply a knockback.
@@ -25,6 +26,7 @@ public class TouchAttackComponent extends Component {
 
   private EntityDirectionComponent entityDirectionComponent;
   private boolean isAttacking = false;
+  private Entity targetEntity;
 
   /**
    * Create a component which attacks entities on collision, without knockback.
@@ -39,7 +41,7 @@ public class TouchAttackComponent extends Component {
    * @param targetLayer The physics layer of the target's collider.
    * @param knockback The magnitude of the knockback applied to the entity.
    */
-  public TouchAttackComponent(short targetLayer, float knockback) {
+  public TouchAttackComponent(short targetLayer, float knockback, int hitDamage) {
     this.targetLayer = targetLayer;
     this.knockbackForce = knockback;
   }
@@ -64,10 +66,12 @@ public class TouchAttackComponent extends Component {
     }
 
     // Try to attack target.
+    Entity source = ((BodyUserData) me.getBody().getUserData()).entity;
     Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
     CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
 
     if (targetStats != null) {
+      this.targetEntity = target;
       targetStats.hit(combatStats);
       if (targetStats.getHealth() > 0) {
         if (!isAttacking) {
@@ -77,23 +81,26 @@ public class TouchAttackComponent extends Component {
               case DEFAULT:
                 break;
               case WEST:
-                entity.getEvents().trigger("attackWest");
+                source.getEvents().trigger("attackWest");
+                target.getEvents().trigger("attackEast");
                 break;
               case EAST:
-                entity.getEvents().trigger("attackEast");
+                source.getEvents().trigger("attackEast");
+                target.getEvents().trigger("attackWest");
                 break;
               case NORTH:
-                entity.getEvents().trigger("attackNorth");
+                source.getEvents().trigger("attackNorth");
+                target.getEvents().trigger("attackSouth");
                 break;
               case SOUTH:
-                entity.getEvents().trigger("attackSouth");
+                source.getEvents().trigger("attackSouth");
+                target.getEvents().trigger("attackNorth");
                 break;
             }
           }
         }
-      } else {
+      }else{
         isAttacking = false;
-//        target.dispose();
       }
     }
 
@@ -107,4 +114,5 @@ public class TouchAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
   }
+
 }

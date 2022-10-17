@@ -1,5 +1,6 @@
 package com.deco2800.game.worker.resources;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.entities.Entity;
@@ -21,6 +22,20 @@ public class CampSpawnStones extends DefaultTask implements PriorityTask{
         this.left_stone_time = this.gameTime.getTime();
         this.up_stone_time = this.gameTime.getTime();
         this.down_stone_time = this.gameTime.getTime();
+    }
+
+    public static boolean checkTile(float x, float y){
+        // Since worldToTile() is a static function, implement the hardcoded version of it for the purpose of this class
+        float tileSize = -1;
+
+        float b = tileSize / 2;
+        float a = tileSize / 3.724f;
+
+        int tileX = (int) ((x / b) - (y / a)) / 2;
+        int tileY = (int) (y / a) + tileX;
+
+        GridPoint2 tile = new GridPoint2(tileX, tileY);
+        return ServiceLocator.getMapService().isOccupied(tile);
     }
 
     @Override
@@ -57,28 +72,29 @@ public class CampSpawnStones extends DefaultTask implements PriorityTask{
             }
         }
 
-        if(right_stone_detected == 0){
+        // Check if the stones detected and the tile is not occupied
+        if(right_stone_detected == 0 || checkTile(campX+1, campY)){
             if((this.gameTime.getTime() - this.right_stone_time) > SPAWN_INTERVAL){
                 Entity stone = StoneFactory.createStone();
                 stone.setPosition(campX+1, campY);
                 ServiceLocator.getEntityService().register(stone);
                 this.right_stone_time = this.gameTime.getTime();
             }
-        }else if(left_stone_detected == 0){
+        }else if(left_stone_detected == 0 || checkTile(campX-1, campY)){
             if((this.gameTime.getTime() - this.left_stone_time) > SPAWN_INTERVAL){
                 Entity stone = StoneFactory.createStone();
                 stone.setPosition(campX-1, campY);
                 ServiceLocator.getEntityService().register(stone);
                 this.left_stone_time = this.gameTime.getTime();
             }
-        }else if(up_stone_detected == 0){
+        }else if(up_stone_detected == 0 || checkTile(campX, campY+1)){
             if((this.gameTime.getTime() - this.up_stone_time) > SPAWN_INTERVAL){
                 Entity stone = StoneFactory.createStone();
                 stone.setPosition(campX, campY+1);
                 ServiceLocator.getEntityService().register(stone);
                 this.up_stone_time = this.gameTime.getTime();
             }
-        }else if(down_stone_detected == 0){
+        }else if(down_stone_detected == 0 || checkTile(campX, campY-1)){
             if((this.gameTime.getTime() - this.down_stone_time) > SPAWN_INTERVAL){
                 Entity stone = StoneFactory.createStone();
                 stone.setPosition(campX, campY-1);
