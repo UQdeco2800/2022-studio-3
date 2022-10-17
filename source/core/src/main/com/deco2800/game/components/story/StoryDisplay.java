@@ -1,21 +1,5 @@
 package com.deco2800.game.components.story;
 
-/**
-import com.badlogic.gdx.Gdx;
-import com.deco2800.game.GdxGame;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import static com.deco2800.game.GdxGame.ScreenType.MAIN_GAME;
- **/
 import com.badlogic.gdx.Gdx;
 import com.deco2800.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.deco2800.game.components.mainmenu.InsertButtons;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -50,6 +35,8 @@ public class StoryDisplay extends UIComponent {
     private ArrayList<String> storyImages;
     private int start;
     private int end;
+
+    private static final String[] buttonImages = {"images/next_cut.png", "images/prev-cut.png"};
 
 
 
@@ -84,22 +71,37 @@ public class StoryDisplay extends UIComponent {
 
         start += 1;
         stage.addActor(table);
+        InsertButtons bothButtons = new InsertButtons();
+
+        // next button
+
+        String nextTexture = "images/next_cut.png";
+        String nextTextureHover = "images/next_cut_hover.png";
+
+        ImageButton nextBtn;
+        nextBtn = bothButtons.draw(nextTexture, nextTextureHover);
 
 
-        TextButton nextBtn = new TextButton("Next", skin);
-        TextButton skipBtn = new TextButton("Skip", skin);
-        TextButton prevBtn = new TextButton("Previous", skin);
-        if (start == 0){
-            prevBtn.setVisible(false);
-            Gdx.gl.glClearColor(0, 0, 0, 0);
-            //Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        } else{
-            prevBtn.setVisible(true);
 
-        }
+        // prev buttons
+        String prevTexture = "images/prev_cut.png";
+        String prevTextureHover = "images/prev_cut_hover.png";
+        ImageButton prevBtn;
+        prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
+
+        // skip button
+        String skipTexture = "images/skip_btn.png";
+        String skipTextureHover = "images/skip_btn_hover.png";
+        ImageButton skipBtn;
+        skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
+
+
+
+        //TextButton nextBtn = new TextButton("Next", skin);
+        //TextButton skipBtn = new TextButton("Skip", skin);
+        //TextButton prevBtn = new TextButton("Previous", skin);
 
         // Triggers an event when the button is pressed
-
 
         nextBtn.addListener(
                 new ChangeListener() {
@@ -109,12 +111,6 @@ public class StoryDisplay extends UIComponent {
                         entity.getEvents().trigger("next");
                     }
                 });
-
-
-
-
-
-
 
         skipBtn.addListener(
                 new ChangeListener() {
@@ -138,13 +134,12 @@ public class StoryDisplay extends UIComponent {
 
 
 
-        table.add(skipBtn).expand().top().right().pad(25f).width(100);
+        table.add(skipBtn).expand().top().right().width(200f);
         table.row();
-        table.add(prevBtn).pad(25f).left();
-        table.add(nextBtn).pad(25f).right();
-
-
+        table.add(prevBtn).left().width(70f).padBottom(300f);
+        table.add(nextBtn).right().width(70f).padBottom(300f);
         stage.addActor(table);
+        table.debug();
 
     }
 
@@ -152,9 +147,6 @@ public class StoryDisplay extends UIComponent {
     public void draw(SpriteBatch batch) {
         // draw is handled by the stage
     }
-
-
-
 
     private void nextScene() {
         if (start < end) {
@@ -172,7 +164,6 @@ public class StoryDisplay extends UIComponent {
             start -=1;
         }
     }
-
 
 
     @Override
