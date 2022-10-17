@@ -114,9 +114,15 @@ implements <a href="Command.html" title="interface in com.deco2800.game.ui.termi
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Action a command.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#construct(com.deco2800.game.entities.BuildingType)" class="member-name-link">construct</a><wbr>(<a href="../../../entities/BuildingType.html" title="enum class in com.deco2800.game.entities">BuildingType</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Takes a BuildingType and produces a corresponding input component and
+ highlight</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFinished()" class="member-name-link">isFinished</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -167,7 +173,21 @@ implements <a href="Command.html" title="interface in com.deco2800.game.ui.termi
 <li>
 <section class="detail" id="construct(com.deco2800.game.entities.BuildingType)">
 <h3>construct</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">construct</span><wbr><span class="parameters">(<a href="../../../entities/BuildingType.html" title="enum class in com.deco2800.game.entities">BuildingType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">construct</span><wbr><span class="parameters">(<a href="../../../entities/BuildingType.html" title="enum class in com.deco2800.game.entities">BuildingType</a>&nbsp;type)</span></div>
+<div class="block">Takes a BuildingType and produces a corresponding input component and
+ highlight</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - which building type we want to build</dd>
+<dt>Returns:</dt>
+<dd>whether or not the input component was successfully created</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isFinished()">
+<h3>isFinished</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFinished</span>()</div>
 </section>
 </li>
 </ul>
