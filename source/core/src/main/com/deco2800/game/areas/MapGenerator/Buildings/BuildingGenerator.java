@@ -82,6 +82,8 @@ public class BuildingGenerator {
      * PathGenerator instance used for paths
      */
     private PathGenerator pg;
+    // random should be re-used as per sonarcloud
+    private final Random random = new Random();
 
     public BuildingGenerator(MapGenerator mg) {
         //Get MapGenerator details
@@ -291,7 +293,8 @@ public class BuildingGenerator {
         //Place buildings while any remaining buildings that haven't been placed exist
         while (remainingBuildings.size() > 0) {
             //Select a building to place
-            BuildingSpecification currentBuilding = remainingBuildings.get(new Random().nextInt(remainingBuildings.size()));
+            BuildingSpecification currentBuilding =
+                    remainingBuildings.get(random.nextInt(remainingBuildings.size()));
 
             //Make a building object to mirror this
             Building building = new Building(currentBuilding.getWidth(), currentBuilding.getHeight(), currentBuilding.getName(), currentBuilding.getDoor());

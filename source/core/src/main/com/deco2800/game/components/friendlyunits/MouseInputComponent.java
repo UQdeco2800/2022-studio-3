@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputLayer;
 import com.deco2800.game.services.ServiceLocator;
 
 import static java.lang.Math.abs;
@@ -34,6 +35,11 @@ public class MouseInputComponent extends InputComponent {
         leftPressed = false;
         // For friendly units movement
         this.camera = ServiceLocator.getEntityService().getCamera();
+    }
+
+    @Override
+    public void create() {
+        ServiceLocator.getInputService().register(this, InputLayer.FRIENDLY);
     }
 
     /**

@@ -37,6 +37,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.components.ResourceStatsComponent;
@@ -334,6 +335,7 @@ class BuildingFactoryTest {
     void createTrebuchet() {
         final float Trebuchet_SCALE = 3f;
         Entity trebuchet = new Entity();
+        ServiceLocator.registerTimeSource(new GameTime());
 
         // To make the tests work.
         Entity target = new Entity();

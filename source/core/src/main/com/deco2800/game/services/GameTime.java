@@ -11,6 +11,8 @@ public class GameTime {
   private final long startTime;
   private float timeScale = 1f;
   private static boolean ifPaused = false;
+  private long pausedTime = 0;
+  private long lastPaused;
 
   public GameTime() {
     startTime = TimeUtils.millis();
@@ -42,6 +44,13 @@ public class GameTime {
     return TimeUtils.timeSinceMillis(startTime);
   }
 
+  public long getGameTime() {
+    if (ifPaused()) {
+      return lastPaused - pausedTime;
+    }
+    return getTime() - pausedTime;
+  }
+
   public long getTimeSince(long lastTime) {
     return getTime() - lastTime;
   }
@@ -59,6 +68,7 @@ public class GameTime {
   public void paused() {
     timeScale = 0f;
     ifPaused = true;
+    lastPaused = getTime();
   }
 
   /**
@@ -67,5 +77,6 @@ public class GameTime {
   public void unpaused() {
     timeScale = 1f;
     ifPaused = false;
+    pausedTime += getTime() - lastPaused;
   }
 }
