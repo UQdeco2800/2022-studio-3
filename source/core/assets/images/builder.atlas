@@ -157,3 +157,17 @@ builder_forward_right_move
   orig: 128, 128
   offset: 0, 0
   index: 3
+builder_idle
+  rotate: false
+  xy: 768, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0
+default
+  rotate: false
+  xy: 1024, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 0

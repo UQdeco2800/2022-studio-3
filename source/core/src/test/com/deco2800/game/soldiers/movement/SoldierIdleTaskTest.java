@@ -11,10 +11,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
-<<<<<<< HEAD
-=======
 import com.deco2800.game.soldiers.movement.SoldierIdleTask;
->>>>>>> 11a4961f (test: Unit test for SoldierIdleTask)
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
