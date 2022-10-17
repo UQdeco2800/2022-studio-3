@@ -89,21 +89,18 @@ public class StoryDisplay extends UIComponent {
         ImageButton prevBtn;
         prevBtn = bothButtons.draw(prevTexture, prevTextureHover);
 
+        // skip button
+        String skipTexture = "images/skip_btn.png";
+        String skipTextureHover = "images/skip_btn_hover.png";
+        ImageButton skipBtn;
+        skipBtn = bothButtons.draw(skipTexture, skipTextureHover);
+
+
 
         //TextButton nextBtn = new TextButton("Next", skin);
-        TextButton skipBtn = new TextButton("Skip", skin);
+        //TextButton skipBtn = new TextButton("Skip", skin);
         //TextButton prevBtn = new TextButton("Previous", skin);
 
-        /*
-        if (start == 0){
-            prevBtn.setVisible(false);
-            Gdx.gl.glClearColor(0, 0, 0, 0);
-            //Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        } else{
-            prevBtn.setVisible(true);
-
-        }
-*/
         // Triggers an event when the button is pressed
 
         nextBtn.addListener(
@@ -137,11 +134,12 @@ public class StoryDisplay extends UIComponent {
 
 
 
-        table.add(skipBtn).expand().top().right().pad(25f).width(100);
+        table.add(skipBtn).expand().top().right().width(200f);
         table.row();
-        table.add(prevBtn).pad(25f).left();
-        table.add(nextBtn).pad(25f).right();
+        table.add(prevBtn).left().width(70f).padBottom(300f);
+        table.add(nextBtn).right().width(70f).padBottom(300f);
         stage.addActor(table);
+        table.debug();
 
     }
 
