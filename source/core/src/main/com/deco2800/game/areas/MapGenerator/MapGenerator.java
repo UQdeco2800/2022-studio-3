@@ -78,6 +78,11 @@ public class MapGenerator {
     private final char cityChar = 'c';
 
     /**
+     * Char denoting a flashing tile
+     */
+    private final char flash = 'f';
+
+    /**
      * List of resourceSpecification objects that contain the placements of each resource
      */
     private List<ResourceSpecification> resourcePlacements;
@@ -259,6 +264,14 @@ public class MapGenerator {
      */
     public char getCityChar() {
         return this.cityChar;
+    }
+
+    /**
+     * Returns the current char representing a flashing tile.
+     * @return flash char
+     */
+    public char getFlashChar() {
+        return this.flash;
     }
 
     /**
@@ -730,8 +743,19 @@ public class MapGenerator {
         return tiles;
     }
 
-    public void updateFloodedTiles() {
-
+    /**
+     * Flashes tiles that are chosen to flood on the next flooding iteration.
+     */
+    public void updateFlashingTiles() {
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (tilesToFlood[i][j]) {
+                    if (this.map[i][j] != this.getOceanChar()) {
+                        this.map[i][j] = this.getFlashChar();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -750,6 +774,7 @@ public class MapGenerator {
         // Pick tiles to be flooded and flood them
         nextSquaresToBeFlooded = this.pickTilesToFlood(nextSquaresToBeFlooded, farLeft, farRight);
         this.tilesToFlood = nextSquaresToBeFlooded;
+        this.updateFlashingTiles();
     }
 
     /**

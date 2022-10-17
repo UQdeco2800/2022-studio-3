@@ -48,7 +48,7 @@ public class FloodingGenerator extends Component {
     /**
      * Constant value of flood timer (ms)
      */
-    private final int floodDuration = 1000;
+    private final int floodDuration = 150000;
     /**
      * Stores current progress update
      */
@@ -107,10 +107,7 @@ public class FloodingGenerator extends Component {
      * To be called each time update is called.
      */
     @Override
-    public void update() {
-        //this.updateFlags();
-
-    }
+    public void update() {}
 
     public Boolean updateFlags() {
         if (this.timer.isTimerExpired()) {
@@ -122,11 +119,12 @@ public class FloodingGenerator extends Component {
         //Obtain completion status
         byte currentProgress = this.timer.getFlagStatus();
         if (progress == currentProgress) {
-            if (progress == 0b00000000) {
-                return true;
-            }
-            return false;
+            return progress == 0b00000000;
         } else {
+            if ((currentProgress & 0b00010000) == 0b00010000) {
+                System.out.println("HEREEEEE");
+                this.triggerFlashTilesEvent();
+            }
             progress = currentProgress;
             this.setFlags();
             return true;
@@ -164,11 +162,18 @@ public class FloodingGenerator extends Component {
     }
 
     /**
+     * Flashes tiles that will be flooded on the next iteration.
+     */
+    public void triggerFlashTilesEvent() {
+        this.atlantisTerrainFactory.flashTiles();
+        this.atlantisGameArea.flood();
+    }
+
+    /**
      * Algorithm that determines which tiles to be flooded on the next flooding event.
      * The call to atlantisTerrainFactory updates the structure of mapGenerator.
      */
     public void triggerFloodEvent() {
-        this.atlantisTerrainFactory.flashTiles();
         this.atlantisTerrainFactory.floodTiles();
         this.atlantisGameArea.flood();
     }
