@@ -43,7 +43,7 @@ public class MainGameExitDisplay extends UIComponent {
 //      });
 
     InsertButtons insertButtons = new InsertButtons();
-    ImageButton pauseMenuBtn = insertButtons.draw("images/CogWheel/Esc Menu/SettingsCogWheel.png", "images/CogWheel/Esc Menu/SettingsCogWheel-highlighted.png");
+    ImageButton pauseMenuBtn = insertButtons.draw("images/CogWheel/Esc Menu/SettingsCogWheel_small.png", "images/CogWheel/Esc Menu/SettingsCogWheel-highlighted_small.png");
     pauseMenuBtn.addListener(
       new ChangeListener() {
         @Override
