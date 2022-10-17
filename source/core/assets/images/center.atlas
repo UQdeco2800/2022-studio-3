@@ -3,6 +3,7 @@ size: 5200, 5200
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+
 100-idle
   rotate: false
   xy: 119, 220
