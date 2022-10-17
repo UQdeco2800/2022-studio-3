@@ -170,7 +170,6 @@ public class SpellUI extends UIComponent {
 
             Vector2 worldPosition = screenToWorldPosition(screenX, screenY);
             Vector2 spellWorldPosition = new Vector2(worldPosition.x - 10, worldPosition.y - 6);
-            System.out.println(worldPosition);
 
             spell.setPosition(spellWorldPosition);
 
