@@ -45,6 +45,7 @@ public class TutorialScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(TutorialScreen.class);
     private static final String[] mainGameTextures = {
             "images/heart.png",
+            "images/CogWheel/Esc Menu/CogWheelBG.png",
             "images/bigblack.png",
             "images/resource_display.png",
             "images/gainstone.png",
@@ -62,6 +63,9 @@ public class TutorialScreen extends ScreenAdapter {
             "images/level_1_town_hall_Highlight.png",
             "images/CogWheel/Esc Menu/CogWheelBG.png",
     };
+
+    public static final String[] sounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
+
 
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
 
@@ -155,8 +159,9 @@ public class TutorialScreen extends ScreenAdapter {
     private void loadAssets() {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadSounds(sounds);
         resourceService.loadTextures(mainGameTextures);
-        resourceService.loadSounds(atlantisSounds);
+
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -164,7 +169,7 @@ public class TutorialScreen extends ScreenAdapter {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
-        resourceService.unloadAssets(atlantisSounds);
+        resourceService.unloadAssets(sounds);
     }
 
     /**

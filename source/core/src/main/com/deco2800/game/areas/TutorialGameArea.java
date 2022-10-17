@@ -44,13 +44,13 @@ public class TutorialGameArea extends GameArea {
 
     public static final String[] uiTextures = AtlantisGameArea.uiTextures;
     public static final String[] forestTextureAtlases = AtlantisGameArea.forestTextureAtlases;
-    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
     public static final String[] buildingPlacementTextures = AtlantisGameArea.buildingPlacementTextures;
 
 
     /** textures needed to load */
     private String[] tutorialTextures = {
             "images/spellbox-zeus.png",
+            "images/CogWheel/Esc Menu/CogWheelBG.png",
             "images/spell-btn-unclickable.png",
             "images/dialogue_box_pattern2_background.png",
             "images/dialogue_box_image_default.png",
@@ -142,7 +142,7 @@ public class TutorialGameArea extends GameArea {
 
 
 
-    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
+    public static final String[] sounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -157,10 +157,14 @@ public class TutorialGameArea extends GameArea {
     private void loadAssets() {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(sounds);
         resourceService.loadTextureAtlases(this.tutorialTexturesAtlases);
         resourceService.loadTextures(this.tutorialTextures);
+
+
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextures(uiTextures);
+
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadTextures(buildingPlacementTextures);
         ServiceLocator.getResourceService().loadAll();
@@ -173,7 +177,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
-        resourceService.unloadAssets(atlantisSounds);
+        resourceService.unloadAssets(sounds);
         resourceService.unloadAssets(this.forestTextures);
     }
 

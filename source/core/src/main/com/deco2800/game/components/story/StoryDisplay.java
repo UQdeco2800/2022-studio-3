@@ -139,7 +139,6 @@ public class StoryDisplay extends UIComponent {
         table.add(prevBtn).left().width(70f).padBottom(300f);
         table.add(nextBtn).right().width(70f).padBottom(300f);
         stage.addActor(table);
-        table.debug();
 
     }
 
