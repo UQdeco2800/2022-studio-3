@@ -70,8 +70,6 @@ public class BuildingAnimationController extends Component {
         if(animator.isFinished()) {
             animator.startAnimation(COLLAPSE);
         }
-        ServiceLocator.getEntityService().unregister(this.getEntity());
-        this.getEntity().getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
     }
 
     /**

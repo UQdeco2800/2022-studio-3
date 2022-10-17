@@ -273,7 +273,7 @@ public class AtlantisGameArea extends GameArea {
 //        spawnTownHall();
 //        spawnBarracks();
         //spawnWalls();
-//        spawnCityWalls();
+        spawnCityWalls();
 
         // spawnBuildings();
 
@@ -286,7 +286,7 @@ public class AtlantisGameArea extends GameArea {
 
         spawnTitanShrine();
         spawnShip();
-        spawnTrebuchet(titan, this);
+        spawnTrebuchet(ship, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -684,7 +684,7 @@ public class AtlantisGameArea extends GameArea {
         int range = 20;
 
         // To get spawn point
-        GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInIsland(terrainFactory, range);
+        GridPoint2 spawnPoint = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 100);
 
         MapComponent mc1 = new MapComponent();
         mc1.display();
@@ -692,7 +692,7 @@ public class AtlantisGameArea extends GameArea {
         titan = BuildingFactory.createTitanShrine();
         spawnEntityAt((titan.addComponent(mc1))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)),
-                       spawnPoint, false, false);
+                       spawnPoint, true, true);
     }
 
     /**
@@ -961,6 +961,7 @@ public class AtlantisGameArea extends GameArea {
         char[][] map = mg.getMap();
         GridPoint2 spawn = RandomPointGenerator.getRandomPointInIsland(terrainFactory, 10);
         GridPoint2 corner1 = RandomPointGenerator.getRescaledBottomRightCorner(terrainFactory, 1f);
+        corner1.x += 10;
         GridPoint2 corner2 = RandomPointGenerator.getRescaledTopLeftCorner(terrainFactory, 1f);
         spawnEntityAt((BuildingFactory.createTrebuchet(target, gameArea))
                         .addComponent(new UnitSpawningComponent(gameAreaEventHandle)), corner1,

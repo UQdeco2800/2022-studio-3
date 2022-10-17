@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
+import com.deco2800.game.map.MapService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.RandomUtils;
 
@@ -240,42 +241,27 @@ public class RandomPointGenerator {
         char[][] map = mg.getMap();
         char[][] smallerMap = new char[range][range];
 
-        List<GridPoint2> islandTiles = new ArrayList<>();
-        for (int y = 0; y < mg.getHeight(); y++) {
-            for (int x = 0; x < mg.getWidth(); x++) {
-                if (map[y][x] == mg.getIslandChar()) {
-                    GridPoint2 point = new GridPoint2(x, (mg.getHeight()-1)-y);
-                    islandTiles.add(point);
-                }
-            }
-        }
+        List<GridPoint2> islandTiles = ServiceLocator.getMapService().getIslandTiles();;
 
         boolean notFound = true;
-
+        GridPoint2 point2 = new GridPoint2(0, 0);
         while (notFound) {
-            GridPoint2 point1 = islandTiles.get(0);
-            GridPoint2 point2 = islandTiles.get(islandTiles.size()-1);
             Random rand = new Random();
+            int index = rand.nextInt(islandTiles.size()-1);
+            point2 = islandTiles.get(index);
 
-            GridPoint2 point = islandTiles.get(rand.nextInt(islandTiles.size()-1));
-            int x = point.x;
-            int y = (mg.getHeight()-1) - point.y;
-
-            try {
-                for (int i = y; i < y + range; i++) {
-                    for (int j = x; j < x + range; j++) {
-                        if (map[j][i] != mg.getIslandChar()) {
-                            notFound = true;
-                            break;
-                        } else {
-                        }
-                    }
+            boolean occupied = false;
+            for (int i = index; i < range; i++) {
+                boolean foo = ServiceLocator.getMapService().isOccupied(islandTiles.get(i));
+                if (ServiceLocator.getMapService().isOccupied(islandTiles.get(i))) {
+                    System.out.println(point2.toString() + "::" + foo);
+                    occupied = true;
                 }
-                return point;
-            } catch (IndexOutOfBoundsException e) {
-                notFound = true;
+            }
+            if (!occupied) {
+                return point2;
             }
         }
-        return new GridPoint2(0 , 0);
+        return point2;
     }
 }

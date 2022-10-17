@@ -98,6 +98,8 @@ public class BuildingHealthManager extends Component {
         switch(buildingHealthState) {
             case ZERO_HEALTH -> {
                 this.getEntity().getEvents().trigger("collapsing");
+                ServiceLocator.getEntityService().unregister(this.getEntity());
+                this.getEntity().getComponent(PhysicsComponent.class).getPhysics().addToDestroy(this.entity);
             }
             case HALF_HEALTH -> {
                 this.getEntity().getEvents().trigger("damaged");
