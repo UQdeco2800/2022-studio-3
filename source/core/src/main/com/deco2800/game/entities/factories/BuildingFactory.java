@@ -181,19 +181,32 @@ public class BuildingFactory {
         mp.display();
         mp.setDisplayColour(Color.GOLDENROD);
 
-        // TODO: Change barracks from static texture to animation.
-//        AnimationRenderComponent animator =
-////                new AnimationRenderComponent(ServiceLocator.getResourceService()
-////                                                           .getAsset("images/barracks.atlas",
-////                                                                     TextureAtlas.class));
-        barracks.addComponent(new TextureRenderComponent("images/barracks_level_1.0.png"))
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/barracks.atlas",
+                                TextureAtlas.class));
+
+        animator.addAnimation(FULL_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(FULL_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_HEALTH_TRANSITION, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(COLLAPSE, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(HALF_ATTACKED, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation(REBUILD, 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("default", 0.1f, Animation.PlayMode.NORMAL);
+
+        barracks
+                .addComponent(new TextureImageComponent("images/barracks_level_2.0.png"))
+                .addComponent(animator)
                 .addComponent(new BuildingActions(config.type, config.level))
-                .addComponent(new HighlightedTextureRenderComponent("images/barracks_level_1.0_Highlight.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(new TextureScaler(leftPoint, maxX, maxY))
                 .addComponent(mp)
                 .addComponent(new SelectionCollider())
-                .addComponent(new BuildingUIDataComponent());
+                .addComponent(new BuildingUIDataComponent())
+                .addComponent(new BuildingHealthManager())
+                .addComponent(new BuildingAnimationController())
+                .addComponent(new AnimationTestingComponent());
 
         barracks.getComponent(TextureScaler.class).setPreciseScale(BARRACKS_SCALE, true);
 
@@ -309,7 +322,6 @@ public class BuildingFactory {
         mc.display();
         mc.setDisplayColour(Color.CORAL);
         titanShrine
-                .addComponent(new damageAnimation())
                 .addComponent(new BuildingActions(config.type, config.level))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack, config.baseDefence))
                 .addComponent(mc)

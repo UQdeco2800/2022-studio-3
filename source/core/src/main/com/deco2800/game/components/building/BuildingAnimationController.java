@@ -48,7 +48,7 @@ public class BuildingAnimationController extends Component {
         entity.getEvents().addListener("underAttackFull", this::underAttackFull);
         entity.getEvents().addListener("underAttackHalf", this::underAttackHalf);
 
-        animator.startAnimation(REBUILD);
+        animator.startAnimation("default");
     }
     
     /**
@@ -77,7 +77,7 @@ public class BuildingAnimationController extends Component {
      */
     private void creationTransition() {
         if (animator.isFinished()) {
-            animator.startAnimation(REBUILD);
+            animator.startAnimation(FULL_HEALTH);
         }
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.deco2800.game.components.TextureImageComponent;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
@@ -20,12 +21,18 @@ public class SelectionCollider extends ColliderComponent {
     }
 
     public SelectionCollider setPoints(float[] points) {
-        if (entity.getComponent(TextureRenderComponent.class) == null) {
+        if (entity.getComponent(TextureRenderComponent.class) == null &&
+            entity.getComponent(TextureImageComponent.class) == null) {
             return null;
         }
 
         //Create Texture Region based off this class' TRC
-        Texture baseTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
+        Texture baseTexture;
+        try {
+            baseTexture = entity.getComponent(TextureRenderComponent.class).getTextureOG();
+        } catch (NullPointerException e) {
+            baseTexture = entity.getComponent(TextureImageComponent.class).getAsset();
+        }
         TextureRegion tr = new TextureRegion(baseTexture);
 
         PolygonRegion region = new PolygonRegion(tr, points, null);
