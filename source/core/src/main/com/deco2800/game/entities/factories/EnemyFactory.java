@@ -69,7 +69,7 @@ public class EnemyFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent("images/bullet.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new PhysicsMovementComponent(new Vector2(5f, 5f)))
+                    .addComponent(new PhysicsMovementComponent(new Vector2(10f, 10f)))
                     .addComponent(new ColliderComponent())
                     .addComponent(new bulletHitShips(target, gameArea));
 
