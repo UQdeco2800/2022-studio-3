@@ -9,21 +9,51 @@ import com.deco2800.game.worker.components.type.MinerComponent;
 import com.deco2800.game.worker.type.ForagerFactory;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.extensions.GameExtension;
+import com.deco2800.game.input.InputService;
+import com.deco2800.game.physics.PhysicsService;
+import com.deco2800.game.rendering.RenderService;
+import com.deco2800.game.services.ResourceService;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.entities.EntityService;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.Gdx;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(GameExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ForagerFactoryTest {
 
     private static Entity forager1;
 
+    @BeforeEach
+    void BeforeEach() {
+        ServiceLocator.clear();
+        TextureAtlas builderAtlas = new TextureAtlas(Gdx.files.internal("images/forager.atlas"));
+        ResourceService rs = mock(ResourceService.class);
+        when(rs.getAsset(anyString(), eq(TextureAtlas.class))).thenReturn(builderAtlas);
+        ServiceLocator.registerResourceService(rs);
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+    }
+
     @Test
-    static void shouldDetectForagerComponents() {
+    public void shouldDetectForagerComponents() {
         forager1 = ForagerFactory.createForager();
         ForagerComponent foragerComponent = forager1.getComponent(ForagerComponent.class);
         MinerComponent minerComponent = forager1.getComponent(MinerComponent.class);
@@ -33,14 +63,14 @@ public class ForagerFactoryTest {
     }
 
     @Test
-    static void shouldDetectCollectStatsComponent(){
+    public void shouldDetectCollectStatsComponent(){
         forager1 = ForagerFactory.createForager();
         CollectStatsComponent forager_collect_stats = forager1.getComponent(CollectStatsComponent.class);
         assertEquals(2, forager_collect_stats.getCollectionAmount());
     }
 
     @Test
-    static void shouldCollectAndUnloadResources(){
+    public void shouldCollectAndUnloadResources(){
         forager1 = ForagerFactory.createForager();
         ResourceCollectComponent resourceCollectComponent = forager1.getComponent(ResourceCollectComponent.class);
         resourceCollectComponent.create();

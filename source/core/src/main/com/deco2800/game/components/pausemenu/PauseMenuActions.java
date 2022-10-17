@@ -1,8 +1,10 @@
 package com.deco2800.game.components.pausemenu;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Timer;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PauseMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(com.deco2800.game.components.mainmenu.MainMenuActions.class);
+
+  Sound btn_sound = ServiceLocator.getResourceService().getAsset("sounds/menuclicking.mp3", Sound.class);
   private GdxGame game;
   private boolean loading = false;
 
@@ -32,6 +36,7 @@ public class PauseMenuActions extends Component {
    */
   private void onResume() {
     logger.info("Start game");
+    btn_sound.play();
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
@@ -40,6 +45,7 @@ public class PauseMenuActions extends Component {
    */
   private void onMenu() {
     logger.info("exit a game to main menu");
+    btn_sound.play();
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
@@ -48,6 +54,7 @@ public class PauseMenuActions extends Component {
    */
   private void onExit() {
     logger.info("Exit game");
+    btn_sound.play();
     game.setScreen(GdxGame.ScreenType.ENDGAME);
   }
 
@@ -56,6 +63,7 @@ public class PauseMenuActions extends Component {
    */
   private void onSettings() {
     logger.info("Launching settings screen");
+    btn_sound.play();
     game.setScreen(GdxGame.ScreenType.SETTINGS);
   }
 }

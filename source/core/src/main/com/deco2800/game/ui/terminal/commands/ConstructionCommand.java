@@ -19,6 +19,7 @@ public class ConstructionCommand implements Command{
     private static final Logger logger = LoggerFactory.getLogger(DebugCommand.class);
     private Entity constructHighlight =
             new Entity();
+    private ConstructionInputComponent activeBuild;
 
     @Override
     public boolean action(ArrayList<String> args) {
@@ -31,12 +32,10 @@ public class ConstructionCommand implements Command{
         switch(arg) {
             case "barracks":
             case "1":
-                construct(BuildingType.BARRACKS);
-                return true;
+                return construct(BuildingType.BARRACKS);
             case "wall":
             case "2":
-                construct(BuildingType.WALL);
-                return true;
+                return construct(BuildingType.WALL);
             case "town-hall":
             case "town_hall":
             case "townhall":
@@ -49,13 +48,24 @@ public class ConstructionCommand implements Command{
         }
     }
 
-    public void construct(BuildingType type) {
+    /**
+     * Takes a BuildingType and produces a corresponding input component and
+     * highlight
+     * @param type which building type we want to build
+     * @return whether or not the input component was successfully created
+     */
+    public boolean construct(BuildingType type) {
+
+        if (activeBuild != null && !activeBuild.isFinished()) {
+            return false;
+        }
+
         String buildPath;
         switch (type) {
             case BARRACKS -> buildPath = "images/barracks_highlight_green.png";
             case WALL -> buildPath = "images/wooden_wall_green.png";
             default -> {
-                return;
+                return false;
             }
         }
         constructHighlight.dispose();
@@ -68,10 +78,16 @@ public class ConstructionCommand implements Command{
             case BARRACKS ->constructHighlight.scaleWidth(BARRACKS_SCALE);
             case WALL -> constructHighlight.scaleWidth(WALL_SCALE);
         }
-        InputComponent constructInput =
+        // gotta be a cleaner way to set this up
+        if (activeBuild != null)
+            activeBuild.dispose();
+        activeBuild =
                 new ConstructionInputComponent(constructHighlight, type);
-        ServiceLocator.getInputService().register(constructInput);
+        ServiceLocator.getInputService().register(activeBuild);
+        return true;
+    }
 
-
+    public boolean isFinished() {
+        return activeBuild == null || activeBuild.isFinished();
     }
 }

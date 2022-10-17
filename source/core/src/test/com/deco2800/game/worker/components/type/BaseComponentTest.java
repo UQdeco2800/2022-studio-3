@@ -1,5 +1,6 @@
 package com.deco2800.game.worker.components.type;
 
+import com.badlogic.gdx.utils.compression.lzma.Base;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,24 +25,26 @@ class BaseComponentTest {
 
     @Test
     void getWoodDefined(){
-        assertEquals(0, baseComponent.getWood());
+        assertEquals(BaseComponent.STARTING_WOOD, baseComponent.getWood());
     }
 
     @Test
     void getMetalDefined(){
-        assertEquals(0, baseComponent.getMetal());
+        assertEquals(BaseComponent.STARTING_METAL, baseComponent.getMetal());
     }
 
     @Test
     void getStoneDefined(){
-        assertEquals(0, baseComponent.getStone());
+        assertEquals(BaseComponent.STARTING_STONE, baseComponent.getStone());
     }
 
     @Test
     void updateBaseStatsDefined(){
         baseComponent.updateBaseStats(1, 1, 1);
-        assertEquals(1, baseComponent.getWood());
-        assertEquals(1, baseComponent.getMetal());
-        assertEquals(1, baseComponent.getStone());
+        assertEquals(BaseComponent.STARTING_WOOD + 1, baseComponent.getWood());
+        assertEquals(BaseComponent.STARTING_METAL + 1,
+                baseComponent.getMetal());
+        assertEquals(BaseComponent.STARTING_STONE + 1,
+                baseComponent.getStone());
     }
 }

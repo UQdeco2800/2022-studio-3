@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.friendlyunits.SelectableComponent;
 import com.deco2800.game.rendering.RenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -91,8 +90,8 @@ public class HealthBarComponent extends RenderComponent {
         float xdist = 0.5f; // x scaled distance for health bar from centre of entity (0.5 = whole entity
         float ydist = 0.3f; // y offset for health bar from centre of entity
         float height = 0.2f; // height of health bar
-        float line_size = 0.06f; // segment line width
-        float segment_health = 25f; // amount of health to display per segment
+        float lineSize = 0.06f; // segment line width
+        float segmentHealth = 25f; // amount of health to display per segment
 
         Vector2 position = entity.getCenterPosition();
         Vector2 scale = entity.getScale();
@@ -100,15 +99,15 @@ public class HealthBarComponent extends RenderComponent {
         float xPos = position.x - (scale.x * xdist);
         float yPos = position.y - (scale.y * ydist);
         float width = 2 * scale.x * xdist; // width of entire health bar
-        float healthWidth = width * (float) stats.getHealth() / stats.getMaxHealth(); // width of green health
+        float healthWidth = width * stats.getHealth() / stats.getMaxHealth(); // width of green health
 
         // Drawing health
         batch.draw(health, xPos, yPos, healthWidth, height);
-        batch.draw(segment, xPos, yPos, width, line_size);  // bottom border
-        batch.draw(segment, xPos, yPos + height, width, line_size); // top border
+        batch.draw(segment, xPos, yPos, width, lineSize);  // bottom border
+        batch.draw(segment, xPos, yPos + height, width, lineSize); // top border
         // Drawing segments
-        for (float x = xPos - line_size; x < xPos + width; x += width * (segment_health/ stats.getMaxHealth())) {
-            batch.draw(segment, x, yPos, line_size, height + line_size);
+        for (float x = xPos - lineSize; x < xPos + width; x += width * (segmentHealth/ stats.getMaxHealth())) {
+            batch.draw(segment, x, yPos, lineSize, height + lineSize);
         }
 
         zIndex = -yPos; // updates the zIndex to display above entity

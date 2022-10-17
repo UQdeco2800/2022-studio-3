@@ -11,8 +11,6 @@ import com.deco2800.game.components.maingame.*;
 import com.deco2800.game.components.pausemenu.PauseMenuActions;
 import com.deco2800.game.components.pausemenu.PauseMenuDisplay;
 import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.story.StoryActions;
-import com.deco2800.game.components.story.StoryDisplay;
 import com.deco2800.game.components.tutorial.TutorialDisplay;
 import com.deco2800.game.components.tutorial.TutorialActions;
 import com.deco2800.game.entities.Entity;
@@ -32,8 +30,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.weather.WeatherIconDisplay;
-import com.deco2800.game.components.resources.ResourceCountDisplay;
-import com.deco2800.game.components.gamearea.PerformanceDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,9 +60,12 @@ public class TutorialScreen extends ScreenAdapter {
             "images/city_tile.png",
 
             "images/level_1_town_hall_Highlight.png",
+            "images/CogWheel/Esc Menu/CogWheelBG.png",
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(11.5f, 2.5f);
+
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
 
     private final GdxGame game;
     private final Renderer renderer;
@@ -156,6 +156,7 @@ public class TutorialScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
+        resourceService.loadSounds(atlantisSounds);
         ServiceLocator.getResourceService().loadAll();
     }
 
@@ -163,6 +164,7 @@ public class TutorialScreen extends ScreenAdapter {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
+        resourceService.unloadAssets(atlantisSounds);
     }
 
     /**

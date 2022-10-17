@@ -20,38 +20,36 @@ import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.MapGenerator.ResourceSpecification;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
-import com.deco2800.game.components.BuildingUIDataComponent;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.areas.terrain.TerrainTile;
+import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.BuildingActions;
 import com.deco2800.game.components.building.TextureScaler;
 import com.deco2800.game.components.buildingmenu.BuildingMenuDisplay;
 import com.deco2800.game.components.friendlyunits.GestureDisplay;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
 import com.deco2800.game.components.maingame.*;
-import com.deco2800.game.areas.terrain.MinimapComponent;
-import com.deco2800.game.areas.terrain.TerrainTile;
 import com.deco2800.game.components.maingame.DialogueBoxActions;
 import com.deco2800.game.components.maingame.DialogueBoxDisplay;
 import com.deco2800.game.components.maingame.Explosion;
-import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.soldiermenu.SoldierMenuDisplay;
+//import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.maingame.SpellUI;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.UnitType;
-import com.deco2800.game.entities.factories.BuildingFactory;
-import com.deco2800.game.entities.factories.EnemyFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.UnitFactory;
-import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.map.MapService;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.factories.ArcherFactory;
+import com.deco2800.game.soldiers.factories.HopliteFactory;
+import com.deco2800.game.soldiers.factories.SpearmanFactory;
+import com.deco2800.game.soldiers.factories.SwordsmanFactory;
 import com.deco2800.game.worker.WorkerBaseFactory;
 import com.deco2800.game.worker.resources.MiningCampFactory;
 import com.deco2800.game.worker.resources.TreeFactory;
@@ -61,7 +59,6 @@ import com.deco2800.game.worker.type.MinerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -71,9 +68,7 @@ import java.util.stream.Collectors;
  * Atlantis game area for creating the map the game is played in
  */
 public class AtlantisGameArea extends GameArea {
-    private static final Logger logger = LoggerFactory.getLogger(ForestGameArea.class);
-    private static final int NUM_TREES = 5;
-    private static final int NUM_STONE = 10;
+    private static final Logger logger = LoggerFactory.getLogger(AtlantisGameArea.class);
     public static final String[] forestTextures = {
             "test/files/dummyTexture.png",
             "test/files/dummyOcean.png",
@@ -99,10 +94,6 @@ public class AtlantisGameArea extends GameArea {
             "images/sea_2.png",
             "images/sea_3.png",
             "images/sea_4.png",
-            "images/Waves tile/wave_1.png",
-            "images/Waves tile/wave_2.png",
-            "images/Waves tile/wave_3.png",
-            "images/Waves tile/wave_4.png",
             "images/hex_grass_1.png",
             "images/hex_grass_2.png",
             "images/hex_grass_3.png",
@@ -148,16 +139,10 @@ public class AtlantisGameArea extends GameArea {
             "images/connector_ew.png",
             "images/wall_pillar.png",
             "images/SpellIndicator/spelliso.png",
-            "images/wooden_wall.png",
-            "images/wooden_wall_2.png",
-            "images/wooden_wall_3.png",
-            "images/stone_wall.png",
-            "images/stone_wall_2_.png",
-            "images/stone_wall_3.png",
             "images/Base_Highlight",
             "images/level_1_town_hall_Highlight.png",
             "images/stone.png",
-            "images/archer.png",
+            "images/archerstatic.png",
             "images/swordsman.png",
             "images/hoplite.png",
             "images/spearman.png",
@@ -183,6 +168,7 @@ public class AtlantisGameArea extends GameArea {
             "images/swordsman_avatar.png",
             "images/spearman_avatar.png",
             "images/hoplite_avatar.png",
+            "images/arrow.png",
     };
 
     /* TODO: remove unused textures wasting precious resources */
@@ -197,7 +183,7 @@ public class AtlantisGameArea extends GameArea {
             "images/barracks_highlight_red.png",
             "images/barracks_highlight_green.png",
             "images/wooden_wall_green.png",
-            "images/wooden_wall_red.png"
+            "images/wooden_wall_red.png",
     };
     public static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas",
@@ -206,9 +192,8 @@ public class AtlantisGameArea extends GameArea {
             "images/hoplite.atlas", "images/spearman.atlas", "images/blue_joker.atlas",
             "images/snake.atlas", "images/wolf.atlas", "images/snake2.0.atlas", "images/titan.atlas",
             "images/newwolf.atlas", "images/ns_gate.atlas", "images/ew_gate.atlas",
-            "images/newwolf.atlas", "images/forager.atlas",
             "images/spell.atlas", "images/waterfeature.atlas", "images/lamp.atlas",
-            "images/newwolf.atlas", "images/forager.atlas","images/tree_.atlas",
+            "images/tree_.atlas",
             "images/spell.atlas", "images/titanshrine.atlas", "images/ship2.atlas"
     };
     public static final String[] soldierMenuTextures = {
@@ -218,15 +203,13 @@ public class AtlantisGameArea extends GameArea {
     public static final String[] buildingMenuTextures = {
             "images/building-selection-menu.png"
     };
-    public static final String[] atlantisSounds = {"sounds/Impact4.ogg"};
+    public static final String[] atlantisSounds = {"sounds/Impact4.ogg", "sounds/spell_sound.wav", "sounds/menuclicking.mp3"};
 
     Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/in-game-v3.wav"));
 
     private final AtlantisTerrainFactory terrainFactory;
 
     private DialogueBoxDisplay dialogueBoxDisplay;
-
-    private Entity player;
 
     private Entity townHall;
     private Entity ship;
@@ -235,6 +218,10 @@ public class AtlantisGameArea extends GameArea {
     private EventHandler gameAreaEventHandle;
     private Entity terrainMapAndMiniMap;
     private BuildingGenerator buildingGenerator;
+    // Random instance extracted as per sonarcloud
+    private final Random random = new Random();
+
+
 
     public AtlantisGameArea(AtlantisTerrainFactory terrainFactory) {
         super();
@@ -254,11 +241,11 @@ public class AtlantisGameArea extends GameArea {
         gameAreaEventHandle.addListener("spawnSpearmint", this::spawnSpearman);
         gameAreaEventHandle.addListener("spawnTitan", this::spawnTitan);
         gameAreaEventHandle.addListener("spawnBlueJoker", this::spawnBlueJokers);
+        gameAreaEventHandle.addListener("spawnUnit",this::spawnUnit);
 
 //        loadAssets();
         displayUI();
         spawnTerrain();
-//        player = spawnPlayer();
         centreCameraOnCity();
 
         spawnForager();
@@ -270,27 +257,29 @@ public class AtlantisGameArea extends GameArea {
 //        spawnMiner();
 
         //playMusic();
-//        player = spawnPlayer();
         centreCameraOnCity();
 
         // Spawn Buildings in the city
-//        spawnTownHall();
-//        spawnBarracks();
-        //spawnWalls();
         spawnCityWalls();
 
         // spawnBuildings();
 
-//        spawnForager();
-//        spawnMiner();
-//        spawnBuilder();
+        spawnForager();
+        spawnMiner();
+        //spawnBuilder();
         spawnCity();
+        //spawnForager();
+        spawnHoplite();
+        spawnSpearman();
+        spawnSwordsman();
+        
 
         spawnResources();
 
-//        spawnTitanShrine();
+        spawnTitanShrine();
 //        spawnShip();
-//        spawnTrebuchet(titan, this);
+        spawnTrebuchet(titan, this);
+        spawnArcher(titan, this);
 
         // spawnWorkerBase();
         // spawnResources();
@@ -298,7 +287,6 @@ public class AtlantisGameArea extends GameArea {
         // spawnWorkerBase();
         // spawnMiner();
 
-        // spawnExampleUnit();
         //spawnBlueJokers();
 
         spawnWolf();
@@ -307,10 +295,6 @@ public class AtlantisGameArea extends GameArea {
         //spawnTitan();
         //spawnSnakes();
 
-//        spawnUnit(UnitType.ARCHER, new GridPoint2(8,8));
-//        spawnUnit(UnitType.SPEARMAN, new GridPoint2(-8,-8));
-//        spawnUnit(UnitType.SWORDSMAN, new GridPoint2(8, -8));
-//        spawnUnit(UnitType.HOPLITE, new GridPoint2(-8, 8));
         // spawnTrees();
         //spawnStone();
         //spawnMiner();
@@ -533,28 +517,6 @@ public class AtlantisGameArea extends GameArea {
     }
 
     /**
-     * Spawns player at the centre of the Atlantean city
-     *
-     * @return Entity corresponding to the spawned player
-     */
-    private Entity spawnPlayer() {
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        //Get details of where the city is located
-        Map<String, Coordinate> cityDetails = mg.getCityDetails();
-        //Store centre of city
-        Coordinate centre = cityDetails.get("Centre");
-        //Spawn player at centre of city
-        GridPoint2 spawn = new GridPoint2(centre.getX(), mg.getHeight() - centre.getY());
-
-        MapComponent mapComponent = new MapComponent();
-        mapComponent.display();
-        mapComponent.setDisplayColour(Color.BLACK);
-        Entity newPlayer = PlayerFactory.createPlayer().addComponent(mapComponent);
-        spawnEntityAt(newPlayer, spawn, true, true);
-        return newPlayer;
-    }
-
-    /**
      * Moves the camera to the centre of the city on game startup
      */
     private void centreCameraOnCity() {
@@ -673,15 +635,11 @@ public class AtlantisGameArea extends GameArea {
         List<CityRow> cityRows = bg.getCityRows();
         for (CityRow cr : cityRows) {
             List<Building> buildings = cr.getBuildings();
-            for (int i = 0; i < buildings.size(); i++) {
+            for (int i = 0; i < buildings.size() - 1; i++) {
                 //Iterate through row of buildings, excluding the last entry
                 //Roll to see if a feature is being placed
 
-                if (new Random().nextInt(100) <= 30) {
-                    //Skip last building in row, as features will be difficult to see
-                    if (i == 0) {
-                        i++;
-                    }
+                if (random.nextInt(100) <= 30) {
                     continue;
                 }
                 //A feature is being placed - determine where
@@ -709,10 +667,6 @@ public class AtlantisGameArea extends GameArea {
                 feature.getComponent(TextureScaler.class).setSpawnPoint(spawn, terrain);
                 spawnEntity(feature);
 
-                //Skip last building in row, as features will be difficult to see
-                if (i == 0) {
-                    i++;
-                }
             }
         }
 
@@ -735,9 +689,6 @@ public class AtlantisGameArea extends GameArea {
         MapComponent mc2 = new MapComponent();
         mc2.display();
         mc2.setDisplayColour(Color.BROWN);
-
-//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc1)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn1, true, true);
-//        spawnEntityAt((BuildingFactory.createBarracks().addComponent(mc2)).addComponent(new UnitSpawningComponent(gameAreaEventHandle)), spawn2, true, true);
     }
 
     /**
@@ -773,8 +724,6 @@ public class AtlantisGameArea extends GameArea {
         ship = BuildingFactory.createShip();
         ship.addComponent(mc).addComponent(new UnitSpawningComponent(gameAreaEventHandle));
         spawnEntityAt(ship, spawnPoint, false, false);
-    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn1, true, true);
-    //     spawnEntityAt(BuildingFactory.createBarracks(), spawn2, true, true);
     }
 
     /**
@@ -1073,77 +1022,52 @@ public class AtlantisGameArea extends GameArea {
         return newBuilder;
     }
 
-    /**
-     * Creates units for demonstration purposes
-     *
-     * Spawns them relative to city centre for convenience
-     * @param type Which unit are we spawning? (see unit wiki)
-     * @param location offset from centre of city
-     */
-    private void spawnUnit(UnitType type, GridPoint2 location) {
-        MapComponent mc = new MapComponent();
-        mc.display();
-        mc.setDisplayColour(Color.GRAY);
-        Entity unit = UnitFactory.createUnit(type).addComponent(mc);
+    private void spawnArcher(Entity target, GameArea gameArea) {
+        int offset = 20;
         MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate cityCentre = mg.getCityDetails().get("Centre");
-        spawnEntityAt(unit, new GridPoint2(cityCentre.getX(),
-                mg.getHeight() - cityCentre.getY()).add(location.x, location.y)
-                , true, false);
+        char[][] map = mg.getMap();
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        spawnEntityAt((ArcherFactory.createArcher(target, gameArea)), spawn, true, true);
     }
 
-    /**
-     * Creates units for demonstration purposes
-     *
-     * Spawns them relative to city centre for convenience
-     * @param type Which unit are we spawning? (see unit wiki)
-     * @param location offset from centre of city
-     */
-    private void spawnUnit(UnitType type, Vector2 location) {
-        Entity unit = UnitFactory.createUnit(type);
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate cityCentre = mg.getCityDetails().get("Centre");
-        spawnEntityAt(unit, location, true, false);
+    private void spawnSwordsman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSwordsman = SwordsmanFactory.createSwordsman().addComponent(mapComponent);
+        spawnEntityAt(newSwordsman, spawn, true, true);
     }
 
+    private void spawnSpearman() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newSpearman = SpearmanFactory.createSpearman().addComponent(mapComponent);
+        spawnEntityAt(newSpearman, spawn, true, true);
+    }
+
+    private void spawnHoplite() {
+        GridPoint2 spawn = RandomPointGenerator.getRandomPointInRange(terrainFactory, 0.25);
+        MapComponent mapComponent = new MapComponent();
+        mapComponent.display();
+        Entity newHoplite = HopliteFactory.createHoplite().addComponent(mapComponent);
+        spawnEntityAt(newHoplite, spawn, true, true);
+
+    }
     /**
      * Overloaded method used for spawning units from the Shop UI
      */
     private void spawnUnit(UnitType type) {
-        Entity unit = UnitFactory.createUnit(type);
-        MapGenerator mg = terrainFactory.getMapGenerator();
-        Coordinate cityCentre = mg.getCityDetails().get("Centre");
-        GridPoint2 gp = new GridPoint2(cityCentre.getX(), mg.getHeight() - cityCentre.getY());
-        spawnEntityAt(unit, MapService.tileToWorldPosition(gp), true, false);
+        if (type == UnitType.SWORDSMAN) {
+            spawnSwordsman();
+        } else if (type == UnitType.SPEARMAN) {
+            spawnSpearman();
+        } else if (type == UnitType.HOPLITE) {
+            spawnHoplite();
+        } else if (type == UnitType.ARCHER) {
+            spawnArcher(titan, this);
+        }
     }
-
-    private void spawnArcher() {
-        spawnUnit(UnitType.ARCHER);
-    }
-
-    // private void spawnArcher(Vector2 location) {
-    //     spawnUnit(UnitType.ARCHER, location);
-    // }
-
-    // private void spawnSwordsman(Vector2 location) {
-    //     spawnUnit(UnitType.SWORDSMAN, location);
-    // }
-
-    private void spawnSpearman() {
-        spawnUnit(UnitType.SPEARMAN);
-    }
-
-    private void spawnHoplite() {
-        spawnUnit(UnitType.HOPLITE);
-    }
-
-    // private void spawnSpearman(Vector2 location) {
-    //     spawnUnit(UnitType.SPEARMAN, location);
-    // }
-
-    // private void spawnHoplite(Vector2 location) {
-    //     spawnUnit(UnitType.HOPLITE, location);
-    // }
 
     /**
      * Randomly spawns a worker base on the map
@@ -1266,7 +1190,5 @@ public class AtlantisGameArea extends GameArea {
         this.dialogueBoxDisplay.setMinimap(minimapComponent);
         this.terrainMapAndMiniMap = new Entity().addComponent(terrain).addComponent(minimapComponent);
         spawnEntity(terrainMapAndMiniMap);
-//
-//        spawnEntity(new Entity().addComponent(terrain).addComponent(minimapComponent));
     }
 }

@@ -1,9 +1,7 @@
 package com.deco2800.game.services;
 
 import com.deco2800.game.areas.AtlantisGameArea;
-import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.GameAreaEventService;
-import com.deco2800.game.components.AtlantisGameAreaEventHandler;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.map.MapService;

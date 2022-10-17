@@ -9,6 +9,9 @@ import com.deco2800.game.areas.MapGenerator.Coordinate;
 import com.deco2800.game.areas.MapGenerator.MapGenerator;
 import com.deco2800.game.areas.terrain.AtlantisTerrainFactory;
 import com.deco2800.game.areas.terrain.MinimapComponent;
+import com.deco2800.game.components.maingame.DialogueBoxActions;
+import com.deco2800.game.components.maingame.DialogueBoxDisplay;
+import com.deco2800.game.components.maingame.InfoBoxDisplay;
 import com.deco2800.game.components.UnitSpawningComponent;
 import com.deco2800.game.components.building.Building;
 import com.deco2800.game.components.friendlyunits.MouseInputComponent;
@@ -24,7 +27,7 @@ import com.deco2800.game.input.CameraInputComponent;
 import com.deco2800.game.map.MapComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.components.gamearea.GameAreaDisplay;
+import com.deco2800.game.components.friendlyunits.gamearea.GameAreaDisplay;
 
 import java.util.Map;
 import java.util.Vector;
@@ -139,6 +142,7 @@ public class TutorialGameArea extends GameArea {
 
 
 
+    public static final String[] atlantisSounds = AtlantisGameArea.atlantisSounds;
     public TutorialGameArea(AtlantisTerrainFactory terrainFactory, DialogueBoxDisplay display) {
         super();
         this.terrainFactory = terrainFactory;
@@ -169,6 +173,7 @@ public class TutorialGameArea extends GameArea {
 
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(this.tutorialTextures);
+        resourceService.unloadAssets(atlantisSounds);
         resourceService.unloadAssets(this.forestTextures);
     }
 

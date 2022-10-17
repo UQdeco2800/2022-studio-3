@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.*;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.BuildingFactory;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.worker.WorkerFactory;
@@ -48,6 +50,8 @@ public class GateColliderTest {
         ServiceLocator.registerResourceService(rs);
         ServiceLocator.registerInputService(new InputService());
         ServiceLocator.registerPhysicsService(new PhysicsService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
     }
 
     //Helper method to create a mocked fixture for an entity
