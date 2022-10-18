@@ -11,6 +11,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.soldiers.movement.SoldierIdleTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,12 +26,12 @@ import static org.mockito.Mockito.when;
 public class SoldierIdleTaskTest {
     @BeforeEach
     void beforeEach() {
-        ServiceLocator.registerMapService(new MapService());
-        ServiceLocator.registerPhysicsService(new PhysicsService());
-        ServiceLocator.registerEntityService(new EntityService());
         GameTime gameTime = mock(GameTime.class);
         when(gameTime.getTime()).thenReturn(0L);
         ServiceLocator.registerTimeSource(gameTime);
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerMapService(new MapService());
+        ServiceLocator.registerPhysicsService(new PhysicsService());
     }
 
     @Test
@@ -87,4 +88,6 @@ public class SoldierIdleTaskTest {
         task.update();
         assertFalse(task.isIdling()); // Should still be moving
     }
+
+
 }
